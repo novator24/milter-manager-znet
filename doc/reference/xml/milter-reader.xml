@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-reader">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-reader.top_of_page">MilterReader</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterReader</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-reader.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="MilterReader"/>
+<synopsis>#define             <link linkend="MILTER-READER-ERROR:CAPS">MILTER_READER_ERROR</link>
+enum                <link linkend="MilterReaderError">MilterReaderError</link>;
+struct              <link linkend="MilterReader-struct">MilterReader</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-reader-error-quark">milter_reader_error_quark</link>           (<parameter><type>void</type></parameter>);
+<link linkend="MilterReader"><returnvalue>MilterReader</returnvalue></link> *      <link linkend="milter-reader-io-channel-new">milter_reader_io_channel_new</link>        (<parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *channel</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-reader-start">milter_reader_start</link>                 (<parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>,
+                                                         <parameter><link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *loop</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-reader-is-watching">milter_reader_is_watching</link>           (<parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-reader-shutdown">milter_reader_shutdown</link>              (<parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="milter-manager-milter-reader.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----MilterReader
+</synopsis>
+</refsect1>
+<refsect1 id="milter-manager-milter-reader.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+MilterReader implements
+ <link linkend="MilterErrorEmittable">MilterErrorEmittable</link> and  <link linkend="MilterFinishedEmittable">MilterFinishedEmittable</link>.</para>
+</refsect1>
+
+<refsect1 id="milter-manager-milter-reader.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-reader.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-READER-ERROR:CAPS" role="macro">
+<title>MILTER_READER_ERROR</title>
+<indexterm zone="MILTER-READER-ERROR:CAPS"><primary>MILTER_READER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_READER_ERROR           (milter_reader_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterReaderError" role="enum">
+<title>enum MilterReaderError</title>
+<indexterm zone="MilterReaderError"><primary>MilterReaderError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_READER_ERROR_NO_CHANNEL,
+    MILTER_READER_ERROR_IO_ERROR
+} MilterReaderError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterReader-struct" role="struct">
+<title>struct MilterReader</title>
+<indexterm zone="MilterReader-struct"><primary>MilterReader</primary></indexterm>
+<programlisting>struct MilterReader;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reader-error-quark" role="function">
+<title>milter_reader_error_quark ()</title>
+<indexterm zone="milter-reader-error-quark"><primary>milter_reader_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_reader_error_quark           (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reader-io-channel-new" role="function">
+<title>milter_reader_io_channel_new ()</title>
+<indexterm zone="milter-reader-io-channel-new"><primary>milter_reader_io_channel_new</primary></indexterm>
+<programlisting><link linkend="MilterReader"><returnvalue>MilterReader</returnvalue></link> *      milter_reader_io_channel_new        (<parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *channel</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reader-start" role="function">
+<title>milter_reader_start ()</title>
+<indexterm zone="milter-reader-start"><primary>milter_reader_start</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_reader_start                 (<parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>,
+                                                         <parameter><link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *loop</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reader-is-watching" role="function">
+<title>milter_reader_is_watching ()</title>
+<indexterm zone="milter-reader-is-watching"><primary>milter_reader_is_watching</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_reader_is_watching           (<parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reader-shutdown" role="function">
+<title>milter_reader_shutdown ()</title>
+<indexterm zone="milter-reader-shutdown"><primary>milter_reader_shutdown</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_reader_shutdown              (<parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

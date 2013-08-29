@@ -1,0 +1,23 @@
+[scenario]
+clients=client10026;client10027
+import=end-of-header.txt
+actions=body-accept
+
+[client10026]
+port=10026
+arguments=--action;accept;--body;Accept message
+
+[client10027]
+port=10027
+arguments=--action;accept;--body;Accept message
+
+[body-accept]
+command=body
+
+chunk=Accept message
+
+response=body
+n_received=2
+status=accept
+
+chunks=Accept message;Accept message

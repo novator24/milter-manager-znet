@@ -1,0 +1,278 @@
+<!-- ##### SECTION Title ##### -->
+milter-utils
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_IMPLEMENT_ERROR_EMITTABLE ##### -->
+<para>
+
+</para>
+
+@init: 
+
+
+<!-- ##### MACRO MILTER_DEFINE_ERROR_EMITTABLE_TYPE ##### -->
+<para>
+
+</para>
+
+@TypeName: 
+@type_name: 
+@TYPE_PARENT: 
+
+
+<!-- ##### MACRO MILTER_IMPLEMENT_FINISHED_EMITTABLE_WITH_CODE ##### -->
+<para>
+
+</para>
+
+@init: 
+@code: 
+
+
+<!-- ##### MACRO MILTER_IMPLEMENT_FINISHED_EMITTABLE ##### -->
+<para>
+
+</para>
+
+@init: 
+
+
+<!-- ##### MACRO MILTER_DEFINE_FINISHED_EMITTABLE_TYPE ##### -->
+<para>
+
+</para>
+
+@TypeName: 
+@type_name: 
+@TYPE_PARENT: 
+
+
+<!-- ##### MACRO MILTER_IMPLEMENT_REPLY_SIGNALS ##### -->
+<para>
+
+</para>
+
+@init: 
+
+
+<!-- ##### FUNCTION milter_utils_inspect_io_condition_error ##### -->
+<para>
+
+</para>
+
+@condition: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_inspect_enum ##### -->
+<para>
+
+</para>
+
+@enum_type: 
+@enum_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_get_enum_name ##### -->
+<para>
+
+</para>
+
+@enum_type: 
+@enum_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_get_enum_nick_name ##### -->
+<para>
+
+</para>
+
+@enum_type: 
+@enum_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_inspect_flags ##### -->
+<para>
+
+</para>
+
+@flags_type: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_get_flags_names ##### -->
+<para>
+
+</para>
+
+@flags_type: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_inspect_object ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_format_reply_code ##### -->
+<para>
+
+</para>
+
+@reply_code: 
+@extended_code: 
+@message: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_inspect_hash_string_string ##### -->
+<para>
+
+</para>
+
+@hash: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_merge_hash_string_string ##### -->
+<para>
+
+</para>
+
+@dest: 
+@src: 
+
+
+<!-- ##### FUNCTION milter_utils_inspect_list_pointer ##### -->
+<para>
+
+</para>
+
+@list: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_command_to_macro_stage ##### -->
+<para>
+
+</para>
+
+@command: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_macro_stage_to_command ##### -->
+<para>
+
+</para>
+
+@stage: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_set_error_with_sub_error ##### -->
+<para>
+
+</para>
+
+@error: 
+@domain: 
+@error_code: 
+@sub_error: 
+@format: 
+@...: 
+
+
+<!-- ##### FUNCTION milter_utils_flags_from_string ##### -->
+<para>
+
+</para>
+
+@flags_type: 
+@flags_string: 
+@base_flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_enum_from_string ##### -->
+<para>
+
+</para>
+
+@enum_type: 
+@enum_string: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_utils_append_indent ##### -->
+<para>
+
+</para>
+
+@string: 
+@size: 
+
+
+<!-- ##### FUNCTION milter_utils_xml_append_text_element ##### -->
+<para>
+
+</para>
+
+@string: 
+@name: 
+@content: 
+@indent: 
+
+
+<!-- ##### FUNCTION milter_utils_xml_append_boolean_element ##### -->
+<para>
+
+</para>
+
+@string: 
+@name: 
+@boolean: 
+@indent: 
+
+
+<!-- ##### FUNCTION milter_utils_strcmp0 ##### -->
+<para>
+
+</para>
+
+@str1: 
+@str2: 
+@Returns: 
+
+

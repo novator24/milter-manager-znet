@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-launch-protocol">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-launch-protocol.top_of_page">milter-manager-launch-protocol</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-manager-launch-protocol</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-launch-protocol.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-LAUNCH-COMMAND-LAUNCH:CAPS">MILTER_MANAGER_LAUNCH_COMMAND_LAUNCH</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-launch-protocol.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-launch-protocol.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-LAUNCH-COMMAND-LAUNCH:CAPS" role="macro">
+<title>MILTER_MANAGER_LAUNCH_COMMAND_LAUNCH</title>
+<indexterm zone="MILTER-MANAGER-LAUNCH-COMMAND-LAUNCH:CAPS"><primary>MILTER_MANAGER_LAUNCH_COMMAND_LAUNCH</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_LAUNCH_COMMAND_LAUNCH "launch"
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

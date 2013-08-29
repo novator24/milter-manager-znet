@@ -1,0 +1,94 @@
+<!-- ##### SECTION Title ##### -->
+milter-manager-control-protocol
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_COMMAND_SET_CONFIGURATION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_COMMAND_GET_CONFIGURATION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_COMMAND_RELOAD ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_COMMAND_STOP_CHILD ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_COMMAND_GET_STATUS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_SUCCESS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_FAILURE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_CONFIGURATION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_STATUS ##### -->
+<para>
+
+</para>
+
+
+

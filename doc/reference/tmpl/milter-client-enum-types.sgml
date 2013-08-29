@@ -1,0 +1,56 @@
+<!-- ##### SECTION Title ##### -->
+milter-client-enum-types
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION milter_client_context_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_CLIENT_CONTEXT_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_client_context_state_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_CLIENT_CONTEXT_STATE ##### -->
+<para>
+
+</para>
+
+
+

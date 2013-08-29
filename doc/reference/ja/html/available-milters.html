@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>利用可能なmilter</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="start.html" title="Part I. はじめよう">
+<link rel="prev" href="users.html" title="ユーザ">
+<link rel="next" href="ruby.html" title="Part II. Ruby support">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="users.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="ruby.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="available-milters"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="available-milters.top_of_page"></a>利用可能なmilter</span></h2>
+<p>利用可能なmilter — milter managerで利用できるmilter</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp5811344"></a><h2>このドキュメントについて</h2>
+<p>milter managerと一緒に利用できたことが報告されているmilterを 紹介します。</p>
+<p>
+  ここで紹介されているmilter以外でも利用できると思います。利用 しているmilterがここに載っていない場合は
+  <a class="ulink" href="https://lists.sourceforge.net/lists/listinfo/milter-manager-users-ja" target="_top">メーリングリスト</a>
+  でお知らせください。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp5706672"></a><h2>spam対策</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="ulink" href="http://hcpnet.free.fr/milter-greylist/" target="_top">milter-greylist</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://savannah.nongnu.org/projects/spamass-milt/" target="_top">spamass-milter</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.cloudmark.com/ja/serviceproviders/authority.html" target="_top">Cloudmark Authority</a>
+  : アンチウイルス機能付き。
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.kaspersky.co.jp/anti-spam" target="_top">Kaspersky Anti-Spam 3.0</a>
+  
+</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp8467088"></a><h2>アンチウイルス</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="ulink" href="http://drweb.jp/productlineup.html" target="_top">Dr.Web</a>
+  : spam対策機能付き。
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.clamav.net/" target="_top">clamav-milter</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.promark-inc.com/products/mailserver.html" target="_top">ProScan</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.kaspersky.co.jp/anti-virus_linux_mail_server" target="_top">Kaspersky Anti-Virus Linux Mail Server 5.6</a>
+  
+</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp12059008"></a><h2>ドメイン認証</h2>
+<div class="refsect2">
+<a name="idp12059744"></a><h3>DKIM/DomainKeys</h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.opendkim.org/" target="_top">OpenDKIM</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://enma.sourceforge.net/" target="_top">ENMA</a>
+  : SPF/Sender IDにも対応。
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://sourceforge.net/projects/dkim-milter/" target="_top">dkim-milter</a>
+  
+</p></li>
+</ul></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11421072"></a><h3>SPF/Sender ID</h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.acme.com/software/spfmilter/" target="_top">spfmilter</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://sourceforge.net/projects/sid-milter/" target="_top">sid-milter</a>
+  
+</p></li>
+</ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp11425792"></a><h2>その他</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+  <a class="ulink" href="http://amavisd-milter.sourceforge.net/" target="_top">amavisd-milter</a>
+  
+</p></li></ul></div>
+</div>
+<div class="refsect1">
+<a name="idp11728480"></a><h2>未確認</h2>
+<p>動作を確認した場合は教えてもらえると助かります。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.benzedrine.cx/milter-regex.html" target="_top">milter-regex</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="ulink" href="http://www.mimedefang.org/" target="_top">MIMEDefang</a>
+  
+</p></li>
+<li class="listitem"><p>...</p></li>
+</ul></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

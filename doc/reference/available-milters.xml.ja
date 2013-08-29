@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="available-milters">
+<refmeta>
+  <refentrytitle role='top_of_page' id='available-milters.top_of_page'>利用可能なmilter</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>利用可能なmilter</refname>
+  <refpurpose>milter managerで利用できるmilter</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>milter managerと一緒に利用できたことが報告されているmilterを 紹介します。</para>
+  <para>
+  ここで紹介されているmilter以外でも利用できると思います。利用 しているmilterがここに載っていない場合は
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-ja'>メーリングリスト</ulink>
+  でお知らせください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>spam対策</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://hcpnet.free.fr/milter-greylist/'>milter-greylist</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://savannah.nongnu.org/projects/spamass-milt/'>spamass-milter</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.cloudmark.com/ja/serviceproviders/authority.html'>Cloudmark Authority</ulink>
+  : アンチウイルス機能付き。
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.kaspersky.co.jp/anti-spam'>Kaspersky Anti-Spam 3.0</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>アンチウイルス</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://drweb.jp/productlineup.html'>Dr.Web</ulink>
+  : spam対策機能付き。
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.clamav.net/'>clamav-milter</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.promark-inc.com/products/mailserver.html'>ProScan</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.kaspersky.co.jp/anti-virus_linux_mail_server'>Kaspersky Anti-Virus Linux Mail Server 5.6</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>ドメイン認証</title>
+  <refsect2>
+  <title>DKIM/DomainKeys</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.opendkim.org/'>OpenDKIM</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://enma.sourceforge.net/'>ENMA</ulink>
+  : SPF/Sender IDにも対応。
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://sourceforge.net/projects/dkim-milter/'>dkim-milter</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>SPF/Sender ID</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.acme.com/software/spfmilter/'>spfmilter</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://sourceforge.net/projects/sid-milter/'>sid-milter</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>その他</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://amavisd-milter.sourceforge.net/'>amavisd-milter</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>未確認</title>
+  <para>動作を確認した場合は教えてもらえると助かります。</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.benzedrine.cx/milter-regex.html'>milter-regex</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.mimedefang.org/'>MIMEDefang</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>...</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

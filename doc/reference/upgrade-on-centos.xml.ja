@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-on-centos">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-on-centos.top_of_page'>CentOSで更新</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>CentOSで更新</refname>
+  <refpurpose>CentOSでのmilter managerの更新方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  CentOSに特化したmilter managerの更新方法について説明します。 新規にインストールする方法は
+  <link linkend='install-to-centos'>CentOSへインストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>更新</title>
+  <para>1.8.1以前から更新する場合はまずmilter-manager-releaseパッケージをインス トールします。1.8.2以降の場合はこの操作は必要ありません。</para>
+  <para>新しいGPG鍵がこの中に含まれているためGPG鍵チェックを無効にし て更新します。</para>
+  <programlisting>% sudo yum install --nogpgcheck -y milter-manager-release</programlisting>
+  <para>パッケージを更新するだけで、追加の作業は必要ありません。</para>
+  <programlisting>% sudo yum update -y milter-manager</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>milter managerは簡単に更新することができる、メンテナンスコス トが低いソフトウェアです。</para>
+  <para>新しいバージョンで行われている様々な改善を利用したい場合は更 新を検討してください。</para>
+  <para>
+  追加パッケージもインストールしている場合は
+  <link linkend='upgrade-options-on-centos'>CentOSで更新 （任意）</link>
+  も参照してくださ い。
+</para>
+</refsect1>
+</refentry>

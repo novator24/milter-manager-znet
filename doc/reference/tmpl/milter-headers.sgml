@@ -1,0 +1,211 @@
+<!-- ##### SECTION Title ##### -->
+MilterHeaders
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION milter_header_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_header_free ##### -->
+<para>
+
+</para>
+
+@header: 
+
+
+<!-- ##### FUNCTION milter_header_equal ##### -->
+<para>
+
+</para>
+
+@header1: 
+@header2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_header_compare ##### -->
+<para>
+
+</para>
+
+@header_a: 
+@header_b: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_header_inspect ##### -->
+<para>
+
+</para>
+
+@string: 
+@header: 
+@user_data: 
+
+
+<!-- ##### STRUCT MilterHeaders ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_headers_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_copy ##### -->
+<para>
+
+</para>
+
+@headers: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_get_list ##### -->
+<para>
+
+</para>
+
+@headers: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_add_header ##### -->
+<para>
+
+</para>
+
+@headers: 
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_insert_header ##### -->
+<para>
+
+</para>
+
+@headers: 
+@position: 
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_change_header ##### -->
+<para>
+
+</para>
+
+@headers: 
+@name: 
+@index: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_delete_header ##### -->
+<para>
+
+</para>
+
+@headers: 
+@name: 
+@index: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_length ##### -->
+<para>
+
+</para>
+
+@headers: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_get_nth_header ##### -->
+<para>
+
+</para>
+
+@headers: 
+@index: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_find ##### -->
+<para>
+
+</para>
+
+@headers: 
+@header: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_lookup_by_name ##### -->
+<para>
+
+</para>
+
+@headers: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_remove ##### -->
+<para>
+
+</para>
+
+@headers: 
+@header: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_headers_index_in_same_header_name ##### -->
+<para>
+
+</para>
+
+@headers: 
+@header: 
+@Returns: 
+
+

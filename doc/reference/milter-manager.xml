@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-manager">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-manager.top_of_page'>milter-manager</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-manager</refname>
+  <refpurpose>an effective anti-spam and anti-virus solution with milters</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>NAME</title>
+  <para>milter-manager - an effective anti-spam and anti-virus solution with milters</para>
+</refsect1>
+
+<refsect1>
+  <title>SYNOPSIS</title>
+  <para>
+  <code>milter-manager</code>
+   [
+  <emphasis>option ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>DESCRIPTION</title>
+  <para>milter-manager is a milter that provides an effective anti-spam and anti-virus solution with milters.</para>
+  <para>milter-manager provides a platform to use milters effectively and flexibly. milter-manager has embedded Ruby interpreter that is used for dynamic milter applicable condition. milter-manager can provide the platform by embedded Ruby interpreter.</para>
+  <para>milter-manager reads its configuration file. The current configuration can be confirmed by --show-config option:</para>
+  <programlisting>% milter-manager --show-config</programlisting>
+  <para>milter-manager also provides other options that overrides configurations specified in configuration file.</para>
+</refsect1>
+
+<refsect1>
+  <title>Options</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-manager.--help'>--help</term>
+  <listitem>
+  <para>Shows available options and exits.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--connection-spec'>--connection-spec=SPEC</term>
+  <listitem>
+  <para>Specifies a socket that accepts connections from MTA. SPEC should be formatted as one of the followings:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:PATH</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT@HOST</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT@[ADDRESS]</para>
+</listitem>
+  <listitem>
+  <para>inet6:POST</para>
+</listitem>
+  <listitem>
+  <para>inet6:PORT@HOST</para>
+</listitem>
+  <listitem>
+  <para>inet6:PORT@[ADDRESS]</para>
+</listitem>
+</itemizedlist>
+  <para>Examples:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:/var/run/milter/milter-manager.sock</para>
+</listitem>
+  <listitem>
+  <para>inet:10025</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@[127.0.0.1]</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+  <para>This option overrides &quot;manager.connection_spec&quot; in configuration file.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--config-dir'>--config-dir=DIRECTORY</term>
+  <listitem>
+  <para>Specifies a directory that includes milter-manager's configuration file. milter-manager tries to load DIRECTORY/milter-manager.conf. If it isn't find, milter-manager loads milter-manager.conf in default directory.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--pid-file'>--pid-file=FILE</term>
+  <listitem>
+  <para>Saves process ID of milter-manager to FILE.</para>
+  <para>This option overrides &quot;manager.pid_file&quot; in configuration file.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--user-name'>--user-name=NAME</term>
+  <listitem>
+  <para>Runs milter-manager as NAME user. milter-manager should be started by root.</para>
+  <para>This option overrides &quot;security.effective_user&quot; in configuration file.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--group-name'>--group-name=NAME</term>
+  <listitem>
+  <para>Runs milter-manager as NAME group. milter-manager should be started by root.</para>
+  <para>This option overrides &quot;security.effective_group&quot; in configuration file.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--socket-group-name'>--socket-group-name=NAME</term>
+  <listitem>
+  <para>Changes group of UNIX domain socket for accepting connection by milter-manager to NAME group. Specified group should be one of the effective user's supplementary groups.</para>
+  <para>This option overrides &quot;manager.unix_socket_group&quot; in configuration file.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--daemon'>--daemon</term>
+  <listitem>
+  <para>Runs milter-manager as daemon process.</para>
+  <para>This option overrides &quot;manager.daemon&quot; in configuration file.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--no-daemon'>--no-daemon</term>
+  <listitem>
+  <para>This option cancels the prior --daemon option.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--show-config'>--show-config</term>
+  <listitem>
+  <para>Shows the current configuration and exits. The output format can be used in configuration file. This option is useful for confirming registered milters and reporting your milter-manager's configuration when you report milter-manager's problems.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--verbose'>--verbose</term>
+  <listitem>
+  <para>Logs verbosely. Logs by syslog with &quot;mail&quot;. If milter-manager isn't daemon process, standard output is also used.</para>
+  <para>&quot;MILTER_LOG_LEVEL=all&quot; environment variable configuration has the same effect.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--version'>--version</term>
+  <listitem>
+  <para>Shows version and exits.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>EXIT STATUS</title>
+  <para>The exit status is 0 if milter starts to listen and non 0 otherwise. milter-manager can't start to listen when connection spec is invalid format or other connection specific problems. e.g. the port number is already used, permission isn't granted for create UNIX domain socket and so on.</para>
+</refsect1>
+
+<refsect1>
+  <title>FILES</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-manager./usr/local/etc/milter-manager/milter-manager-conf'>/usr/local/etc/milter-manager/milter-manager.conf</term>
+  <listitem>
+  <para>The default configuration file.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>EXAMPLE</title>
+  <para>The following example is good for debugging milter-manager behavior. In the case, milter-manager works in the foreground and logs are outputted to the standard output.</para>
+  <programlisting>% milter-manager --no-daemon --verbose</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>SEE ALSO</title>
+  <para>
+  <link linkend='milter-test-server'>milter-test-server.rd</link>
+  (1),
+  <link linkend='milter-test-client'>milter-test-client.rd</link>
+  (1),
+  <link linkend='milter-performance-check'>milter-performance-check.rd</link>
+  (1),
+  <link linkend='milter-manager-log-analyzer'>milter-manager-log-analyzer.rd</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

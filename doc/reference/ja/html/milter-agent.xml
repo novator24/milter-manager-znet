@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-agent">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-agent.top_of_page">MilterAgent</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterAgent</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-agent.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+<anchor id="MilterAgent"/>
+<synopsis>#define             <link linkend="MILTER-AGENT-ERROR:CAPS">MILTER_AGENT_ERROR</link>
+enum                <link linkend="MilterAgentError">MilterAgentError</link>;
+struct              <link linkend="MilterAgent-struct">MilterAgent</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-agent-error-quark">milter_agent_error_quark</link>            (<parameter><type>void</type></parameter>);
+<link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     <link linkend="milter-agent-get-encoder">milter_agent_get_encoder</link>            (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>);
+<link linkend="MilterDecoder"><returnvalue>MilterDecoder</returnvalue></link> *     <link linkend="milter-agent-get-decoder">milter_agent_get_decoder</link>            (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-agent-set-writer">milter_agent_set_writer</link>             (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-agent-set-reader">milter_agent_set_reader</link>             (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-agent-write-packet">milter_agent_write_packet</link>           (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> packet_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-agent-flush">milter_agent_flush</link>                  (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-agent-start">milter_agent_start</link>                  (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-agent-shutdown">milter_agent_shutdown</link>               (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="milter-manager-milter-agent.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----MilterAgent
+         +----<link linkend="MilterProtocolAgent">MilterProtocolAgent</link>
+</synopsis>
+</refsect1>
+<refsect1 id="milter-manager-milter-agent.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">実装されたインターフェイス</title>
+<para>MilterAgentは<link linkend="MilterErrorEmittable">MilterErrorEmittable</link>と<link linkend="MilterFinishedEmittable">MilterFinishedEmittable</link>を実装しています。</para>
+</refsect1>
+
+<refsect1 id="milter-manager-milter-agent.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-agent.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-AGENT-ERROR:CAPS" role="macro">
+<title>MILTER_AGENT_ERROR</title>
+<indexterm zone="MILTER-AGENT-ERROR:CAPS"><primary>MILTER_AGENT_ERROR</primary></indexterm>
+<programlisting>#define MILTER_AGENT_ERROR           (milter_agent_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterAgentError" role="enum">
+<title>enum MilterAgentError</title>
+<indexterm zone="MilterAgentError"><primary>MilterAgentError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_AGENT_ERROR_IO_ERROR,
+    MILTER_AGENT_ERROR_DECODE_ERROR,
+    MILTER_AGENT_ERROR_NO_EVENT_LOOP_ERROR
+} MilterAgentError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterAgent-struct" role="struct">
+<title>struct MilterAgent</title>
+<indexterm zone="MilterAgent-struct"><primary>MilterAgent</primary></indexterm>
+<programlisting>struct MilterAgent;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-error-quark" role="function">
+<title>milter_agent_error_quark ()</title>
+<indexterm zone="milter-agent-error-quark"><primary>milter_agent_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_agent_error_quark            (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-get-encoder" role="function">
+<title>milter_agent_get_encoder ()</title>
+<indexterm zone="milter-agent-get-encoder"><primary>milter_agent_get_encoder</primary></indexterm>
+<programlisting><link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     milter_agent_get_encoder            (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-get-decoder" role="function">
+<title>milter_agent_get_decoder ()</title>
+<indexterm zone="milter-agent-get-decoder"><primary>milter_agent_get_decoder</primary></indexterm>
+<programlisting><link linkend="MilterDecoder"><returnvalue>MilterDecoder</returnvalue></link> *     milter_agent_get_decoder            (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-set-writer" role="function">
+<title>milter_agent_set_writer ()</title>
+<indexterm zone="milter-agent-set-writer"><primary>milter_agent_set_writer</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_agent_set_writer             (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-set-reader" role="function">
+<title>milter_agent_set_reader ()</title>
+<indexterm zone="milter-agent-set-reader"><primary>milter_agent_set_reader</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_agent_set_reader             (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterReader"><type>MilterReader</type></link> *reader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-write-packet" role="function">
+<title>milter_agent_write_packet ()</title>
+<indexterm zone="milter-agent-write-packet"><primary>milter_agent_write_packet</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_agent_write_packet           (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> packet_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-flush" role="function">
+<title>milter_agent_flush ()</title>
+<indexterm zone="milter-agent-flush"><primary>milter_agent_flush</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_agent_flush                  (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-start" role="function">
+<title>milter_agent_start ()</title>
+<indexterm zone="milter-agent-start"><primary>milter_agent_start</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_agent_start                  (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-shutdown" role="function">
+<title>milter_agent_shutdown ()</title>
+<indexterm zone="milter-agent-shutdown"><primary>milter_agent_shutdown</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_agent_shutdown               (<parameter><link linkend="MilterAgent"><type>MilterAgent</type></link> *agent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

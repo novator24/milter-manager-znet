@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-mfdef">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-mfdef.top_of_page">mfdef</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>mfdef</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-mfdef.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="SMFIR-ADDRCPT:CAPS">SMFIR_ADDRCPT</link>
+#define             <link linkend="SMFIR-DELRCPT:CAPS">SMFIR_DELRCPT</link>
+#define             <link linkend="SMFIR-ADDRCPT-PAR:CAPS">SMFIR_ADDRCPT_PAR</link>
+#define             <link linkend="SMFIR-SHUTDOWN:CAPS">SMFIR_SHUTDOWN</link>
+#define             <link linkend="SMFIR-ACCEPT:CAPS">SMFIR_ACCEPT</link>
+#define             <link linkend="SMFIR-REPLBODY:CAPS">SMFIR_REPLBODY</link>
+#define             <link linkend="SMFIR-CONTINUE:CAPS">SMFIR_CONTINUE</link>
+#define             <link linkend="SMFIR-DISCARD:CAPS">SMFIR_DISCARD</link>
+#define             <link linkend="SMFIR-CHGFROM:CAPS">SMFIR_CHGFROM</link>
+#define             <link linkend="SMFIR-CONN-FAIL:CAPS">SMFIR_CONN_FAIL</link>
+#define             <link linkend="SMFIR-ADDHEADER:CAPS">SMFIR_ADDHEADER</link>
+#define             <link linkend="SMFIR-INSHEADER:CAPS">SMFIR_INSHEADER</link>
+#define             <link linkend="SMFIR-SETSYMLIST:CAPS">SMFIR_SETSYMLIST</link>
+#define             <link linkend="SMFIR-CHGHEADER:CAPS">SMFIR_CHGHEADER</link>
+#define             <link linkend="SMFIR-PROGRESS:CAPS">SMFIR_PROGRESS</link>
+#define             <link linkend="SMFIR-QUARANTINE:CAPS">SMFIR_QUARANTINE</link>
+#define             <link linkend="SMFIR-REJECT:CAPS">SMFIR_REJECT</link>
+#define             <link linkend="SMFIR-SKIP:CAPS">SMFIR_SKIP</link>
+#define             <link linkend="SMFIR-TEMPFAIL:CAPS">SMFIR_TEMPFAIL</link>
+#define             <link linkend="SMFIR-REPLYCODE:CAPS">SMFIR_REPLYCODE</link>
+#define             <link linkend="SMFIM-FIRST:CAPS">SMFIM_FIRST</link>
+#define             <link linkend="SMFIM-LAST:CAPS">SMFIM_LAST</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-mfdef.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-mfdef.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="SMFIR-ADDRCPT:CAPS" role="macro">
+<title>SMFIR_ADDRCPT</title>
+<indexterm zone="SMFIR-ADDRCPT:CAPS"><primary>SMFIR_ADDRCPT</primary></indexterm>
+<programlisting>#define SMFIR_ADDRCPT         '+'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-DELRCPT:CAPS" role="macro">
+<title>SMFIR_DELRCPT</title>
+<indexterm zone="SMFIR-DELRCPT:CAPS"><primary>SMFIR_DELRCPT</primary></indexterm>
+<programlisting>#define SMFIR_DELRCPT         '-'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-ADDRCPT-PAR:CAPS" role="macro">
+<title>SMFIR_ADDRCPT_PAR</title>
+<indexterm zone="SMFIR-ADDRCPT-PAR:CAPS"><primary>SMFIR_ADDRCPT_PAR</primary></indexterm>
+<programlisting>#define SMFIR_ADDRCPT_PAR     '2'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-SHUTDOWN:CAPS" role="macro">
+<title>SMFIR_SHUTDOWN</title>
+<indexterm zone="SMFIR-SHUTDOWN:CAPS"><primary>SMFIR_SHUTDOWN</primary></indexterm>
+<programlisting>#define SMFIR_SHUTDOWN        '4'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-ACCEPT:CAPS" role="macro">
+<title>SMFIR_ACCEPT</title>
+<indexterm zone="SMFIR-ACCEPT:CAPS"><primary>SMFIR_ACCEPT</primary></indexterm>
+<programlisting>#define SMFIR_ACCEPT          'a'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-REPLBODY:CAPS" role="macro">
+<title>SMFIR_REPLBODY</title>
+<indexterm zone="SMFIR-REPLBODY:CAPS"><primary>SMFIR_REPLBODY</primary></indexterm>
+<programlisting>#define SMFIR_REPLBODY        'b'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-CONTINUE:CAPS" role="macro">
+<title>SMFIR_CONTINUE</title>
+<indexterm zone="SMFIR-CONTINUE:CAPS"><primary>SMFIR_CONTINUE</primary></indexterm>
+<programlisting>#define SMFIR_CONTINUE        'c'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-DISCARD:CAPS" role="macro">
+<title>SMFIR_DISCARD</title>
+<indexterm zone="SMFIR-DISCARD:CAPS"><primary>SMFIR_DISCARD</primary></indexterm>
+<programlisting>#define SMFIR_DISCARD         'd'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-CHGFROM:CAPS" role="macro">
+<title>SMFIR_CHGFROM</title>
+<indexterm zone="SMFIR-CHGFROM:CAPS"><primary>SMFIR_CHGFROM</primary></indexterm>
+<programlisting>#define SMFIR_CHGFROM         'e'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-CONN-FAIL:CAPS" role="macro">
+<title>SMFIR_CONN_FAIL</title>
+<indexterm zone="SMFIR-CONN-FAIL:CAPS"><primary>SMFIR_CONN_FAIL</primary></indexterm>
+<programlisting>#define SMFIR_CONN_FAIL       'f'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-ADDHEADER:CAPS" role="macro">
+<title>SMFIR_ADDHEADER</title>
+<indexterm zone="SMFIR-ADDHEADER:CAPS"><primary>SMFIR_ADDHEADER</primary></indexterm>
+<programlisting>#define SMFIR_ADDHEADER       'h'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-INSHEADER:CAPS" role="macro">
+<title>SMFIR_INSHEADER</title>
+<indexterm zone="SMFIR-INSHEADER:CAPS"><primary>SMFIR_INSHEADER</primary></indexterm>
+<programlisting>#define SMFIR_INSHEADER       'i'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-SETSYMLIST:CAPS" role="macro">
+<title>SMFIR_SETSYMLIST</title>
+<indexterm zone="SMFIR-SETSYMLIST:CAPS"><primary>SMFIR_SETSYMLIST</primary></indexterm>
+<programlisting>#define SMFIR_SETSYMLIST      'l'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-CHGHEADER:CAPS" role="macro">
+<title>SMFIR_CHGHEADER</title>
+<indexterm zone="SMFIR-CHGHEADER:CAPS"><primary>SMFIR_CHGHEADER</primary></indexterm>
+<programlisting>#define SMFIR_CHGHEADER       'm'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-PROGRESS:CAPS" role="macro">
+<title>SMFIR_PROGRESS</title>
+<indexterm zone="SMFIR-PROGRESS:CAPS"><primary>SMFIR_PROGRESS</primary></indexterm>
+<programlisting>#define SMFIR_PROGRESS        'p'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-QUARANTINE:CAPS" role="macro">
+<title>SMFIR_QUARANTINE</title>
+<indexterm zone="SMFIR-QUARANTINE:CAPS"><primary>SMFIR_QUARANTINE</primary></indexterm>
+<programlisting>#define SMFIR_QUARANTINE      'q'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-REJECT:CAPS" role="macro">
+<title>SMFIR_REJECT</title>
+<indexterm zone="SMFIR-REJECT:CAPS"><primary>SMFIR_REJECT</primary></indexterm>
+<programlisting>#define SMFIR_REJECT          'r'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-SKIP:CAPS" role="macro">
+<title>SMFIR_SKIP</title>
+<indexterm zone="SMFIR-SKIP:CAPS"><primary>SMFIR_SKIP</primary></indexterm>
+<programlisting>#define SMFIR_SKIP            's'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-TEMPFAIL:CAPS" role="macro">
+<title>SMFIR_TEMPFAIL</title>
+<indexterm zone="SMFIR-TEMPFAIL:CAPS"><primary>SMFIR_TEMPFAIL</primary></indexterm>
+<programlisting>#define SMFIR_TEMPFAIL        't'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIR-REPLYCODE:CAPS" role="macro">
+<title>SMFIR_REPLYCODE</title>
+<indexterm zone="SMFIR-REPLYCODE:CAPS"><primary>SMFIR_REPLYCODE</primary></indexterm>
+<programlisting>#define SMFIR_REPLYCODE       'y'
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIM-FIRST:CAPS" role="macro">
+<title>SMFIM_FIRST</title>
+<indexterm zone="SMFIM-FIRST:CAPS"><primary>SMFIM_FIRST</primary></indexterm>
+<programlisting>#define SMFIM_FIRST           SMFIM_CONNECT
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIM-LAST:CAPS" role="macro">
+<title>SMFIM_LAST</title>
+<indexterm zone="SMFIM-LAST:CAPS"><primary>SMFIM_LAST</primary></indexterm>
+<programlisting>#define SMFIM_LAST            SMFIM_EOH
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

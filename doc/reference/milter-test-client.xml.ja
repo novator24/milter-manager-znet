@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-test-client">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-test-client.top_of_page'>milter-test-client</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-test-client</refname>
+  <refpurpose>milter側のmilterプロトコルを実装したプログラム</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>名前</title>
+  <para>milter-test-client - milter側のmilterプロトコルを実装したプログラム</para>
+</refsect1>
+
+<refsect1>
+  <title>書式</title>
+  <para>
+  <code>milter-test-client</code>
+   [
+  <emphasis>オプション ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>説明</title>
+  <para>milter-test-clientはMTA側から渡ってきた情報を表示するだけの milterです。マクロも含めてMTA側から渡っている情報を表示する ので、MTA側のmilterの設定を確認するために利用できます。</para>
+  <para>Postfixのアーカイブの中にも同様のツールがあります。 src/milter/内にあるtest-milter.cがそれで、Postfixのmilterの実 装のテストにも使っているようです。ただし、test-milterはマクロ までは表示してくれません。もし、マクロを利用しているmilterが 期待通りに動かない場合の問題調査を行うのであれば、 milter-test-clientが役立つでしょう。</para>
+</refsect1>
+
+<refsect1>
+  <title>オプション</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-test-client.--help'>--help</term>
+  <listitem>
+  <para>利用できるオプションを表示して終了します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--connection-spec'>--connection-spec=SPEC</term>
+  <listitem>
+  <para>接続を待ち受けるソケットを指定します。SPECの書式は次のう ちのどれかです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:パス</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号@ホスト名</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号@[アドレス]</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号@ホスト名</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号@[アドレス]</para>
+</listitem>
+</itemizedlist>
+  <para>例:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:/tmp/milter-test-client.sock</para>
+</listitem>
+  <listitem>
+  <para>inet:10025</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@[127.0.0.1]</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--verbose'>--verbose</term>
+  <listitem>
+  <para>実行時のログをより詳細に出力します。</para>
+  <para>「milter_log_level=all」というように環境変数を設定している 場合と同じ効果があります。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--syslog'>--syslog</term>
+  <listitem>
+  <para>Syslogにもログを出力します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--no-report-request'>--no-report-request</term>
+  <listitem>
+  <para>MTAから受け取った情報を表示しません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--report-memory-profile'>--report-memory-profile</term>
+  <listitem>
+  <para>milterセッションが終了する毎にメモリ使用量を表示します。</para>
+  <para>MILTER_MEMORY_PROFILE環境変数をyesに設定するとより詳細な 情報を表示します。</para>
+  <para>例:</para>
+  <programlisting>% MILTER_MEMORY_PROFILE=yes milter-test-client -s inet:10025</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--daemon'>--daemon</term>
+  <listitem>
+  <para>デーモンプロセスとして起動します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--user'>--user=USER</term>
+  <listitem>
+  <para>実効ユーザをUSERとします。root権限が必要です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--group'>--group=GROUP</term>
+  <listitem>
+  <para>実効グループをGROUPとします。root権限が必要です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--unix-socket-group'>--unix-socket-group=GROUP</term>
+  <listitem>
+  <para>SPECで「unix:パス」を指定したときにUNIXドメインソケットの グループを変更します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--n-workers'>--n-workers=N_WORKERS</term>
+  <listitem>
+  <para>
+  メールを処理するプロセスを
+  <varname>N_WORKERS</varname>
+  個起動します。 指定できる値は0以上、1000以下です。0のときにワーカープロセスを使用し ません。
+</para>
+  <para>
+  <emphasis>注意: この項目は実験的な機能扱いです。</emphasis>
+  
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--event-loop-backend'>--event-loop-backend=BACKEND</term>
+  <listitem>
+  <para>
+  イベントループのバックエンドを指定します。
+  <varname>BACKEND</varname>
+  に指定できる値は、
+  <command>glib</command>
+  か
+  <command>libev</command>
+  のいずれかです。
+</para>
+  <para>
+  <emphasis>注意: この項目は実験的な機能扱いです。</emphasis>
+  
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--packet-buffer-size'>--packet-buffer-size=SIZE</term>
+  <listitem>
+  <para>
+  end-of-message時に送信パケットをバッファリングするための バッファサイズを指定します。パケットの量が
+  <varname>SIZE</varname>
+  バイ ト以上になるとまとめてパケットを送信します。0を指定すると バッファリングしません。
+</para>
+  <para>既定値は0KBで、バッファリングしません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--version'>--version</term>
+  <listitem>
+  <para>バージョンを表示して終了します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>終了ステータス</title>
+  <para>MTAからの接続を受け付ける状態になった場合は0になり、そうでな い場合は0以外になります。milter-test-clientはソケットの書式が 間違っている場合か、ソケットまわりの問題が起こると接続を受け 付ける状態になれません。そけっとまわりの問題とは、例えば、ポー トがすでに使用されているとか、UNIXドメインソケットを作成する パーミッションがない、などです。</para>
+</refsect1>
+
+<refsect1>
+  <title>例</title>
+  <para>以下の例では、10025番ポートでMTAからの接続を待つmilterを起動 します。</para>
+  <programlisting>% milter-test-client -s inet:10025</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>関連項目</title>
+  <para>
+  <link linkend='milter-test-server'>milter-test-server.rd.ja</link>
+  (1),
+  <link linkend='milter-performance-check'>milter-performance-check.rd.ja</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

@@ -1,0 +1,156 @@
+<!-- ##### SECTION Title ##### -->
+MilterDecoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterDecoderError ##### -->
+<para>
+
+</para>
+
+@MILTER_DECODER_ERROR_SHORT_COMMAND_LENGTH: 
+@MILTER_DECODER_ERROR_LONG_COMMAND_LENGTH: 
+@MILTER_DECODER_ERROR_UNEXPECTED_END: 
+@MILTER_DECODER_ERROR_UNEXPECTED_COMMAND: 
+@MILTER_DECODER_ERROR_MISSING_NULL: 
+
+<!-- ##### ENUM MilterDecoderCompareType ##### -->
+<para>
+
+</para>
+
+@MILTER_DECODER_COMPARE_AT_LEAST: 
+@MILTER_DECODER_COMPARE_EXACT: 
+
+<!-- ##### STRUCT MilterDecoder ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION milter_decoder_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_decode ##### -->
+<para>
+
+</para>
+
+@decoder: 
+@chunk: 
+@size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_end_decode ##### -->
+<para>
+
+</para>
+
+@decoder: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_get_buffer ##### -->
+<para>
+
+</para>
+
+@decoder: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_get_command_length ##### -->
+<para>
+
+</para>
+
+@decoder: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_check_command_length ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@length: 
+@expected_length: 
+@compare_type: 
+@error: 
+@target: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_decode_null_terminated_value ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@length: 
+@error: 
+@message: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_decode_header_content ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@length: 
+@name: 
+@value: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_decoder_decode_negotiate ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@length: 
+@processed_length: 
+@error: 
+@Returns: 
+
+

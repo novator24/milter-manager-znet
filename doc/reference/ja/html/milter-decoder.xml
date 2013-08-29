@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-decoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-decoder.top_of_page">MilterDecoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterDecoder</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-decoder.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+<anchor id="MilterDecoder"/>
+<synopsis>#define             <link linkend="MILTER-DECODER-ERROR:CAPS">MILTER_DECODER_ERROR</link>
+enum                <link linkend="MilterDecoderError">MilterDecoderError</link>;
+enum                <link linkend="MilterDecoderCompareType">MilterDecoderCompareType</link>;
+struct              <link linkend="MilterDecoder-struct">MilterDecoder</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-decoder-error-quark">milter_decoder_error_quark</link>          (<parameter><type>void</type></parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-decoder-decode">milter_decoder_decode</link>               (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-decoder-end-decode">milter_decoder_end_decode</link>           (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-decoder-get-buffer">milter_decoder_get_buffer</link>           (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>);
+<link linkend="gint32"><returnvalue>gint32</returnvalue></link>              <link linkend="milter-decoder-get-command-length">milter_decoder_get_command_length</link>   (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-decoder-check-command-length">milter_decoder_check_command_length</link> (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> expected_length</parameter>,
+                                                         <parameter><link linkend="MilterDecoderCompareType"><type>MilterDecoderCompareType</type></link> compare_type</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *target</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="milter-decoder-decode-null-terminated-value">milter_decoder_decode_null_terminated_value</link>
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-decoder-decode-header-content">milter_decoder_decode_header_content</link>
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      <link linkend="milter-decoder-decode-negotiate">milter_decoder_decode_negotiate</link>     (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *processed_length</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="milter-manager-milter-decoder.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----MilterDecoder
+</synopsis>
+</refsect1>
+
+<refsect1 id="milter-manager-milter-decoder.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-decoder.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-DECODER-ERROR:CAPS" role="macro">
+<title>MILTER_DECODER_ERROR</title>
+<indexterm zone="MILTER-DECODER-ERROR:CAPS"><primary>MILTER_DECODER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_DECODER_ERROR           (milter_decoder_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterDecoderError" role="enum">
+<title>enum MilterDecoderError</title>
+<indexterm zone="MilterDecoderError"><primary>MilterDecoderError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_DECODER_ERROR_SHORT_COMMAND_LENGTH,
+    MILTER_DECODER_ERROR_LONG_COMMAND_LENGTH,
+    MILTER_DECODER_ERROR_UNEXPECTED_END,
+    MILTER_DECODER_ERROR_UNEXPECTED_COMMAND,
+    MILTER_DECODER_ERROR_MISSING_NULL
+} MilterDecoderError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterDecoderCompareType" role="enum">
+<title>enum MilterDecoderCompareType</title>
+<indexterm zone="MilterDecoderCompareType"><primary>MilterDecoderCompareType</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_DECODER_COMPARE_AT_LEAST,
+    MILTER_DECODER_COMPARE_EXACT
+} MilterDecoderCompareType;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterDecoder-struct" role="struct">
+<title>struct MilterDecoder</title>
+<indexterm zone="MilterDecoder-struct"><primary>MilterDecoder</primary></indexterm>
+<programlisting>struct MilterDecoder;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-error-quark" role="function">
+<title>milter_decoder_error_quark ()</title>
+<indexterm zone="milter-decoder-error-quark"><primary>milter_decoder_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_decoder_error_quark          (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-decode" role="function">
+<title>milter_decoder_decode ()</title>
+<indexterm zone="milter-decoder-decode"><primary>milter_decoder_decode</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_decoder_decode               (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-end-decode" role="function">
+<title>milter_decoder_end_decode ()</title>
+<indexterm zone="milter-decoder-end-decode"><primary>milter_decoder_end_decode</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_decoder_end_decode           (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-get-buffer" role="function">
+<title>milter_decoder_get_buffer ()</title>
+<indexterm zone="milter-decoder-get-buffer"><primary>milter_decoder_get_buffer</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_decoder_get_buffer           (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-get-command-length" role="function">
+<title>milter_decoder_get_command_length ()</title>
+<indexterm zone="milter-decoder-get-command-length"><primary>milter_decoder_get_command_length</primary></indexterm>
+<programlisting><link linkend="gint32"><returnvalue>gint32</returnvalue></link>              milter_decoder_get_command_length   (<parameter><link linkend="MilterDecoder"><type>MilterDecoder</type></link> *decoder</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-check-command-length" role="function">
+<title>milter_decoder_check_command_length ()</title>
+<indexterm zone="milter-decoder-check-command-length"><primary>milter_decoder_check_command_length</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_decoder_check_command_length (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> expected_length</parameter>,
+                                                         <parameter><link linkend="MilterDecoderCompareType"><type>MilterDecoderCompareType</type></link> compare_type</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *target</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-decode-null-terminated-value" role="function">
+<title>milter_decoder_decode_null_terminated_value ()</title>
+<indexterm zone="milter-decoder-decode-null-terminated-value"><primary>milter_decoder_decode_null_terminated_value</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                milter_decoder_decode_null_terminated_value
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-decode-header-content" role="function">
+<title>milter_decoder_decode_header_content ()</title>
+<indexterm zone="milter-decoder-decode-header-content"><primary>milter_decoder_decode_header_content</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_decoder_decode_header_content
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-decode-negotiate" role="function">
+<title>milter_decoder_decode_negotiate ()</title>
+<indexterm zone="milter-decoder-decode-negotiate"><primary>milter_decoder_decode_negotiate</primary></indexterm>
+<programlisting><link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      milter_decoder_decode_negotiate     (<parameter>const <link linkend="gchar"><type>gchar</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> length</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *processed_length</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

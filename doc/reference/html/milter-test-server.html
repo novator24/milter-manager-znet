@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter-test-server</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="commands.html" title="Commands">
+<link rel="prev" href="milter-manager.html" title="milter-manager">
+<link rel="next" href="milter-test-client.html" title="milter-test-client">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="milter-manager.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="commands.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="milter-test-client.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="milter-test-server"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="milter-test-server.top_of_page"></a>milter-test-server</span></h2>
+<p>milter-test-server — MTA side milter protocol implemented program</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp8276064"></a><h2>NAME</h2>
+<p>milter-test-server - MTA side milter protocol implemented program</p>
+</div>
+<div class="refsect1">
+<a name="idp2999264"></a><h2>SYNOPSIS</h2>
+<p>
+  <code class="code">milter-test-server</code>
+   [
+  <span class="emphasis"><em>option ...</em></span>
+  ]
+</p>
+</div>
+<div class="refsect1">
+<a name="idp9178112"></a><h2>DESCRIPTION</h2>
+<p>milter-test-server talks MTA side milter protocol. It can connect to a milter without MTA. For now, there is no similar tool. It is useful to test milter not MTA + milter. For example, it can be used for the following situation:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>milter's performance check</p></li>
+<li class="listitem"><p>milter's operation check</p></li>
+</ul></div>
+<p>milter-test-server can be used for simple performance check because it shows elapsed time. You can confirm elapsed time without MTA's processing time. You will find a problem of a milter more easily because it doesn't depend on MTA.</p>
+<p>
+  If a milter changes headers and/or body, milter-test-server can show changed message. It can be used for testing a milter that may change headers and/or body. If it is used with 
+  <a class="ulink" href="http://cutter.sourceforge.net/" target="_top">unit testing framework like Cutter</a>
+  , you can write automated unit tests.
+</p>
+</div>
+<div class="refsect1">
+<a name="idp9429904"></a><h2>Options</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--help"></a>--help</span></p></td>
+<td><p>Shows available options and exits.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--name"></a>--name=NAME</span></p></td>
+<td>
+<p>Uses NAME as milter-test-server's name. The name is used as a value of "{daemon_name}" macro for example.</p>
+<p>The default value is "milter-test-server" that is the command file name.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--connection-spec"></a>--connection-spec=SPEC</span></p></td>
+<td>
+<p>Specifies a socket to connect to milter. SPEC should be formatted as one of the followings:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:PATH</p></li>
+<li class="listitem"><p>inet:PORT</p></li>
+<li class="listitem"><p>inet:PORT@HOST</p></li>
+<li class="listitem"><p>inet:PORT@[ADDRESS]</p></li>
+<li class="listitem"><p>inet6:POST</p></li>
+<li class="listitem"><p>inet6:PORT@HOST</p></li>
+<li class="listitem"><p>inet6:PORT@[ADDRESS]</p></li>
+</ul></div>
+<p>Examples:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:/var/run/milter/milter-manager.sock</p></li>
+<li class="listitem"><p>inet:10025</p></li>
+<li class="listitem"><p>inet:10025@localhost</p></li>
+<li class="listitem"><p>inet:10025@[127.0.0.1]</p></li>
+<li class="listitem"><p>inet6:10025</p></li>
+<li class="listitem"><p>inet6:10025@localhost</p></li>
+<li class="listitem"><p>inet6:10025@[::1]</p></li>
+</ul></div>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--negotiate-version"></a>--negotiate-version=VERSION</span></p></td>
+<td>
+<p>Uses VERSION as milter protocol version sent to milter.</p>
+<p>The default value is 8. The value is the same as Sendmail 8.14's default value.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--connect-host"></a>--connect-host=HOST</span></p></td>
+<td>
+<p>Uses HOST as connected host.</p>
+<p>The host name is passed to milter's xxfi_connect() callback.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--connect-address"></a>--connect-address=SPEC</span></p></td>
+<td>
+<p>Uses SPEC as connected address. SPEC format is same as --connection-spec option's SPEC.</p>
+<p>The address is passed to milter's xxfi_connect() callback.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--connect-macro"></a>--connect-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_connect() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "client_connections" name and "1" value is sent on xxfi_connect() callback:</p>
+<pre class="programlisting">--connect-macro client_connections:1</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--helo-fqdn"></a>--helo-fqdn=FQDN</span></p></td>
+<td>
+<p>Uses FQDN for 'HELO/EHLO' SMTP command.</p>
+<p>The FQDN is passed to milter's xxfi_helo() callback.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--helo-macro"></a>--helo-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_helo() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "client_ptr" name and "unknown" value is sent on xxfi_helo() callback:</p>
+<pre class="programlisting">--helo-macro client_ptr:unknown</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--envelope-from"></a>--envelope-from=FROM, -fFROM</span></p></td>
+<td>
+<p>Uses FROM for 'MAIL FROM' SMTP command.</p>
+<p>The address is passed to milter's xxfi_envfrom() callback.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--envelope-from-macro"></a>--envelope-from-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_envfrom() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "client_addr" name and "192.168.0.1" value is sent on xxfi_envfrom() callback:</p>
+<pre class="programlisting">--envelope-from-macro client_addr:192.168.0.1</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--envelope-recipient"></a>--envelope-recipient=RECIPIENT, -rRECIPIENT</span></p></td>
+<td>
+<p>Uses RECIPIENT for 'RCPT TO' SMTP command. If you want to use multiple recipients, specify --envelope-recipient option n-times.</p>
+<p>The address is passed to milter's xxfi_envrcpt() callback. xxfi_envrcpt() is called for each recipient.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--envelope-recipient-macro"></a>--envelope-recipient-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_envrcpt() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "client_ptr" name and "2929" value is sent on xxfi_envrcpt() callback:</p>
+<pre class="programlisting">--envelope-recipient-macro client_ptr:2929</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--data-macro"></a>--data-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_data() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "client_name" name and "unknown" value is sent on xxfi_data() callback:</p>
+<pre class="programlisting">--data-macro client_name:unknown</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--header"></a>--header=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a header that names NAME and its value is VALUE. If you want to multiple headers, specify --header option n-times.</p>
+<p>The header is passed to milter's xxfi_header() callback. xxfi_header() is called for each header.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--end-of-header-macro"></a>--end-of-header-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_eoh() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "n_headers" name and "100" value is sent on xxfi_eoh() callback:</p>
+<pre class="programlisting">--end-of-header-macro n_headers:100</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--body"></a>--body=CHUNK</span></p></td>
+<td>
+<p>Adds CHUNK as body chunk. If you want to multiple chunks, specify --body option n-times.</p>
+<p>The chunk is passed to milter's xxfi_body() callback. xxfi_body() is called for each chunk.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--end-of-message-macro"></a>--end-of-message-macro=NAME:VALUE</span></p></td>
+<td>
+<p>Adds a macro that is sent on xxfi_eom() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</p>
+<p>Here is an example that a macro that has "elapsed" name and "0.29" value is sent on xxfi_eom() callback:</p>
+<pre class="programlisting">--end-of-message-macro elapsed:0.29</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--unknown"></a>--unknown=COMMAND</span></p></td>
+<td>
+<p>Uses COMMAND as unknown SMTP command.</p>
+<p>The command is passed to milter's xxfi_unknown() callback. xxfi_unknown() is called between xxfi_envrcpt() and xxfi_data().</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--authenticated-name"></a>--authenticated-name=NAME</span></p></td>
+<td><p>
+  Uses 
+  <code class="varname">NAME</code>
+   as an authorized user name on SMTP Auth. It corresponds to SASL login name. 
+  <code class="varname">NAME</code>
+   is passed as a value of 
+  <code class="code">{auth_authen}</code>
+   on MAIL FROM.
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--authenticated-type"></a>--authenticated-type=TYPE</span></p></td>
+<td><p>
+  Uses 
+  <code class="varname">TYPE</code>
+   as an authorized type on SMTP Auth. It corresponds to SASL login method. 
+  <code class="varname">TYPE</code>
+   is passed as a value of 
+  <code class="code">{auth_type}</code>
+   on MAIL FROM.
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--authenticated-author"></a>--authenticated-author=AUTHOR</span></p></td>
+<td><p>
+  Uses 
+  <code class="varname">AUTHOR</code>
+   as an authorized sender on SMTP Auth. It corresponds to SASL sender. 
+  <code class="varname">AUTHOR</code>
+   is passed as a value of 
+  <code class="code">{auth_author}</code>
+   on MAIL FROM.
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--mail-file"></a>--mail-file=PATH</span></p></td>
+<td><p>
+  Uses file exists at 
+  <code class="varname">PATH</code>
+   as mail content. If the file has 'From:' and/or 'To:', they are used for from and/or recipient addresses.
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--output-message"></a>--output-message</span></p></td>
+<td><p>Shows a message applied a milter. If you want to check milter's operation that may change header and/or body, specify this option.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--color"></a>--color=[yes|true|no|false|auto]</span></p></td>
+<td>
+<p>Shows a messaged applied a milter with colorization if --color, --color=yes or --color=true is specified. If --color=auto is specified, colorization is enabled on terminal environment.</p>
+<p>The default is off.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--connection-timeout"></a>--connection-timeout=SECONDS</span></p></td>
+<td>
+<p>
+  Specifies timeout on connecting to a milter. An error is occurred when a connection can't be established in 
+  <code class="varname">SECONDS</code>
+   seconds.
+</p>
+<p>The default is 300 seconds. (5 minutes)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--reading-timeout"></a>--reading-timeout=SECONDS</span></p></td>
+<td>
+<p>
+  Specifies timeout on reading a response from a milter. An error is occurred when the milter doesn't respond to a request in 
+  <code class="varname">SECONDS</code>
+   seconds.
+</p>
+<p>The default is 10 seconds.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--writing-timeout"></a>--writing-timeout=SECONDS</span></p></td>
+<td>
+<p>
+  Specifies timeout on writing a request to a milter. An error is occurred when request to the milter isn't completed in 
+  <code class="varname">SECONDS</code>
+   seconds.
+</p>
+<p>The default is 10 seconds.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--end-of-message-timeout"></a>--end-of-message-timeout=SECONDS</span></p></td>
+<td>
+<p>
+  Specifies timeout on reading a response of end-of-message command from a milter. An error is occurred when the milter doesn't complete its response to the end-of-message command in 
+  <code class="varname">SECONDS</code>
+  seconds.
+</p>
+<p>The default is 300 seconds. (5 minutes)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--threads"></a>--threads=N</span></p></td>
+<td>
+<p>Use N threads to request a milter.</p>
+<p>The default is 0. (main thread only)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--verbose"></a>--verbose</span></p></td>
+<td>
+<p>Logs verbosely.</p>
+<p>"MILTER_LOG_LEVEL=all" environment variable configuration has the same effect.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-server.--version"></a>--version</span></p></td>
+<td><p>Shows version and exits.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp9683664"></a><h2>EXIT STATUS</h2>
+<p>The exit status is 0 if milter session is started and non 0 otherwise. milter session can't be started when connection spec is invalid format or milter-test-server can't connect to a milter.</p>
+</div>
+<div class="refsect1">
+<a name="idp9685184"></a><h2>EXAMPLE</h2>
+<p>The following example talks with a milter that works on host 192.168.1.29 and is listened at 10025 port.</p>
+<pre class="programlisting">% milter-test-server -s inet:10025@192.168.1.29</pre>
+</div>
+<div class="refsect1">
+<a name="idp9687312"></a><h2>SEE ALSO</h2>
+<p>
+  <a class="link" href="milter-test-client.html" title="milter-test-client">milter-test-client.rd</a>
+  (1),
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check.rd</a>
+  (1)
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

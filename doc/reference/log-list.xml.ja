@@ -1,0 +1,1519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="log-list">
+<refmeta>
+  <refentrytitle role='top_of_page' id='log-list.top_of_page'>ログ一覧</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>ログ一覧</refname>
+  <refpurpose>milter managerが出力するログの一覧</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>milter managerが出力するログについて説明します。</para>
+</refsect1>
+
+<refsect1>
+  <title>モジュール</title>
+  <para>milter managerは以下の4つのモジュールに分かれています。</para>
+  <itemizedlist>
+  <listitem>
+  <para>core</para>
+</listitem>
+  <listitem>
+  <para>client</para>
+</listitem>
+  <listitem>
+  <para>server</para>
+</listitem>
+  <listitem>
+  <para>manager</para>
+</listitem>
+</itemizedlist>
+  <para>それぞれ以下のような役割になっています。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.core'>core</term>
+  <listitem>
+  <para>client, server, namagerのモジュールで共通に利用す る機能を提供するモジュールです。入出力や通信データのエン コード・デコード処理などを含んでいます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.client'>client</term>
+  <listitem>
+  <para>milterを実装するために必要な機能を提供するモジュールです。 coreを利用しています。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.server'>server</term>
+  <listitem>
+  <para>MTA側のmilter通信部分を実装するために必要な機能を提供するモ ジュールです。coreを利用しています。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.manager'>manager</term>
+  <listitem>
+  <para>milter managerを実装するために必要な機能を提供するモジュー ルです。core, client, serverを利用しています。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>libmilter-clientを利用して実装したmilterはclientモジュールを 利用しているため、coreとclientのログが出力されます。milter managerはmanagerモジュールを利用しているため、core, client, server, managerすべてのモジュールのログが出力されます。</para>
+</refsect1>
+
+<refsect1>
+  <title>出力レベル</title>
+  <para>以下の出力レベルがあり、必要な情報のみログ出力することができ ます。複数の情報を出力したい場合は複数の出力レベルを指定しま す。</para>
+  <itemizedlist>
+  <listitem>
+  <para>default: critical, error, warningを出力</para>
+</listitem>
+  <listitem>
+  <para>none: 出力しない</para>
+</listitem>
+  <listitem>
+  <para>critical: 致命的な問題のみ出力</para>
+</listitem>
+  <listitem>
+  <para>error: エラーのみ出力</para>
+</listitem>
+  <listitem>
+  <para>warning: 警告のみ出力</para>
+</listitem>
+  <listitem>
+  <para>info: 付加情報のみ出力</para>
+</listitem>
+  <listitem>
+  <para>debug: デバッグ情報のみ出力</para>
+</listitem>
+  <listitem>
+  <para>statistics: 統計情報のみ出力</para>
+</listitem>
+  <listitem>
+  <para>all: すべての情報を出力</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>フォーマット</title>
+  <para>ログは以下のようなフォーマットになっています。</para>
+  <programlisting>[#{セッションID}] [#{タグ名1}][#{タグ名2}][...] #{メッセージ}</programlisting>
+  <para>このうち、「セッションID」と「メッセージ」は省略されている場 合があります。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.セッションID'>セッションID</term>
+  <listitem>
+  <para>セッションIDは数値です。セッション毎に重複しない値が使わ れ、モジュールが異なっていてもセッションが同じであれば同 じセッションIDを用います。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.タグ名'>タグ名</term>
+  <listitem>
+  <para>タグ名にはアルファベット・数字・ハイフン（-）・アンダーバー （_）のみ利用します。利用しているタグ名には特に規則はあり ません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.メッセージ'>メッセージ</term>
+  <listitem>
+  <para>メッセージは任意の文字が入ります。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>以下は「セッションID」が省略されている例です。</para>
+  <programlisting>[agent][error][decode] Decode error</programlisting>
+  <para>このログには下のタグがついています。</para>
+  <itemizedlist>
+  <listitem>
+  <para>agent</para>
+</listitem>
+  <listitem>
+  <para>error</para>
+</listitem>
+  <listitem>
+  <para>decode</para>
+</listitem>
+</itemizedlist>
+  <para>また、このログのメッセージは以下の通りです。</para>
+  <programlisting>Decode error</programlisting>
+  <para>「セッションID」がつくと以下のようになります。</para>
+  <programlisting>[29] [agent][error][decode] Decode error</programlisting>
+</refsect1>
+
+
+<refsect1>
+  <title>ログ一覧</title>
+  <para>モジュール毎にログの「タグ名」とログが出力される条件を説明します。</para>
+  <para>以下のフォーマットで記述します。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.#{出力レベル}:'>#{出力レベル}: [#{タグ名1}][#{タグ名2}][...]</term>
+  <listitem>
+  <para>#{ログが出力される条件}</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>例えば、以下のようになります。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.error:'>error: [reader][error][read]</term>
+  <listitem>
+  <para>読み込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>これは、「読み込み時にエラーが発生」したときに 「[reader][error][read]」というタグの付いたログが「出力レベル error」で出力されるということを表します。</para>
+  <refsect2>
+  <title>core</title>
+  <para>coreモジュールのログの一覧です。</para>
+  <para>coreモジュールには以下のオブジェクト（ひとまとまりの処理を実 行する単位）があります。タグにオブジェクト名が含まれます。</para>
+  <itemizedlist>
+  <listitem>
+  <para>reader: データ読み込みオブジェクト。</para>
+</listitem>
+  <listitem>
+  <para>writer: データ書き込みオブジェクト。</para>
+</listitem>
+  <listitem>
+  <para>agent: データのやりとりをするオブジェクト。データの読み 書きにreaderとwriterを使う。</para>
+</listitem>
+</itemizedlist>
+  <variablelist>
+  <varlistentry>
+  <term>error: [reader][error][read]</term>
+  <listitem>
+  <para>読み込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [reader][callback][error]</term>
+  <listitem>
+  <para>入力エラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [reader][watch][read][fail]</term>
+  <listitem>
+  <para>読み込み可能検出監視の登録に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [reader][watch][error][fail]</term>
+  <listitem>
+  <para>入力エラー検出監視の登録に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [reader][error][shutdown]</term>
+  <listitem>
+  <para>入力の終了処理に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][flush-callback][error]</term>
+  <listitem>
+  <para>出力データのフラッシュ時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][write-callback][error]</term>
+  <listitem>
+  <para>書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][write][error]</term>
+  <listitem>
+  <para>書き込みリクエスト時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][flush][error]</term>
+  <listitem>
+  <para>出力データのフラッシュリクエスト時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][error-callback][error]</term>
+  <listitem>
+  <para>出力エラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][watch][fail]</term>
+  <listitem>
+  <para>出力エラー検出監視の登録に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][shutdown][flush-buffer][write][error]</term>
+  <listitem>
+  <para>出力終了処理直前の未送信データ出力時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][shutdown][flush-buffer][flush][error]</term>
+  <listitem>
+  <para>出力終了処理直前の未送信データのフラッシュ時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [writer][error][shutdown]</term>
+  <listitem>
+  <para>出力の終了処理に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [agent][error][decode]</term>
+  <listitem>
+  <para>入力データの解析時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [agent][error][reader]</term>
+  <listitem>
+  <para>入力データの読み込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [agent][error][writer]</term>
+  <listitem>
+  <para>出力データの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [agent][error][set-writer][auto-flush]</term>
+  <listitem>
+  <para>出力先切替時の自動フラッシュ時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+  <refsect2>
+  <title>client</title>
+  <para>clientモジュールのログの一覧です。</para>
+  <para>セッションに関係ない部分では「セッションID」は付きません。</para>
+  <variablelist>
+  <varlistentry>
+  <term>error: [client][connection-spec][default][error]</term>
+  <listitem>
+  <para>デフォルトの接続情報の設定に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][error][write]</term>
+  <listitem>
+  <para>出力データの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][error][buffered-packets][write]</term>
+  <listitem>
+  <para>溜めていた出力データの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][error][reply-on-end-of-message][flush]</term>
+  <listitem>
+  <para>end-of-messageイベント応答時の自動フラッシュでエラーが発 生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][error][unix]</term>
+  <listitem>
+  <para>UNIXドメインソケットの初期化中にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][unix][error]</term>
+  <listitem>
+  <para>UNIXドメインソケットの終了処理中にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][single-thread][start][error]</term>
+  <listitem>
+  <para>シングルスレッドモードでのメインループ開始時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][multi-thread][start][error]</term>
+  <listitem>
+  <para>マルチスレッドモードでのメインループ開始時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][main][error]</term>
+  <listitem>
+  <para>処理開始時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.warning:'>warning: [client][accept][suspend]</term>
+  <listitem>
+  <para>同時接続数が多すぎて（RLIMIT_NOFILEが足りない）新しく接続 を受け付けられず、一時的に接続受付を中断している。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>warning: [client][accept][resume]</term>
+  <listitem>
+  <para>一時中断していた接続受付を再開。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>warning: [client][error][accept]</term>
+  <listitem>
+  <para>接続受付に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][single-thread][accept][start][error]</term>
+  <listitem>
+  <para>シングルスレッドモードでの接続受付の開始に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][multi-thread][accept][error]</term>
+  <listitem>
+  <para>マルチスレッドモードでの接続受付の開始に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][multi-thread][error]</term>
+  <listitem>
+  <para>スレッドプールにスレッド追加時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][watch][error]</term>
+  <listitem>
+  <para>listen中のソケットにエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][prepare][error]</term>
+  <listitem>
+  <para>初期化時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][prepare][listen][error]</term>
+  <listitem>
+  <para>listen(2)に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][pid-file][error][remove]</term>
+  <listitem>
+  <para>PIDファイルの削除時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][pid-file][save][error]</term>
+  <listitem>
+  <para>PIDファイルの保存時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][run][success][cleanup][error]</term>
+  <listitem>
+  <para>正常終了時の後処理でエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][run][fail][cleanup][error]</term>
+  <listitem>
+  <para>異常終了時の後処理でエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][master][run][error]</term>
+  <listitem>
+  <para>マスタープロセスの処理開始時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][worker][run][error]</term>
+  <listitem>
+  <para>ワーカープロセスの処理開始時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][worker][run][listen][error]</term>
+  <listitem>
+  <para>マルチワーカーモード時にワーカープロセスのlisten(2)でエラー が発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [client][workers][run][listen][error]</term>
+  <listitem>
+  <para>マルチワーカーモード時にマスタープロセスのlisten(2)でエラー が発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>warning: [client][option][deprecated]</term>
+  <listitem>
+  <para>非推奨のオプションを指定した。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.statistics:'>statistics: [sessions][finished]</term>
+  <listitem>
+  <para>セッション終了時。メッセージとして以下のフォーマットの統 計情報が付く。</para>
+  <programlisting>#{総処理セッション数}(+#{前回から処理したセッション数}) #{処理中のセッション数}</programlisting>
+  <para>例えば、前回のログ出力時には27セッション処理した状態で、 現在は追加で2セッションの処理が完了し、3セッションを処理 中である場合は以下のようになります。</para>
+  <programlisting>29(+2) 3</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>statistics: [reply][end-of-message][quarantine]</term>
+  <listitem>
+  <para>隔離レスポンスを返した。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+  <refsect2>
+  <title>server</title>
+  <para>serverモジュールのログの一覧です。</para>
+  <para>serverモジュールは同時に複数のmilterと通信する用途を想定して います。そのため、以下のようにログには通信相手のmilter名が含 まれます。</para>
+  <programlisting>[#{セッションID}] [#{タグ名1}][#{タグ名2}][...] [#{milter名}] #{メッセージ}</programlisting>
+  <para>なお、clientモジュール同様、セッションに関係ない部分では「セッ ションID」は付きません。以下はタグ部分について</para>
+  <variablelist>
+  <varlistentry>
+  <term>error: [server][dispose][body][remained]</term>
+  <listitem>
+  <para>セッション終了後も未送信の本文が残っている。通信相手の milterが本文の通信途中で強制的に接続を切った可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][flushed][error][next-state][invalid]</term>
+  <listitem>
+  <para>非同期のデータ書き出し時に不正な状態遷移を検出した。通信相 手のmilterがmilterプロトコルに沿っていない通信した可能性が ある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][error]</term>
+  <listitem>
+  <para>想定外のエラーが発生。詳細はメッセージで確認する。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][error][write]</term>
+  <listitem>
+  <para>書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][error][#{response}][state][invalid][#{state}]</term>
+  <listitem>
+  <para>状態「#{state}」の時にmilterから意図しないレスポンス 「#{response}」が返ってきた。メッセージには期待するレスポン スの一覧が含まれている。通信相手のmilterがmilterプロトコル に沿っていない通信をした可能性がある。</para>
+  <para>状態「#{state}」は以下のいずれかである。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.invalid'>invalid</term>
+  <listitem>
+  <para>不正な状態。通常はこの状態にならない。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.start'>start</term>
+  <listitem>
+  <para>通信を開始した直後の状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.define-macro'>define-macro</term>
+  <listitem>
+  <para>マクロ定義を通信している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.negotiate'>negotiate</term>
+  <listitem>
+  <para>milterとセッション内でのやりとり方法を調整している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.connect'>connect</term>
+  <listitem>
+  <para>negotiateが完了し、milterとの接続が確立された状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.helo'>helo</term>
+  <listitem>
+  <para>SMTPのHELOコマンドに対応するmilterプロトコルを処理し ている状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.envelope-from'>envelope-from</term>
+  <listitem>
+  <para>SMTPのMAIL FROMコマンドに対応するmilterプロトコルを処 理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.envelope-recipient'>envelope-recipient</term>
+  <listitem>
+  <para>SMTPのRCPT TOコマンドに対応するmilterプロトコルを処 理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.data'>data</term>
+  <listitem>
+  <para>SMTPのDATAコマンドに対応するmilterプロトコルを処 理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.unknown'>unknown</term>
+  <listitem>
+  <para>SMTPで未知のコマンドに対応するmilterプロトコルを処 理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.header'>header</term>
+  <listitem>
+  <para>SMTPのDATAコマンドで送信されたメールのヘッダーを milterプロトコルで処理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.end-of-header'>end-of-header</term>
+  <listitem>
+  <para>SMTPのDATAコマンドで送信されたメールのヘッダーの処理 が終わったという通知をmilterプロトコルで処理して いる状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.body'>body</term>
+  <listitem>
+  <para>SMTPのDATAコマンドで送信されたメールの本文を milterプロトコルで処理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.end-of-message'>end-of-message</term>
+  <listitem>
+  <para>SMTPのDATAコマンドで送信されたメールの処理が終わった という通知をmilterプロトコルで処理している状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.quit'>quit</term>
+  <listitem>
+  <para>milterプロトコルで終了処理をしている状態。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.abort'>abort</term>
+  <listitem>
+  <para>milterプロトコルで中断処理をしている状態。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>milterからのレスポンス「#{response}」は以下のいずれかである。 それぞれの項目はmilterプロトコルで使われているレスポンスに 対応している。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.negotiate-reply'>negotiate-reply</term>
+  <listitem>
+  <para>negotiateのレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.continue'>continue</term>
+  <listitem>
+  <para>処理の継続を表すレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.reply-code'>reply-code</term>
+  <listitem>
+  <para>SMTPのレスポンスコードを指定するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.add-header'>add-header</term>
+  <listitem>
+  <para>ヘッダーを末尾に追加するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.insert-header'>insert-header</term>
+  <listitem>
+  <para>ヘッダーを任意の位置に追加するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.change-header'>change-header</term>
+  <listitem>
+  <para>ヘッダーを変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.add-recipient'>add-recipient</term>
+  <listitem>
+  <para>宛先を変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.delete-recipient'>delete-recipient</term>
+  <listitem>
+  <para>宛先を削除するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.replace-body'>replace-body</term>
+  <listitem>
+  <para>本文を変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.progress'>progress</term>
+  <listitem>
+  <para>処理が継続中であることを示すレスポンス。タイムアウト 時間を伸ばすために利用される。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.quarantine'>quarantine</term>
+  <listitem>
+  <para>メールを隔離するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.skip'>skip</term>
+  <listitem>
+  <para>本文の受信を中止するレスポンス。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][timeout][connection]</term>
+  <listitem>
+  <para>接続処理がタイムアウト。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][error][connect]</term>
+  <listitem>
+  <para>接続エラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [server][error][connected][start]</term>
+  <listitem>
+  <para>接続開始時の初期化処理時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>warning: [server][reply][quitted][#{state}][#{response}]</term>
+  <listitem>
+  <para>milterプロトコルが終了したあとにレスポンスが返ってきた。 状態「#{state}」とレスポンス「#{response}」は 【[server][error][#{response}][state][invalid][#{state}]】 で説明している項目と同じ。 このログの次に error ログを出力していなければ問題ない。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+</refsect1>
+
+
+<refsect2>
+  <title>manager</title>
+  <para>managerモジュールのログの一覧です。</para>
+  <para>managerモジュールもclientモジュール同様、セッションに関係ない 部分では「セッションID」は付きません。</para>
+  <refsect3>
+  <title>サブモジュール</title>
+  <para>一番最初のタグはmanagerモジュール内のサブモジュール名になり ます。ただし、以下のログについてはタグが付きません。</para>
+  <itemizedlist>
+  <listitem>
+  <para>クラッシュ時のログ</para>
+</listitem>
+  <listitem>
+  <para>milter-managerコマンド起動時に関連するログ</para>
+</listitem>
+</itemizedlist>
+  <para>サブモジュールは以下の8つです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>manager</para>
+</listitem>
+  <listitem>
+  <para>configuration</para>
+</listitem>
+  <listitem>
+  <para>launcher</para>
+</listitem>
+  <listitem>
+  <para>process-launcher</para>
+</listitem>
+  <listitem>
+  <para>controller</para>
+</listitem>
+  <listitem>
+  <para>leader</para>
+</listitem>
+  <listitem>
+  <para>children</para>
+</listitem>
+  <listitem>
+  <para>egg</para>
+</listitem>
+</itemizedlist>
+  <variablelist>
+  <varlistentry>
+  <term>manager</term>
+  <listitem>
+  <para>各モジュールを利用してmilter-managerコマンドを実装してい るサブモジュールです。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.configuration'>configuration</term>
+  <listitem>
+  <para>設定ファイルを読み込むモジュール。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.launcher'>launcher</term>
+  <listitem>
+  <para>子milterを起動するモジュール。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.process-launcher'>process-launcher</term>
+  <listitem>
+  <para>milter-managerコマンド内でlauncherサブモジュールを起動す るモジュール。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.controller'>controller</term>
+  <listitem>
+  <para>milter-managerプロセスを外部から操作するモジュール。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.leader'>leader</term>
+  <listitem>
+  <para>childrenモジュールがまとめた子milter全体の処理結果をMTAに 返すモジュール。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.children'>children</term>
+  <listitem>
+  <para>複数の子milterに対してmilterプロトコルで処理した結果を統 合して、全体の処理結果としてまとめるモジュール。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.egg'>egg</term>
+  <listitem>
+  <para>1つの子milterに関する情報を管理するモジュール。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>それぞれのサブモジュール毎に説明します。</para>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: manager</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [manager][reload][signal][error]</term>
+  <listitem>
+  <para>SIGHUPシグナルによってリクエストされた設定の再読み込み中 にエラーが発生。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: configuration</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [configuration][dispose][clear][error]</term>
+  <listitem>
+  <para>終了時の設定クリアが失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][new][clear][error]</term>
+  <listitem>
+  <para>初回の設定クリアが失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][load][clear][error]</term>
+  <listitem>
+  <para>設定再読み込み前の設定クリアに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][load][error]</term>
+  <listitem>
+  <para>設定ファイル（milter-manager.conf）の読み込みに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][load][custom][error]</term>
+  <listitem>
+  <para>カスタム設定ファイル（milter-manager.custom.conf）の読み 込みに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][clear][custom][error]</term>
+  <listitem>
+  <para>Rubyでの設定クリア処理に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][maintain][error]</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-maintenance-interval'>manager.maintenance_interval</link>
+  で指定した間隔で実行されるメンテナンス処理中にエラーが発生。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [configuration][event-loop-created][error]</term>
+  <listitem>
+  <para>イベントループの作成後の処理でエラーが発生。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: launcher</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [launcher][error][child][authority][group]</term>
+  <listitem>
+  <para>子milterを起動する時に、指定したグループへの実行権限の変 更に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [launcher][error][child][authority][groups]</term>
+  <listitem>
+  <para>子milterを起動する時に、指定したユーザの追加グループの初 期化に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [launcher][error][child][authority][user]</term>
+  <listitem>
+  <para>子milterを起動する時に、指定したユーザへの実行権限の変更 に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [launcher][error][launch]</term>
+  <listitem>
+  <para>子milterの起動に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [launcher][error][write]</term>
+  <listitem>
+  <para>子milterの起動が成功したか失敗したかを返すレスポンスの書 き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: process-launcher</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [process-launcher][error][start]</term>
+  <listitem>
+  <para>launcherモジュールとの接続開始処理でエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [process-launcher][error]</term>
+  <listitem>
+  <para>forkしたlauncherモジュールからのファイルディスクリプタ切り 離しに失敗。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: controller</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [controller][error][write][success]</term>
+  <listitem>
+  <para>成功を示すレスポンスデータの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][write][error]</term>
+  <listitem>
+  <para>エラーを示すレスポンスデータの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][save]</term>
+  <listitem>
+  <para>設定ファイルの保存時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][write][configuration]</term>
+  <listitem>
+  <para>設定ファイルの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][reload][error]</term>
+  <listitem>
+  <para>設定の再読み込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][write][status]</term>
+  <listitem>
+  <para>ステータスを返すレスポンスの書き込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][unix]</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.controller-remove-unix-socket-on-create'>controller.remove_unix_socket_on_create</link>
+  を有効にした場合に終了時に実行する、使用したUNIXドメイン ソケットの削除処理中にエラーが発生。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][start]</term>
+  <listitem>
+  <para>通信開始処理に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][accept]</term>
+  <listitem>
+  <para>接続の受け付けに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][watch]</term>
+  <listitem>
+  <para>通信中にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [controller][error][listen]</term>
+  <listitem>
+  <para>listen(2)に失敗。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: leader</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [leader][error][invalid-state]</term>
+  <listitem>
+  <para>不正な状態遷移を検出。milter managerのバグである可能性が高い。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error]</term>
+  <listitem>
+  <para>childrenモジュールでエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][reply-code]</term>
+  <listitem>
+  <para>SMTPのレスポンスコード指定に失敗。通信相手のmilterが不正 なレスポンスコードを送っている可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][add-header]</term>
+  <listitem>
+  <para>ヘッダーを末尾に追加する時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][insert-header]</term>
+  <listitem>
+  <para>ヘッダーを任意の位置に追加する時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][delete-header]</term>
+  <listitem>
+  <para>ヘッダーを削除するときにエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][change-from]</term>
+  <listitem>
+  <para>差出人を変更するときにエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][add-recipient]</term>
+  <listitem>
+  <para>宛先を追加する時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][delete-recipient]</term>
+  <listitem>
+  <para>宛先を削除する時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [leader][error][replace-body]</term>
+  <listitem>
+  <para>本文を置き換える時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: children</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [children][error][negotiate]</term>
+  <listitem>
+  <para>子milterにネゴシエーション（セッション内でのやりとり方法 の調整）開始のリクエストを送っていないのにレスポンスが返っ てきた。通信相手のmilterがmilterプロトコルに沿っていない 通信をした可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][pending-message-request]</term>
+  <listitem>
+  <para>milter-managerプロセス内部で遅延させた子milterへのリクエ ストに問題があった。発生した場合はmilter manager内のバグ である。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][read][seek]</term>
+  <listitem>
+  <para>本文データの読み込み位置の変更時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][read]</term>
+  <listitem>
+  <para>本文データの読み込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][invalid-state][temporary-failure]</term>
+  <listitem>
+  <para>milterプロトコルでは想定していないタイミングで子milterが temporary-failureレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][invalid-state][reject]</term>
+  <listitem>
+  <para>milterプロトコルでは想定していないタイミングで子milterが rejectレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][invalid-state][accept]</term>
+  <listitem>
+  <para>milterプロトコルでは想定していないタイミングで子milterが acceptレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][invalid-state][discard]</term>
+  <listitem>
+  <para>milterプロトコルでは想定していないタイミングで子milterが discardレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][invalid-state][stopped]</term>
+  <listitem>
+  <para>milterプロトコルでは想定していないタイミングで milter-managerプロセスが子milterの実行を停止した。 milter manager内のバグである可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][invalid-state][#{response}][#{state}]</term>
+  <listitem>
+  <para>end-of-message時しか返せないレスポンス「#{response}」を状 態「#{state}」の時に返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</para>
+  <para>レスポンス「#{response}」は以下のいずれかである。</para>
+  <variablelist>
+  <varlistentry>
+  <term>add-header</term>
+  <listitem>
+  <para>ヘッダーを末尾に追加するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>insert-header</term>
+  <listitem>
+  <para>ヘッダーを任意の位置に追加するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>change-header</term>
+  <listitem>
+  <para>ヘッダーを変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.delete-header'>delete-header</term>
+  <listitem>
+  <para>ヘッダーを変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.change-from'>change-from</term>
+  <listitem>
+  <para>差出人を変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>add-recipient</term>
+  <listitem>
+  <para>宛先を追加するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>delete-recipient</term>
+  <listitem>
+  <para>宛先を削除するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>replace-body</term>
+  <listitem>
+  <para>本文を変更するレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>progress</term>
+  <listitem>
+  <para>処理が継続中であることを示すレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>quarantine</term>
+  <listitem>
+  <para>メールを隔離するレスポンス。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>状態「#{state}」は 【[server][error][#{response}][state][invalid][#{state}]】 で説明している項目と同じ。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][timeout][writing]</term>
+  <listitem>
+  <para>書き込みがタイムアウト。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][timeout][reading]</term>
+  <listitem>
+  <para>読み込みがタイムアウト。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][timeout][end-of-message]</term>
+  <listitem>
+  <para>end-of-message時に指定した時間内にレスポンスが返ってこな かった。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][#{state}][#{fallback_status}]</term>
+  <listitem>
+  <para>
+  子milterとの通信に利用しているserverモジュールでエラーが 発生。子milterの処理結果は
+  <link linkend='configuration.milter-fallback-status'>milter.fallback_status</link>
+  で指定したステータス「#{fallback_status}」を利用。
+</para>
+  <para>状態「#{state}」は 【[server][error][#{response}][state][invalid][#{state}]】 で説明している項目と同じ。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][start-child][write]</term>
+  <listitem>
+  <para>launcherサブモジュールへの子milterの起動リクエストの書き 込み時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][start-child][flush]</term>
+  <listitem>
+  <para>launcherサブモジュールへの子milterの起動リクエストのフラッ シュ時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][negotiate][not-started]</term>
+  <listitem>
+  <para>MTAがネゴシエーション（セッション内でのやりとり方法 の調整）を開始していないのに、ネゴシエーションのレスポン ス処理を実行。milter manager内のバグである可能性がある。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][negotiate][no-response]</term>
+  <listitem>
+  <para>すべての子milterからネゴシエーション（セッション内でのやり とり方法の調整）のレスポンスがない。子milterの問題である 可能性が高い。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][timeout][connection]</term>
+  <listitem>
+  <para>指定した時間内に接続を確立できなかった。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][connection]</term>
+  <listitem>
+  <para>接続処理時にエラーが発生。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][alive]</term>
+  <listitem>
+  <para>全ての子milterが終了しているのにまだMTAからリクエストがき ている。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][message-processing]</term>
+  <listitem>
+  <para>SMTPのDATAコマンドで送信されたメールの処理を実行している 子milterがいないのに、MTAからメール処理のリクエストがきた。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][open]</term>
+  <listitem>
+  <para>大きなメール本文保存用の一時ファイルの作成に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][encoding]</term>
+  <listitem>
+  <para>大きなメール本文保存用の一時ファイルの読み書き用のエンコー ディングの設定に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][write]</term>
+  <listitem>
+  <para>大きなメール本文保存用の一時ファイルへの本文書き込みに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][send][seek]</term>
+  <listitem>
+  <para>大きなメール本文保存用の一時ファイルの読み出し位置指定に 失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [children][error][body][send]</term>
+  <listitem>
+  <para>大きなメール本文保存用の一時ファイルからの本文読み出しに 失敗。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>サブモジュール: egg</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: [egg][error]</term>
+  <listitem>
+  <para>子milter接続時に不正な接続情報が指定されていることを検出。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [egg][error][set-spec]</term>
+  <listitem>
+  <para>子milterに不正な接続情報を指定。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>その他: クラッシュ時のログ</title>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.critical:'>critical: [#{signal}] unable to open pipe for collecting stack trace</term>
+  <listitem>
+  <para>クラッシュ時にスタックトレース取得用のパイプの作成に失敗 した。シグナル「#{signal}」は「SEGV」または「ABORT」にな る。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>critical: #{stack_trace}</term>
+  <listitem>
+  <para>タグはつかない。スタックトレースの各行を表示する。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>その他: milter-managerコマンド起動時のログ</title>
+  <variablelist>
+  <varlistentry>
+  <term>error: failed to create pipe for launcher command</term>
+  <listitem>
+  <para>launcherモジュール用へのコマンド送信用パイプ作成に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to create pipe for launcher reply</term>
+  <listitem>
+  <para>launcherモジュール用からのレスポンス受信用パイプ作成に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to fork process launcher process</term>
+  <listitem>
+  <para>launcherモジュール用プロセスのforkに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to find password entry for effective user</term>
+  <listitem>
+  <para>指定した実行ユーザが見つからない。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to get password entry for effective user</term>
+  <listitem>
+  <para>指定した実行ユーザの取得に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to get limit for RLIMIT_NOFILE</term>
+  <listitem>
+  <para>開けるファイルディスクリプタ数の制限値取得に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to set limit for RLIMIT_NOFILE</term>
+  <listitem>
+  <para>開けるファイルディスクリプタ数の制限値設定に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to create custom configuration directory</term>
+  <listitem>
+  <para>カスタム設定ディレクトリの作成に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to change owner and group of configuration directory</term>
+  <listitem>
+  <para>設定ディレクトリの所有者・グループの変更に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to listen</term>
+  <listitem>
+  <para>listen(2)に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to drop privilege</term>
+  <listitem>
+  <para>root権限を落とすことに失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to listen controller socket:</term>
+  <listitem>
+  <para>controllerモジュールがlisten(2)に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to daemonize:</term>
+  <listitem>
+  <para>デーモン化に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: failed to start milter-manager process:</term>
+  <listitem>
+  <para>milter-managerプロセスの起動処理に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [manager][reload][custom-load-path][error]</term>
+  <listitem>
+  <para>設定の再読込に失敗。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>error: [manager][configuration][reload][command-line-load-path][error]</term>
+  <listitem>
+  <para>コマンドラインで指定したロードパスからの設定の読み込みに失敗。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+  <refsect3>
+  <title>その他: 統計情報</title>
+  <variablelist>
+  <varlistentry>
+  <term>statistics: [milter][header][add]</term>
+  <listitem>
+  <para>子milterがヘッダを追加。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>statistics: [milter][end][#{last_state}][#{status}][#{elapsed}]</term>
+  <listitem>
+  <para>子milterが1つ終了。</para>
+  <para>「[#{last_state}]」には終了時の状態が入る。 「[#{last_state}]」に入る値は 【[server][error][#{response}][state][invalid][#{state}]】 の「#{state}」と同じである。</para>
+  <para>「[#{status}]」には子milterからのレスポンスが入る。レスポ ンスは以下のいずれかがである。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='log-list.reject'>reject</term>
+  <listitem>
+  <para>拒否を表すレスポウンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.discard'>discard</term>
+  <listitem>
+  <para>廃棄を表すレスポウンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.accept'>accept</term>
+  <listitem>
+  <para>受信を表すレスポウンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.temporary-failure'>temporary-failure</term>
+  <listitem>
+  <para>一時拒否を表すレスポウンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.pass'>pass</term>
+  <listitem>
+  <para>暗黙的な受信を表すレスポンス。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='log-list.stop'>stop</term>
+  <listitem>
+  <para>処理を途中で中断したことを表すレスポウンス。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>「[#{elapsed}]」には接続してからの経過時間が入る。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>statistics: [session][end][#{last_state}][#{status}][#{elapsed}]</term>
+  <listitem>
+  <para>milterセッションが1つ終了。 「[#{last_state}]」、「#{status}」、「#{elapsed}」に入る 値は【[milter][end][#{last_state}][#{status}][#{elapsed}]】 と同様。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>statistics: [session][disconnected][#{elapsed}]</term>
+  <listitem>
+  <para>SMTPクライアントがセッションを途中で切断。</para>
+  <para>「[#{elapsed}]」には接続してからの経過時間が入る。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>statistics: [session][header][add]</term>
+  <listitem>
+  <para>milterセッション全体のレスポンスとしてヘッダーを追加。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+</refsect2>
+</refentry>

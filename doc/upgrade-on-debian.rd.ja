@@ -1,0 +1,63 @@
+# -*- rd -*-
+
+= Debianで更新 --- Debian GNU/Linuxでのmilter managerの更新方法
+
+== このドキュメントについて
+
+Debian GNU/Linuxに特化したmilter managerの更新方法について説
+明します。新規にインストールする方法は((<Debianへインストール
+|install-to-debian.rd.ja>))を見てください。
+
+== 更新
+
+パッケージを更新するだけで、追加の作業は必要ありません。
+
+  % sudo aptitude -V -D -y safe-upgrade
+
+=== 1.8.0 以前から 1.8.1 への更新
+
+2011-11-15 にパッケージの署名に使用している鍵を変更したので、新しい鍵を
+登録してください。古い鍵はもう使えません。
+
+  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1
+
+sources.list に指定する URI を変更しました。しばらくは以前のものも使用で
+きますが、1.9 系列をリリースするときには削除する予定です。
+
+1.8.0 以前からのユーザは早めに source.list を変更してください。
+
+=== squeezeの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main
+  deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main
+
+=== wheezyの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main
+  deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main
+
+=== jessieの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main
+  deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main
+
+=== sidの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main
+  deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main
+
+== まとめ
+
+milter managerは簡単に更新することができる、メンテナンスコス
+トが低いソフトウェアです。
+
+新しいバージョンで行われている様々な改善を利用したい場合は更
+新を検討してください。
+
+追加パッケージもインストールしている場合は((<Debianで更新
+（任意）|upgrade-options-on-debian.rd.ja>))も参照してくださ
+い。

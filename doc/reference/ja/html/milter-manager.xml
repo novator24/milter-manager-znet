@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager.top_of_page">MilterManager</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManager</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-TYPE-MANAGER:CAPS">MILTER_TYPE_MANAGER</link>
+#define             <link linkend="MILTER-MANAGER:CAPS">MILTER_MANAGER</link>                      (obj)
+#define             <link linkend="MILTER-MANAGER-IS:CAPS">MILTER_MANAGER_IS</link>                   (obj)
+#define             <link linkend="MILTER-MANAGER-GET-CLASS:CAPS">MILTER_MANAGER_GET_CLASS</link>            (obj)
+struct              <link linkend="MilterManager">MilterManager</link>;
+<link linkend="MilterManager"><returnvalue>MilterManager</returnvalue></link> *     <link linkend="milter-manager-new">milter_manager_new</link>                  (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="MilterManagerConfiguration"><returnvalue>MilterManagerConfiguration</returnvalue></link> * <link linkend="milter-manager-get-configuration">milter_manager_get_configuration</link>
+                                                        (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-reload">milter_manager_reload</link>               (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-set-launcher-channel">milter_manager_set_launcher_channel</link> (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *read_channel</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *write_channel</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-TYPE-MANAGER:CAPS" role="macro">
+<title>MILTER_TYPE_MANAGER</title>
+<indexterm zone="MILTER-TYPE-MANAGER:CAPS"><primary>MILTER_TYPE_MANAGER</primary></indexterm>
+<programlisting>#define MILTER_TYPE_MANAGER            (milter_manager_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER:CAPS" role="macro">
+<title>MILTER_MANAGER()</title>
+<indexterm zone="MILTER-MANAGER:CAPS"><primary>MILTER_MANAGER</primary></indexterm>
+<programlisting>#define MILTER_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER, MilterManager))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-IS:CAPS" role="macro">
+<title>MILTER_MANAGER_IS()</title>
+<indexterm zone="MILTER-MANAGER-IS:CAPS"><primary>MILTER_MANAGER_IS</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_IS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), MILTER_TYPE_MANAGER))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-GET-CLASS:CAPS" role="macro">
+<title>MILTER_MANAGER_GET_CLASS()</title>
+<indexterm zone="MILTER-MANAGER-GET-CLASS:CAPS"><primary>MILTER_MANAGER_GET_CLASS</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), MILTER_TYPE_MANAGER, MilterManagerClass))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManager" role="struct">
+<title>struct MilterManager</title>
+<indexterm zone="MilterManager"><primary>MilterManager</primary></indexterm>
+<programlisting>struct MilterManager {
+    MilterClient object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-new" role="function">
+<title>milter_manager_new ()</title>
+<indexterm zone="milter-manager-new"><primary>milter_manager_new</primary></indexterm>
+<programlisting><link linkend="MilterManager"><returnvalue>MilterManager</returnvalue></link> *     milter_manager_new                  (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-get-configuration" role="function">
+<title>milter_manager_get_configuration ()</title>
+<indexterm zone="milter-manager-get-configuration"><primary>milter_manager_get_configuration</primary></indexterm>
+<programlisting><link linkend="MilterManagerConfiguration"><returnvalue>MilterManagerConfiguration</returnvalue></link> * milter_manager_get_configuration
+                                                        (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-reload" role="function">
+<title>milter_manager_reload ()</title>
+<indexterm zone="milter-manager-reload"><primary>milter_manager_reload</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_reload               (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-set-launcher-channel" role="function">
+<title>milter_manager_set_launcher_channel ()</title>
+<indexterm zone="milter-manager-set-launcher-channel"><primary>milter_manager_set_launcher_channel</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_set_launcher_channel (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *read_channel</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *write_channel</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

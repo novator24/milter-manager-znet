@@ -1,0 +1,298 @@
+= milter-performance-check / milter manager / milter managerのマニュアル
+
+== 名前
+
+milter-performance-check - MTAのパフォーマンスを計るプログラム
+
+== 書式
+
+(({milter-performance-check})) [((*オプション ...*))]
+
+== 説明
+
+milter-performance-checkはMTAの性能を計測するSMTPクライアント
+です。milter-test-serverでmilterのみの性能を計測し、
+milter-performance-checkでMTAとmilterを合わせた性能を計測する
+という住み分けです。
+
+同様のツールにはPostfix付属のsmtp-sourceがあります。どちらも、
+同時に複数のSMTPセッションを張って一斉にメールを送信すること
+ができます。機能的にはsmtp-sourceの方が高機能です。
+
+milter-performance-checkが便利なのはSMTPセッションの時間のみ
+を計測してくれることです。smtp-sourceではtimeコマンドと組み合
+わせるなどして、smtp-source全体の実行時間を計測します。
+
+実際は、SMTPセッションの時間のみでも、ツール全体の実行時間で
+もそれほど違いはでないと思います。また、テスト用のメール総数
+を多くすればするほど、SMTPセッションにかかる時間が大きくなり、
+ツール自体の実行時間による影響は小さくなります。
+
+milter-performance-checkが提供している機能で十分な時は、
+milter-performance-checkを利用し、それでは不十分な時は
+smtp-sourceを利用するとよいでしょう。
+
+== オプション
+
+: --help
+
+   利用できるオプションを表示して終了します。
+
+: --smtp-server=SERVER
+
+   接続先のSMTPサーバを指定します。
+
+   既定値はlocalhostです。
+
+: --smtp-port=PORT
+
+   接続先のSMTPサーバのポート番号指定します。
+
+   既定値は25です。
+
+: --connect-host=HOST
+
+   接続元のホスト名を指定します。
+
+   ((<PostfixのXCLIENT SMTP拡張
+   |URL:http://www.postfix-jp.info/trans-2.3/jhtml/XCLIENT_README.html>))
+   のNAMEを利用するので
+   ((<smtpd_authorized_xclient_hosts|URL:http://www.postfix-jp.info/trans-2.3/jhtml/postconf.5.html#smtpd_authorized_xclient_hosts>))
+   を適切に設定する必要があります。
+
+: --connect-address=ADDRESS
+
+   接続元のアドレスを指定します。
+
+   ((<PostfixのXCLIENT SMTP拡張
+   |URL:http://www.postfix-jp.info/trans-2.3/jhtml/XCLIENT_README.html>))
+   のADDRを利用するので
+   ((<smtpd_authorized_xclient_hosts|URL:http://www.postfix-jp.info/trans-2.3/jhtml/postconf.5.html#smtpd_authorized_xclient_hosts>))
+   を適切に設定する必要があります。
+
+: --helo-fqdn=FQDN
+
+   HELOコマンドでFQDNを使います。
+
+   既定値はlocalhost.localdomainです。
+
+: --starttls=HOW
+
+   1.6.9から使用可能。
+
+   STARTTLSを使うかどうかを指定します。指定可能な((|HOW|))は
+   以下の通りです。
+
+     : ((%auto%))
+         MTAがSTARTTLSをサポートしている場合はSTARTTLSを使い
+         ます。（既定値）
+
+     : ((%always%))
+        常にSTARTTLSを使います。
+
+     : ((%disable%))
+        STARTTLSを使いません。
+
+   既定値は((%auto%))です。
+
+: --auth-user=USER
+
+   1.6.9から使用可能。
+
+   SMTP認証のユーザ名として((|USER|))を使います。
+
+   既定値はありません。
+
+: --auth-password=PASSWORD
+
+   1.6.9から使用可能。
+
+   SMTP認証のパスワードとして((|PASSWORD|))を使います。
+
+   既定値はありません。
+
+: --auth-mechanism=MECHANISM
+
+   1.6.9から使用可能。
+
+   SMTP認証の方法として((|MECHANISM|))を使います。指定可能な
+   ((|MECHANISM|))は以下の通りです。
+
+     : ((%auto%))
+        MTAがサポートしている認証方式を検出してそれを使い
+        ます。（既定値）
+
+     : ((%plain%))
+        常にPLAINを使用します。
+
+     : ((%login%))
+        常にLOGINを使用します。
+
+     : ((%cram_md5%))または((%cram-md5%))
+        常にCRAM-MD5を使用します。
+
+   既定値は((%auto%))です。
+
+: --auth-map=FILE
+
+   1.6.9から使用可能。
+
+   接続するMTAのアドレス・ポート番号ごとにSMTP認証の設定を
+   ((|FILE|))から読み込みます。((|FILE|))の書式は以下のよう
+   になっており、((<Postfixの
+   smtp_sasl_password_maps|URL:http://www.postfix.org/postconf.5.html#smtp_sasl_password_maps>))
+   でも使えます。
+
+     SERVER1:PORT USER1:PASSWORD1
+     SERVER2:PORT USER2:PASSWORD2
+     ...
+
+   「smtp.example.com」の「submissionポート」（587番ポート）
+   宛てのメールは「send-user」ユーザ・「secret」パスワード
+   を使うという設定は以下の通りです。
+
+     smtp.example.com:587 send-user:secret
+
+   既定値はありません。
+
+: --from=FROM
+
+   MAILコマンドのアドレスにFROMを使います。
+
+   既定値はfrom@example.comです。
+
+: --force-from=FROM
+
+   送信するメールファイルを指定した場合でも、ファイル中にあ
+   るFrom:の値ではなく、FROMをMAILコマンドのアドレスに使いま
+   す。
+
+   既定値はありません。
+
+: --recipient=RECIPIENT
+
+   RCPTコマンドのアドレスにRECIPIENTを使います。複数の宛先を
+   指定する場合は複数回このオプションを指定してください。
+
+   既定値は[to@example.com]です。
+
+: --force-recipient=RECIPIENT
+
+   送信するメールファイルを指定した場合でも、ファイル中にあ
+   るTo:の値ではなく、RECIPIENTをRCPTコマンドのアドレスに使
+   います。複数の宛先を指定する場合は複数回このオプションを
+   指定してください。
+
+   既定値はありません。
+
+: --n-mails=N
+
+   合計でN個のメールを送信します。複数のメールが同時に送信さ
+   れます。同時に最大で何通送るかは
+   ((<--n-concurrent-connections|.#--n-concurrent-connections>))
+   で指定します。
+
+   既定値は100です。
+
+: --n-additional-lines=N
+
+   メールの本文にN行追加します。
+
+   既定値はありません。（追加しません。）
+
+: --n-concurrent-connections=N
+
+   同時に最大N接続でメールを送信します。
+
+   既定値は10です。
+
+: --period=PERIOD
+
+   PERIOD（単位は秒、分、時間のどれか）の間に指定されたメー
+   ルを送信します。各メールは間隔内で平均的に送信します。単
+   位を省略した場合は秒として扱われます
+
+   例（送信メール数を100とする）:
+     * --period=5    # 0.05秒間隔で送信（5 / 100）
+     * --period=50s  # 0.5秒間隔で送信（50 / 100）
+     * --period=10m  # 6秒間隔で送信（60 * 10 / 100）
+     * --period=0.5h # 18秒間隔で送信（60 * 60 * 0.5 / 100）
+
+   既定値はありません。
+
+: --interval=INTERVAL
+
+   INTERVAL（単位は秒、分、時間のどれか）間隔で指定されたメー
+   ルを送信します。単位を省略した場合は秒として扱われます。
+
+   例:
+     * --interval=5    # 5秒間隔で送信
+     * --interval=0.5s # 0.5秒間隔で送信
+     * --interval=10m  # 10分間隔で送信
+     * --interval=0.5h # 30分間隔で送信
+
+   既定値はありません。
+
+: --flood, --flood[=PERIOD]
+
+   PERIOD（単位は秒、分、時間のどれか）の間、ずっと指定され
+   たメールを送信します。PERIODを省略した場合はC-cで終了する
+   までずっと指定したメールを送信します。単位を省略した場合
+   は秒として扱われます。
+
+   既定値はありません。
+
+: --shuffle, --no-shuffle
+
+   送信予定のメールを無作為に並び替えてから送信します。
+
+   既定値はfalseです。（並び替えません。）
+
+: --report-failure-responses, --no-report-failure-responses
+
+   SMTPサーバが返した失敗時のメッセージを一番最後に表示しま
+   す。
+
+   既定値はfalseです。（表示しません。）
+
+: --report-periodically, --report-periodically=INTERVAL
+
+   INTERVAL（単位は秒、分、時間のどれか）間隔で統計情報を表
+   示します。INTERVALを省略した場合は1s（1秒）を指定したと扱
+   われます。単位を省略した場合は秒として扱われます。
+
+   既定値はありません。（定期的に統計情報を表示しません。）
+
+: --reading-timeout=SECONDS
+
+   SMTPサーバからのレスポンスを待つ時間を指定します。
+   ((|SECONDS|))秒経ってもレスポンスが返ってこない場合はエラー
+   になります。
+
+   既定値は60秒です。
+
+== 終了ステータス
+
+常に0。
+
+== 例
+
+以下の例では、milter-performance-checkはlocalhostの25番ポート
+で動いているSMTPサーバに接続し、100通のメールを送ります。それ
+ぞれのメールの差出人はfrom@example.comで、宛先は
+webmaster@localhostとinfo@localhostです。
+
+  % milter-performance-check --recipient=webmaster@localhost --recipient=info@localhost
+
+以下の例では、milter-performance-checkは192.168.1.29の25番ポー
+トで動いているSMTPサーバに接続し、/tmp/test-mails/以下にある
+ファイルをメールとして送信します。ファイルはRFC 2822のメール
+フォーマットでなければいけません。各メールは3秒毎（60 * 10 /
+100）にuser@localhost宛に送られます。--n-mails=1オプションが
+指定されているので、それぞれのメールは1通のみ送られます。
+
+  % milter-performance-check --n-mails=1 --smtp-server=192.168.1.102 --force-recipient=user@localhost --period=5m /tmp/test-mails/
+
+== 関連項目
+
+((<milter-report-statistics.rd.ja>))(1)

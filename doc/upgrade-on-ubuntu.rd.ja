@@ -1,0 +1,63 @@
+# -*- rd -*-
+
+= Ubuntuで更新 --- Ubuntu Linuxでのmilter managerの更新方法
+
+== このドキュメントについて
+
+Ubuntu Linuxに特化したmilter managerの更新方法について説明し
+ます。新規にインストールする方法は((<Ubuntuへインストール
+|install-to-ubuntu.rd.ja>))を見てください。
+
+== 更新
+
+パッケージを更新するだけで、追加の作業は必要ありません。
+
+  % sudo apt-get -V -y upgrade
+
+=== 1.8.0 以前からの更新
+
+2011-11-15 にパッケージの署名に使用している鍵を変更したので、新しい鍵を
+登録してください。古い鍵はもう使えません。
+
+  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1
+
+sources.list に指定する URI を変更しました。しばらくは以前のものも使用で
+きますが、1.9 系列をリリースするときには削除する予定です。
+
+1.8.0 以前からのユーザは早めに source.list を変更してください。
+
+=== Lucid Lynxの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe
+  deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe
+
+=== Precise Pangolinの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe
+  deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe
+
+=== Quantal Quetzalの場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe
+  deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe
+
+=== Raring Ringtail の場合
+
+/etc/apt/sources.list.d/milter-manager.list:
+  deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe
+  deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe
+
+== まとめ
+
+milter managerは簡単に更新することができる、メンテナンスコス
+トが低いソフトウェアです。
+
+新しいバージョンで行われている様々な改善を利用したい場合は更
+新を検討してください。
+
+追加パッケージもインストールしている場合は((<Ubuntuで更新
+（任意）|upgrade-options-on-ubuntu.rd.ja>))も参照してくださ
+い。

@@ -1,0 +1,1014 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterServerContext">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterServerContext.top_of_page">MilterServerContext</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterServerContext</refname>
+<refpurpose>Process server side milter protocol.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="MilterServerContext.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-SERVER-CONTEXT-ERROR:CAPS">MILTER_SERVER_CONTEXT_ERROR</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</link>
+enum                <link linkend="MilterServerContextError">MilterServerContextError</link>;
+enum                <link linkend="MilterServerContextState">MilterServerContextState</link>;
+struct              <link linkend="MilterServerContext-struct">MilterServerContext</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-server-context-error-quark">milter_server_context_error_quark</link>   (<parameter><type>void</type></parameter>);
+<link linkend="MilterServerContext"><returnvalue>MilterServerContext</returnvalue></link> * <link linkend="milter-server-context-new">milter_server_context_new</link>         (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-connection-timeout">milter_server_context_set_connection_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-writing-timeout">milter_server_context_set_writing_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-reading-timeout">milter_server_context_set_reading_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-end-of-message-timeout">milter_server_context_set_end_of_message_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-set-connection-spec">milter_server_context_set_connection_spec</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-establish-connection">milter_server_context_establish_connection</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-server-context-get-status">milter_server_context_get_status</link>    (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="MilterServerContextState"><returnvalue>MilterServerContextState</returnvalue></link> <link linkend="milter-server-context-get-state">milter_server_context_get_state</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-state">milter_server_context_set_state</link>     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterServerContextState"><type>MilterServerContextState</type></link> state</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-is-processing">milter_server_context_is_processing</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-negotiate">milter_server_context_negotiate</link>     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-connect">milter_server_context_connect</link>       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter><type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_length</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-helo">milter_server_context_helo</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-envelope-from">milter_server_context_envelope_from</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-envelope-recipient">milter_server_context_envelope_recipient</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-data">milter_server_context_data</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-unknown">milter_server_context_unknown</link>       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-header">milter_server_context_header</link>        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-end-of-header">milter_server_context_end_of_header</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-body">milter_server_context_body</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-end-of-message">milter_server_context_end_of_message</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-quit">milter_server_context_quit</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-abort">milter_server_context_abort</link>         (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-is-enable-step">milter_server_context_is_enable_step</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-get-skip-body">milter_server_context_get_skip_body</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-server-context-get-name">milter_server_context_get_name</link>      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-name">milter_server_context_set_name</link>      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterServerContext.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="MilterAgent">MilterAgent</link>
+         +----<link linkend="MilterProtocolAgent">MilterProtocolAgent</link>
+               +----MilterServerContext
+</synopsis>
+</refsect1>
+<refsect1 id="MilterServerContext.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+MilterServerContext implements
+ <link linkend="MilterErrorEmittable">MilterErrorEmittable</link>,  <link linkend="MilterFinishedEmittable">MilterFinishedEmittable</link> and  <link linkend="MilterReplySignals">MilterReplySignals</link>.</para>
+</refsect1>
+<refsect1 id="MilterServerContext.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="MilterServerContext--connection-timeout">connection-timeout</link>&quot;       <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+  &quot;<link linkend="MilterServerContext--end-of-message-timeout">end-of-message-timeout</link>&quot;   <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+  &quot;<link linkend="MilterServerContext--message-result">message-result</link>&quot;           <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link>*  : Read / Write
+  &quot;<link linkend="MilterServerContext--name">name</link>&quot;                     <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  &quot;<link linkend="MilterServerContext--reading-timeout">reading-timeout</link>&quot;          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+  &quot;<link linkend="MilterServerContext--state">state</link>&quot;                    <link linkend="MilterServerContextState"><type>MilterServerContextState</type></link>  : Read / Write
+  &quot;<link linkend="MilterServerContext--status">status</link>&quot;                   <link linkend="MilterStatus"><type>MilterStatus</type></link>          : Read / Write
+  &quot;<link linkend="MilterServerContext--writing-timeout">writing-timeout</link>&quot;          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+</synopsis>
+</refsect1>
+<refsect1 id="MilterServerContext.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="MilterServerContext-connection-timeout">connection-timeout</link>&quot;                             : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-end-of-message-timeout">end-of-message-timeout</link>&quot;                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-message-processed">message-processed</link>&quot;                              : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-reading-timeout">reading-timeout</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-ready">ready</link>&quot;                                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-state-transited">state-transited</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-body">stop-on-body</link>&quot;                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-connect">stop-on-connect</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-data">stop-on-data</link>&quot;                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-end-of-header">stop-on-end-of-header</link>&quot;                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-end-of-message">stop-on-end-of-message</link>&quot;                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-envelope-from">stop-on-envelope-from</link>&quot;                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-envelope-recipient">stop-on-envelope-recipient</link>&quot;                     : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-header">stop-on-header</link>&quot;                                 : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stop-on-helo">stop-on-helo</link>&quot;                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-stopped">stopped</link>&quot;                                        : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterServerContext-writing-timeout">writing-timeout</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+</synopsis>
+</refsect1>
+
+<refsect1 id="MilterServerContext.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link> processes one server side milter
+protocol session. It means <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link> instance
+is created for each milter protocol session.
+</para>
+</refsect1>
+<refsect1 id="MilterServerContext.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-SERVER-CONTEXT-ERROR:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_ERROR</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-ERROR:CAPS"><primary>MILTER_SERVER_CONTEXT_ERROR</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_ERROR           (milter_server_context_error_quark())
+</programlisting>
+<para>
+Used to get the <link linkend="GError"><type>GError</type></link> quark for <link linkend="MilterServerContext"><type>MilterServerContext</type></link> errors.
+</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT     300
+</programlisting>
+<para>
+The default connection timeout by seconds.
+</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT         10
+</programlisting>
+<para>
+The default writing timeout by seconds.
+</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT         10
+</programlisting>
+<para>
+The default reading timeout by seconds.
+</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT 300
+</programlisting>
+<para>
+The default end-of-message response timeout by seconds.
+</para></refsect2>
+<refsect2 id="MilterServerContextError" role="enum">
+<title>enum MilterServerContextError</title>
+<indexterm zone="MilterServerContextError"><primary>MilterServerContextError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_SERVER_CONTEXT_ERROR_CONNECTION_FAILURE,
+    MILTER_SERVER_CONTEXT_ERROR_NO_SPEC,
+    MILTER_SERVER_CONTEXT_ERROR_INVALID_STATE,
+    MILTER_SERVER_CONTEXT_ERROR_BUSY,
+    MILTER_SERVER_CONTEXT_ERROR_IO_ERROR,
+    MILTER_SERVER_CONTEXT_ERROR_NEWER_VERSION_REQUESTED
+} MilterServerContextError;
+</programlisting>
+<para>
+These identify the variable errors that can occur while
+calling <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link> functions.
+</para><variablelist role="enum">
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-CONNECTION-FAILURE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_CONNECTION_FAILURE</literal></term>
+<listitem><simpara>Indicates a
+connection failure.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-NO-SPEC:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_NO_SPEC</literal></term>
+<listitem><simpara>Indicates the
+connection spec isn't set.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-INVALID-STATE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_INVALID_STATE</literal></term>
+<listitem><simpara>Indicates
+unexpected response is received on the current
+<link linkend="MilterServerContextState"><literal>MilterServerContextState</literal></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-BUSY:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_BUSY</literal></term>
+<listitem><simpara>Indicates
+a new operation is requested before the previous
+operation's response is received.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-IO-ERROR:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_IO_ERROR</literal></term>
+<listitem><simpara>Indicates an IO
+error causing on writing/reading milter protocol data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-NEWER-VERSION-REQUESTED:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_NEWER_VERSION_REQUESTED</literal></term>
+<listitem><simpara>Indicates unsupported newer version is requested.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterServerContextState" role="enum">
+<title>enum MilterServerContextState</title>
+<indexterm zone="MilterServerContextState"><primary>MilterServerContextState</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_SERVER_CONTEXT_STATE_INVALID,
+    MILTER_SERVER_CONTEXT_STATE_START,
+    MILTER_SERVER_CONTEXT_STATE_DEFINE_MACRO,
+    MILTER_SERVER_CONTEXT_STATE_NEGOTIATE,
+    MILTER_SERVER_CONTEXT_STATE_CONNECT,
+    MILTER_SERVER_CONTEXT_STATE_HELO,
+    MILTER_SERVER_CONTEXT_STATE_ENVELOPE_FROM,
+    MILTER_SERVER_CONTEXT_STATE_ENVELOPE_RECIPIENT,
+    MILTER_SERVER_CONTEXT_STATE_DATA,
+    MILTER_SERVER_CONTEXT_STATE_UNKNOWN,
+    MILTER_SERVER_CONTEXT_STATE_HEADER,
+    MILTER_SERVER_CONTEXT_STATE_END_OF_HEADER,
+    MILTER_SERVER_CONTEXT_STATE_BODY,
+    MILTER_SERVER_CONTEXT_STATE_END_OF_MESSAGE,
+    MILTER_SERVER_CONTEXT_STATE_QUIT,
+    MILTER_SERVER_CONTEXT_STATE_ABORT
+} MilterServerContextState;
+</programlisting>
+<para>
+These identify the state of <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.
+</para><variablelist role="enum">
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-INVALID:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_INVALID</literal></term>
+<listitem><simpara>Invalid state.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-START:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_START</literal></term>
+<listitem><simpara>Just started.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-DEFINE-MACRO:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_DEFINE_MACRO</literal></term>
+<listitem><simpara>Sent macro definition.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-NEGOTIATE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_NEGOTIATE</literal></term>
+<listitem><simpara>Negotiating.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-CONNECT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_CONNECT</literal></term>
+<listitem><simpara>Sent connection
+information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-HELO:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_HELO</literal></term>
+<listitem><simpara>Sent HELO information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-ENVELOPE-FROM:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_ENVELOPE_FROM</literal></term>
+<listitem><simpara>Sent MAIL
+FROM command information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-ENVELOPE-RECIPIENT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_ENVELOPE_RECIPIENT</literal></term>
+<listitem><simpara>Sent
+RCPT TO command information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-DATA:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_DATA</literal></term>
+<listitem><simpara>Sent DATA command
+information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-UNKNOWN:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_UNKNOWN</literal></term>
+<listitem><simpara>Sent unknown
+SMTP command.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-HEADER:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_HEADER</literal></term>
+<listitem><simpara>Sent a header.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-END-OF-HEADER:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_END_OF_HEADER</literal></term>
+<listitem><simpara>Sent all headers.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-BODY:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_BODY</literal></term>
+<listitem><simpara>Sent a body chunk.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-END-OF-MESSAGE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_END_OF_MESSAGE</literal></term>
+<listitem><simpara>Sent all body
+chunks.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-QUIT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_QUIT</literal></term>
+<listitem><simpara>Sent quit request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-ABORT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_ABORT</literal></term>
+<listitem><simpara>Sent abort request.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterServerContext-struct" role="struct">
+<title>struct MilterServerContext</title>
+<indexterm zone="MilterServerContext-struct"><primary>MilterServerContext</primary></indexterm>
+<programlisting>struct MilterServerContext;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-server-context-error-quark" role="function">
+<title>milter_server_context_error_quark ()</title>
+<indexterm zone="milter-server-context-error-quark"><primary>milter_server_context_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_server_context_error_quark   (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-server-context-new" role="function">
+<title>milter_server_context_new ()</title>
+<indexterm zone="milter-server-context-new"><primary>milter_server_context_new</primary></indexterm>
+<programlisting><link linkend="MilterServerContext"><returnvalue>MilterServerContext</returnvalue></link> * milter_server_context_new         (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Creates a new context object.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link> object.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-connection-timeout" role="function">
+<title>milter_server_context_set_connection_timeout ()</title>
+<indexterm zone="milter-server-context-set-connection-timeout"><primary>milter_server_context_set_connection_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_connection_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>
+Sets the timeout by seconds on connection. If <parameter>context</parameter>
+doesn't connects to client in <parameter>timeout</parameter> seconds,
+<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link> signal is emitted.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara>the connection timeout by seconds. (default is
+<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</literal></link>)</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-writing-timeout" role="function">
+<title>milter_server_context_set_writing_timeout ()</title>
+<indexterm zone="milter-server-context-set-writing-timeout"><primary>milter_server_context_set_writing_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_writing_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>
+Sets the timeout by seconds on writing. If <parameter>context</parameter>
+doesn't write to client socket in <parameter>timeout</parameter> seconds,
+<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link> signal is emitted.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara>the writing timeout by seconds. (default is
+<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</literal></link>)</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-reading-timeout" role="function">
+<title>milter_server_context_set_reading_timeout ()</title>
+<indexterm zone="milter-server-context-set-reading-timeout"><primary>milter_server_context_set_reading_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_reading_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>
+Sets the timeout by seconds on reading. If <parameter>context</parameter>
+doesn't receive response from client socket in <parameter>timeout</parameter>
+seconds, <link linkend="MilterServerContext-timeout"><type>"timeout"</type></link> signal is emitted.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara>the reading timeout by seconds. (default is
+<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</literal></link>)</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-end-of-message-timeout" role="function">
+<title>milter_server_context_set_end_of_message_timeout ()</title>
+<indexterm zone="milter-server-context-set-end-of-message-timeout"><primary>milter_server_context_set_end_of_message_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_end_of_message_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>
+Sets the timeout by seconds on end-of-message. If
+<parameter>context</parameter> doesn't receive response for end-of-message from
+client socket in <parameter>timeout</parameter> seconds,
+<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link> signal is emitted.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara>the timeout by seconds on end-of-message.
+(default is
+<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</literal></link>)</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-connection-spec" role="function">
+<title>milter_server_context_set_connection_spec ()</title>
+<indexterm zone="milter-server-context-set-connection-spec"><primary>milter_server_context_set_connection_spec</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_set_connection_spec
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Sets a connection specification of client. If <parameter>spec</parameter> is
+invalid format and <parameter>error</parameter> is not <link linkend="NULL:CAPS"><literal>NULL</literal></link>, error detail is
+stored into <parameter>error</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>spec</parameter>&#160;:</term>
+<listitem><simpara>the connection spec of client.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-establish-connection" role="function">
+<title>milter_server_context_establish_connection ()</title>
+<indexterm zone="milter-server-context-establish-connection"><primary>milter_server_context_establish_connection</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_establish_connection
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Establishes a connection to client. If establishing is
+failed and <parameter>error</parameter> is not <link linkend="NULL:CAPS"><literal>NULL</literal></link>, error detail is stored
+into <parameter>error</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-status" role="function">
+<title>milter_server_context_get_status ()</title>
+<indexterm zone="milter-server-context-get-status"><primary>milter_server_context_get_status</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_server_context_get_status    (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the current status.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the current status.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-state" role="function">
+<title>milter_server_context_get_state ()</title>
+<indexterm zone="milter-server-context-get-state"><primary>milter_server_context_get_state</primary></indexterm>
+<programlisting><link linkend="MilterServerContextState"><returnvalue>MilterServerContextState</returnvalue></link> milter_server_context_get_state
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the current state.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the current state.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-state" role="function">
+<title>milter_server_context_set_state ()</title>
+<indexterm zone="milter-server-context-set-state"><primary>milter_server_context_set_state</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_state     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterServerContextState"><type>MilterServerContextState</type></link> state</parameter>);</programlisting>
+<para>
+Sets the current state.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter>&#160;:</term>
+<listitem><simpara>the new state.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-is-processing" role="function">
+<title>milter_server_context_is_processing ()</title>
+<indexterm zone="milter-server-context-is-processing"><primary>milter_server_context_is_processing</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_is_processing (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets whether waiting response.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if any response is received after the last
+writing, <link linkend="FALSE:CAPS"><literal>FALSE</literal></link> otherwise.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-negotiate" role="function">
+<title>milter_server_context_negotiate ()</title>
+<indexterm zone="milter-server-context-negotiate"><primary>milter_server_context_negotiate</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_negotiate     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+Negotiates with client.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>option</parameter>&#160;:</term>
+<listitem><simpara>the negotiate option.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-connect" role="function">
+<title>milter_server_context_connect ()</title>
+<indexterm zone="milter-server-context-connect"><primary>milter_server_context_connect</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_connect       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter><type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_length</parameter>);</programlisting>
+<para>
+Sends connected SMTP client information.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host_name</parameter>&#160;:</term>
+<listitem><simpara>the host name of connected SMTP client.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>the address of connected SMTP client.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address_length</parameter>&#160;:</term>
+<listitem><simpara>the length of <parameter>address</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-helo" role="function">
+<title>milter_server_context_helo ()</title>
+<indexterm zone="milter-server-context-helo"><primary>milter_server_context_helo</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_helo          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);</programlisting>
+<para>
+Sends the FQDN passed on HELO.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fqdn</parameter>&#160;:</term>
+<listitem><simpara>the FQDN.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-envelope-from" role="function">
+<title>milter_server_context_envelope_from ()</title>
+<indexterm zone="milter-server-context-envelope-from"><primary>milter_server_context_envelope_from</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_envelope_from (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);</programlisting>
+<para>
+Sends the parameter passed on MAIL FROM.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>from</parameter>&#160;:</term>
+<listitem><simpara>the envelope from address.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-envelope-recipient" role="function">
+<title>milter_server_context_envelope_recipient ()</title>
+<indexterm zone="milter-server-context-envelope-recipient"><primary>milter_server_context_envelope_recipient</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_envelope_recipient
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>);</programlisting>
+<para>
+Sends the parameter passed on RCPT TO.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter>&#160;:</term>
+<listitem><simpara>the envelope recipient address.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-data" role="function">
+<title>milter_server_context_data ()</title>
+<indexterm zone="milter-server-context-data"><primary>milter_server_context_data</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_data          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Notifies DATA is received.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-unknown" role="function">
+<title>milter_server_context_unknown ()</title>
+<indexterm zone="milter-server-context-unknown"><primary>milter_server_context_unknown</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_unknown       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);</programlisting>
+<para>
+Sends received unknown SMTP command.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command</parameter>&#160;:</term>
+<listitem><simpara>the unknown SMTP command.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-header" role="function">
+<title>milter_server_context_header ()</title>
+<indexterm zone="milter-server-context-header"><primary>milter_server_context_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_header        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+Sends a header.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the header name.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara>the header value.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-end-of-header" role="function">
+<title>milter_server_context_end_of_header ()</title>
+<indexterm zone="milter-server-context-end-of-header"><primary>milter_server_context_end_of_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_end_of_header (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Notifies all headers are sent.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-body" role="function">
+<title>milter_server_context_body ()</title>
+<indexterm zone="milter-server-context-body"><primary>milter_server_context_body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_body          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>
+Sends a body chunk.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chunk</parameter>&#160;:</term>
+<listitem><simpara>the body chunk.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the size of <parameter>chunk</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-end-of-message" role="function">
+<title>milter_server_context_end_of_message ()</title>
+<indexterm zone="milter-server-context-end-of-message"><primary>milter_server_context_end_of_message</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_end_of_message
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>
+Notifies all body chunks are sent with optional the last
+body chunk.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chunk</parameter>&#160;:</term>
+<listitem><simpara>the body chunk. maybe <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the size of <parameter>chunk</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-quit" role="function">
+<title>milter_server_context_quit ()</title>
+<indexterm zone="milter-server-context-quit"><primary>milter_server_context_quit</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_quit          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Quits the current connection.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-abort" role="function">
+<title>milter_server_context_abort ()</title>
+<indexterm zone="milter-server-context-abort"><primary>milter_server_context_abort</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_abort         (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Aborts the current connection.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-is-enable-step" role="function">
+<title>milter_server_context_is_enable_step ()</title>
+<indexterm zone="milter-server-context-is-enable-step"><primary>milter_server_context_is_enable_step</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_is_enable_step
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);</programlisting>
+<para>
+Gets whether <parameter>step</parameter> flag is enabled in the <parameter>context</parameter>'s option.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>step</parameter>&#160;:</term>
+<listitem><simpara>the step flag.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if <parameter>step</parameter> flags is enabled, <link linkend="FALSE:CAPS"><literal>FALSE</literal></link> otherwise.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-skip-body" role="function">
+<title>milter_server_context_get_skip_body ()</title>
+<indexterm zone="milter-server-context-get-skip-body"><primary>milter_server_context_get_skip_body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_get_skip_body (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets whether <parameter>context</parameter> received skip response on sending
+body chunks.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if body chunks are skipped, <link linkend="FALSE:CAPS"><literal>FALSE</literal></link>
+otherwise.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-name" role="function">
+<title>milter_server_context_get_name ()</title>
+<indexterm zone="milter-server-context-get-name"><primary>milter_server_context_get_name</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_server_context_get_name      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the name of <parameter>context</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the name of <parameter>context</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-name" role="function">
+<title>milter_server_context_set_name ()</title>
+<indexterm zone="milter-server-context-set-name"><primary>milter_server_context_set_name</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_name      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+Sets the name of <parameter>context</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the name.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="MilterServerContext.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="MilterServerContext--connection-timeout" role="property"><title>The <literal>&quot;connection-timeout&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--connection-timeout"><primary>MilterServerContext:connection-timeout</primary></indexterm>
+<programlisting>  &quot;connection-timeout&quot;       <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds for connecting to a filter.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 300</para>
+</refsect2>
+<refsect2 id="MilterServerContext--end-of-message-timeout" role="property"><title>The <literal>&quot;end-of-message-timeout&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--end-of-message-timeout"><primary>MilterServerContext:end-of-message-timeout</primary></indexterm>
+<programlisting>  &quot;end-of-message-timeout&quot;   <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds between sending end-of-message to a filter and waiting for its reply.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 300</para>
+</refsect2>
+<refsect2 id="MilterServerContext--message-result" role="property"><title>The <literal>&quot;message-result&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--message-result"><primary>MilterServerContext:message-result</primary></indexterm>
+<programlisting>  &quot;message-result&quot;           <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link>*  : Read / Write</programlisting>
+<para>Result of the current processing message.</para></refsect2>
+<refsect2 id="MilterServerContext--name" role="property"><title>The <literal>&quot;name&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--name"><primary>MilterServerContext:name</primary></indexterm>
+<programlisting>  &quot;name&quot;                     <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>The name of the MilterServerContext.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="MilterServerContext--reading-timeout" role="property"><title>The <literal>&quot;reading-timeout&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--reading-timeout"><primary>MilterServerContext:reading-timeout</primary></indexterm>
+<programlisting>  &quot;reading-timeout&quot;          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds for reading reply from a filter.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 10</para>
+</refsect2>
+<refsect2 id="MilterServerContext--state" role="property"><title>The <literal>&quot;state&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--state"><primary>MilterServerContext:state</primary></indexterm>
+<programlisting>  &quot;state&quot;                    <link linkend="MilterServerContextState"><type>MilterServerContextState</type></link>  : Read / Write</programlisting>
+<para>The state of the MilterServerContext.</para><para>Default value: MILTER_SERVER_CONTEXT_STATE_START</para>
+</refsect2>
+<refsect2 id="MilterServerContext--status" role="property"><title>The <literal>&quot;status&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--status"><primary>MilterServerContext:status</primary></indexterm>
+<programlisting>  &quot;status&quot;                   <link linkend="MilterStatus"><type>MilterStatus</type></link>          : Read / Write</programlisting>
+<para>The status of the MilterServerContext.</para><para>Default value: MILTER_STATUS_NOT_CHANGE</para>
+</refsect2>
+<refsect2 id="MilterServerContext--writing-timeout" role="property"><title>The <literal>&quot;writing-timeout&quot;</literal> property</title>
+<indexterm zone="MilterServerContext--writing-timeout"><primary>MilterServerContext:writing-timeout</primary></indexterm>
+<programlisting>  &quot;writing-timeout&quot;          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds for writing information from MTA to a filter.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 10</para>
+</refsect2>
+</refsect1>
+<refsect1 id="MilterServerContext.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="MilterServerContext-connection-timeout" role="signal"><title>The <literal>&quot;connection-timeout&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-connection-timeout"><primary>MilterServerContext::connection-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-end-of-message-timeout" role="signal"><title>The <literal>&quot;end-of-message-timeout&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-end-of-message-timeout"><primary>MilterServerContext::end-of-message-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-message-processed" role="signal"><title>The <literal>&quot;message-processed&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-message-processed"><primary>MilterServerContext::message-processed</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link> *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-reading-timeout" role="signal"><title>The <literal>&quot;reading-timeout&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-reading-timeout"><primary>MilterServerContext::reading-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-ready" role="signal"><title>The <literal>&quot;ready&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-ready"><primary>MilterServerContext::ready</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-state-transited" role="signal"><title>The <literal>&quot;state-transited&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-state-transited"><primary>MilterServerContext::state-transited</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link>     *milterservercontext,
+                                                        <link linkend="MilterServerContextState"><type>MilterServerContextState</type></link> arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>                 user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-body" role="signal"><title>The <literal>&quot;stop-on-body&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-body"><primary>MilterServerContext::stop-on-body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="guint64"><type>guint64</type></link>              arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-connect" role="signal"><title>The <literal>&quot;stop-on-connect&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-connect"><primary>MilterServerContext::stop-on-connect</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             arg2,
+                                                        <link linkend="guint"><type>guint</type></link>                arg3,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-data" role="signal"><title>The <literal>&quot;stop-on-data&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-data"><primary>MilterServerContext::stop-on-data</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-end-of-header" role="signal"><title>The <literal>&quot;stop-on-end-of-header&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-end-of-header"><primary>MilterServerContext::stop-on-end-of-header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-end-of-message" role="signal"><title>The <literal>&quot;stop-on-end-of-message&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-end-of-message"><primary>MilterServerContext::stop-on-end-of-message</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="guint64"><type>guint64</type></link>              arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-envelope-from" role="signal"><title>The <literal>&quot;stop-on-envelope-from&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-envelope-from"><primary>MilterServerContext::stop-on-envelope-from</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-envelope-recipient" role="signal"><title>The <literal>&quot;stop-on-envelope-recipient&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-envelope-recipient"><primary>MilterServerContext::stop-on-envelope-recipient</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-header" role="signal"><title>The <literal>&quot;stop-on-header&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-header"><primary>MilterServerContext::stop-on-header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-helo" role="signal"><title>The <literal>&quot;stop-on-helo&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stop-on-helo"><primary>MilterServerContext::stop-on-helo</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stopped" role="signal"><title>The <literal>&quot;stopped&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-stopped"><primary>MilterServerContext::stopped</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-writing-timeout" role="signal"><title>The <literal>&quot;writing-timeout&quot;</literal> signal</title>
+<indexterm zone="MilterServerContext-writing-timeout"><primary>MilterServerContext::writing-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+</refentry>

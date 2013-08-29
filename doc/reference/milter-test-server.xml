@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-test-server">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-test-server.top_of_page'>milter-test-server</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-test-server</refname>
+  <refpurpose>MTA side milter protocol implemented program</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>NAME</title>
+  <para>milter-test-server - MTA side milter protocol implemented program</para>
+</refsect1>
+
+<refsect1>
+  <title>SYNOPSIS</title>
+  <para>
+  <code>milter-test-server</code>
+   [
+  <emphasis>option ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>DESCRIPTION</title>
+  <para>milter-test-server talks MTA side milter protocol. It can connect to a milter without MTA. For now, there is no similar tool. It is useful to test milter not MTA + milter. For example, it can be used for the following situation:</para>
+  <itemizedlist>
+  <listitem>
+  <para>milter's performance check</para>
+</listitem>
+  <listitem>
+  <para>milter's operation check</para>
+</listitem>
+</itemizedlist>
+  <para>milter-test-server can be used for simple performance check because it shows elapsed time. You can confirm elapsed time without MTA's processing time. You will find a problem of a milter more easily because it doesn't depend on MTA.</para>
+  <para>
+  If a milter changes headers and/or body, milter-test-server can show changed message. It can be used for testing a milter that may change headers and/or body. If it is used with 
+  <ulink url='http://cutter.sourceforge.net/'>unit testing framework like Cutter</ulink>
+  , you can write automated unit tests.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Options</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-test-server.--help'>--help</term>
+  <listitem>
+  <para>Shows available options and exits.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--name'>--name=NAME</term>
+  <listitem>
+  <para>Uses NAME as milter-test-server's name. The name is used as a value of &quot;{daemon_name}&quot; macro for example.</para>
+  <para>The default value is &quot;milter-test-server&quot; that is the command file name.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connection-spec'>--connection-spec=SPEC</term>
+  <listitem>
+  <para>Specifies a socket to connect to milter. SPEC should be formatted as one of the followings:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:PATH</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT@HOST</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT@[ADDRESS]</para>
+</listitem>
+  <listitem>
+  <para>inet6:POST</para>
+</listitem>
+  <listitem>
+  <para>inet6:PORT@HOST</para>
+</listitem>
+  <listitem>
+  <para>inet6:PORT@[ADDRESS]</para>
+</listitem>
+</itemizedlist>
+  <para>Examples:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:/var/run/milter/milter-manager.sock</para>
+</listitem>
+  <listitem>
+  <para>inet:10025</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@[127.0.0.1]</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--negotiate-version'>--negotiate-version=VERSION</term>
+  <listitem>
+  <para>Uses VERSION as milter protocol version sent to milter.</para>
+  <para>The default value is 8. The value is the same as Sendmail 8.14's default value.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connect-host'>--connect-host=HOST</term>
+  <listitem>
+  <para>Uses HOST as connected host.</para>
+  <para>The host name is passed to milter's xxfi_connect() callback.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connect-address'>--connect-address=SPEC</term>
+  <listitem>
+  <para>Uses SPEC as connected address. SPEC format is same as --connection-spec option's SPEC.</para>
+  <para>The address is passed to milter's xxfi_connect() callback.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connect-macro'>--connect-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_connect() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;client_connections&quot; name and &quot;1&quot; value is sent on xxfi_connect() callback:</para>
+  <programlisting>--connect-macro client_connections:1</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--helo-fqdn'>--helo-fqdn=FQDN</term>
+  <listitem>
+  <para>Uses FQDN for 'HELO/EHLO' SMTP command.</para>
+  <para>The FQDN is passed to milter's xxfi_helo() callback.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--helo-macro'>--helo-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_helo() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;client_ptr&quot; name and &quot;unknown&quot; value is sent on xxfi_helo() callback:</para>
+  <programlisting>--helo-macro client_ptr:unknown</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-from'>--envelope-from=FROM, -fFROM</term>
+  <listitem>
+  <para>Uses FROM for 'MAIL FROM' SMTP command.</para>
+  <para>The address is passed to milter's xxfi_envfrom() callback.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-from-macro'>--envelope-from-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_envfrom() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;client_addr&quot; name and &quot;192.168.0.1&quot; value is sent on xxfi_envfrom() callback:</para>
+  <programlisting>--envelope-from-macro client_addr:192.168.0.1</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-recipient'>--envelope-recipient=RECIPIENT, -rRECIPIENT</term>
+  <listitem>
+  <para>Uses RECIPIENT for 'RCPT TO' SMTP command. If you want to use multiple recipients, specify --envelope-recipient option n-times.</para>
+  <para>The address is passed to milter's xxfi_envrcpt() callback. xxfi_envrcpt() is called for each recipient.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-recipient-macro'>--envelope-recipient-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_envrcpt() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;client_ptr&quot; name and &quot;2929&quot; value is sent on xxfi_envrcpt() callback:</para>
+  <programlisting>--envelope-recipient-macro client_ptr:2929</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--data-macro'>--data-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_data() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;client_name&quot; name and &quot;unknown&quot; value is sent on xxfi_data() callback:</para>
+  <programlisting>--data-macro client_name:unknown</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--header'>--header=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a header that names NAME and its value is VALUE. If you want to multiple headers, specify --header option n-times.</para>
+  <para>The header is passed to milter's xxfi_header() callback. xxfi_header() is called for each header.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--end-of-header-macro'>--end-of-header-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_eoh() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;n_headers&quot; name and &quot;100&quot; value is sent on xxfi_eoh() callback:</para>
+  <programlisting>--end-of-header-macro n_headers:100</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--body'>--body=CHUNK</term>
+  <listitem>
+  <para>Adds CHUNK as body chunk. If you want to multiple chunks, specify --body option n-times.</para>
+  <para>The chunk is passed to milter's xxfi_body() callback. xxfi_body() is called for each chunk.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--end-of-message-macro'>--end-of-message-macro=NAME:VALUE</term>
+  <listitem>
+  <para>Adds a macro that is sent on xxfi_eom() callback. The macro has NAME name and VALUE value. This option can be specified N-times for N additional macros.</para>
+  <para>Here is an example that a macro that has &quot;elapsed&quot; name and &quot;0.29&quot; value is sent on xxfi_eom() callback:</para>
+  <programlisting>--end-of-message-macro elapsed:0.29</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--unknown'>--unknown=COMMAND</term>
+  <listitem>
+  <para>Uses COMMAND as unknown SMTP command.</para>
+  <para>The command is passed to milter's xxfi_unknown() callback. xxfi_unknown() is called between xxfi_envrcpt() and xxfi_data().</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--authenticated-name'>--authenticated-name=NAME</term>
+  <listitem>
+  <para>
+  Uses 
+  <varname>NAME</varname>
+   as an authorized user name on SMTP Auth. It corresponds to SASL login name. 
+  <varname>NAME</varname>
+   is passed as a value of 
+  <code>{auth_authen}</code>
+   on MAIL FROM.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--authenticated-type'>--authenticated-type=TYPE</term>
+  <listitem>
+  <para>
+  Uses 
+  <varname>TYPE</varname>
+   as an authorized type on SMTP Auth. It corresponds to SASL login method. 
+  <varname>TYPE</varname>
+   is passed as a value of 
+  <code>{auth_type}</code>
+   on MAIL FROM.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--authenticated-author'>--authenticated-author=AUTHOR</term>
+  <listitem>
+  <para>
+  Uses 
+  <varname>AUTHOR</varname>
+   as an authorized sender on SMTP Auth. It corresponds to SASL sender. 
+  <varname>AUTHOR</varname>
+   is passed as a value of 
+  <code>{auth_author}</code>
+   on MAIL FROM.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--mail-file'>--mail-file=PATH</term>
+  <listitem>
+  <para>
+  Uses file exists at 
+  <varname>PATH</varname>
+   as mail content. If the file has 'From:' and/or 'To:', they are used for from and/or recipient addresses.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--output-message'>--output-message</term>
+  <listitem>
+  <para>Shows a message applied a milter. If you want to check milter's operation that may change header and/or body, specify this option.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--color'>--color=[yes|true|no|false|auto]</term>
+  <listitem>
+  <para>Shows a messaged applied a milter with colorization if --color, --color=yes or --color=true is specified. If --color=auto is specified, colorization is enabled on terminal environment.</para>
+  <para>The default is off.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connection-timeout'>--connection-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  Specifies timeout on connecting to a milter. An error is occurred when a connection can't be established in 
+  <varname>SECONDS</varname>
+   seconds.
+</para>
+  <para>The default is 300 seconds. (5 minutes)</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--reading-timeout'>--reading-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  Specifies timeout on reading a response from a milter. An error is occurred when the milter doesn't respond to a request in 
+  <varname>SECONDS</varname>
+   seconds.
+</para>
+  <para>The default is 10 seconds.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--writing-timeout'>--writing-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  Specifies timeout on writing a request to a milter. An error is occurred when request to the milter isn't completed in 
+  <varname>SECONDS</varname>
+   seconds.
+</para>
+  <para>The default is 10 seconds.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--end-of-message-timeout'>--end-of-message-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  Specifies timeout on reading a response of end-of-message command from a milter. An error is occurred when the milter doesn't complete its response to the end-of-message command in 
+  <varname>SECONDS</varname>
+  seconds.
+</para>
+  <para>The default is 300 seconds. (5 minutes)</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--threads'>--threads=N</term>
+  <listitem>
+  <para>Use N threads to request a milter.</para>
+  <para>The default is 0. (main thread only)</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--verbose'>--verbose</term>
+  <listitem>
+  <para>Logs verbosely.</para>
+  <para>&quot;MILTER_LOG_LEVEL=all&quot; environment variable configuration has the same effect.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--version'>--version</term>
+  <listitem>
+  <para>Shows version and exits.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>EXIT STATUS</title>
+  <para>The exit status is 0 if milter session is started and non 0 otherwise. milter session can't be started when connection spec is invalid format or milter-test-server can't connect to a milter.</para>
+</refsect1>
+
+<refsect1>
+  <title>EXAMPLE</title>
+  <para>The following example talks with a milter that works on host 192.168.1.29 and is listened at 10025 port.</para>
+  <programlisting>% milter-test-server -s inet:10025@192.168.1.29</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>SEE ALSO</title>
+  <para>
+  <link linkend='milter-test-client'>milter-test-client.rd</link>
+  (1),
+  <link linkend='milter-performance-check'>milter-performance-check.rd</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

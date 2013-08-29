@@ -1,0 +1,89 @@
+<!-- ##### SECTION Title ##### -->
+SmfiContext
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO SMFI_CONTEXT_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM SmfiContextError ##### -->
+<para>
+
+</para>
+
+@SMFI_CONTEXT_ERROR_INVALID_CODE: 
+
+<!-- ##### STRUCT SmfiContext ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION smfi_context_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_context_new ##### -->
+<para>
+
+</para>
+
+@client_context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION libmilter_compatible_reset ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### FUNCTION libmilter_compatible_convert_status_to ##### -->
+<para>
+
+</para>
+
+@status: 
+@Returns: 
+
+
+<!-- ##### FUNCTION libmilter_compatible_convert_status_from ##### -->
+<para>
+
+</para>
+
+@status: 
+@Returns: 
+
+

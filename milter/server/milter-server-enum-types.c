@@ -1,0 +1,56 @@
+
+
+
+#include "milter-server-enum-types.h"
+#include "milter-server-context.h"
+
+/* enumerations from "milter-server-context.h" */
+GType
+milter_server_context_error_get_type (void)
+{
+  static GType etype = 0;
+  if (etype == 0) {
+    static const GEnumValue values[] = {
+      { MILTER_SERVER_CONTEXT_ERROR_CONNECTION_FAILURE, "MILTER_SERVER_CONTEXT_ERROR_CONNECTION_FAILURE", "connection-failure" },
+      { MILTER_SERVER_CONTEXT_ERROR_NO_SPEC, "MILTER_SERVER_CONTEXT_ERROR_NO_SPEC", "no-spec" },
+      { MILTER_SERVER_CONTEXT_ERROR_INVALID_STATE, "MILTER_SERVER_CONTEXT_ERROR_INVALID_STATE", "invalid-state" },
+      { MILTER_SERVER_CONTEXT_ERROR_BUSY, "MILTER_SERVER_CONTEXT_ERROR_BUSY", "busy" },
+      { MILTER_SERVER_CONTEXT_ERROR_IO_ERROR, "MILTER_SERVER_CONTEXT_ERROR_IO_ERROR", "io-error" },
+      { MILTER_SERVER_CONTEXT_ERROR_NEWER_VERSION_REQUESTED, "MILTER_SERVER_CONTEXT_ERROR_NEWER_VERSION_REQUESTED", "newer-version-requested" },
+      { 0, NULL, NULL }
+    };
+    etype = g_enum_register_static ("MilterServerContextError", values);
+  }
+  return etype;
+}
+GType
+milter_server_context_state_get_type (void)
+{
+  static GType etype = 0;
+  if (etype == 0) {
+    static const GEnumValue values[] = {
+      { MILTER_SERVER_CONTEXT_STATE_INVALID, "MILTER_SERVER_CONTEXT_STATE_INVALID", "invalid" },
+      { MILTER_SERVER_CONTEXT_STATE_START, "MILTER_SERVER_CONTEXT_STATE_START", "start" },
+      { MILTER_SERVER_CONTEXT_STATE_DEFINE_MACRO, "MILTER_SERVER_CONTEXT_STATE_DEFINE_MACRO", "define-macro" },
+      { MILTER_SERVER_CONTEXT_STATE_NEGOTIATE, "MILTER_SERVER_CONTEXT_STATE_NEGOTIATE", "negotiate" },
+      { MILTER_SERVER_CONTEXT_STATE_CONNECT, "MILTER_SERVER_CONTEXT_STATE_CONNECT", "connect" },
+      { MILTER_SERVER_CONTEXT_STATE_HELO, "MILTER_SERVER_CONTEXT_STATE_HELO", "helo" },
+      { MILTER_SERVER_CONTEXT_STATE_ENVELOPE_FROM, "MILTER_SERVER_CONTEXT_STATE_ENVELOPE_FROM", "envelope-from" },
+      { MILTER_SERVER_CONTEXT_STATE_ENVELOPE_RECIPIENT, "MILTER_SERVER_CONTEXT_STATE_ENVELOPE_RECIPIENT", "envelope-recipient" },
+      { MILTER_SERVER_CONTEXT_STATE_DATA, "MILTER_SERVER_CONTEXT_STATE_DATA", "data" },
+      { MILTER_SERVER_CONTEXT_STATE_UNKNOWN, "MILTER_SERVER_CONTEXT_STATE_UNKNOWN", "unknown" },
+      { MILTER_SERVER_CONTEXT_STATE_HEADER, "MILTER_SERVER_CONTEXT_STATE_HEADER", "header" },
+      { MILTER_SERVER_CONTEXT_STATE_END_OF_HEADER, "MILTER_SERVER_CONTEXT_STATE_END_OF_HEADER", "end-of-header" },
+      { MILTER_SERVER_CONTEXT_STATE_BODY, "MILTER_SERVER_CONTEXT_STATE_BODY", "body" },
+      { MILTER_SERVER_CONTEXT_STATE_END_OF_MESSAGE, "MILTER_SERVER_CONTEXT_STATE_END_OF_MESSAGE", "end-of-message" },
+      { MILTER_SERVER_CONTEXT_STATE_QUIT, "MILTER_SERVER_CONTEXT_STATE_QUIT", "quit" },
+      { MILTER_SERVER_CONTEXT_STATE_ABORT, "MILTER_SERVER_CONTEXT_STATE_ABORT", "abort" },
+      { 0, NULL, NULL }
+    };
+    etype = g_enum_register_static ("MilterServerContextState", values);
+  }
+  return etype;
+}
+
+
+

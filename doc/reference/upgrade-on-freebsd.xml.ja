@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-on-freebsd">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-on-freebsd.top_of_page'>FreeBSDで更新</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>FreeBSDで更新</refname>
+  <refpurpose>FreeBSDでのmilter managerの更新方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  FreeBSDに特化したmilter managerの更新方法について説明します。 新規にインストールする方法は
+  <link linkend='install-to-freebsd'>FreeBSDへインストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>ビルドと更新</title>
+  <para>上書きインストールで更新できます。ただし、 /usr/local/etc/milter-manager/milter-manager.confが上書きさ れてしまうので、milter-manager.confを変更している場合は事前 にバックアップをとってください。</para>
+  <para>milter-manager.confではなくmilter-manager.local.confを利用し ている場合はバックアップをとる必要はありません。</para>
+  <programlisting>% cd ~/src/
+% fetch http://downloads.sourceforge.net/milter-manager/milter-manager-2.0.0.tar.gz
+% tar xvzf milter-manager-2.0.0.tar.gz
+% cd milter-manager-2.0.0
+% ./configure CPPFLAGS=&quot;-I/usr/local/include&quot;
+% gmake
+% sudo cp /usr/local/etc/milter-manager/milter-manager.conf{,.`date +%Y%m%d`}
+% sudo gmake install</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>milter managerは簡単に更新することができる、メンテナンスコス トが低いソフトウェアです。</para>
+  <para>新しいバージョンで行われている様々な改善を利用したい場合は更 新を検討してください。</para>
+  <para>
+  追加パッケージもインストールしている場合は
+  <link linkend='upgrade-options-on-freebsd'>FreeBSDで更新 （任意）</link>
+  も参照してくださ い。
+</para>
+</refsect1>
+</refentry>

@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>逆引きリファレンス</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="start.html" title="Part I. はじめよう">
+<link rel="prev" href="log-list.html" title="ログ一覧">
+<link rel="next" href="users.html" title="ユーザ">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="log-list.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="users.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="reverse-dictionary"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="reverse-dictionary.top_of_page"></a>逆引きリファレンス</span></h2>
+<p>逆引きリファレンス — やりたいことからやり方へ</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6002080"></a><h2>このドキュメントについて</h2>
+<p>「やりたいこと」をキーにして、そのやり方を見つけるためのドキュ メントです。</p>
+</div>
+<div class="refsect1">
+<a name="idp5182912"></a><h2>インストール</h2>
+<div class="refsect2">
+<a name="idp10116176"></a><h3>Debian GNU/Linuxにインストールする</h3>
+<p>
+  <a class="link" href="install-to-debian.html" title="Debianへインストール">Debian GNU/Linuxへインストール</a>
+  で説明しています。aptitudeでインストールできるので、メンテナ ンスが楽です。
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp8396480"></a><h3>Ubuntuにインストールする</h3>
+<p>
+  <a class="link" href="install-to-ubuntu.html" title="Ubuntuへインストール">Ubuntuへインストール</a>
+  で説明して います。aptitudeでインストールできるので、メンテナンスが楽で す。
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5780112"></a><h3>CentOSにインストールする</h3>
+<p>
+  <a class="link" href="install-to-centos.html" title="CentOS 6へインストール">CentOSへインストール</a>
+  で説明して います。RPMパッケージでインストールできるので、メンテナンス が楽です。
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp7259040"></a><h3>FreeBSDにインストールする</h3>
+<p>
+  <a class="link" href="install-to-freebsd.html" title="FreeBSDへインストール">FreeBSDへインストール</a>
+  で説明し ています。
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9370928"></a><h3>統計情報をグラフ化する</h3>
+<p>プラットフォーム毎にドキュメントが用意されています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-debian.html#install-options-to-debian.milter-manager-log-analyzer" title="milter-manager-log-analyzerのインストール">Debian用</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-ubuntu.html#install-options-to-ubuntu.milter-manager-log-analyzer" title="milter-manager-log-analyzerのインストール">Ubuntu用</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-centos.html#install-options-to-centos.milter-manager-log-analyzer" title="milter-manager-log-analyzerのインストール">CentOS用</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-freebsd.html#install-options-to-freebsd.milter-manager-log-analyzer" title="milter-manager-log-analyzerのインストール">FreeBSD用</a>
+  
+</p></li>
+</ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp5604768"></a><h2>設定: 基本編</h2>
+<div class="refsect2">
+<a name="reverse-dictionary.configuration-basic-find-configuration-file"></a><h3>設定ファイルを見つける</h3>
+<p>インストールマニュアル通りにインストールしている場合は、カス タマイズ用の設定ファイルは以下のようになります。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Ubuntu: /etc/milter-manager/milter-manager.local.conf</p></li>
+<li class="listitem"><p>CentOS: /etc/milter-manager/milter-manager.local.conf</p></li>
+<li class="listitem"><p>Ubuntu: /usr/local/etc/milter-manager/milter-manager.local.conf</p></li>
+</ul></div>
+<p>milter-manager.local.confは新規に作成するファイルです。既定値 では、milter-managerはmilter-manager.confと同じディレクトリに milter-manager.local.confがあると自動的に読み込みます。</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5610944"></a><h3>TCP/IPでmilter-managerに接続する</h3>
+<p>
+  <a class="link" href="configuration.html#configuration.manager-connection-spec">manager.connection_spec</a>
+  で"inet:"を指定します。
+</p>
+<pre class="programlisting"># 10025番ポートで待ち受ける。自ホストからのみ接続可。
+manager.connection_spec = "inet:10025@localhost"</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11125616"></a><h3>UNIXドメインソケットでmilter-managerに接続する</h3>
+<p>
+  <a class="link" href="configuration.html#configuration.manager-connection-spec">manager.connection_spec</a>
+  で"unix:"を指定します。
+</p>
+<pre class="programlisting"># /var/run/milter/milter-manager.sockで待ち受ける
+manager.connection_spec = "unix://var/run/milter/milter-manager.sock"</pre>
+<p>
+  ソケットファイルのパーミッションは
+  <a class="link" href="configuration.html#configuration.manager-unix-socket-mode">manager.unix_socket_mode</a>
+  で指定できます。
+</p>
+<pre class="programlisting"># 同じグループのユーザは接続可能。
+manager.unix_socket_mode = 0660</pre>
+<p>
+  ソケットファイルのグループは
+  <a class="link" href="configuration.html#configuration.manager-unix-socket-group">manager.unix_socket_group</a>
+  で指定できます。
+</p>
+<pre class="programlisting"># ソケットファイルは"milter"グループが所有する
+manager.unix_socket_group = "milter"</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp12679456"></a><h3>UNIXドメインソケットの後始末する</h3>
+<p>UNIXドメインソケット作成時に同名のファイルがある場合、ソケッ ト作成に失敗します。そのような状況を避けるために、以下のタイ ミングでソケットファイルを削除する設定があります。</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>UNIXドメインソケット作成前</p></li>
+<li class="listitem"><p>UNIXドメインソケット使用後</p></li>
+</ol></div>
+<p>既定値では両方とも有効になっているので、通常はソケットファイ ルがあるという理由でソケット作成に失敗することはありません。</p>
+<p>もし、無効にする場合は、それぞれ、以下の設定を変更します。</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.manager-remove-unix-socket-on-create">manager.remove_unix_socket_on_create</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.manager-remove-unix-socket-on-close">manager.remove_unix_socket_on_close</a>
+  
+</p></li>
+</ol></div>
+<p>以下は、両方を無効にする設定例です。</p>
+<pre class="programlisting"># ソケット作成前に既存のソケットファイルを削除しない
+manager.remove_unix_socket_on_create = false
+# ソケット使用後にソケットファイルを削除しない
+manager.remove_unix_socket_on_close = false</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp12690528"></a><h2>設定: 応用編</h2>
+<div class="refsect2">
+<a name="idp12691264"></a><h3>特定のアカウントのみmilterを適用する</h3>
+<p>サンプルとして特定のアカウントのみ登録されているmilterを適用 する設定が組み込まれています。このサンプルを使用して、以下の アカウントのみmilterを適用する例を示します。</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>test-user@example.com</p></li>
+<li class="listitem"><p>test.example.comドメインのすべてのアカウント</p></li>
+</ol></div>
+<p>
+  設定は
+  <a class="link" href="reverse-dictionary.html#reverse-dictionary.configuration-basic-find-configuration-file" title="設定ファイルを見つける">milter-manager.local.conf</a>
+  に追記します。
+</p>
+<pre class="programlisting">restrict_accounts_by_list("test-user@example.com",
+                          /@test\.example\.com\z/)</pre>
+<p>この機能は現在はまだサンプル扱いのため、今後変更される可能性 がありますが、その場合も同様の機能は提供され続けます。変更さ れる場合は、データベースやLDAPからのアカウント取得機能など、 より豊富な機能が備わっているはずです。</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

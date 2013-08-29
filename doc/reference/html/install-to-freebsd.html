@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Install to FreeBSD</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="install-to.html" title="Install milter manager to your platform">
+<link rel="prev" href="install-options-to-centos.html" title="Install to CentOS (optional)">
+<link rel="next" href="install-options-to-freebsd.html" title="Install to FreeBSD (optional)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="install-options-to-centos.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="install-to.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="install-options-to-freebsd.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install-to-freebsd"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install-to-freebsd.top_of_page"></a>Install to FreeBSD</span></h2>
+<p>Install to FreeBSD — How to install milter manager to FreeBSD</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp9385632"></a><h2>About this document</h2>
+<p>
+  This document describes how to install milter manager to FreeBSD. See 
+  <a class="link" href="install.html" title="Install">Install</a>
+   for general install information.
+</p>
+<p>This document assumes that FreeBSD 9.1-RELEASE is used.</p>
+</div>
+<div class="refsect1">
+<a name="idp8838352"></a><h2>Install packages</h2>
+<p>To install the following packages, related packages are also installed:</p>
+<pre class="programlisting">% sudo /usr/local/sbin/portupgrade -NRr lang/ruby18 glib20</pre>
+<p>We use Postfix as MTA:</p>
+<pre class="programlisting">% sudo /usr/local/sbin/portupgrade -NRr postfix</pre>
+<p>We use spamass-milter, clamav-milter and milter-greylist as milters:</p>
+<pre class="programlisting">% sudo /usr/local/sbin/portupgrade -NRr spamass-milter
+% sudo /usr/local/sbin/portupgrade -NRr -m 'WITH_POSTFIX=true' milter-greylist
+% sudo /usr/local/sbin/portupgrade -NRr -m 'WITH_MILTER=true' clamav</pre>
+</div>
+<div class="refsect1">
+<a name="idp7207536"></a><h2>Build and Install</h2>
+<p>We work at ~/src/. We will install milter manager into /usr/local/.</p>
+<pre class="programlisting">% mkdir -p ~/src/
+% cd ~/src/
+% fetch http://downloads.sourceforge.net/milter-manager/milter-manager-2.0.0.tar.gz
+% tar xvzf milter-manager-2.0.0.tar.gz
+% cd milter-manager-2.0.0
+% ./configure CPPFLAGS="-I/usr/local/include"
+% gmake
+% sudo gmake install</pre>
+</div>
+<div class="refsect1">
+<a name="idp9442800"></a><h2>Configuration</h2>
+<p>Here is a basic configuration policy.</p>
+<p>We use UNIX domain socket for accepting connection from MTA because security and speed.</p>
+<p>We use general user for milter's effective user. This is also for security. 'mail' group has permission of read/write UNIX domain socket. 'postfix' user is joined to 'mail' group.</p>
+<p>
+  milter-greylist should be applied only if
+  <a class="ulink" href="http://gabacho.reto.jp/en/anti-spam/" target="_top">S25R</a>
+  condition is matched to reduce needless delivery delay. But the configuration is automatically done by milter-manager. We need to do nothing for it.
+</p>
+<div class="refsect2">
+<a name="idp6104896"></a><h3>Configure spamass-milter</h3>
+<p>At first, we configure spamd.</p>
+<p>We create /usr/local/etc/mail/spamassassin/local.cf with the following configuration. This configuration is for adding headers only if spam detected.</p>
+<pre class="programlisting">remove_header ham Status
+remove_header ham Level</pre>
+<p>We need to append the following to /etc/rc.conf to enable spamd:</p>
+<pre class="programlisting">spamd_enable=YES</pre>
+<p>If our SMTP server has many concurrent connections, we should increase max concurrent connections. It is 5 by default. It's a good first value that about 1/3 of the max SMTP connections. e.g. about 30 for about 100 connections SMTP server:</p>
+<pre class="programlisting">spamd_flags="-c --max-children=30 "</pre>
+<p>We can adjust apposite value after operation. We can see milter manager's statistics graphs at the time.</p>
+<p>spamd should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service sa-spamd start</pre>
+<p>Next, we configure spamass-milter. We run spamass-milter with 'spamd' user and 'spamd' group.</p>
+<p>spamass-milter creates a socket file as /var/run/spamass-milter.sock by default. But general user can't create a new file in /var/run/. We create /var/run/spamass-milter/ directory owned by 'spamd' user. spamass-milter creates a socket file in the directory:</p>
+<pre class="programlisting">% sudo mkdir /var/run/spamass-milter/
+% sudo /usr/sbin/chown spamd:spamd /var/run/spamass-milter</pre>
+<p>We add the following to /etc/rc.conf:</p>
+<pre class="programlisting">spamass_milter_enable="YES"
+spamass_milter_user="spamd"
+spamass_milter_group="spamd"
+spamass_milter_socket="/var/run/spamss-milter/spamass-milter.sock"
+spamass_milter_socket_owner="spamd"
+spamass_milter_socket_group="mail"
+spamass_milter_socket_mode="660"
+spamass_milter_localflags="-u spamd -- -u spamd"</pre>
+<p>spamass-milter should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service spamass-milter start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp6355136"></a><h3>Configure clamav-milter</h3>
+<p>At first, we configure ClamAV.</p>
+<p>We add the following to /etc/rc.conf to enable clamd and freshclam:</p>
+<pre class="programlisting">clamav_clamd_enable="YES"
+clamav_freshclam_enable="YES"</pre>
+<p>Get the latest definition files before run clamd:</p>
+<pre class="programlisting">% sudo /usr/local/bin/freshcram</pre>
+<p>clamd and freshclam should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service clamav-clamd start
+% sudo /usr/sbin/service clamav-freshclam start</pre>
+<p>clamav-milter is ran as 'clamav' user and 'clamav' group by default. We use the configuration because 'clamav' user is general user. We set group read/write permission of socket.</p>
+<p>We add the following to /etc/rc.conf:</p>
+<pre class="programlisting">clamav_milter_enable="YES"
+clamav_milter_socket_mode="660"
+clamav_milter_socket_group="mail"</pre>
+<p>We may need to configure /usr/local/etc/clamav-milter.conf. e.g.:</p>
+<p>/usr/local/etc/clamav-milter.conf</p>
+<p>Before:</p>
+<pre class="programlisting">#OnInfected Quarantine
+#AddHeader Replace
+#LogSyslog yes
+#LogFacility LOG_MAIL
+#LogInfected Basic</pre>
+<p>After:</p>
+<pre class="programlisting">OnInfected Reject
+AddHeader Replace
+LogSyslog yes
+LogFacility LOG_MAIL
+LogInfected Full</pre>
+<p>Here are explanations of the above configurations:</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.OnInfected"></a>OnInfected Reject</span></p></td>
+<td><p>Rejects infected mails. The default value is Quarantine. It puts infected mails into Postfix's hold queue. If we don't want to confirm hold queue periodically, Reject is a good way for easy maintenance.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.AddHeader"></a>AddHeader Replace</span></p></td>
+<td><p>Replaces X-Virus-Scanned header even if it's existed.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.LogSyslog"></a>LogSyslog yes</span></p></td>
+<td><p>Logs to syslog.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.LogFacility"></a>LogFacility LOG_MAIL</span></p></td>
+<td><p>Logs to syslog with LOG_MAIL facility. /var/log/maillog is the default LOG_MAIL log file.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.LogInfected"></a>LogInfected Full</span></p></td>
+<td><p>Logs verbosity on finding infected mails.</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>clamav-milter should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service clamav-milter start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11299504"></a><h3>Configure milter-greylist</h3>
+<p>We run milter-greylist as 'mailnull' user and 'mailnull' group. 'mailnull' user is the default configuration and it is unused user on Postfix environment.</p>
+<p>We copy /usr/local/etc/mail/greylist.conf.sample to /usr/local/etc/mail/greylist.conf and change it for the following configurations:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>change the effective group to "mail" group from "mailnull" group.</p></li>
+<li class="listitem"><p>add write permission for the socket file to "mail" group.</p></li>
+<li class="listitem"><p>use the leading 24bits for IP address match to avoid Greylist adverse effect for sender uses some MTA case.</p></li>
+<li class="listitem"><p>decrease retransmit check time to 10 minutes from 30 minutes (default value) to avoid Greylist adverse effect.</p></li>
+<li class="listitem"><p>increase auto whitelist period to a week from 1 day (default value) to avoid Greylist adverse effect.</p></li>
+<li class="listitem"><p>use Greylist by default.</p></li>
+</ul></div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>The configuration relaxes Greylist check to avoid Greylist
+adverse effect. It increases received spam mails but we
+should give priority to avoid false positive rather than
+false negative. We should not consider that we blocks all
+spam mails by Greylist. We can blocks spam mails that
+isn't blocked by Greylist by other anti-spam technique
+such as SpamAssassin. milter manager helps constructing
+mail system that combines some anti-spam techniques.</div>
+<p>Before:</p>
+<pre class="programlisting">socket "/var/milter-greylist/milter-greylist.sock"
+user "mailnull:mailnull"
+racl whitelist default</pre>
+<p>After:</p>
+<pre class="programlisting">socket "/var/milter-greylist/milter-greylist.sock" 660
+user "mailnull:mail"
+subnetmatch /24
+greylist 10m
+autowhite 1w
+racl greylist default</pre>
+<p>We add the following to /etc/rc.conf:</p>
+<pre class="programlisting">miltergreylist_enable="YES"
+miltergreylist_runas="mailnull:mail"</pre>
+<p>milter-greylist should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service milter-greylist start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11314384"></a><h3>Configure milter-manager</h3>
+<p>We create 'milter-manager' user because we run milter-manager as 'milter-manager' user:</p>
+<pre class="programlisting">% sudo /usr/sbin/pw groupadd milter-manager
+% sudo /usr/sbin/pw useradd milter-manager -g milter-manager -G mail -m</pre>
+<p>milter-manager detects milters that installed in system. We can confirm spamass-milter, clamav-milter and milter-greylist are detected:</p>
+<pre class="programlisting">% sudo /usr/local/sbin/milter-manager -u milter-manager --show-config</pre>
+<p>The following output shows milters are detected:</p>
+<pre class="programlisting">...
+define_milter("milter-greylist") do |milter|
+  milter.connection_spec = "unix:/var/milter-greylist/milter-greylist.sock"
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter("clamav-milter") do |milter|
+  milter.connection_spec = "unix:/var/run/clamav/clmilter.sock"
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter("spamass-milter") do |milter|
+  milter.connection_spec = "unix:/var/run/spamss-milter/spamass-milter.sock"
+  ...
+  milter.enabled = true
+  ...
+end
+..</pre>
+<p>
+  We should confirm that milter's name, socket path and 'enabled = true'. If the values are unexpected, we need to change /usr/local/etc/milter-manager/milter-manager.conf. See 
+  <a class="link" href="configuration.html" title="Configuration">Configuration</a>
+   for details of milter-manager.conf.
+</p>
+<p>But if we can, we want to use milter manager without editing miter-manager.conf. If you report your environment to the milter manager project, the milter manager project may improve detect method.</p>
+<p>milter-manager creates socket file as /var/run/milter-manager/milter-manager.sock by default on FreeBSD. We need to create /var/run/milter-manager directory before running milter-manager:</p>
+<pre class="programlisting">% sudo mkdir -p /var/run/milter-manager
+% sudo /usr/sbin/chown -R milter-manager:milter-manager /var/run/milter-manager</pre>
+<p>milter-manager's configuration is completed. We start to setup running milter-manager.</p>
+<p>We add the following to /etc/rc.conf to enable milter-manager:</p>
+<pre class="programlisting">milter_manager_enable="YES"</pre>
+<p>milter-manager should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service milter-manager start</pre>
+<p>/usr/local/bin/milter-test-server is usuful to confirm milter-manager was ran:</p>
+<pre class="programlisting">% sudo -u mailnull milter-test-server -s unix:/var/run/milter-manager/milter-manager.sock</pre>
+<p>Here is a sample success output:</p>
+<pre class="programlisting">status: pass
+elapsed-time: 0.128 seconds</pre>
+<p>If milter-manager fails to run, the following message will be shown:</p>
+<pre class="programlisting">Failed to connect to unix:/var/run/milter-manager/milter-manager.sock: No such file or directory</pre>
+<p>In this case, we can use log to solve the problem. milter-manager is verbosily if --verbose option is specified. milter-manager outputs logs to standard output if milter-manager isn't daemon process.</p>
+<p>We add the following to /etc/rc.conf to output verbose log to standard output:</p>
+<pre class="programlisting">milter_manager_debug="YES"</pre>
+<p>milter-manager should be started:</p>
+<pre class="programlisting">% sudo /usr/sbin/service milter-manager restart</pre>
+<p>Some logs are output if there is a problem. Running milter-manager can be exitted by Ctrl+c.</p>
+<p>milter_manager_debug configuration in /etc/rc.conf should be commented out after the problem is solved to run milter-manager as daemon process. And milter-manager should restarted.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11333488"></a><h3>Configure Postfix</h3>
+<p>We add 'postfix' user to 'mail' group:</p>
+<pre class="programlisting">% sudo /usr/sbin/pw groupmod mail -m postfix</pre>
+<p>We start milter's configuration.</p>
+<p>We add the following milter configuration to /usr/local/etc/postfix/main.cf:</p>
+<pre class="programlisting">milter_protocol = 6
+milter_default_action = accept
+milter_mail_macros = {auth_author} {auth_type} {auth_authen}</pre>
+<p>Here are descriptions of the configuration.</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.milter-protocol"></a>milter_protocol = 6</span></p></td>
+<td><p>Postfix uses milter protocol version 6.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.milter-default-action"></a>milter_default_action = accept</span></p></td>
+<td>
+<p>Postfix accepts a mail if Postfix can't connect to milter. It's useful configuration for not stopping mail server function if milter has some problems. But it causes some problems that spam mails and virus mails may be delivered until milter is recovered.</p>
+<p>If you can recover milter, 'tempfail' will be better choice rather than 'accept'. Default is 'tempfail'.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-freebsd.milter-mail-macros"></a>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</span></p></td>
+<td><p>Postfix passes SMTP Auth related infomation to milter. Some milters like milter-greylist use it.</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>We need to register milter-manager to Postfix. It's important that spamass-milter, clamav-milter, milter-greylist aren't needed to be registered because they are used via milter-manager.</p>
+<p>We add the following to /usr/local/etc/postfix/main.cf:</p>
+<pre class="programlisting">smtpd_milters = unix:/var/run/milter-manager/milter-manager.sock</pre>
+<p>Postfix should reload its configuration:</p>
+<pre class="programlisting">% sudo /usr/sbin/service postfix reload</pre>
+<p>Postfix's milter configuration is completed.</p>
+<p>milter-manager logs to syslog. If milter-manager works well, some logs can be showen in /var/log/maillog. We need to sent a test mail for confirming.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp11349456"></a><h2>Conclusion</h2>
+<p>There are many configurations to work milter and Postfix together. They can be reduced by introducing milter-manager.</p>
+<p>Without milter-manager, we need to specify sockets of spamass-milter, clamav-milter and milter-greylist to smtpd_milters. With milter-manager, we doesn't need to specify sockets of them, just specify a coket of milter-manager. They are detected automatically. We doesn't need to take care some small mistakes like typo.</p>
+<p>milter-manager also supports xxx_enabled="NO" configuration used in /etc/rc.conf. If we disable a milter, we use the following steps:</p>
+<pre class="programlisting">% sudo /usr/sbin/service XXX stop
+% sudo vim /etc/rc.conf # XXX_enabled="YES" =&gt; XXX_enabled="NO"</pre>
+<p>We need to reload milter-manager after we disable a milter.</p>
+<pre class="programlisting">% sudo /usr/sbin/service milter-manager reload</pre>
+<p>milter-manager detects a milter is disabled and doesn't use it. We doesn't need to change Postfix's main.cf.</p>
+<p>We can reduce maintainance cost by introducing milter-manager if we use some milters on FreeBSD.</p>
+<p>
+  milter manager also provides tools to help operation. Installing them is optional but we can reduce operation cost too. If we also install them, we will go to
+  <a class="link" href="install-options-to-freebsd.html" title="Install to FreeBSD (optional)">Install to FreeBSD (optional)</a>
+  .
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

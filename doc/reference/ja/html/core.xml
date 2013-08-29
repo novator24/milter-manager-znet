@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-Core-library">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-Core-library.top_of_page">Core library</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>Core library</refname>
+<refpurpose>The core library to be used by
+                    milter-manager libraries.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-Core-library.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis><link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-init">milter_init</link>                         (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-quit">milter_quit</link>                         (<parameter><type>void</type></parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-Core-library.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+The milter-core library includes common features that are
+used by the milter-client, milter-server and
+milter-manager libraries.
+</para>
+<para>
+Applications and libraries that use the milter-core
+library need to call <link linkend="milter-init"><function>milter_init()</function></link> at the beginning and
+<link linkend="milter-quit"><function>milter_quit()</function></link> at the end:
+</para>
+<para>
+<informalexample><programlisting>
+#include &lt;milter/core.h&gt;
+
+int
+main (int argc, char **argv)
+{
+    milter_init();
+    main_codes_that_use_the_milter_core_library();
+    milter_quit();
+
+    return 0;
+}
+</programlisting></informalexample>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-Core-library.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="milter-init" role="function">
+<title>milter_init ()</title>
+<indexterm zone="milter-init"><primary>milter_init</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_init                         (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Call this function before using any other the milter-core
+library functions.
+</para></refsect2>
+<refsect2 id="milter-quit" role="function">
+<title>milter_quit ()</title>
+<indexterm zone="milter-quit"><primary>milter_quit</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_quit                         (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Call this function after the milter-server library use.
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

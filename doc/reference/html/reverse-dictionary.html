@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reverse Dictionary</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="start.html" title="Part I. Getting start">
+<link rel="prev" href="log-list.html" title="Log list">
+<link rel="next" href="users.html" title="Users">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="log-list.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="users.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="reverse-dictionary"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="reverse-dictionary.top_of_page"></a>Reverse Dictionary</span></h2>
+<p>Reverse Dictionary — Find how to do by want to do</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp8106944"></a><h2>About this document</h2>
+<p>This is a document to find how to do by want to do as key.</p>
+</div>
+<div class="refsect1">
+<a name="idp7773808"></a><h2>Install</h2>
+<div class="refsect2">
+<a name="idp8669648"></a><h3>Install to Debian GNU/Linux</h3>
+<p>
+  <a class="link" href="install-to-debian.html" title="Install to Debian">Install to Debian GNU/Linux</a>
+  describes it. You can maintain milter manager package easily because milter manager can be installed with aptitude.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp8493072"></a><h3>Install to Ubuntu Linux</h3>
+<p>
+  <a class="link" href="install-to-ubuntu.html" title="Install to Ubuntu">Install to Ubuntu Linux</a>
+   describes it. You can maintain milter manager package easily because milter manager can be installed with aptitude.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp7669968"></a><h3>Install to CentOS</h3>
+<p>
+  <a class="link" href="install-to-centos.html" title="Install to CentOS 6">Install to CentOS</a>
+   describes it. You can maintain milter manager package easily because milter manager can be installed as RPM package.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp8534688"></a><h3>Install to FreeBSD</h3>
+<p>
+  <a class="link" href="install-to-freebsd.html" title="Install to FreeBSD">Install to FreeBSD</a>
+   describes it.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp2940368"></a><h3>Generate graphs for statistics data</h3>
+<p>There are documents for each platform:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-debian.html#install-options-to-debian.milter-manager-log-analyzer" title="Install milter-manager-log-analyzer">For Debian</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-ubuntu.html#install-options-to-ubuntu.milter-manager-log-analyzer" title="Install milter-manager-log-analyzer">For Ubuntu</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-centos.html#install-options-to-centos.milter-manager-log-analyzer" title="Install milter-manager-log-analyzer">For CentOS</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-freebsd.html#install-options-to-freebsd.milter-manager-log-analyzer" title="Install milter-manager-log-analyzer">For FreeBSD</a>
+  
+</p></li>
+</ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp10902128"></a><h2>Configuration: Basic</h2>
+<div class="refsect2">
+<a name="reverse-dictionary.configuration-basic-find-configuration-file"></a><h3>Find a configuration file</h3>
+<p>Here are configuration file locations when you install milter manager followed by install manual for your platform:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Ubuntu: /etc/milter-manager/milter-manager.local.conf</p></li>
+<li class="listitem"><p>CentOS: /etc/milter-manager/milter-manager.local.conf</p></li>
+<li class="listitem"><p>Ubuntu: /usr/local/etc/milter-manager/milter-manager.local.conf</p></li>
+</ul></div>
+<p>milter-manager.local.conf is a file what you create newly. milter-manager.conf loads milter-manager.local.conf in the same directory by default.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp10908176"></a><h3>Connect milter-manager via TCP/IP</h3>
+<p>
+  "inet:" is used for 
+  <a class="link" href="configuration.html#configuration.manager-connection-spec">manager.connection_spec</a>
+  .
+</p>
+<pre class="programlisting"># Listen on 10025 port. milter-manager accepts a connection from localhost
+manager.connection_spec = "inet:10025@localhost"</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11242288"></a><h3>Connect milter-manager via UNIX domain socket</h3>
+<p>
+  "unix:" is used for 
+  <a class="link" href="configuration.html#configuration.manager-connection-spec">manager.connection_spec</a>
+  .
+</p>
+<pre class="programlisting"># Listen on /var/run/milter/milter-manager.sock.
+manager.connection_spec = "unix://var/run/milter/milter-manager.sock"</pre>
+<p>
+  A socket file permission can be specified by
+  <a class="link" href="configuration.html#configuration.manager-unix-socket-mode">manager.unix_socket_mode</a>
+  .
+</p>
+<pre class="programlisting"># Users who belongs to the same group that owns the socket
+# can connect to milter-manager.
+manager.unix_socket_mode = 0660</pre>
+<p>
+  A group for socket file can be specified by
+  <a class="link" href="configuration.html#configuration.manager-unix-socket-group">manager.unix_socket_group</a>
+  .
+</p>
+<pre class="programlisting"># Socket file is belongs to "milter" group.
+manager.unix_socket_group = "milter"</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11594848"></a><h3>Cleanup UNIX domain socket</h3>
+<p>Creating socket is failed when the same name of newly UNIX domain socket. To avoid the situation, milter-manager provides features that remove socket file on the following points:</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>before creating a UNIX domain socket</p></li>
+<li class="listitem"><p>after finishing a UNIX domain socket use</p></li>
+</ol></div>
+<p>Normally, milter-manager doesn't fail to create a socket by 'socket file already exists' reason because milter-manager enables both of them by default.</p>
+<p>If you want to disable the features, change the following configuration respectively:</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.manager-remove-unix-socket-on-create">manager.remove_unix_socket_on_create</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.manager-remove-unix-socket-on-close">manager.remove_unix_socket_on_close</a>
+  
+</p></li>
+</ol></div>
+<p>Here is an configuration to disable both of them:</p>
+<pre class="programlisting"># Don't remove an existing socket file before creating a socket file
+manager.remove_unix_socket_on_create = false
+# Don't remove a socket file after its use
+manager.remove_unix_socket_on_close = false</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp11605808"></a><h2>Configuration: Application</h2>
+<div class="refsect2">
+<a name="idp11606560"></a><h3>Apply milters to messages only for specified accounts</h3>
+<p>milter-manager provides a sample configuration to restrict milter application to specified account. This section shows an example that all registered milters only applied to the following accounts:</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>test-user@example.com</p></li>
+<li class="listitem"><p>all accounts in test.example.com domain</p></li>
+</ol></div>
+<p>
+  Here is a configuration to be appended to
+  <a class="link" href="reverse-dictionary.html#reverse-dictionary.configuration-basic-find-configuration-file" title="Find a configuration file">milter-manager.local.conf</a>
+  :
+</p>
+<pre class="programlisting">restrict_accounts_by_list("test-user@example.com",
+                          /@test\.example\.com\z/)</pre>
+<p>This configuration syntax may be changed because this is still sample. But a feature provided by this configuration will be still provided. The feature will be more powerful by supporting database and LDAP as an account source in the future.</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!-- ##### SECTION Title ##### -->
+MilterMacrosRequests
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterMacrosRequests ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION milter_macros_requests_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_set_symbols ##### -->
+<para>
+
+</para>
+
+@requests: 
+@command: 
+@first_symbol: 
+@...: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_set_symbols_va_list ##### -->
+<para>
+
+</para>
+
+@requests: 
+@command: 
+@first_symbol: 
+@args: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_set_symbols_string_array ##### -->
+<para>
+
+</para>
+
+@requests: 
+@command: 
+@strings: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_get_symbols ##### -->
+<para>
+
+</para>
+
+@requests: 
+@command: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_get_all_symbols ##### -->
+<para>
+
+</para>
+
+@requests: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_merge ##### -->
+<para>
+
+</para>
+
+@dest: 
+@src: 
+
+
+<!-- ##### FUNCTION milter_macros_requests_foreach ##### -->
+<para>
+
+</para>
+
+@requests: 
+@func: 
+@user_data: 
+
+

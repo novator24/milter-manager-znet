@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-option">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-option.top_of_page">MilterOption</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterOption</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-option.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="MilterOption"/>
+<synopsis>enum                <link linkend="MilterActionFlags">MilterActionFlags</link>;
+enum                <link linkend="MilterStepFlags">MilterStepFlags</link>;
+<link linkend="MilterStepFlags"><returnvalue>MilterStepFlags</returnvalue></link>     <link linkend="milter-step-flags-merge">milter_step_flags_merge</link>             (<parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> a</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> b</parameter>);
+struct              <link linkend="MilterOption-struct">MilterOption</link>;
+<link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      <link linkend="milter-option-new">milter_option_new</link>                   (<parameter><link linkend="guint32"><type>guint32</type></link> version</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);
+<link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      <link linkend="milter-option-new-empty">milter_option_new_empty</link>             (<parameter><type>void</type></parameter>);
+<link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      <link linkend="milter-option-copy">milter_option_copy</link>                  (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-option-equal">milter_option_equal</link>                 (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option1</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option2</parameter>);
+<link linkend="guint32"><returnvalue>guint32</returnvalue></link>             <link linkend="milter-option-get-version">milter_option_get_version</link>           (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-set-version">milter_option_set_version</link>           (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> version</parameter>);
+<link linkend="MilterActionFlags"><returnvalue>MilterActionFlags</returnvalue></link>   <link linkend="milter-option-get-action">milter_option_get_action</link>            (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-set-action">milter_option_set_action</link>            (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-add-action">milter_option_add_action</link>            (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-remove-action">milter_option_remove_action</link>         (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>);
+<link linkend="MilterStepFlags"><returnvalue>MilterStepFlags</returnvalue></link>     <link linkend="milter-option-get-step">milter_option_get_step</link>              (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-set-step">milter_option_set_step</link>              (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-add-step">milter_option_add_step</link>              (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-option-remove-step">milter_option_remove_step</link>           (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-option-combine">milter_option_combine</link>               (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *src</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-option-merge">milter_option_merge</link>                 (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *src</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-option-inspect">milter_option_inspect</link>               (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="milter-manager-milter-option.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----MilterOption
+</synopsis>
+</refsect1>
+
+<refsect1 id="milter-manager-milter-option.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-option.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MilterActionFlags" role="enum">
+<title>enum MilterActionFlags</title>
+<indexterm zone="MilterActionFlags"><primary>MilterActionFlags</primary></indexterm>
+<programlisting>typedef enum {
+    /* no flags */
+    MILTER_ACTION_NONE =                         0 &lt;&lt; 0,
+    /* filter may add headers */
+    MILTER_ACTION_ADD_HEADERS =                  0x00000001L,
+    /* filter may replace body */
+    MILTER_ACTION_CHANGE_BODY =                  0x00000002L,
+    /* filter may add recipients */
+    MILTER_ACTION_ADD_ENVELOPE_RECIPIENT =       0x00000004L,
+    /* filter may delete recipients */
+    MILTER_ACTION_DELETE_ENVELOPE_RECIPIENT =    0x00000008L,
+    /* filter may change/delete headers */
+    MILTER_ACTION_CHANGE_HEADERS =               0x00000010L,
+    /* filter may quarantine envelope */
+    MILTER_ACTION_QUARANTINE =                   0x00000020L,
+    /* filter may change "from" (envelope sender) */
+    MILTER_ACTION_CHANGE_ENVELOPE_FROM =         0x00000040L,
+    /* add recipients incl. args */
+    MILTER_ACTION_ADD_ENVELOPE_RECIPIENT_WITH_PARAMETERS = 0x00000080L,
+    /* filter can send set of symbols (macros) that it wants */
+    MILTER_ACTION_SET_SYMBOL_LIST =              0x00000100L
+} MilterActionFlags;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterStepFlags" role="enum">
+<title>enum MilterStepFlags</title>
+<indexterm zone="MilterStepFlags"><primary>MilterStepFlags</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_STEP_NONE =                   0 &lt;&lt; 0,
+    /* MTA should not send connect info */
+    MILTER_STEP_NO_CONNECT =             0x00000001L,
+    /* MTA should not send HELO info */
+    MILTER_STEP_NO_HELO =                0x00000002L,
+    /* MTA should not send MAIL info */
+    MILTER_STEP_NO_ENVELOPE_FROM =       0x00000004L,
+    /* MTA should not send RCPT info */
+    MILTER_STEP_NO_ENVELOPE_RECIPIENT =  0x00000008L,
+    /* MTA should not send body */
+    MILTER_STEP_NO_BODY =                0x00000010L,
+    /* MTA should not send headers */
+    MILTER_STEP_NO_HEADERS =             0x00000020L,
+    /* MTA should not send end of header */
+    MILTER_STEP_NO_END_OF_HEADER =       0x00000040L,
+    /* No reply for headers */
+    MILTER_STEP_NO_REPLY_HEADER =        0x00000080L,
+    /* MTA should not send unknown commands */
+    MILTER_STEP_NO_UNKNOWN =             0x00000100L,
+    /* MTA should not send DATA */
+    MILTER_STEP_NO_DATA =                0x00000200L,
+    /* MTA understands SMFIS_SKIP */
+    MILTER_STEP_SKIP =                   0x00000400L,
+    /* MTA should also send rejected RCPTs */
+    MILTER_STEP_ENVELOPE_RECIPIENT_REJECTED = 0x00000800L,
+    /* No reply for connect */
+    MILTER_STEP_NO_REPLY_CONNECT =       0x00001000L,
+    /* No reply for HELO */
+    MILTER_STEP_NO_REPLY_HELO =          0x00002000L,
+    /* No reply for MAIL */
+    MILTER_STEP_NO_REPLY_ENVELOPE_FROM = 0x00004000L,
+    /* No reply for RCPT */
+    MILTER_STEP_NO_REPLY_ENVELOPE_RECIPIENT = 0x00008000L,
+    /* No reply for DATA */
+    MILTER_STEP_NO_REPLY_DATA =          0x00010000L,
+    /* No reply for UNKNOWN */
+    MILTER_STEP_NO_REPLY_UNKNOWN =       0x00020000L,
+    /* No reply for end of header */
+    MILTER_STEP_NO_REPLY_END_OF_HEADER = 0x00040000L,
+    /* No reply for body chunk */
+    MILTER_STEP_NO_REPLY_BODY =          0x00080000L,
+    /* header value with leading space */
+    MILTER_STEP_HEADER_VALUE_WITH_LEADING_SPACE = 0x00100000L
+} MilterStepFlags;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-step-flags-merge" role="function">
+<title>milter_step_flags_merge ()</title>
+<indexterm zone="milter-step-flags-merge"><primary>milter_step_flags_merge</primary></indexterm>
+<programlisting><link linkend="MilterStepFlags"><returnvalue>MilterStepFlags</returnvalue></link>     milter_step_flags_merge             (<parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> a</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> b</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterOption-struct" role="struct">
+<title>struct MilterOption</title>
+<indexterm zone="MilterOption-struct"><primary>MilterOption</primary></indexterm>
+<programlisting>struct MilterOption;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-new" role="function">
+<title>milter_option_new ()</title>
+<indexterm zone="milter-option-new"><primary>milter_option_new</primary></indexterm>
+<programlisting><link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      milter_option_new                   (<parameter><link linkend="guint32"><type>guint32</type></link> version</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-new-empty" role="function">
+<title>milter_option_new_empty ()</title>
+<indexterm zone="milter-option-new-empty"><primary>milter_option_new_empty</primary></indexterm>
+<programlisting><link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      milter_option_new_empty             (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-copy" role="function">
+<title>milter_option_copy ()</title>
+<indexterm zone="milter-option-copy"><primary>milter_option_copy</primary></indexterm>
+<programlisting><link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      milter_option_copy                  (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-equal" role="function">
+<title>milter_option_equal ()</title>
+<indexterm zone="milter-option-equal"><primary>milter_option_equal</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_option_equal                 (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option1</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option2</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-get-version" role="function">
+<title>milter_option_get_version ()</title>
+<indexterm zone="milter-option-get-version"><primary>milter_option_get_version</primary></indexterm>
+<programlisting><link linkend="guint32"><returnvalue>guint32</returnvalue></link>             milter_option_get_version           (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-set-version" role="function">
+<title>milter_option_set_version ()</title>
+<indexterm zone="milter-option-set-version"><primary>milter_option_set_version</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_set_version           (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> version</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-get-action" role="function">
+<title>milter_option_get_action ()</title>
+<indexterm zone="milter-option-get-action"><primary>milter_option_get_action</primary></indexterm>
+<programlisting><link linkend="MilterActionFlags"><returnvalue>MilterActionFlags</returnvalue></link>   milter_option_get_action            (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-set-action" role="function">
+<title>milter_option_set_action ()</title>
+<indexterm zone="milter-option-set-action"><primary>milter_option_set_action</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_set_action            (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-add-action" role="function">
+<title>milter_option_add_action ()</title>
+<indexterm zone="milter-option-add-action"><primary>milter_option_add_action</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_add_action            (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-remove-action" role="function">
+<title>milter_option_remove_action ()</title>
+<indexterm zone="milter-option-remove-action"><primary>milter_option_remove_action</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_remove_action         (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterActionFlags"><type>MilterActionFlags</type></link> action</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-get-step" role="function">
+<title>milter_option_get_step ()</title>
+<indexterm zone="milter-option-get-step"><primary>milter_option_get_step</primary></indexterm>
+<programlisting><link linkend="MilterStepFlags"><returnvalue>MilterStepFlags</returnvalue></link>     milter_option_get_step              (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-set-step" role="function">
+<title>milter_option_set_step ()</title>
+<indexterm zone="milter-option-set-step"><primary>milter_option_set_step</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_set_step              (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-add-step" role="function">
+<title>milter_option_add_step ()</title>
+<indexterm zone="milter-option-add-step"><primary>milter_option_add_step</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_add_step              (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-remove-step" role="function">
+<title>milter_option_remove_step ()</title>
+<indexterm zone="milter-option-remove-step"><primary>milter_option_remove_step</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_option_remove_step           (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-combine" role="function">
+<title>milter_option_combine ()</title>
+<indexterm zone="milter-option-combine"><primary>milter_option_combine</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_option_combine               (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *src</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-merge" role="function">
+<title>milter_option_merge ()</title>
+<indexterm zone="milter-option-merge"><primary>milter_option_merge</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_option_merge                 (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *src</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-option-inspect" role="function">
+<title>milter_option_inspect ()</title>
+<indexterm zone="milter-option-inspect"><primary>milter_option_inspect</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_option_inspect               (<parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

@@ -1,0 +1,296 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerChildren
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_CHILDREN_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CHILDREN ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerChildrenError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_CHILDREN_ERROR_MILTER_EXIT: 
+@MILTER_MANAGER_CHILDREN_ERROR_NO_NEGOTIATION: 
+@MILTER_MANAGER_CHILDREN_ERROR_NO_DEMAND_COMMAND: 
+@MILTER_MANAGER_CHILDREN_ERROR_NO_ALIVE_MILTER: 
+@MILTER_MANAGER_CHILDREN_ERROR_NO_MESSAGE_PROCESSING_MILTER: 
+
+<!-- ##### STRUCT MilterManagerChildren ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_children_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_new ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@event_loop: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_add_child ##### -->
+<para>
+
+</para>
+
+@children: 
+@child: 
+
+
+<!-- ##### FUNCTION milter_manager_children_length ##### -->
+<para>
+
+</para>
+
+@children: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_get_children ##### -->
+<para>
+
+</para>
+
+@children: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_foreach ##### -->
+<para>
+
+</para>
+
+@children: 
+@func: 
+@user_data: 
+
+
+<!-- ##### FUNCTION milter_manager_children_negotiate ##### -->
+<para>
+
+</para>
+
+@children: 
+@option: 
+@macros_requests: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_define_macro ##### -->
+<para>
+
+</para>
+
+@children: 
+@command: 
+@macro: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_connect ##### -->
+<para>
+
+</para>
+
+@children: 
+@host_name: 
+@address: 
+@address_length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_helo ##### -->
+<para>
+
+</para>
+
+@children: 
+@fqdn: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_envelope_from ##### -->
+<para>
+
+</para>
+
+@children: 
+@from: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_envelope_recipient ##### -->
+<para>
+
+</para>
+
+@children: 
+@recipient: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_data ##### -->
+<para>
+
+</para>
+
+@children: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_unknown ##### -->
+<para>
+
+</para>
+
+@children: 
+@command: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_header ##### -->
+<para>
+
+</para>
+
+@children: 
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_end_of_header ##### -->
+<para>
+
+</para>
+
+@children: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_body ##### -->
+<para>
+
+</para>
+
+@children: 
+@chunk: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_end_of_message ##### -->
+<para>
+
+</para>
+
+@children: 
+@chunk: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_quit ##### -->
+<para>
+
+</para>
+
+@children: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_abort ##### -->
+<para>
+
+</para>
+
+@children: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_set_retry_connect_time ##### -->
+<para>
+
+</para>
+
+@children: 
+@time: 
+
+
+<!-- ##### FUNCTION milter_manager_children_is_important_status ##### -->
+<para>
+
+</para>
+
+@children: 
+@state: 
+@status: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_children_set_status ##### -->
+<para>
+
+</para>
+
+@children: 
+@state: 
+@status: 
+
+
+<!-- ##### FUNCTION milter_manager_children_set_launcher_channel ##### -->
+<para>
+
+</para>
+
+@children: 
+@read_channel: 
+@write_channel: 
+
+

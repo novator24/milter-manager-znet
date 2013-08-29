@@ -1,0 +1,24 @@
+# -*- rd -*-
+
+= Debianで更新（任意） --- Debian GNU/Linuxでのmilter manager関連ソフトウェアの更新方法
+
+== このドキュメントについて
+
+Debian GNU/Linuxに特化したmilter manager関連ソフトウェアの更
+新方法について説明します。新規にインストールする方法は
+((<Debianへインストール（任意）|
+install-options-to-debian.rd.ja>))を見てください。
+
+まず、milter manager本体を更新する必要があるので、まだの場合
+は((<Debianで更新|upgrade-on-debian.rd.ja>))を見てください。
+
+== milter-manager-log-analyzerの更新
+
+パッケージを更新した時点で作業は完了しているので、追加の作業
+は必要ありません。
+
+== まとめ
+
+milter manager本体同様にmilter manager関連ソフトウェアも簡単
+に更新することができます。新しいバージョンで行われている様々
+な改善を利用したい場合は更新を検討してください。

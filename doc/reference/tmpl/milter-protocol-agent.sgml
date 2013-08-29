@@ -1,0 +1,126 @@
+<!-- ##### SECTION Title ##### -->
+MilterProtocolAgent
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterProtocolAgent ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION milter_protocol_agent_set_macro_context ##### -->
+<para>
+
+</para>
+
+@agent: 
+@macro_context: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_set_macros ##### -->
+<para>
+
+</para>
+
+@agent: 
+@macro_context: 
+@macro_name: 
+@...: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_set_macros_hash_table ##### -->
+<para>
+
+</para>
+
+@agent: 
+@macro_context: 
+@macros: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_set_macro ##### -->
+<para>
+
+</para>
+
+@agent: 
+@macro_context: 
+@macro_name: 
+@macro_value: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_get_macros ##### -->
+<para>
+
+</para>
+
+@agent: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_get_available_macros ##### -->
+<para>
+
+</para>
+
+@agent: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_get_macro ##### -->
+<para>
+
+</para>
+
+@agent: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_clear_macros ##### -->
+<para>
+
+</para>
+
+@agent: 
+@macro_context: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_set_macros_requests ##### -->
+<para>
+
+</para>
+
+@agent: 
+@requests: 
+
+
+<!-- ##### FUNCTION milter_protocol_agent_get_macros_requests ##### -->
+<para>
+
+</para>
+
+@agent: 
+@Returns: 
+
+

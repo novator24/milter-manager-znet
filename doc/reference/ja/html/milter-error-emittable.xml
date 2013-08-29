@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterErrorEmittable">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterErrorEmittable.top_of_page">MilterErrorEmittable</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterErrorEmittable</refname>
+<refpurpose>An interface for "error" signal.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="MilterErrorEmittable.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>                    <link linkend="MilterErrorEmittable-struct">MilterErrorEmittable</link>;
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-error-emittable-emit">milter_error_emittable_emit</link>         (<parameter><link linkend="MilterErrorEmittable"><type>MilterErrorEmittable</type></link> *emittable</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> *error</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterErrorEmittable.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GInterface">GInterface</link>
+   +----MilterErrorEmittable
+</synopsis>
+</refsect1>
+<refsect1 id="MilterErrorEmittable.implementations" role="implementations">
+<title role="implementations.title">Known Implementations</title>
+<para>MilterErrorEmittableは<link linkend="MilterAgent">MilterAgent</link>、<link linkend="MilterClient">MilterClient</link>、<link linkend="MilterClientContext">MilterClientContext</link>、<link linkend="MilterProtocolAgent">MilterProtocolAgent</link>、<link linkend="MilterReader">MilterReader</link>、<link linkend="MilterServerContext">MilterServerContext</link>が実装しています。</para>
+</refsect1>
+
+<refsect1 id="MilterErrorEmittable.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+The <link linkend="MilterErrorEmittable"><literal>MilterErrorEmittable</literal></link> interface provides
+<link linkend="MilterErrorEmittable-error"><type>"error"</type></link>
+signal. <link linkend="MilterErrorEmittable-error"><type>"error"</type></link> signal will be
+emitted on error.
+</para>
+</refsect1>
+<refsect1 id="MilterErrorEmittable.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterErrorEmittable-struct" role="struct">
+<title>MilterErrorEmittable</title>
+<indexterm zone="MilterErrorEmittable-struct"><primary>MilterErrorEmittable</primary></indexterm>
+<programlisting>typedef struct _MilterErrorEmittable MilterErrorEmittable;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-error-emittable-emit" role="function">
+<title>milter_error_emittable_emit ()</title>
+<indexterm zone="milter-error-emittable-emit"><primary>milter_error_emittable_emit</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_error_emittable_emit         (<parameter><link linkend="MilterErrorEmittable"><type>MilterErrorEmittable</type></link> *emittable</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> *error</parameter>);</programlisting>
+<para>
+Emits <link linkend="MilterErrorEmittable-error"><type>"error"</type></link> signal.
+</para><variablelist role="params">
+<varlistentry><term><parameter>emittable</parameter> :</term>
+<listitem><simpara><link linkend="MilterErrorEmittable"><literal>MilterErrorEmittable</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter> :</term>
+<listitem><simpara>エラーの詳細を示した<link linkend="GError"><literal>GError</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+</refentry>

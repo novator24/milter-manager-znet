@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-performance-check">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-performance-check.top_of_page'>milter-performance-check</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-performance-check</refname>
+  <refpurpose>MTAのパフォーマンスを計るプログラム</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>名前</title>
+  <para>milter-performance-check - MTAのパフォーマンスを計るプログラム</para>
+</refsect1>
+
+<refsect1>
+  <title>書式</title>
+  <para>
+  <code>milter-performance-check</code>
+   [
+  <emphasis>オプション ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>説明</title>
+  <para>milter-performance-checkはMTAの性能を計測するSMTPクライアント です。milter-test-serverでmilterのみの性能を計測し、 milter-performance-checkでMTAとmilterを合わせた性能を計測する という住み分けです。</para>
+  <para>同様のツールにはPostfix付属のsmtp-sourceがあります。どちらも、 同時に複数のSMTPセッションを張って一斉にメールを送信すること ができます。機能的にはsmtp-sourceの方が高機能です。</para>
+  <para>milter-performance-checkが便利なのはSMTPセッションの時間のみ を計測してくれることです。smtp-sourceではtimeコマンドと組み合 わせるなどして、smtp-source全体の実行時間を計測します。</para>
+  <para>実際は、SMTPセッションの時間のみでも、ツール全体の実行時間で もそれほど違いはでないと思います。また、テスト用のメール総数 を多くすればするほど、SMTPセッションにかかる時間が大きくなり、 ツール自体の実行時間による影響は小さくなります。</para>
+  <para>milter-performance-checkが提供している機能で十分な時は、 milter-performance-checkを利用し、それでは不十分な時は smtp-sourceを利用するとよいでしょう。</para>
+</refsect1>
+
+<refsect1>
+  <title>オプション</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-performance-check.--help'>--help</term>
+  <listitem>
+  <para>利用できるオプションを表示して終了します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--smtp-server'>--smtp-server=SERVER</term>
+  <listitem>
+  <para>接続先のSMTPサーバを指定します。</para>
+  <para>既定値はlocalhostです。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--smtp-port'>--smtp-port=PORT</term>
+  <listitem>
+  <para>接続先のSMTPサーバのポート番号指定します。</para>
+  <para>既定値は25です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--connect-host'>--connect-host=HOST</term>
+  <listitem>
+  <para>接続元のホスト名を指定します。</para>
+  <para>
+  <ulink url='http://www.postfix-jp.info/trans-2.3/jhtml/XCLIENT_README.html'>PostfixのXCLIENT SMTP拡張</ulink>
+  のNAMEを利用するので
+  <ulink url='http://www.postfix-jp.info/trans-2.3/jhtml/postconf.5.html#smtpd_authorized_xclient_hosts'>smtpd_authorized_xclient_hosts</ulink>
+  を適切に設定する必要があります。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--connect-address'>--connect-address=ADDRESS</term>
+  <listitem>
+  <para>接続元のアドレスを指定します。</para>
+  <para>
+  <ulink url='http://www.postfix-jp.info/trans-2.3/jhtml/XCLIENT_README.html'>PostfixのXCLIENT SMTP拡張</ulink>
+  のADDRを利用するので
+  <ulink url='http://www.postfix-jp.info/trans-2.3/jhtml/postconf.5.html#smtpd_authorized_xclient_hosts'>smtpd_authorized_xclient_hosts</ulink>
+  を適切に設定する必要があります。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--helo-fqdn'>--helo-fqdn=FQDN</term>
+  <listitem>
+  <para>HELOコマンドでFQDNを使います。</para>
+  <para>既定値はlocalhost.localdomainです。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--starttls'>--starttls=HOW</term>
+  <listitem>
+  <para>1.6.9から使用可能。</para>
+  <para>
+  STARTTLSを使うかどうかを指定します。指定可能な
+  <varname>HOW</varname>
+  は 以下の通りです。
+</para>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-performance-check.&lt;command&gt;auto&lt;/command&gt;'>
+  <command>auto</command>
+</term>
+  <listitem>
+  <para>MTAがSTARTTLSをサポートしている場合はSTARTTLSを使い ます。（既定値）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.&lt;command&gt;always&lt;/command&gt;'>
+  <command>always</command>
+</term>
+  <listitem>
+  <para>常にSTARTTLSを使います。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.&lt;command&gt;disable&lt;/command&gt;'>
+  <command>disable</command>
+</term>
+  <listitem>
+  <para>STARTTLSを使いません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>
+  既定値は
+  <command>auto</command>
+  です。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--auth-user'>--auth-user=USER</term>
+  <listitem>
+  <para>1.6.9から使用可能。</para>
+  <para>
+  SMTP認証のユーザ名として
+  <varname>USER</varname>
+  を使います。
+</para>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--auth-password'>--auth-password=PASSWORD</term>
+  <listitem>
+  <para>1.6.9から使用可能。</para>
+  <para>
+  SMTP認証のパスワードとして
+  <varname>PASSWORD</varname>
+  を使います。
+</para>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--auth-mechanism'>--auth-mechanism=MECHANISM</term>
+  <listitem>
+  <para>1.6.9から使用可能。</para>
+  <para>
+  SMTP認証の方法として
+  <varname>MECHANISM</varname>
+  を使います。指定可能な
+  <varname>MECHANISM</varname>
+  は以下の通りです。
+</para>
+  <variablelist>
+  <varlistentry>
+  <term>
+  <command>auto</command>
+</term>
+  <listitem>
+  <para>MTAがサポートしている認証方式を検出してそれを使い ます。（既定値）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.&lt;command&gt;plain&lt;/command&gt;'>
+  <command>plain</command>
+</term>
+  <listitem>
+  <para>常にPLAINを使用します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.&lt;command&gt;login&lt;/command&gt;'>
+  <command>login</command>
+</term>
+  <listitem>
+  <para>常にLOGINを使用します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.&lt;command&gt;cram-md5&lt;/command&gt;または&lt;command&gt;cram-md5&lt;/command&gt;'>
+  <command>cram_md5</command>または<command>cram-md5</command>
+</term>
+  <listitem>
+  <para>常にCRAM-MD5を使用します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>
+  既定値は
+  <command>auto</command>
+  です。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--auth-map'>--auth-map=FILE</term>
+  <listitem>
+  <para>1.6.9から使用可能。</para>
+  <para>
+  接続するMTAのアドレス・ポート番号ごとにSMTP認証の設定を
+  <varname>FILE</varname>
+  から読み込みます。
+  <varname>FILE</varname>
+  の書式は以下のよう になっており、
+  <ulink url='http://www.postfix.org/postconf.5.html#smtp_sasl_password_maps'>Postfixの smtp_sasl_password_maps</ulink>
+  でも使えます。
+</para>
+  <programlisting>SERVER1:PORT USER1:PASSWORD1
+SERVER2:PORT USER2:PASSWORD2
+...</programlisting>
+  <para>「smtp.example.com」の「submissionポート」（587番ポート） 宛てのメールは「send-user」ユーザ・「secret」パスワード を使うという設定は以下の通りです。</para>
+  <programlisting>smtp.example.com:587 send-user:secret</programlisting>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--from'>--from=FROM</term>
+  <listitem>
+  <para>MAILコマンドのアドレスにFROMを使います。</para>
+  <para>既定値はfrom@example.comです。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--force-from'>--force-from=FROM</term>
+  <listitem>
+  <para>送信するメールファイルを指定した場合でも、ファイル中にあ るFrom:の値ではなく、FROMをMAILコマンドのアドレスに使いま す。</para>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--recipient'>--recipient=RECIPIENT</term>
+  <listitem>
+  <para>RCPTコマンドのアドレスにRECIPIENTを使います。複数の宛先を 指定する場合は複数回このオプションを指定してください。</para>
+  <para>既定値は[to@example.com]です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--force-recipient'>--force-recipient=RECIPIENT</term>
+  <listitem>
+  <para>送信するメールファイルを指定した場合でも、ファイル中にあ るTo:の値ではなく、RECIPIENTをRCPTコマンドのアドレスに使 います。複数の宛先を指定する場合は複数回このオプションを 指定してください。</para>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--n-mails'>--n-mails=N</term>
+  <listitem>
+  <para>
+  合計でN個のメールを送信します。複数のメールが同時に送信さ れます。同時に最大で何通送るかは
+  <link linkend='milter-performance-check.--n-concurrent-connections'>--n-concurrent-connections</link>
+  で指定します。
+</para>
+  <para>既定値は100です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--n-additional-lines'>--n-additional-lines=N</term>
+  <listitem>
+  <para>メールの本文にN行追加します。</para>
+  <para>既定値はありません。（追加しません。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--n-concurrent-connections'>--n-concurrent-connections=N</term>
+  <listitem>
+  <para>同時に最大N接続でメールを送信します。</para>
+  <para>既定値は10です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--period'>--period=PERIOD</term>
+  <listitem>
+  <para>PERIOD（単位は秒、分、時間のどれか）の間に指定されたメー ルを送信します。各メールは間隔内で平均的に送信します。単 位を省略した場合は秒として扱われます</para>
+  <para>例（送信メール数を100とする）:</para>
+  <itemizedlist>
+  <listitem>
+  <para>--period=5    # 0.05秒間隔で送信（5 / 100）</para>
+</listitem>
+  <listitem>
+  <para>--period=50s  # 0.5秒間隔で送信（50 / 100）</para>
+</listitem>
+  <listitem>
+  <para>--period=10m  # 6秒間隔で送信（60 * 10 / 100）</para>
+</listitem>
+  <listitem>
+  <para>--period=0.5h # 18秒間隔で送信（60 * 60 * 0.5 / 100）</para>
+</listitem>
+</itemizedlist>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--interval'>--interval=INTERVAL</term>
+  <listitem>
+  <para>INTERVAL（単位は秒、分、時間のどれか）間隔で指定されたメー ルを送信します。単位を省略した場合は秒として扱われます。</para>
+  <para>例:</para>
+  <itemizedlist>
+  <listitem>
+  <para>--interval=5    # 5秒間隔で送信</para>
+</listitem>
+  <listitem>
+  <para>--interval=0.5s # 0.5秒間隔で送信</para>
+</listitem>
+  <listitem>
+  <para>--interval=10m  # 10分間隔で送信</para>
+</listitem>
+  <listitem>
+  <para>--interval=0.5h # 30分間隔で送信</para>
+</listitem>
+</itemizedlist>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--flood'>--flood, --flood[=PERIOD]</term>
+  <listitem>
+  <para>PERIOD（単位は秒、分、時間のどれか）の間、ずっと指定され たメールを送信します。PERIODを省略した場合はC-cで終了する までずっと指定したメールを送信します。単位を省略した場合 は秒として扱われます。</para>
+  <para>既定値はありません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--shuffle'>--shuffle, --no-shuffle</term>
+  <listitem>
+  <para>送信予定のメールを無作為に並び替えてから送信します。</para>
+  <para>既定値はfalseです。（並び替えません。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--report-failure-responses'>--report-failure-responses, --no-report-failure-responses</term>
+  <listitem>
+  <para>SMTPサーバが返した失敗時のメッセージを一番最後に表示しま す。</para>
+  <para>既定値はfalseです。（表示しません。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--report-periodically'>--report-periodically, --report-periodically=INTERVAL</term>
+  <listitem>
+  <para>INTERVAL（単位は秒、分、時間のどれか）間隔で統計情報を表 示します。INTERVALを省略した場合は1s（1秒）を指定したと扱 われます。単位を省略した場合は秒として扱われます。</para>
+  <para>既定値はありません。（定期的に統計情報を表示しません。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-performance-check.--reading-timeout'>--reading-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  SMTPサーバからのレスポンスを待つ時間を指定します。
+  <varname>SECONDS</varname>
+  秒経ってもレスポンスが返ってこない場合はエラー になります。
+</para>
+  <para>既定値は60秒です。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>終了ステータス</title>
+  <para>常に0。</para>
+</refsect1>
+
+<refsect1>
+  <title>例</title>
+  <para>以下の例では、milter-performance-checkはlocalhostの25番ポート で動いているSMTPサーバに接続し、100通のメールを送ります。それ ぞれのメールの差出人はfrom@example.comで、宛先は webmaster@localhostとinfo@localhostです。</para>
+  <programlisting>% milter-performance-check --recipient=webmaster@localhost --recipient=info@localhost</programlisting>
+  <para>以下の例では、milter-performance-checkは192.168.1.29の25番ポー トで動いているSMTPサーバに接続し、/tmp/test-mails/以下にある ファイルをメールとして送信します。ファイルはRFC 2822のメール フォーマットでなければいけません。各メールは3秒毎（60 * 10 / 100）にuser@localhost宛に送られます。--n-mails=1オプションが 指定されているので、それぞれのメールは1通のみ送られます。</para>
+  <programlisting>% milter-performance-check --n-mails=1 --smtp-server=192.168.1.102 --force-recipient=user@localhost --period=5m /tmp/test-mails/</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>関連項目</title>
+  <para>
+  <link linkend='milter-report-statistics'>milter-report-statistics.rd.ja</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

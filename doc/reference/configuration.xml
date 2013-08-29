@@ -1,0 +1,2411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="configuration">
+<refmeta>
+  <refentrytitle role='top_of_page' id='configuration.top_of_page'>Configuration</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Configuration</refname>
+  <refpurpose>How to write milter-manager.conf</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>This document describes how to write milter-manager.conf that is milter-manager's configuration file.</para>
+</refsect1>
+
+<refsect1>
+  <title>Place</title>
+  <para>It assumes that milter-manager is installed under /usr/local/. If you specify --prefix=/usr/local option to configure script or omit the option, milter-manager is installed under /usr/local/.</para>
+  <para>In this case, milter-manager's configuration file is placed at /usr/local/etc/milter-manager/milter-manager.conf. If you have installed successfully, the file should exist.</para>
+</refsect1>
+
+<refsect1>
+  <title>Summary</title>
+  <para>The beginning milter-manager.conf is the following:</para>
+  <programlisting># -*- ruby -*-
+
+load(&quot;applicable-conditions/*.conf&quot;)
+load_default
+load_if_exist(&quot;milter-manager.local.conf&quot;)</programlisting>
+  <para>Normally, the part should not be changed. If you need to change your configuration, you should write your configurations to &quot;milter-manager.local.conf&quot; file in the same directory of &quot;milter-manager.conf&quot;.</para>
+  <para>Configuration items are categorized as the followings:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.package'>Package</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.security'>Security</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.milter-manager'>milter-manager</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.controller'>Controller</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.built-in-applicable-conditions'>Built-in applicable conditions</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.applicable-condition'>Applicable condition</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.child-milter'>Child milter</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.database'>Database</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+  <para>There is a convenient feature of milter-manager. It's introduced before each items are described the below.</para>
+  <para>If you run milter-manager with --show-config option, the current configuration is shown.</para>
+  <programlisting>% /usr/local/sbin/milter-manager --show-config
+package.platform = &quot;debian&quot;
+package.options = nil
+
+security.privilege_mode = false
+security.effective_user = nil
+security.effective_group = nil
+
+log.level = &quot;default&quot;
+log.use_syslog = true
+log.syslog_facility = &quot;mail&quot;
+
+manager.connection_spec = nil
+manager.unix_socket_mode = 0660
+manager.unix_socket_group = nil
+manager.remove_unix_socket_on_create = true
+manager.remove_unix_socket_on_close = true
+manager.daemon = false
+manager.pid_file = nil
+manager.maintenance_interval = 10
+manager.suspend_time_on_unacceptable = 5
+manager.max_connections = 0
+manager.custom_configuration_directory = nil
+manager.fallback_status = &quot;accept&quot;
+manager.fallback_status_at_disconnect = &quot;temporary-failure&quot;
+manager.event_loop_backend = &quot;glib&quot;
+manager.n_workers = 0
+manager.packet_buffer_size = 0
+manager.connection_check_interval = 0
+manager.chunk_size = 65535
+manager.max_pending_finished_sessions = 0
+
+controller.connection_spec = nil
+controller.unix_socket_mode = 0660
+controller.remove_unix_socket_on_create = true
+controller.remove_unix_socket_on_close = true
+
+define_applicable_condition(&quot;S25R&quot;) do |condition|
+  condition.description = &quot;Selective SMTP Rejection&quot;
+end
+
+define_applicable_condition(&quot;Remote Network&quot;) do |condition|
+  condition.description = &quot;Check only remote network&quot;
+end</programlisting>
+  <para>You can confirm the current configuration.</para>
+  <para>The output format is the same as milter-manager.conf's syntax. You can refer the output for writing milter-manager.conf.</para>
+  <para>Here are descriptions of configuration items.</para>
+</refsect1>
+
+<refsect1 id='configuration.package'>
+  <title>Package</title>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.package-platform'>package.platform</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be changed.</emphasis>
+  
+</para>
+  <para>milter auto-detect method is different on each platform. The auto-detect method assumes that milters are installed with package system on its platform. If real platform and platform detected by milter-manager are different, the auto-detect method doesn't work well.</para>
+  <para>Your platform is detected on building milter-manager. You can specify correct platform if the detected platform is wrong. You will use this item only when the detected platform is wrong but you can't build again.</para>
+  <para>Here are supported platforms:</para>
+  <itemizedlist>
+  <listitem>
+  <para>debian: for Debian series Linux like Debian GNU/Linux and Ubuntu Linux.</para>
+</listitem>
+  <listitem>
+  <para>redhat: for RedHat series Linux like CentOS.</para>
+</listitem>
+  <listitem>
+  <para>freebsd: for FreeBSD.</para>
+</listitem>
+  <listitem>
+  <para>pkgsrc: for *BSD that use pkgsrc like NetBSD and DragonFly BSD.</para>
+</listitem>
+</itemizedlist>
+  <para>Platform name should be surrounded with '&quot;' (double quote) like &quot;debian&quot;.</para>
+  <para>
+  NOTE: This item should be change 
+  <emphasis>before</emphasis>
+   load_default.
+</para>
+  <para>Example:</para>
+  <programlisting>package.platform = &quot;pkgsrc&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>package.platform = &quot;debian&quot; # depend on your environment.</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.package-options'>package.options</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be changed.</emphasis>
+  
+</para>
+  <para>This item is determined on building like package.platform.</para>
+  <para>You can pass additional information to milter auto-detect method. The format of this item is &quot;NAME1=VALUE1,NAME2=VALUE2,...&quot;. You can pass zero or more information.</para>
+  <para>Currently, additional information is only used on &quot;pkgsrc&quot; platform. &quot;pkgsrc&quot; platform only uses &quot;prefix=/PATH/TO/DIRECTORY/HAS/rc.d&quot;. For example, you need to specify &quot;prefix=/etc&quot; if you install start-script under /etc/rc.d/ directory.</para>
+  <para>
+  NOTE: This item should be change 
+  <emphasis>before</emphasis>
+   load_default.
+</para>
+  <para>Example:</para>
+  <programlisting>package.options = &quot;prefix=/etc,name=value&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>package.options = nil # depend on your environment.</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='configuration.security'>
+  <title>Security</title>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.security-privilege-mode'>security.privilege_mode</term>
+  <listitem>
+  <para>Specifies whether run as privilege mode or not. If you want to use child milter auto run feature, you need to enable the mode.</para>
+  <para>It's set true for enabling the mode, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>security.privilege_mode = true</programlisting>
+  <para>Default:</para>
+  <programlisting>security.privilege_mode = false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.security-effective-user'>security.effective_user</term>
+  <listitem>
+  <para>Specifies effective user of milter-manager process. To switch effective user, you need to run milter-manager command as root user.</para>
+  <para>Effective user is specified like &quot;nobody&quot;. User name should be surrounded with '&quot;' (double quote). If you don't want to specify user, use nil.</para>
+  <para>Example:</para>
+  <programlisting>security.effective_user = &quot;nobody&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>security.effective_user = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.security-effective-group'>security.effective_group</term>
+  <listitem>
+  <para>Specifies effective group of milter-manager process. To switch effective group, you need to run milter-manager command as root group.</para>
+  <para>Effective group is specified like &quot;nogroup&quot;. Group name should be surrounded with '&quot;' (double quote). If you don't want to specify group, use nil.</para>
+  <para>Example:</para>
+  <programlisting>security.effective_group = &quot;nobody&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>security.effective_group = nil</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='configuration.log'>
+  <title>Log</title>
+  <para>Since 1.6.6.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.log-level'>log.level</term>
+  <listitem>
+  <para>Specifies log level. All log levels are independent. You can specify log level by combining log levels what you need like &quot;info, debug and error levels are needed&quot;.</para>
+  <para>Here are available log levels:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.default'>default</term>
+  <listitem>
+  <para>Logs critical, error, warnings, message and statistics level messages. It's the default.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.all'>all</term>
+  <listitem>
+  <para>Logs all messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.critical'>critical</term>
+  <listitem>
+  <para>Logs critical messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.error'>error</term>
+  <listitem>
+  <para>Logs error messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.warning'>warning</term>
+  <listitem>
+  <para>Logs warnings messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.message'>message</term>
+  <listitem>
+  <para>Logs important messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.info'>info</term>
+  <listitem>
+  <para>Logs normal messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.debug'>debug</term>
+  <listitem>
+  <para>Logs debug messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.statistics'>statistics</term>
+  <listitem>
+  <para>Logs statistics messages.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.profile'>profile</term>
+  <listitem>
+  <para>Logs profile messages.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Log level should be surrounded with '&quot;' (double quote) like &quot;all&quot;. To specify some log levels, you need to separate each log level by &quot;|&quot; like &quot;critical|error|warning&quot;.</para>
+  <para>Example:</para>
+  <programlisting>log.level = &quot;all&quot;        # Logs all messages</programlisting>
+  <para>Default:</para>
+  <programlisting>log.level = &quot;default&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.log-use-syslog'>log.use_syslog</term>
+  <listitem>
+  <para>Specifies whether syslog is also used.</para>
+  <para>It's set true for using syslog, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>log.use_syslog = false   # Syslog isn't used.</programlisting>
+  <para>Default:</para>
+  <programlisting>log.use_syslog = true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.log-syslog-facility'>log.syslog_facility</term>
+  <listitem>
+  <para>Specifies syslog facility.</para>
+  <para>Here are available facilities and corresponded syslog constants:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.authpriv'>authpriv</term>
+  <listitem>
+  <para>LOG_AUTHPRIV</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.cron'>cron</term>
+  <listitem>
+  <para>LOG_CRON</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.daemon'>daemon</term>
+  <listitem>
+  <para>LOG_DAEMON</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.kern'>kern</term>
+  <listitem>
+  <para>LOG_KERN</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local0'>local0</term>
+  <listitem>
+  <para>LOG_LOCAL0</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local1'>local1</term>
+  <listitem>
+  <para>LOG_LOCAL1</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local2'>local2</term>
+  <listitem>
+  <para>LOG_LOCAL2</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local3'>local3</term>
+  <listitem>
+  <para>LOG_LOCAL3</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local4'>local4</term>
+  <listitem>
+  <para>LOG_LOCAL4</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local5'>local5</term>
+  <listitem>
+  <para>LOG_LOCAL5</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local6'>local6</term>
+  <listitem>
+  <para>LOG_LOCAL6</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local7'>local7</term>
+  <listitem>
+  <para>LOG_LOCAL7</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.lpr'>lpr</term>
+  <listitem>
+  <para>LOG_LPR</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.mail'>mail</term>
+  <listitem>
+  <para>LOG_MAIL</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.news'>news</term>
+  <listitem>
+  <para>LOG_NEWS</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.user'>user</term>
+  <listitem>
+  <para>LOG_USER</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.uucp'>uucp</term>
+  <listitem>
+  <para>LOG_UUCP</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Facility should be surrounded with '&quot;' (double quote) like &quot;mail&quot;.</para>
+  <para>Example:</para>
+  <programlisting>log.syslog_facility = &quot;local4&quot;   # LOG_LOCAL4 is used.</programlisting>
+  <para>Default:</para>
+  <programlisting>log.syslog_facility = &quot;mail&quot;</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='configuration.milter-manager'>
+  <title>milter-manager</title>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.manager-connection-spec'>manager.connection_spec</term>
+  <listitem>
+  <para>Specifies a socket that milter-manager accepts connection from MTA.</para>
+  <para>Socket is specified like &quot;inet:10025&quot;. Socket should be surrounded with '&quot;' (double quote). Available socket formats are the following:</para>
+  <itemizedlist>
+  <listitem>
+  <para>UNIX domain socket: unix:PATH</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: unix:/var/run/milter/milter-manager.sock</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>IPv4 socket: inet:PORT</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: inet:10025</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>IPv4 socket: inet:PORT@HOST</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: inet:10025@localhost</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>IPv4 socket: inet:PORT@[ADDRESS]</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: inet:10025@[127.0.0.1]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>IPv6 socket: inet6:PORT</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: inet6:10025</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>IPv6 socket: inet6:PORT@HOST</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: inet6:10025@localhost</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>IPv6 socket: inet6:PORT@[ADDRESS]</para>
+  <itemizedlist>
+  <listitem>
+  <para>Example: inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+  <para>If security.effective_user and/or security.effective_group are specified, UNIX domain socket is made with the authority.</para>
+  <para>If HOST of IPv4 socket and IPv6 socket is omitted, milter-manager accepts connection from all network interface. If HOST is specified, milter-manager accepts connection from the address.</para>
+  <para>Example:</para>
+  <programlisting>manager.connection_spec = &quot;unix:/var/run/milter/milter-manager.sock&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.connection_spec = &quot;inet:10025@[127.0.0.1]&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-unix-socket-mode'>manager.unix_socket_mode</term>
+  <listitem>
+  <para>Specifies permission of UNIX domain socket that milter-manager uses for accepting connection. This is used only when UNIX domain socket is specified for manager.connection_spec.</para>
+  <para>Don't forget to prepend '0' to specify permission as octal notation.</para>
+  <para>Example:</para>
+  <programlisting>manager.unix_socket_mode = 0600</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.unix_socket_mode = 0660</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-unix-socket-group'>manager.unix_socket_group</term>
+  <listitem>
+  <para>Specifies group of UNIX domain socket that milter-manager uses for accepting connection. This is used only when UNIX domain socket is specified for manager.connection_spec.</para>
+  <para>Socket's group is changed by chown(2) after creating a socket with security.effective_user/security.effective_group authority. Specified group should be one of the security.effective_user's supplementary groups.</para>
+  <para>Group is specified like &quot;nogroup&quot;. Group name should be surrounded with '&quot;' (double quote). If you don't want to specify group, use nil.</para>
+  <para>Example:</para>
+  <programlisting>manager.unix_socket_group = &quot;nobody&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.unix_socket_group = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-remove-unix-socket-on-create'>manager.remove_unix_socket_on_create</term>
+  <listitem>
+  <para>Specifies whether remove existing UNIX domain socket before creating new UNIX domain socket or not. This is used only when UNIX domain socket is specified for manager.connection_spec.</para>
+  <para>True if remove, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>manager.remove_unix_socket_on_create = false</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.remove_unix_socket_on_create = true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-remove-unix-socket-on-close'>manager.remove_unix_socket_on_close</term>
+  <listitem>
+  <para>Specifies whether remove used UNIX domain socket after shutting down. This is used only when UNIX domain socket is specified for manager.connection_spec.</para>
+  <para>True if remove, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>manager.remove_unix_socket_on_close = false</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.remove_unix_socket_on_close = true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-daemon'>manager.daemon</term>
+  <listitem>
+  <para>Specifies whether run as daemon process or not. This item doesn't need to set in configuration file because this item can be overridden by --daemon command line option.</para>
+  <para>True if run as daemon process, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>manager.daemon = true</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.daemon = false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-pid-file'>manager.pid_file</term>
+  <listitem>
+  <para>Specifies file name where milter-manager saves its process ID.</para>
+  <para>If security.effective_user and/or security.effective_group are specified, the file is wrote with the authority. You should take care permission of the file.</para>
+  <para>File name is specified like &quot;/var/run/milter/milter-manager.pid&quot;. File name should be surrounded with '&quot;' (double quote). If you don't want to specify file name, use nil.</para>
+  <para>Example:</para>
+  <programlisting>manager.pid_file = &quot;/var/run/milter/milter-manager.pid&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.pid_file = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-maintenance-interval'>manager.maintenance_interval</term>
+  <listitem>
+  <para>Specifies maintenance process is ran after each N sessions.</para>
+  <para>For now, the maintenance process is memory release process.</para>
+  <para>It's a good choice that maintenance process is ran after each few sessions on few concurrently access environment. The configuration will keep memory usage low.</para>
+  <para>It's a good choice that maintenance process is ran after each many sessions on many concurrently access environment. The configuration will keep process efficiency.</para>
+  <para>0 or nil means maintenance process is never ran.</para>
+  <para>Example:</para>
+  <programlisting>manager.maintenance_interval = nil</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.maintenance_interval = 10</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-suspend-time-on-unacceptable'>manager.suspend_time_on_unacceptable</term>
+  <listitem>
+  <para>Specifies how many seconds are suspended on milter-manager can't accept a connection from MTA. In the case, milter-manager has many connections. Please consider that you increment number of openable file descriptors by ulimit or limit in the case.</para>
+  <para>Example:</para>
+  <programlisting>manager.suspend_time_on_unacceptable = 10</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.suspend_time_on_unacceptable = 5</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-max-connections'>manager.max_connections</term>
+  <listitem>
+  <para>Since 1.3.1.</para>
+  <para>Specifies max concurrent connections. 0 means no limit. It's the default value.</para>
+  <para>
+  A newly connection is waited until an existing connection is closed when there are max concurrent connections. Number of the current existing connections are confirmed each
+  <link linkend='configuration.manager-suspend-time-on-unacceptable'>manager.suspend_time_on_unacceptable</link>
+  seconds.
+</para>
+  <para>Example:</para>
+  <programlisting>manager.max_connections = 10 # accepts only 10 connections concurrency</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.max_connections = 0 # no limit</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-max-file-descriptors'>manager.max_file_descriptors</term>
+  <listitem>
+  <para>Since 1.3.1.</para>
+  <para>Specifies max number of file descriptors that can be opened by a milter-manager process. 0 means that the system default is used. The system is used by default because the default value is 0.</para>
+  <para>milter-manager opens &quot;number of child milters + 1 (for MTA)&quot; file descriptors for each connection. milter-manager also opens a few file descriptors for its internal usage. milter-manager should be able to open number of file descriptors computed by the following expression:</para>
+  <programlisting>(number of child milters + 1) * max concurrent connections +
+  10（milter-manager internal usage + alpha）</programlisting>
+  <para>This value is used as soft limit and hard limit by setrlimit(2).</para>
+  <para>Example:</para>
+  <programlisting>manager.max_file_descriptors = 65535</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.max_file_descriptors = 0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-custom-configuration-directory'>manager.custom_configuration_directory</term>
+  <listitem>
+  <para>Specifies a directory to save custom configuration via Web interface.</para>
+  <para>Directory name is specified like &quot;/tmp/milter-manager&quot;. Directory name should be surrounded with '&quot;' (double quote).</para>
+  <para>If you specify 'nil', milter-manager creates &quot;.milter-manager&quot; directory under effective user's home directory and use it for custom configuration directory.</para>
+  <para>Example:</para>
+  <programlisting>manager.custom_configuration_directory = &quot;/tmp/milter-manager/&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.custom_configuration_directory = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-fallback-status'>manager.fallback_status</term>
+  <listitem>
+  <para>Since 1.6.3.</para>
+  <para>Specifies a status that is replied to the SMTP server on error in milter manager. Here is a list of error cases in milter manager:</para>
+  <itemizedlist>
+  <listitem>
+  <para>No child milter.</para>
+</listitem>
+  <listitem>
+  <para>Failed to open a temporary file for mail body.</para>
+</listitem>
+  <listitem>
+  <para>and so on...</para>
+</listitem>
+</itemizedlist>
+  <para>Here are available values:</para>
+  <itemizedlist>
+  <listitem>
+  <para>&quot;accept&quot;: Accepts a mail. It's the default.</para>
+</listitem>
+  <listitem>
+  <para>&quot;temporary-failure&quot;: Rejects a mail temporary.</para>
+</listitem>
+  <listitem>
+  <para>&quot;reject&quot;: Rejects a mail.</para>
+</listitem>
+  <listitem>
+  <para>&quot;discard&quot;: Discards a mail.</para>
+</listitem>
+</itemizedlist>
+  <para>Example:</para>
+  <programlisting>manager.fallback_status = &quot;reject&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.fallback_status = &quot;accept&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-fallback-status-at-disconnect'>manager.fallback_status_at_disconnect</term>
+  <listitem>
+  <para>Since 1.6.3.</para>
+  <para>
+  Specifies a status that is replied to the SMTP server when milter manager detects the SMTP client disconnects the SMTP server connection. This item doesn't used by default because disconnect check is disabled by default. You can enable disconnect check by
+  <link linkend='configuration.manager-use-netstat-connection-checker'>manager.use_netstat_connection_checker</link>
+  .
+</para>
+  <para>Here are available values:</para>
+  <itemizedlist>
+  <listitem>
+  <para>&quot;accept&quot;: Accepts a mail.</para>
+</listitem>
+  <listitem>
+  <para>&quot;temporary-failure&quot;: Rejects a mail temporary. It's the default.</para>
+</listitem>
+  <listitem>
+  <para>&quot;reject&quot;: Rejects a mail.</para>
+</listitem>
+  <listitem>
+  <para>&quot;discard&quot;: Discards a mail.</para>
+</listitem>
+</itemizedlist>
+  <para>Example:</para>
+  <programlisting>manager.fallback_status_at_disconnect = &quot;discard&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.fallback_status_at_disconnect = &quot;temporary-failure&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-event-loop-backend'>manager.event_loop_backend</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used.</emphasis>
+  
+</para>
+  <para>Since 1.6.3.</para>
+  <para>Specifies a backend for event loop. For non-large mail system which processes 100 or less mails per second, you don't need to change it. For large mail system which processes 100 or more mails per seconds, you need to change it to &quot;libev&quot;.</para>
+  <para>Here are availble values:</para>
+  <itemizedlist>
+  <listitem>
+  <para>&quot;glib&quot;: Uses GLib's event loop that uses poll(2) as I/O multiplexer. It's the default.</para>
+</listitem>
+  <listitem>
+  <para>&quot;libev&quot;: Uses libev that uses epoll, kqueue or event ports as I/O multiplexer.</para>
+</listitem>
+</itemizedlist>
+  <para>Example:</para>
+  <programlisting>manager.event_loop_backend = &quot;libev&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.event_loop_backend = &quot;glib&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-n-workers'>manager.n_workers</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used.</emphasis>
+  
+</para>
+  <para>Since 1.6.3.</para>
+  <para>Specifies the number of processes which process mails. For non-large mail system which processes 100 or less mails per second, and mail system which doesn't use very heavy milter, you don't need to change it. For large mail system which processes 100 or more mails per seconds using very heavy milters, you need to increase it.</para>
+  <para>Availble value is between 0 and 1000. If it is 0, no worker processes will be used.</para>
+  <para>Example:</para>
+  <programlisting>manager.n_workers = 10</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.n_workers = 0 # no worker processes.</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-packet-buffer-size'>manager.packet_buffer_size</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used.</emphasis>
+  
+</para>
+  <para>Since 1.6.3.</para>
+  <para>Specifies buffer size to buffer send packets on end-of-message. Packets aren't sent until amount of buffered packets is greater than buffer size. 0 means buffering is disabled.</para>
+  <para>It may improve performance when many message modification operations, add_header, delete_recipient and so on, are requested on end-of-message. Normary, this configuration doesn't improve performance.</para>
+  <para>Example:</para>
+  <programlisting>manager.packet_buffer_size = 4096 # Doesn't send packets
+                                  # until amount of
+                                  # buffered packets &gt;= 4KB.</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.packet_buffer_size = 0 # Disables buffering.</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-chunk-size'>manager.chunk_size</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used.</emphasis>
+  
+</para>
+  <para>Since 1.8.0.</para>
+  <para>Specifies chunk size on body data for 2..n child milters. The maximum size is 65535 bytes and it is the default. If chunk size is decreased, communication overhead is incrased. You should use it only if you want to decrease each data size.</para>
+  <para>Example:</para>
+  <programlisting>manager.chunk_size = 4096 # Sends body data as 4KB chunks.</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.chunk_size = 65535 # Sends body data as 64KB chunks.</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-max-pending-finished-sessions'>manager.max_pending_finished_sessions</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used.</emphasis>
+  
+</para>
+  <para>Since 1.8.6.</para>
+  <para>Milter manager delays processings that don't effect to throughput until idle time. For example, termination processing for finished milter session is one of those delayed processings.</para>
+  <para>Milter manager does termination processing for finished milter sessions by setting this item. Normally, there is idle time even when milter manager processes multiple milter sessions concurrently. If the number of processing milter sssions is too large, there will be no idle time. So termination processins are not done. If termination processings are not done for a long time, the number of openable file descripters may be lacked. Because used socket is closed in termination processing.</para>
+  <para>
+  Normally, you should avoid the no idle time situation because it is overload. It is better that increasing the number of workers by
+  <link linkend='configuration.manager-n-workers'>manager.n_workers</link>
+   configuration.
+</para>
+  <para>Milter manager does termination processing even when there is no idle time by setting one or larger number. Termination processing is done when specified the number of finished sessions. This item doesn't disable termination processing on idle time. So this item doesn't effect to throughput on normal time. This item effects on only no idle time.</para>
+  <para>The default value is 0. It distables termination processing on no idle time feature.</para>
+  <para>Example:</para>
+  <programlisting># Do termination processing after each session is finished
+manager.max_pending_finished_sessions = 1</programlisting>
+  <para>Default:</para>
+  <programlisting># Do termination processing when no other processings aren't remining
+manager.max_pending_finished_sessions = 0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-use-netstat-connection-checker'>manager.use_netstat_connection_checker</term>
+  <listitem>
+  <para>Since 1.5.0.</para>
+  <para>
+  Checks SMTP client and SMTP server are still connected by parsing 
+  <command>netstat</command>
+   command result.
+</para>
+  <para>
+  This feature is useful for aborting SMTP session when SMTP client disconnects SMTP session. e.g. Using
+  <ulink url='http://k2net.hakuba.jp/targrey/index.en.html'>taRgrey</ulink>
+  with milter (milter-greylist). This feature resolves a problem of taRgrey that SMTP server process is grown. SMTP server process growth means memory usage growth. i.e. This feature reduces memory usage caused by taRgrey.
+</para>
+  <para>SMTP session is checked in 5 seconds. The interval time can be changed but it's not needed normally.</para>
+  <para>Example:</para>
+  <programlisting>manager.use_netstat_connection_checker    # check in 5 seconds.
+manager.use_netstat_connection_checker(1) # check in 1 seconds.</programlisting>
+  <para>Default:</para>
+  <programlisting>Don't check.</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-connection-check-interval'>manager.connection_check_interval</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used directly.</emphasis>
+  
+</para>
+  <para>Since 1.5.0.</para>
+  <para>Specifies an interval in seconds to check whether a connection between SMTP client and SMTP server is still connected.</para>
+  <para>0 means 'no check'.</para>
+  <para>
+  <link linkend='configuration.manager-define-connection-checker'>manager.define_connection_checker</link>
+  defines how to check whether a connection is still connected.
+</para>
+  <para>Example:</para>
+  <programlisting>manager.connection_check_interval = 5 # Check in 5 seconds.</programlisting>
+  <para>Default:</para>
+  <programlisting>manager.connection_check_interval = 0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-define-connection-checker'>manager.define_connection_checker(name) {|context| ... # -&gt; true/false}</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used directly.</emphasis>
+  
+</para>
+  <para>Since 1.5.0.</para>
+  <para>
+  Checks a SMTP client is still connected to a SMTP server each
+  <link linkend='configuration.manager-connection-check-interval'>manager.connection_check_interval</link>
+  seconds. If given block returns true value, it means that the connection is still alive, otherwise it means that the connection had been closed.
+</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.name'>name</term>
+  <listitem>
+  <para>The name of the check process.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context'>context</term>
+  <listitem>
+  <para>The object passed to the block that knows the current situation. It has the following information:</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-smtp-client-address'>context.smtp_client_address</term>
+  <listitem>
+  <para>
+  Is the IP address of the check target SMTP client. It is the same object as
+  <link linkend='configuration.socket-address'>socket_address</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-smtp-server-address'>context.smtp_server_address</term>
+  <listitem>
+  <para>
+  Is the IP address of the accepted SMTP server socket. It is the same object as
+  <link linkend='configuration.socket-address'>socket_address</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Example:</para>
+  <programlisting># It assumes that a connection from non local network
+# is always closed.
+manager.define_connection_checker(&quot;netstat-check&quot;) do |context|
+  context.smtp_client_address.local?
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-report-memory-statistics'>manager.report_memory_statistics</term>
+  <listitem>
+  <para>Since 1.5.0.</para>
+  <para>Logs memory usage each maintenance process.</para>
+  <para>Here is the output format but it may be changed in the feature:</para>
+  <programlisting>Mar 28 15:16:58 mail milter-manager[19026]: [statistics] [maintain][memory] (28048KB) total:6979 Proc:44 GLib::Object:18</programlisting>
+  <para>Example:</para>
+  <programlisting>manager.report_memory_statistics</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-maintained'>manager.maintained {...}</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used directly.</emphasis>
+  
+</para>
+  <para>Since 1.5.0.</para>
+  <para>Executes a custom process each maintenance process.</para>
+  <para>Here is an example that logs a message each maintenance process.</para>
+  <para>Example:</para>
+  <programlisting>manager.maintained do
+  Milter::Logger.info(&quot;maintained!&quot;)
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.manager-event-loop-created'>manager.event_loop_created {|loop| ...}</term>
+  <listitem>
+  <para>
+  <emphasis>Normally, this item doesn't need to be used directly.</emphasis>
+  
+</para>
+  <para>Since 1.6.8.</para>
+  <para>Executes a custom process on an event loop is created. An event loop is created only on initialization.</para>
+  <para>Here is an example that registers a callback that logs a message at intervals of 1 second.</para>
+  <para>Example:</para>
+  <programlisting>manager.event_loop_created do |loop|
+  loop.add_timeout(1) do
+    Milter::Logger.info(&quot;timeout!&quot;)
+    true
+  end
+end</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='configuration.controller'>
+  <title>Controller</title>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.controller-connection-spec'>controller.connection_spec</term>
+  <listitem>
+  <para>Specifies a socket that milter-manager accepts connection for controlling milter-manager.</para>
+  <para>Format is same as manager.connection_spec.</para>
+  <para>Example:</para>
+  <programlisting>controller.connection_spec = &quot;inet:10026@localhost&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>controller.connection_spec = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.controller-unix-socket-mode'>controller.unix_socket_mode</term>
+  <listitem>
+  <para>Specifies permission of UNIX domain socket for controlling milter-manager. This is used only when UNIX domain socket is specified for controller.connection_spec.</para>
+  <para>Don't forget to prepend '0' to specify permission as octal notation.</para>
+  <para>Example:</para>
+  <programlisting>controller.unix_socket_mode = 0600</programlisting>
+  <para>Default:</para>
+  <programlisting>controller.unix_socket_mode = 0660</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.controller-remove-unix-socket-on-create'>controller.remove_unix_socket_on_create</term>
+  <listitem>
+  <para>Specifies whether remove existing UNIX domain socket for controlling milter-manager before creating new UNIX domain socket or not. This is used only when UNIX domain socket is specified for controller.connection_spec.</para>
+  <para>True if remove, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>controller.remove_unix_socket_on_create = false</programlisting>
+  <para>Default:</para>
+  <programlisting>controller.remove_unix_socket_on_create = true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.controller-remove-unix-socket-on-close'>controller.remove_unix_socket_on_close</term>
+  <listitem>
+  <para>Specifies whether remove used UNIX domain socket for controlling milter-manager after shutting down. This is used only when UNIX domain socket is specified for controller.connection_spec.</para>
+  <para>True if remove, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>controller.remove_unix_socket_on_close = false</programlisting>
+  <para>Default:</para>
+  <programlisting>controller.remove_unix_socket_on_close = true</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='configuration.child-milter'>
+  <title>Child milter</title>
+  <para>This section describes about configuration items related with child milter.</para>
+  <refsect2>
+  <title>Define child milter</title>
+  <para>Child milter is registered as the following syntax:</para>
+  <programlisting>define_milter(&quot;NAME&quot;) do |milter|
+  milter.XXX = ...
+  milter.YYY = ...
+  milter.ZZZ = ...
+end</programlisting>
+  <para>For example, to register a milter that accepts connection at 'inet:10026@localhost' as 'test-milter':</para>
+  <programlisting>define_milter(&quot;test-milter&quot;) do |milter|
+  milter.connection_spec = &quot;inet:10026@localhost&quot;
+end</programlisting>
+  <para>The following items can be used in 'define_milter do ... end'.</para>
+  <para>Required item is just only milter.connection_spec.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.milter-connection-spec'>milter.connection_spec</term>
+  <listitem>
+  <para>
+  Specifies socket that the child milter accepts. This is 
+  <emphasis>required item</emphasis>
+  .
+</para>
+  <para>Format is same as manager.connection_spec.</para>
+  <para>Example:</para>
+  <programlisting>milter.connection_spec = &quot;inet:10026@localhost&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.connection_spec = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-description'>milter.description</term>
+  <listitem>
+  <para>Specifies description of the child milter.</para>
+  <para>Description is specified like &quot;test milter&quot;. Description is surrounded with '&quot;' (double quote).</para>
+  <para>Example:</para>
+  <programlisting>milter.description = &quot;test milter&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.description = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-enabled'>milter.enabled</term>
+  <listitem>
+  <para>Whether use the child milter or not.</para>
+  <para>True if use, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>milter.enabled = false</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.enabled = true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-fallback-status'>milter.fallback_status</term>
+  <listitem>
+  <para>Specifies a status that is used the child milter causes an error.</para>
+  <para>Here are available values:</para>
+  <itemizedlist>
+  <listitem>
+  <para>&quot;accept&quot;: Accepts a mail. It's the default.</para>
+</listitem>
+  <listitem>
+  <para>&quot;temporary-failure&quot;: Rejects a mail temporary.</para>
+</listitem>
+  <listitem>
+  <para>&quot;reject&quot;: Rejects a mail.</para>
+</listitem>
+  <listitem>
+  <para>&quot;discard&quot;: Discards a mail.</para>
+</listitem>
+</itemizedlist>
+  <para>Example:</para>
+  <programlisting>milter.fallback_status = &quot;temporary-failure&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.fallback_status = &quot;accept&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-evaluation-mode'>milter.evaluation_mode</term>
+  <listitem>
+  <para>Since 1.3.1.</para>
+  <para>Whether turn on evaluation mode or not. The child milter doesn't return its result on evaluation mode. It means the child milter doesn't affect the existing mail system.</para>
+  <para>Graphs are still generated on evaluation mode because statistics are logged.</para>
+  <para>True if evaluation mode is turned on, false otherwise.</para>
+  <para>On false (default) case, message handling in milter session is aborted when a child milter returns &quot;reject&quot; because milter manager returns &quot;reject&quot; to MTA. On true case, message handling in milter session is continued when a child milter returns &quot;reject&quot; because milter manager doesn't return &quot;reject&quot; to MTA. You can use a condition that &quot;a child milter returns 'reject'&quot; in applicable conditions.</para>
+  <para>Example:</para>
+  <programlisting>milter.evaluation_mode = true</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.evaluation_mode = false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-applicable-conditions'>milter.applicable_conditions</term>
+  <listitem>
+  <para>Specifies applicable conditions for the child milter. The child milter is stopped if any condition isn't satisfied.</para>
+  <para>The following command shows available applicable conditions:</para>
+  <programlisting>% /usr/local/sbin/milter-manager --show-config | grep define_applicable_condition
+define_applicable_condition(&quot;S25R&quot;) do |condition|
+define_applicable_condition(&quot;Remote Network&quot;) do |condition|</programlisting>
+  <para>In the above case, &quot;S25R&quot; and &quot;Remote Network&quot; are available.</para>
+  <para>
+  Some applicable conditions are available in default configuration. You can also define your original applicable condition. See
+  <link linkend='configuration.applicable-condition'>Define applicable condition</link>
+  about how to define applicable condition. But defining applicable condition requires Ruby's knowledge.
+</para>
+  <para>To specify multiple applicable conditions, you can use &quot;,&quot;:</para>
+  <programlisting>milter.applicable_conditions = [&quot;S25R&quot;, &quot;Remote Network&quot;]</programlisting>
+  <para>Example:</para>
+  <programlisting>milter.applicable_conditions = [&quot;S25R&quot;]</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.applicable_conditions = []</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-add-applicable-condition'>milter.add_applicable_condition(name)</term>
+  <listitem>
+  <para>Adds an applicable condition to the child milter. See milter.applicable_conditions about 'applicable condition'.</para>
+  <para>Example:</para>
+  <programlisting>milter.add_applicable_condition(&quot;S25R&quot;)</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-command'>milter.command</term>
+  <listitem>
+  <para>Specifies command that run the child milter. The child milter is ran by the command automatically when connecting milter.connection_spec is failed. It is enabled only if security.privilege_mode is true and milter-manager is ran.</para>
+  <para>Command may be run script that is placed in /etc/init.d/ or /usr/local/etc/rc.d/.</para>
+  <para>Command is specified like &quot;/etc/init.d/milter-greylist&quot;. Command should be surrounded with '&quot;' (double quote). If you don't want to run automatically, use nil.</para>
+  <para>Example:</para>
+  <programlisting>milter.command = &quot;/etc/init.d/milter-greylist&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.command = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-command-options'>milter.command_options</term>
+  <listitem>
+  <para>Specifies options to be passed to milter.command.</para>
+  <para>Options are specified like &quot;start&quot;. Options should be surrounded with '&quot;' (double quote).  If some options are specified, use &quot;--option1 --option2&quot; or [&quot;--option1&quot;, &quot;--option2&quot;].</para>
+  <para>Example:</para>
+  <programlisting>milter.command_options = &quot;start&quot;
+milter.command_options = [&quot;--option1&quot;, &quot;--option2&quot;]</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.command_options = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-user-name'>milter.user_name</term>
+  <listitem>
+  <para>Specifies user name to run milter.command.</para>
+  <para>User name is specified like &quot;nobody&quot;. User name should be surrounded with '&quot;' (double quote). If you want to run milter.command as root, use nil.</para>
+  <para>Example:</para>
+  <programlisting>milter.user_name = &quot;nobody&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.user_name = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-connection-timeout'>milter.connection_timeout</term>
+  <listitem>
+  <para>Specifies timeout in seconds for trying to connect to child milter.</para>
+  <para>Example:</para>
+  <programlisting>milter.connection_timeout = 60</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.connection_timeout = 297.0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-writing-timeout'>milter.writing_timeout</term>
+  <listitem>
+  <para>Specifies timeout in seconds for trying to write to child milter.</para>
+  <para>Example:</para>
+  <programlisting>milter.writing_timeout = 15</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.writing_timeout = 7.0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-reading-timeout'>milter.reading_timeout</term>
+  <listitem>
+  <para>Specifies timeout in seconds for trying to read from child milter.</para>
+  <para>Example:</para>
+  <programlisting>milter.reading_timeout = 15</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.reading_timeout = 7.0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-end-of-message-timeout'>milter.end_of_message_timeout</term>
+  <listitem>
+  <para>Specifies timeout in seconds for trying to wait response of xxfi_eom() from child milter.</para>
+  <para>Example:</para>
+  <programlisting>milter.end_of_message_timeout = 60</programlisting>
+  <para>Default:</para>
+  <programlisting>milter.end_of_message_timeout = 297.0</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.milter-name'>milter.name</term>
+  <listitem>
+  <para>Since 1.8.1.</para>
+  <para>Returns child milter's name specified by define_milter.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+
+  <refsect2>
+  <title>Operate child milter</title>
+  <para>There is convenient features to operate defined child milters. But the features require knowledge about Ruby a bit.</para>
+  <para>defined_milters returns a list of define child milter names.</para>
+  <programlisting>define_milter(&quot;milter1&quot;) do |milter|
+  ...
+end
+
+define_milter(&quot;milter2&quot;) do |milter|
+  ...
+end
+
+defined_milters # =&gt; [&quot;milter1&quot;, &quot;milter2&quot;]</programlisting>
+  <para>It's easy that changing configuration of all child milter by this feature.</para>
+  <para>Here is an example that disabling all child milters:</para>
+  <programlisting>defined_milters.each do |name|
+  define_milter(name) do |milter|
+    milter.enabled = false
+  end
+end</programlisting>
+  <para>Here is an example that removing all child milters:</para>
+  <programlisting>defined_milters.each do |name|
+  remove_milter(name)
+end</programlisting>
+  <para>Removing differs from disabling. You need to redefine a milter again when you want to use a removed milter again.</para>
+  <para>Here is an example that adding &quot;S25R&quot; applicable condition to all child milters.</para>
+  <programlisting>defined_milters.each do |name|
+  define_milter(name) do |milter|
+    milter.add_applicable_condition(&quot;S25R&quot;)
+  end
+end</programlisting>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.defined-milters'>defined_milters</term>
+  <listitem>
+  <para>Returns a list of defined child milter names. Returned value is an array of string.</para>
+  <para>Example:</para>
+  <programlisting>defined_milters # =&gt; [&quot;milter1&quot;, &quot;milter2&quot;]</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.remove-milter'>remove_milter(name)</term>
+  <listitem>
+  <para>
+  Removes a child milter that is named as 'name'. You should use 
+  <link linkend='configuration.milter-enabled'>milter.enabled</link>
+   when you may reuse the child milter.
+</para>
+  <para>Example:</para>
+  <programlisting># Removes a milter that is defined as &quot;milter1&quot;.
+remove_milter(&quot;milter1&quot;)</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='configuration.built-in-applicable-conditions'>
+  <title>Built-in applicable conditions</title>
+  <para>Here are descriptions about built-in applicable conditions.</para>
+  <refsect2>
+  <title>S25R</title>
+  <para>This applicable condition applies a child milter to only normal PC like SMTP client. A child milter isn't applied to MTA like SMTP client.</para>
+  <para>
+  Here is an example that uses
+  <ulink url='http://lists.ee.ethz.ch/postgrey/msg01214.html'>Rgrey</ulink>
+  technique. (NOTE: milter-greylist should have &quot;racl greylist default&quot; configuration.)
+</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;milter-greylist&quot;) do |milter|
+  milter.add_applicable_condition(&quot;S25R&quot;)
+end</programlisting>
+  <para>
+  See 
+  <ulink url='http://www.gabacho-net.jp/en/anti-spam/'>S25R</ulink>
+  how to determine a SMTP client is MTA or normal PC.
+</para>
+  <para>S25R rules will also match non normal PC host name. To avoid this false positive, you can create whitelist. google.com domain and obsmtp.com domain are in whitelist by default.</para>
+  <para>You can also create blacklist for normal PC host name that isn't matched to S25R rules.</para>
+  <para>You can customize S25R applicable condition by the following configurations:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.s25r-add-whitelist'>s25r.add_whitelist(matcher)</term>
+  <listitem>
+  <para>Since 1.5.2.</para>
+  <para>
+  S25R applicable condition treats a host name that
+  <varname>matcher</varname>
+   matches the host name as MTA host and adds the host name to whitelist. If a host name is listed in whitelist, child milter isn't applied.
+</para>
+  <para>
+  <varname>matcher</varname>
+   is a regular expression or a host name as string.
+</para>
+  <para>For example, the following configuration adds google.com domain to whitelist:</para>
+  <programlisting>s25r.add_whitelist(/\.google\.com\z/)</programlisting>
+  <para>The following configuration adds mx.example.com host to whitelist:</para>
+  <programlisting>s25r.add_whitelist(&quot;mx.example.com&quot;)</programlisting>
+  <para>[For power user] You can specify complex condition by block. S25R applicable condition passes a host name to the block. For example, the following configuration adds .jp top level domain while 8:00 a.m. to 7:59 p.m. to whitelist:</para>
+  <programlisting>s25r.add_whitelist do |host|
+  (8..19).include?(Time.now.hour) and /\.jp\z/ === host
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.s25r-add-blacklist'>s25r.add_blacklist(matcher)</term>
+  <listitem>
+  <para>Since 1.5.2.</para>
+  <para>
+  S25R applicable condition treats a host name that
+  <varname>matcher</varname>
+   matches the host name as normal PC host and adds the host to blacklist. If a host name is listed in blacklist, child milter is applied.
+</para>
+  <para>NOTE: If a host is listed both whitelist and blacklist, S25R applicable condition give preference to whitelist over blacklist. That is, child milter isn't applied in the case.</para>
+  <para>
+  <varname>matcher</varname>
+   is a regular expression or a host name as string.
+</para>
+  <para>For example, the following configuration adds evil.example.com domain to blacklist:</para>
+  <programlisting>s25r.add_blacklist(/\.evil\.example\.com\z/)</programlisting>
+  <para>The following configuration adds black.example.com host to blacklist:</para>
+  <programlisting>s25r.add_blacklist(&quot;black.example.com&quot;)</programlisting>
+  <para>[For power user] You can specify complex condition by block. S25R applicable condition passes a host name to the block. For example, the following configuration adds .jp top level domain while 8:00 p.m. to 7:59 a.m. to blacklist:</para>
+  <programlisting>s25r.add_blacklist do |host|
+  !(8..19).include?(Time.now.hour) and /\.jp\z/ === host
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.s25r-check-only-ipv4'>s25r.check_only_ipv4=(boolean)</term>
+  <listitem>
+  <para>Since 1.6.6.</para>
+  <para>
+  If 
+  <code>true</code>
+   is specified, S25R check is enabled only for IPv4 connection. If 
+  <code>false</code>
+   is specified, S25R check is also enabled for IPv6 connection.
+</para>
+  <para>Example:</para>
+  <programlisting>s25r.check_only_ipv4 = false # enabled for non IPv4 connection</programlisting>
+  <para>Default:</para>
+  <programlisting>S25R check is enabled only for IPv4.</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+
+  <refsect2>
+  <title>Remote Network</title>
+  <para>This applicable condition applies a child milter to only SMTP client that is connected from remote network.</para>
+  <para>Here is an example that mails from local network are skipped spam-check to avoid false detection:</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;spamass-milter&quot;) do |milter|
+  milter.add_applicable_condition(&quot;Remote Network&quot;)
+end</programlisting>
+  <para>Local network means that not private IP address. e.g. 192.168.0.0/24. You can customize local network by the following configurations.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.remote-network-add-local-address'>remote_network.add_local_address(address)</term>
+  <listitem>
+  <para>Since 1.5.0.</para>
+  <para>Adds the specified IPv4/IPv6 address or IPv4/IPv6 network to local network. Child milter isn't applied to SMTP clients connected from local network.</para>
+  <para>Example:</para>
+  <programlisting># Don't apply child milters connections from 160.29.167.10.
+remote_network.add_local_address(&quot;160.29.167.10&quot;)
+# Don't apply child milters connections from
+# 160.29.167.0/24 network.
+remote_network.add_local_address(&quot;160.29.167.0/24&quot;)
+# Don't apply child milters connections from
+# 2001:2f8:c2:201::fff0.
+remote_network.add_local_address(&quot;2001:2f8:c2:201::fff0&quot;)
+# Don't apply child milters connections from
+# 2001:2f8:c2:201::/64 network.
+remote_network.add_local_address(&quot;2001:2f8:c2:201::/64&quot;)</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+
+  <refsect2 id='configuration.authentication'>
+  <title>Authentication</title>
+  <para>This applicable condition applies a child milter to authenticated SMTP client by SMTP Auth. MTA should send authentication related macros to a milter. Sendmail isn't needed additional configuration. Postfix needs the following additional configuration:</para>
+  <para>main.cf:</para>
+  <programlisting>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</programlisting>
+  <para>Here is an example that authenticated SMTP client's mail, inner to outer mail, is Bcc-ed to be audited:</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;milter-bcc&quot;) do |milter|
+  milter.add_applicable_condition(&quot;Authentication&quot;)
+end</programlisting>
+</refsect2>
+
+  <refsect2 id='configuration.unauthentication'>
+  <title>Unauthentication</title>
+  <para>
+  This applicable condition applies a child miter to non-authenticated SMTP client by SMTP Auth. MTA should send authentication related macros to a milter. See also
+  <link linkend='configuration.authentication'>Authentication</link>
+  .
+</para>
+  <para>Here is an example that only non-authentication SMTP client is applied spam-check to avoid false detection.</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;spamass-milter&quot;) do |milter|
+  milter.add_applicable_condition(&quot;Unauthentication&quot;)
+end</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>Sendmail Compatible</title>
+  <para>This applicable condition is a bit strange. This always applies a child milter. This substitute different macros between Sendmail and Postfix. A milter that depends on Sendmail specific macros can be worked with this applicable condition and Postfix.</para>
+  <para>This applicable condition will be needless in the near feature because milters are fixing to be work with both Sendmail and Postfix. It's good things.</para>
+  <para>You can use this applicable condition with Postfix, it doesn't have adverse affect for Postfix.</para>
+  <para>Here is an example that you use milter-greylist built for Sendmail with Postfix.</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;milter-greylist&quot;) do |milter|
+  milter.add_applicable_condition(&quot;Sendmail Compatible&quot;)
+end</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>stress</title>
+  <para>Since 1.5.0.</para>
+  <para>Those applicable conditions changes process depends on stress dynamically. Stress is determine by number of concurrent connections.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.stress-threshold-n-connections'>stress.threshold_n_connections</term>
+  <listitem>
+  <para>Since 1.5.0.</para>
+  <para>Returns number of concurrent connections to determine stressed.</para>
+  <para>With Postfix, number of max smtpd processes are detected automatically and 3/4 of it is set.</para>
+  <para>
+  With Sendmail, it's not detected automatically. You need to set it with
+  <link linkend='configuration.stress-threshold-n-connections'>stress.threshold_n_connections=</link>
+  by hand.
+</para>
+  <para>Example:</para>
+  <programlisting># Postfix's default. (depends on our environment)
+stress.threshold_n_connections # =&gt; 75</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>stress.threshold_n_connections=(n)</term>
+  <listitem>
+  <para>Since 1.5.0.</para>
+  <para>Sets number of connections to determine stressed.</para>
+  <para>0 means that always non-stressed.</para>
+  <para>Example:</para>
+  <programlisting># Number of concurrent connections is higher or equal
+# 75 means stressed.
+stress.threshold_n_connections = 75</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+  <refsect3 id='configuration.no-stress'>
+  <title>No Stress</title>
+  <para>Since 1.5.0.</para>
+  <para>This applies a child milter only when non-stressed.</para>
+  <para>Here is an example that spamass-milter isn't applied when stressed:</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;spamass-milter&quot;) do |milter|
+  milter.add_applicable_condition(&quot;No Stress&quot;)
+end</programlisting>
+</refsect3>
+
+  <refsect3 id='configuration.stress-notify'>
+  <title>Stress Notify</title>
+  <para>Since 1.5.0.</para>
+  <para>This notifies stressed to a child milter by &quot;{stress}=yes&quot; macro. This just notifies. It means that a child milter is always applied.</para>
+  <para>Here is an example that milter-greylist is notified stressed by macro.</para>
+  <para>Example:</para>
+  <programlisting>define_milter(&quot;milter-greylist&quot;) do |milter|
+  milter.add_applicable_condition(&quot;Stress Notify&quot;)
+end</programlisting>
+  <para>Here is an example configuration for milter-greylist to use tarpitting on non-stress and greylisting on stress. This configuration requires milter-greylist 4.3.4 or later.</para>
+  <para>greylist.conf:</para>
+  <programlisting>sm_macro &quot;no_stress&quot; &quot;{stress}&quot; unset
+racl whitelist sm_macro &quot;no_stress&quot; tarpit 125s
+racl greylist default</programlisting>
+</refsect3>
+
+</refsect2>
+
+  <refsect2 id='configuration.trust'>
+  <title>Trust</title>
+  <para>Since 1.6.0.</para>
+  <para>This sets &quot;trusted_XXX=yes&quot; macros for trusted session. Here is a list of macros:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.trusted-domain'>trusted_domain</term>
+  <listitem>
+  <para>This is set to &quot;yes&quot; when envelope-from domain is trusted.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you receive a SPF passed mail but apply greylist SPF not-passed mail for trusted domains:</para>
+  <para>milter-manager.local.conf:</para>
+  <programlisting>define_milter(&quot;milter-greylist&quot;) do |milter|
+  milter.add_applicable_condition(&quot;Trust&quot;)
+end</programlisting>
+  <para>greylist.conf:</para>
+  <programlisting>sm_macro &quot;trusted_domain&quot; &quot;{trusted_domain}&quot; &quot;yes&quot;
+racl whitelist sm_macro &quot;trusted_domain&quot; spf pass
+racl greylist sm_macro &quot;trusted_domain&quot; not spf pass</programlisting>
+  <para>You can customize how to trust a session by the following configurations:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.trust-add-envelope-from-domain'>trust.add_envelope_from_domain(domain)</term>
+  <listitem>
+  <para>Since 1.6.0.</para>
+  <para>This adds a trusted envelope-from domain.</para>
+  <para>Here is a list of trusted domain by default:</para>
+  <itemizedlist>
+  <listitem>
+  <para>gmail.com</para>
+</listitem>
+  <listitem>
+  <para>hotmail.com</para>
+</listitem>
+  <listitem>
+  <para>msn.com</para>
+</listitem>
+  <listitem>
+  <para>yahoo.co.jp</para>
+</listitem>
+  <listitem>
+  <para>softbank.ne.jp</para>
+</listitem>
+  <listitem>
+  <para>clear-code.com</para>
+</listitem>
+</itemizedlist>
+  <para>Example:</para>
+  <programlisting>trust.add_envelope_from_domain(&quot;example.com&quot;)</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.trust-clear'>trust.clear</term>
+  <listitem>
+  <para>Since 1.8.0.</para>
+  <para>This clears all registered trusted envelope-from domain list.</para>
+  <para>Example:</para>
+  <programlisting>trust.clear</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.trust-load-envelope-from-domains'>trust.load_envelope_from_domains(path)</term>
+  <listitem>
+  <para>Since 1.8.0.</para>
+  <para>
+  This loads trusted envelope-from domain list from
+  <varname>path</varname>
+  . Here is 
+  <varname>path</varname>
+   format:
+</para>
+  <programlisting># This is comment line. This line is ignored.
+gmail.com
+# The above line means 'gmail.com is trusted domain'.
+/\.example\.com/
+# The above line means 'all sub domains of example.com are trusted'.
+
+# The above line consists of spaces. The space only line is ignored.</programlisting>
+  <para>Example:</para>
+  <programlisting>trust.load_envelope_from_domains(&quot;/etc/milter-manager/trusted-domains.list&quot;)
+# It loads trusted envelope-from domain list from
+# /etc/milter-manager/trusted-domains.list.</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+
+  <refsect2>
+  <title>Restrict Accounts</title>
+  <para>TODO</para>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='configuration.applicable-condition'>
+  <title>Define applicable condition</title>
+  <para>You need knowledge about Ruby from this section. Some useful applicable conditions are provided by default. You can define new applicable conditions if you need more conditions. You can decide which child milter is applied or not dynamically by defining our applicable conditions.</para>
+  <para>You define an applicable condition with the following syntax. You need knowledge about Ruby for defining applicable condition.</para>
+  <programlisting>define_applicable_condition(&quot;NAME&quot;) do |condition|
+  condition.description = ...
+  condition.define_connect_stopper do |...|
+    ...
+  end
+  ...
+end</programlisting>
+  <para>For example, here is an applicable condition to implement S25R:</para>
+  <programlisting>define_applicable_condition(&quot;S25R&quot;) do |condition|
+  condition.description = &quot;Selective SMTP Rejection&quot;
+
+  condition.define_connect_stopper do |context, host, socket_address|
+    case host
+    when &quot;unknown&quot;,
+      /\A\[.+\]\z/,
+      /\A[^.]*\d[^\d.]+\d.*\./,
+      /\A[^.]*\d{5}/,
+      /\A(?:[^.]+\.)?\d[^.]*\.[^.]+\..+\.[a-z]/i,
+      /\A[^.]*\d\.[^.]*\d-\d/,
+      /\A[^.]*\d\.[^.]*\d\.[^.]+\..+\./,
+      /\A(?:dhcp|dialup|ppp|[achrsvx]?dsl)[^.]*\d/i
+      false
+    else
+      true
+    end
+  end
+end</programlisting>
+  <para>'host' is &quot;[IP ADDRESS]&quot; not &quot;unknown&quot; when name resolution is failed. So, &quot;unknown&quot; is needless. It's sufficient that you just use /\A\[.+\]\z/. But it is included just in case. :-)</para>
+  <para>Here are configurable items in 'define_applicable_condition do ... end'.</para>
+  <para>There is no required item.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.condition-description'>condition.description</term>
+  <listitem>
+  <para>Specifies description of the applicable condition.</para>
+  <para>Description is specified like &quot;test condition&quot;. Description is surrounded with '&quot;' (double quote).</para>
+  <para>Example:</para>
+  <programlisting>condition.description = &quot;test condition&quot;</programlisting>
+  <para>Default:</para>
+  <programlisting>condition.description = nil</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.condition-define-connect-stopper'>condition.define_connect_stopper {|context, host, socket_address| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not with host name and IP address of connected SMTP client. The available information is same as milter's xxfi_connect.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.host'>host</term>
+  <listitem>
+  <para>The host name (string) of connected SMTP client. It is got by resolving connected IP address. It may be &quot;[IP ADDRESS]&quot; string when name resolution is failed. For example, &quot;[1.2.3.4]&quot;.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>socket_address</term>
+  <listitem>
+  <para>The object that describes connected IP address. Details are said later.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter when SMTP client is connected from resolvable host:</para>
+  <programlisting>condition.define_connect_stopper do |context, host, socket_address|
+  if /\A\[.+\]\z/ =~ host
+    false
+  else
+    true
+  end
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.condition-define-helo-stopper'>condition.define_helo_stopper {|context, fqdn| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not with FQDN on HELO/EHLO command. The available information is same as milter's xxfi_helo.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.fqdn'>fqdn</term>
+  <listitem>
+  <para>The FQDN (string) sent by SMTP client on HELO/EHLO.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter when FQDN is &quot;localhost.localdomain&quot;.</para>
+  <programlisting>condition.define_helo_stopper do |context, helo|
+  helo == &quot;localhost.localdomain&quot;
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.define-envelope-from-stopper'>define_envelope_from_stopper {|context, from| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not with envelope from address passed on MAIL FROM command of SMTP. The available information is same as milter's xxfi_envfrom.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.from'>from</term>
+  <listitem>
+  <para>The envelope from address passed on MAIL FROM command. For example, &quot;&lt;sender@example.com&gt;&quot;.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter when mails are sent from example.com.</para>
+  <programlisting>condition.define_envelope_from_stopper do |context, from|
+  if /@example.com&gt;\z/ =~ from
+    true
+  else
+    false
+  end
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.define-envelope-recipient-stopper'>define_envelope_recipient_stopper {|context, recipient| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not with envelope recipient address passed on RCPT TO command of SMTP. The available information is same as milter's xxfi_envrcpt. This callback is called one or more times when there are multiple recipients.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.recipient'>recipient</term>
+  <listitem>
+  <para>The envelope recipient address passed on RCPT TO command. For example, &quot;&lt;receiver@example.com&gt;&quot;.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter when mails are sent to ml.example.com.</para>
+  <programlisting>condition.define_envelope_recipient_stopper do |context, recipient|
+  if /@ml.example.com&gt;\z/ =~ recipient
+    true
+  else
+    false
+  end
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.condition-define-data-stopper'>condition.define_data_stopper {|context| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not on DATA. The available information is same as milter's xxfi_data.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter on DATA. milter can only add/delete/modify header and/or body after whole message is processed. If you stop the child milter on DATA, you ensure that milter don't add/delete/modify header and/or body. You can confirm the child milter's work if the child milter logs its processed result.</para>
+  <programlisting>condition.define_data_stopper do |context|
+  true
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.define-header-stopper'>define_header_stopper {|context, name, value| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not with header information. The available information is same as milter's xxfi_header. This callback is called for each header.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>name</term>
+  <listitem>
+  <para>The header name. For example, &quot;From&quot;.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.value'>value</term>
+  <listitem>
+  <para>The header value. For example, &quot;sender@example.com&quot;.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter when mails have a header that name is &quot;X-Spam-Flag&quot; and value is &quot;YES&quot;.</para>
+  <programlisting>condition.define_header_stopper do |context, name, value|
+  if [&quot;X-Spam-Flag&quot;, &quot;YES&quot;] == [name, value]
+    true
+  else
+    false
+  end
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.condition-define-end-of-header-stopper'>condition.define_end_of_header_stopper {|context| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not after all headers are processed. The available information is same as milter's xxfi_eoh.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter after all headers are processed.</para>
+  <programlisting>condition.define_end_of_header_stopper do |context|
+  true
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.condition-define-body-stopper'>condition.define_body_stopper {|context, chunk| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not with a body chunk. The available information is same as milter's xxfi_body. This callback may be called multiple times for a large body mail.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter after all headers are processed.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.chunk'>chunk</term>
+  <listitem>
+  <para>A chunk of body. A large body is not processed at a time. It is processed as small chunks. The maximum chunk size is 65535 byte.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter when chunk contains PGP signature.</para>
+  <programlisting>condition.define_body_stopper do |context, chunk|
+  if /^-----BEGIN PGP SIGNATURE-----$/ =~ chunk
+    true
+  else
+    false
+  end
+end</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.condition-define-end-of-message-stopper'>condition.define_end_of_message_stopper {|context| ...}</term>
+  <listitem>
+  <para>Decides whether the child milter is applied or not after a mail is processed. The available information is same as  milter's xxfi_eom.</para>
+  <para>It returns true if you stop the child milter, false otherwise.</para>
+  <variablelist>
+  <varlistentry>
+  <term>context</term>
+  <listitem>
+  <para>The object that has several information at the time. Details are said later.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Here is an example that you stop the child milter after a mail is processed.</para>
+  <programlisting>condition.define_end_of_message_stopper do |context|
+  true
+end</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+  <refsect2>
+  <title>context</title>
+  <para>The object that has several information when you decide whether a child milter is applied or not. (The class of context is Milter::Manager::ChildContext.)</para>
+  <para>It has the following information.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.context-name'>context.name</term>
+  <listitem>
+  <para>Returns the name of child milter. It's name used when define_milter.</para>
+  <para>Example:</para>
+  <programlisting>context.name # -&gt; &quot;clamav-milter&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>context[name]</term>
+  <listitem>
+  <para>Returns value of available macro in the child milter In libmilter API, you need to surround macro name that has two or more length with &quot;{}&quot; but it isn't required. context[name] works well with/without &quot;{}&quot;.</para>
+  <para>Example:</para>
+  <programlisting>context[&quot;j&quot;] # -&gt; &quot;mail.example.com&quot;
+context[&quot;rcpt_address&quot;] # -&gt; &quot;receiver@example.com&quot;
+context[&quot;{rcpt_address}&quot;] # -&gt; &quot;receiver@example.com&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-reject-question'>context.reject?</term>
+  <listitem>
+  <para>
+  Returns true if the child milter returns 'reject'. The child milter must be enabled
+  <link linkend='configuration.milter-evaluation-mode'>milter.evaluation_mode</link>
+  .
+</para>
+  <para>Passed context should be always processing. So, context.reject? never return true. It's usuful when you use the other child milter's result. The other child can be retrieved by context.children[].</para>
+  <para>Example:</para>
+  <programlisting>context.reject? # -&gt; false
+context.children[&quot;milter-greylist&quot;].reject? # -&gt; true or false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-temporary-failure-question'>context.temporary_failure?</term>
+  <listitem>
+  <para>
+  Returns true if the child milter returns 'temporary failure'. The child milter must be enabled
+  <link linkend='configuration.milter-evaluation-mode'>milter.evaluation_mode</link>
+  .
+</para>
+  <para>Passed context should be always processing. So, context.temporay_failure? never return true. It's usuful when you use the other child milter's result. The other child can be retrieved by context.children[].</para>
+  <para>Example:</para>
+  <programlisting>context.temporary_failure? # -&gt; false
+context.children[&quot;milter-greylist&quot;].temporary_failure? # -&gt; true or false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-accept-question'>context.accept?</term>
+  <listitem>
+  <para>Returns true if the child milter returns 'accept'.</para>
+  <para>Passed context should be always processing. So, context.accept? never return true. It's usuful when you use the other child milter's result. The other child can be retrieved by context.children[].</para>
+  <para>Example:</para>
+  <programlisting>context.accept? # -&gt; false
+context.children[&quot;milter-greylist&quot;].accept? # -&gt; true or false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-discard-question'>context.discard?</term>
+  <listitem>
+  <para>
+  Returns true if the child milter returns 'discard'. The child milter must be enabled
+  <link linkend='configuration.milter-evaluation-mode'>milter.evaluation_mode</link>
+  .
+</para>
+  <para>Passed context should be always processing. So, context.discard? never return true. It's usuful when you use the other child milter's result. The other child can be retrieved by context.children[].</para>
+  <para>Example:</para>
+  <programlisting>context.discard? # -&gt; false
+context.children[&quot;milter-greylist&quot;].discard? # -&gt; true or false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-quitted-question'>context.quitted?</term>
+  <listitem>
+  <para>Returns true if the child milter was quitted.</para>
+  <para>Passed context should be always processing. So, context.quitted? never return true. It's usuful when you use the other child milter's result. The other child can be retrieved by context.children[].</para>
+  <para>Example:</para>
+  <programlisting>context.quitted? # -&gt; false
+context.children[&quot;milter-greylist&quot;].quitted? # -&gt; true or false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-children'>context.children[name]</term>
+  <listitem>
+  <para>Returnes the other child milter's context.</para>
+  <para>The name to refere the other child milter is a name that is used for define_milter. (i.e. the name returned by context.name)</para>
+  <para>It returns nil if you refer with nonexistent name.</para>
+  <para>Example:</para>
+  <programlisting>context.children[&quot;milter-greylist&quot;] # -&gt; milter-greylist's context
+context.children[&quot;nonexistent&quot;]     # -&gt; nil
+context.children[context.name]      # -&gt; my context</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-postfix-question'>context.postfix?</term>
+  <listitem>
+  <para>Returns true when MTA is Postfix. It is decided by &quot;v&quot; macro's value. If the value includes &quot;Postfix&quot;, MTA will be Postfix.</para>
+  <para>Returns true when MTA is Postfix, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>context[&quot;v&quot;]     # -&gt; &quot;Postfix 2.5.5&quot;
+context.postfix? # -&gt; true
+
+context[&quot;v&quot;]     # -&gt; &quot;2.5.5&quot;
+context.postfix? # -&gt; false
+
+context[&quot;v&quot;]     # -&gt; nil
+context.postfix? # -&gt; false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.context-authenticated-question'>context.authenticated?</term>
+  <listitem>
+  <para>Returns true when sender is authenticated. It is decided by &quot;auto_type&quot; macro or &quot;auth_authen&quot; macro is available. They are available since MAIL FROM. So, it always returns false before MAIL FROM. You don't forget to add the following configuration to main.cf if you are using Postfix.</para>
+  <programlisting>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</programlisting>
+  <para>It returns true when sender is authenticated, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>context[&quot;auth_type&quot;]   # -&gt; nil
+context[&quot;auth_authen&quot;] # -&gt; nil
+context.authenticated? # -&gt; false
+
+context[&quot;auth_type&quot;]   # -&gt; &quot;CRAM-MD5&quot;
+context[&quot;auth_authen&quot;] # -&gt; nil
+context.authenticated? # -&gt; true
+
+context[&quot;auth_type&quot;]   # -&gt; nil
+context[&quot;auth_authen&quot;] # -&gt; &quot;sender&quot;
+context.authenticated? # -&gt; true</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+
+  <refsect2 id='configuration.socket-address'>
+  <title>socket_address</title>
+  <para>The object that describes socket address. Socket is one of IPv4 socket, IPv6 socket and UNIX domain socket. Socket address is described as corresponding object.</para>
+</refsect2>
+
+  <refsect3>
+  <title>Milter::SocketAddress::IPv4</title>
+  <para>It describes IPv4 socket address. It has the following methods.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.address'>address</term>
+  <listitem>
+  <para>Returns dot-notation IPv4 address.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.address # -&gt; &quot;192.168.1.1&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.port'>port</term>
+  <listitem>
+  <para>Returns port number.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.port # -&gt; 12345</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.to-s'>to_s</term>
+  <listitem>
+  <para>Returns IPv4 address formated as connection_spec format.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s # -&gt; &quot;inet:12345@[192.168.1.1]&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.local-question'>local?</term>
+  <listitem>
+  <para>Returns true if the address is private network address, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s   # -&gt; &quot;inet:12345@[127.0.0.1]&quot;
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; &quot;inet:12345@[192.168.1.1]&quot;
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; &quot;inet:12345@[160.XXX.XXX.XXX]&quot;
+socket_address.local? # -&gt; false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.to-ip-address'>to_ip_address</term>
+  <listitem>
+  <para>Returnes corresponding IPAddr object.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s          # -&gt; &quot;inet:12345@[127.0.0.1]&quot;
+socket_address.to_ip_address # -&gt; #&lt;IPAddr: IPv4:127.0.0.1/255.255.255.255&gt;</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+
+  <refsect3>
+  <title>Milter::SocketAddress::IPv6</title>
+  <para>It describes IPv6 socket address. It has the following methods.</para>
+  <variablelist>
+  <varlistentry>
+  <term>address</term>
+  <listitem>
+  <para>Returns colon-notation IPv6 address.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.address # -&gt; &quot;::1&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>port</term>
+  <listitem>
+  <para>Returns port number.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.port # -&gt; 12345</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>to_s</term>
+  <listitem>
+  <para>Returns IPv6 address formated as connection_spec format.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s # -&gt; &quot;inet6:12345@[::1]&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>local?</term>
+  <listitem>
+  <para>Returns true if the address is private network address, false otherwise.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s   # -&gt; &quot;inet6:12345@[::1]&quot;
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; &quot;inet6:12345@[fe80::XXXX]&quot;
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; &quot;inet6:12345@[2001::XXXX]&quot;
+socket_address.local? # -&gt; false</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>to_ip_address</term>
+  <listitem>
+  <para>Returnes corresponding IPAddr object.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s          # -&gt; &quot;inet6:12345@[::1]&quot;
+socket_address.to_ip_address # -&gt; #&lt;IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0001/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff&gt;</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+
+  <refsect3>
+  <title>Milter::SocketAddress::Unix</title>
+  <para>It describes UNIX domain ssocket address. It has the following methods.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.path'>path</term>
+  <listitem>
+  <para>Returns path of the socket.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.path # -&gt; &quot;/tmp/local.sock&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>to_s</term>
+  <listitem>
+  <para>Returns UNIX domain socket address formated as connection_spec format.</para>
+  <para>Exampel:</para>
+  <programlisting>socket_address.to_s # -&gt; &quot;unix:/tmp/local.sock&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>local?</term>
+  <listitem>
+  <para>Always returns true.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.local? # -&gt; true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>to_ip_address</term>
+  <listitem>
+  <para>Always returnes nil.</para>
+  <para>Example:</para>
+  <programlisting>socket_address.to_s          # -&gt; &quot;unix:/tmp/local.sock&quot;
+socket_address.to_ip_address # -&gt; nil</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='configuration.database'>
+  <title>Database</title>
+  <para>Since 1.6.6.</para>
+  <para>
+  You need knowledge about Ruby for this section. Milter manager supports
+  <ulink url='http://api.rubyonrails.org/files/activerecord/README_rdoc.html'>ActiveRecord</ulink>
+  as database operation library. You can use many RDB like MySQL, SQLite3 and so on because ActiveRecord supports them.
+</para>
+  <para>
+  You need to install ActiveRecord to use database. See optional 
+  <link linkend='install-to'>install</link>
+   documents for ActiveRecord install.
+</para>
+  <para>Let's start small example for using 'users' table in MySQL.</para>
+  <para>Here is connection information for MySQL server:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.Database'>Database name</term>
+  <listitem>
+  <para>mail-system</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.IP'>IP address of database server</term>
+  <listitem>
+  <para>192.168.0.1</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.User'>User name</term>
+  <listitem>
+  <para>milter-manager</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.Password'>Password</term>
+  <listitem>
+  <para>secret</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>First, you write the above connection information to milter-manager.local.conf. In this example, milter-manager.local.conf is placed at /etc/milter-manager/milter-manager.local.conf.</para>
+  <para>/etc/milter-manager/milter-manager.local.conf:</para>
+  <programlisting>database.type = &quot;mysql2&quot;
+database.name = &quot;mail-system&quot;
+database.user = &quot;milter-manager&quot;
+database.password = &quot;secret&quot;</programlisting>
+  <para>Next, you define ActiveRecord object to operate 'users' table. Definition files are placed at models/ directory. models/ directory is placed at the same directory of milter-manager.local.conf. You create models/user.rb.</para>
+  <para>/etc/milter-manager/models/user.rb:</para>
+  <programlisting>class User &lt; ActiveRecord::Base
+end</programlisting>
+  <para>Last, you connect to database and operate data in milter-manager.local.conf:</para>
+  <para>/etc/milter-manager/milter-manager.local.conf:</para>
+  <programlisting>database.setup
+database.load_models(&quot;models/*.rb&quot;)
+User.all.each do |user|
+  p user.name # =&gt; &quot;alice&quot;, &quot;bob&quot;, ...
+end</programlisting>
+  <para>Here are completed files:</para>
+  <para>/etc/milter-manager/milter-manager.local.conf:</para>
+  <programlisting># Configure connection information
+database.type = &quot;mysql2&quot;
+database.name = &quot;mail-system&quot;
+database.user = &quot;milter-manager&quot;
+database.password = &quot;secret&quot;
+
+# Connect
+database.setup
+
+# Load definitions
+database.load_models(&quot;models/*.rb&quot;)
+# Operate data
+User.all.each do |user|
+  p user.name # =&gt; &quot;alice&quot;, &quot;bob&quot;, ...
+end</programlisting>
+  <para>/etc/milter-manager/models/user.rb:</para>
+  <programlisting>class User &lt; ActiveRecord::Base
+end</programlisting>
+  <para>Here are configuration items:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.database-type'>database.type</term>
+  <listitem>
+  <para>Specifies a database type.</para>
+  <para>Here are available types:</para>
+  <variablelist>
+  <varlistentry>
+  <term id='configuration.&amp;quot;mysql2&amp;quot;'>&quot;mysql2&quot;</term>
+  <listitem>
+  <para>Uses MySQL. You need to install mysql2 gem:</para>
+  <programlisting>% sudo gem install mysql2</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.&amp;quot;sqlite3&amp;quot;'>&quot;sqlite3&quot;</term>
+  <listitem>
+  <para>Uses SQLite3. You need to install sqlite3 gem:</para>
+  <programlisting>% sudo gem install sqlite3</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.&amp;quot;pg&amp;quot;'>&quot;pg&quot;</term>
+  <listitem>
+  <para>Uses PostgreSQL. You need to install pg gem:</para>
+  <programlisting>% sudo gem install pg</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>Example:</para>
+  <programlisting>database.type = &quot;mysql2&quot; # uses MySQL</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-name'>database.name</term>
+  <listitem>
+  <para>Specifies database name.</para>
+  <para>
+  For SQLite3, it specifies database path or 
+  <code>&quot;:memory:&quot;</code>
+  .
+</para>
+  <para>Example:</para>
+  <programlisting>database.name = &quot;configurations&quot; # connects 'configurations' database</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-host'>database.host</term>
+  <listitem>
+  <para>Specifies database server host name.</para>
+  <para>In MySQL and so on, &quot;localhost&quot; is used as the default value.</para>
+  <para>In SQLite3, it is ignored.</para>
+  <para>Example:</para>
+  <programlisting>database.host = &quot;192.168.0.1&quot; # connects to server running at 192.168.0.1</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-port'>database.port</term>
+  <listitem>
+  <para>Specifies database server port number.</para>
+  <para>In many cases, you don't need to specify this value explicitly. Because an applicable default value is used.</para>
+  <para>In SQLite3, it is ignored.</para>
+  <para>Example:</para>
+  <programlisting>database.port = 3306 # connects to server running at3 3306 port.</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-path'>database.path</term>
+  <listitem>
+  <para>Specifies database server UNIX domain socket path.</para>
+  <para>
+  In SQLite3, it is used as database path. But
+  <link linkend='configuration.database-name'>.#database.name</link>
+   is prioritize over this. It's recommended that 
+  <link linkend='configuration.database-name'>.#database.name</link>
+   is used rather than
+  <link linkend='configuration.database-path'>.#database.path</link>
+  .
+</para>
+  <para>Example:</para>
+  <programlisting>database.path = &quot;/var/run/mysqld/mysqld.sock&quot; # connects to MySQL via UNIX domain socket</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-user'>database.user</term>
+  <listitem>
+  <para>Specifies database user on connect.</para>
+  <para>In SQLite3, it is ignored.</para>
+  <para>Example:</para>
+  <programlisting>database.user = &quot;milter-manager&quot; # connects to server as 'milter-manager' user</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-password'>database.password</term>
+  <listitem>
+  <para>Specifies database password on connect.</para>
+  <para>In SQLite3, it is ignored.</para>
+  <para>Example:</para>
+  <programlisting>database.password = &quot;secret&quot;</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-extra-options'>database.extra_options</term>
+  <listitem>
+  <para>Since 1.6.9.</para>
+  <para>
+  Specifies extra options. Here is an example to specify
+  <code>:reconnect</code>
+   option to ActiveRecord's MySQL2 adapter:
+</para>
+  <programlisting>database.type = &quot;mysql2&quot;
+database.extra_options[:reconnect] = true</programlisting>
+  <para>Available extra options are different for each database.</para>
+  <para>Example:</para>
+  <programlisting>database.extra_options[:reconnect] = true</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-setup'>database.setup</term>
+  <listitem>
+  <para>Connects to database.</para>
+  <para>You connect to database at this time. After this, you can operate data.</para>
+  <para>Example:</para>
+  <programlisting>database.setup</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='configuration.database-load-models'>database.load_models(path)</term>
+  <listitem>
+  <para>
+  Loads Ruby scripts that write class definitions for ActiveRecord. You can use glob for 
+  <varname>path</varname>
+  . You can use &quot;models/*.rb&quot; for loading all files under models/ directory. If 
+  <varname>path</varname>
+   is relative path, it is resolved from a directory that has milter-manager.conf.
+</para>
+  <para>Example:</para>
+  <programlisting># Loads
+#   /etc/milter-manager/models/user.rb
+#   /etc/milter-manager/models/group.rb
+#   /etc/milter-manager/models/...
+# (In /etc/milter-manager/milter-manager.conf case.)
+database.load_models(&quot;models/*.rb&quot;)</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+</refentry>

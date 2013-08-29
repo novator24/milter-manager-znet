@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-options-on-ubuntu">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-options-on-ubuntu.top_of_page'>Upgrade on Ubuntu (optional)</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Upgrade on Ubuntu (optional)</refname>
+  <refpurpose>How to upgrade milter manager related softwares on Ubuntu Linux</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes how to upgrade milter manager on Ubuntu Linux. See 
+  <link linkend='install-to-ubuntu'>Install to Ubuntu (optional)</link>
+   for newly install information.
+</para>
+  <para>
+  You need to upgrade milter manager before you upgrade optional packages.  See 
+  <link linkend='upgrade-on-ubuntu'>Upgrade on Ubuntu</link>
+   if you don't upgrade milter manager yet.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Upgrade milter-manager-log-analyzer</title>
+  <para>You already upgrade milter-manager-log-analyzer when you upgrade milter-manager package.</para>
+</refsect1>
+
+<refsect1>
+  <title>Conclusion</title>
+  <para>We can upgrade milter manager related softwares as easily as milter manager. We can upgrade if we want improvements in newer version.</para>
+</refsect1>
+</refentry>

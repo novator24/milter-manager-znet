@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="milter manager Reference Manual" link="index.html" author="" name="milter-manager" version="2" language="c">
+  <chapters>
+    <sub name="Getting start" link="start.html">
+      <sub name="NEWS" link="news.html"/>
+      <sub name="README" link="readme.html"/>
+      <sub name="Commands" link="commands.html">
+        <sub name="milter-manager" link="milter-manager.html"/>
+        <sub name="milter-test-server" link="milter-test-server.html"/>
+        <sub name="milter-test-client" link="milter-test-client.html"/>
+        <sub name="milter-performance-check" link="milter-performance-check.html"/>
+        <sub name="milter-statistics-report" link="milter-report-statistics.html"/>
+        <sub name="milter-manager-log-analyzer" link="milter-manager-log-analyzer.html"/>
+      </sub>
+      <sub name="Introduction" link="introduction.html"/>
+      <sub name="Install" link="install.html"/>
+      <sub name="Install milter manager to your platform" link="install-to.html">
+        <sub name="Install to Debian" link="install-to-debian.html"/>
+        <sub name="Install to Debian (optional)" link="install-options-to-debian.html"/>
+        <sub name="Install to Ubuntu" link="install-to-ubuntu.html"/>
+        <sub name="Install to Ubuntu (optional)" link="install-options-to-ubuntu.html"/>
+        <sub name="Install to CentOS 5" link="install-to-centos5.html"/>
+        <sub name="Install to CentOS 6" link="install-to-centos.html"/>
+        <sub name="Install to CentOS (optional)" link="install-options-to-centos.html"/>
+        <sub name="Install to FreeBSD" link="install-to-freebsd.html"/>
+        <sub name="Install to FreeBSD (optional)" link="install-options-to-freebsd.html"/>
+        <sub name="Install to other platforms" link="install-to-others.html"/>
+      </sub>
+      <sub name="Upgrade milter manager on your platform" link="upgrade.html">
+        <sub name="Upgrade on Debian" link="upgrade-on-debian.html"/>
+        <sub name="Upgrade on Debian (optional)" link="upgrade-options-on-debian.html"/>
+        <sub name="Upgrade on Ubuntu" link="upgrade-on-ubuntu.html"/>
+        <sub name="Upgrade on Ubuntu (optional)" link="upgrade-options-on-ubuntu.html"/>
+        <sub name="Upgrade on CentOS" link="upgrade-on-centos.html"/>
+        <sub name="Upgrade on CentOS (optional)" link="upgrade-options-on-centos.html"/>
+        <sub name="Upgrade on FreeBSD" link="upgrade-on-freebsd.html"/>
+        <sub name="Upgrade on FreeBSD (optional)" link="upgrade-options-on-freebsd.html"/>
+      </sub>
+      <sub name="Configuration" link="configuration.html"/>
+      <sub name="Log list" link="log-list.html"/>
+      <sub name="Reverse Dictionary" link="reverse-dictionary.html"/>
+      <sub name="Users" link="users.html"/>
+      <sub name="Available milters" link="available-milters.html"/>
+    </sub>
+    <sub name="Ruby support" link="ruby.html">
+      <sub name="milter development with Ruby" link="ruby-milter-tutorial.html"/>
+      <sub name="milter API for Ruby" link="ruby-milter-reference.html"/>
+      <sub name="milter configuration written by Ruby" link="ruby-milter-configuration.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <keyword type="" name="milter-test-server" link="news.html#idp6742432"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7738544"/>
+    <keyword type="" name="Package" link="news.html#idp7808400"/>
+    <keyword type="" name="milter manager" link="news.html#idp4245936"/>
+    <keyword type="" name="Package" link="news.html#idp4250848"/>
+    <keyword type="" name="Known Issues" link="news.html#idp90608"/>
+    <keyword type="" name="Thanks" link="news.html#idp92944"/>
+    <keyword type="" name="Package" link="news.html#idp112608"/>
+    <keyword type="" name="milter manager" link="news.html#idp119360"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp124832"/>
+    <keyword type="" name="Admin" link="news.html#idp128064"/>
+    <keyword type="" name="Thanks" link="news.html#idp130304"/>
+    <keyword type="" name="milter-core" link="news.html#idp6888912"/>
+    <keyword type="" name="milter manager" link="news.html#idp6894224"/>
+    <keyword type="" name="milter-client" link="news.html#idp6897568"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp6900672"/>
+    <keyword type="" name="Document" link="news.html#idp6905664"/>
+    <keyword type="" name="Package" link="news.html#idp6913552"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp6916704"/>
+    <keyword type="" name="Thanks" link="news.html#idp6918912"/>
+    <keyword type="" name="Package" link="news.html#idp6922816"/>
+    <keyword type="" name="milter manager" link="news.html#idp6930464"/>
+    <keyword type="" name="milter-core" link="news.html#idp6936880"/>
+    <keyword type="" name="Admin" link="news.html#idp6943344"/>
+    <keyword type="" name="Document" link="news.html#idp6946480"/>
+    <keyword type="" name="Thanks" link="news.html#idp6949584"/>
+    <keyword type="" name="Package" link="news.html#idp6956176"/>
+    <keyword type="" name="milter manager" link="news.html#idp6959248"/>
+    <keyword type="" name="milter-core" link="news.html#idp6965536"/>
+    <keyword type="" name="Document" link="news.html#idp6968640"/>
+    <keyword type="" name="Thanks" link="news.html#idp6972848"/>
+    <keyword type="" name="milter-core" link="news.html#idp6978544"/>
+    <keyword type="" name="Package" link="news.html#idp6984688"/>
+    <keyword type="" name="milter manager" link="news.html#idp6988720"/>
+    <keyword type="" name="milter-core" link="news.html#idp6997264"/>
+    <keyword type="" name="milter-client" link="news.html#idp7000464"/>
+    <keyword type="" name="milter-server" link="news.html#idp7005904"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7012256"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp7020400"/>
+    <keyword type="" name="Document" link="news.html#idp7025280"/>
+    <keyword type="" name="Admin" link="news.html#idp7029280"/>
+    <keyword type="" name="Thanks" link="news.html#idp7032480"/>
+    <keyword type="" name="All" link="news.html#idp7041712"/>
+    <keyword type="" name="Package" link="news.html#idp7044864"/>
+    <keyword type="" name="milter manager" link="news.html#idp7055520"/>
+    <keyword type="" name="milter-core" link="news.html#idp7068672"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7075072"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp7078256"/>
+    <keyword type="" name="Document" link="news.html#idp7081408"/>
+    <keyword type="" name="Thanks" link="news.html#idp7084656"/>
+    <keyword type="" name="All" link="news.html#idp7090352"/>
+    <keyword type="" name="Document" link="news.html#idp7093456"/>
+    <keyword type="" name="milter manager" link="news.html#idp7096640"/>
+    <keyword type="" name="milter-client" link="news.html#idp7103696"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp7106880"/>
+    <keyword type="" name="Thanks" link="news.html#idp7115904"/>
+    <keyword type="" name="All" link="news.html#idp7120704"/>
+    <keyword type="" name="Document" link="news.html#idp7123888"/>
+    <keyword type="" name="milter-manager" link="news.html#idp7129296"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7133136"/>
+    <keyword type="" name="milter-core" link="news.html#idp10210704"/>
+    <keyword type="" name="milter-server" link="news.html#idp10213392"/>
+    <keyword type="" name="Thanks" link="news.html#idp10218080"/>
+    <keyword type="" name="All" link="news.html#idp10221392"/>
+    <keyword type="" name="Package" link="news.html#idp10226176"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10231168"/>
+    <keyword type="" name="milter-core" link="news.html#idp10233856"/>
+    <keyword type="" name="milter-client" link="news.html#idp10237312"/>
+    <keyword type="" name="Thanks" link="news.html#idp10240768"/>
+    <keyword type="" name="All" link="news.html#idp10244080"/>
+    <keyword type="" name="Document" link="news.html#idp10247632"/>
+    <keyword type="" name="Package" link="news.html#idp10250416"/>
+    <keyword type="" name="milter-core" link="news.html#idp10253872"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10260880"/>
+    <keyword type="" name="libmilter-compatible" link="news.html#idp10268768"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10273536"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10276992"/>
+    <keyword type="" name="milter-report-statistics" link="news.html#idp10288128"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10292352"/>
+    <keyword type="" name="Thanks" link="news.html#idp10310784"/>
+    <keyword type="" name="milter manager" link="news.html#idp10314864"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10318592"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10321280"/>
+    <keyword type="" name="Thanks" link="news.html#idp10323968"/>
+    <keyword type="" name="milter-client" link="news.html#idp10327280"/>
+    <keyword type="" name="milter manager" link="news.html#idp10331632"/>
+    <keyword type="" name="Document" link="news.html#idp10346784"/>
+    <keyword type="" name="milter-client" link="news.html#idp10349552"/>
+    <keyword type="" name="milter-server" link="news.html#idp10355696"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10360400"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10365696"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10372032"/>
+    <keyword type="" name="milter-report-statistics" link="news.html#idp10379712"/>
+    <keyword type="" name="Packet" link="news.html#idp10383024"/>
+    <keyword type="" name="Thanks" link="news.html#idp10385024"/>
+    <keyword type="" name="milter manager" link="news.html#idp10388336"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10393904"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10396688"/>
+    <keyword type="" name="Thanks" link="news.html#idp10402240"/>
+    <keyword type="" name="milter manager" link="news.html#idp10406320"/>
+    <keyword type="" name="Thanks" link="news.html#idp10409120"/>
+    <keyword type="" name="milter manager" link="news.html#idp10412432"/>
+    <keyword type="" name="Document" link="news.html#idp10416624"/>
+    <keyword type="" name="milter manager" link="news.html#idp10419936"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10427760"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10430448"/>
+    <keyword type="" name="milter-core" link="news.html#idp10435152"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10437920"/>
+    <keyword type="" name="Thanks" link="news.html#idp10442336"/>
+    <keyword type="" name="Document" link="news.html#idp10446176"/>
+    <keyword type="" name="milter manager" link="news.html#idp10450256"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10454192"/>
+    <keyword type="" name="milter-toolkit" link="news.html#idp10456880"/>
+    <keyword type="" name="Thanks" link="news.html#idp10459680"/>
+    <keyword type="" name="Document" link="news.html#idp10464304"/>
+    <keyword type="" name="libmilter-core" link="news.html#idp10469856"/>
+    <keyword type="" name="milter manager" link="news.html#idp10473408"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10476944"/>
+    <keyword type="" name="Thanks" link="news.html#idp10480256"/>
+    <keyword type="" name="Document" link="news.html#idp10484336"/>
+    <keyword type="" name="milter manager" link="news.html#idp10496016"/>
+    <keyword type="" name="milter-toolkit" link="news.html#idp10533520"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10537216"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10540016"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10543792"/>
+    <keyword type="" name="Package" link="news.html#idp10551664"/>
+    <keyword type="" name="Test" link="news.html#idp10554352"/>
+    <keyword type="" name="Thanks" link="news.html#idp10556896"/>
+    <keyword type="" name="Document" link="news.html#idp10561744"/>
+    <keyword type="" name="milter manager" link="news.html#idp10565360"/>
+    <keyword type="" name="Document" link="news.html#idp10570432"/>
+    <keyword type="" name="milter manager" link="news.html#idp10573888"/>
+    <keyword type="" name="Thanks" link="news.html#idp10584560"/>
+    <keyword type="" name="Document" link="news.html#idp10589408"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10591328"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10597424"/>
+    <keyword type="" name="milter-toolkit" link="news.html#idp10606304"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10608224"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10610144"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10612064"/>
+    <keyword type="" name="Thanks" link="news.html#idp10613984"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10618064"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10624544"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10627232"/>
+    <keyword type="" name="Thanks" link="news.html#idp10629152"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10633232"/>
+    <keyword type="" name="Thanks" link="news.html#idp10638912"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10642992"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10661248"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10663296"/>
+    <keyword type="" name="Thanks" link="news.html#idp10666272"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10670800"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10690128"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10692384"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10698736"/>
+    <keyword type="" name="Documentation" link="news.html#idp10700992"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10704608"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10706912"/>
+    <keyword type="" name="Documentation" link="news.html#idp10710544"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10714704"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10716960"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10720624"/>
+    <keyword type="" name="New applicable conditions" link="news.html#idp10731616"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10737680"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10744752"/>
+    <keyword type="" name="Optional dependencies" link="readme.html#idp10171008"/>
+    <keyword type="" name="Postfix supports milter system" link="introduction.html#idp7510608"/>
+    <keyword type="" name="More effective milter combination" link="introduction.html#idp6154912"/>
+    <keyword type="" name="MTA configuration problems" link="introduction.html#idp5306224"/>
+    <keyword type="" name="milter manager" link="introduction.html#idp5311392"/>
+    <keyword type="" name="Required" link="install.html#idp7989408"/>
+    <keyword type="" name="Optional: Testing" link="install.html#idp5623520"/>
+    <keyword type="" name="Optional: Graph" link="install.html#idp9576160"/>
+    <keyword type="" name="For squeeze" link="install-to-debian.html#idp7524256"/>
+    <keyword type="" name="For wheezy" link="install-to-debian.html#idp8396848"/>
+    <keyword type="" name="For jessie" link="install-to-debian.html#idp8188576"/>
+    <keyword type="" name="For sid" link="install-to-debian.html#idp7892192"/>
+    <keyword type="" name="Install" link="install-to-debian.html#idp7250688"/>
+    <keyword type="" name="Configure spamass-milter" link="install-to-debian.html#idp8505952"/>
+    <keyword type="" name="Configure clamav-milter" link="install-to-debian.html#idp6211184"/>
+    <keyword type="" name="Configure milter-greylist" link="install-to-debian.html#idp6216096"/>
+    <keyword type="" name="Configure milter-manager" link="install-to-debian.html#idp5418400"/>
+    <keyword type="" name="Configure Postfix" link="install-to-debian.html#idp2882480"/>
+    <keyword type="" name="Way 1: View via a Web server at the same host" link="install-options-to-debian.html#idp6513904"/>
+    <keyword type="" name="Way 2: View via Munin at other host" link="install-options-to-debian.html#install-options-to-debian.munin"/>
+    <keyword type="" name="For Lucid Lynx" link="install-to-ubuntu.html#idp6659104"/>
+    <keyword type="" name="For Precise Pangolin" link="install-to-ubuntu.html#idp7494304"/>
+    <keyword type="" name="For Quantal Quetzal" link="install-to-ubuntu.html#idp1479152"/>
+    <keyword type="" name="For Raring Ringtail" link="install-to-ubuntu.html#idp5492368"/>
+    <keyword type="" name="Install" link="install-to-ubuntu.html#idp5495840"/>
+    <keyword type="" name="Configure spamass-milter" link="install-to-ubuntu.html#idp7866208"/>
+    <keyword type="" name="Configure clamav-milter" link="install-to-ubuntu.html#idp6851136"/>
+    <keyword type="" name="Configure milter-greylist" link="install-to-ubuntu.html#idp9505680"/>
+    <keyword type="" name="Configure milter-manager" link="install-to-ubuntu.html#idp10785456"/>
+    <keyword type="" name="Configure Postfix" link="install-to-ubuntu.html#idp10804528"/>
+    <keyword type="" name="Way 1: View via a Web server at the same host" link="install-options-to-ubuntu.html#idp9251856"/>
+    <keyword type="" name="Way 2: View via Munin at other host" link="install-options-to-ubuntu.html#install-options-to-ubuntu.munin"/>
+    <keyword type="" name="Configure spamass-milter" link="install-to-centos5.html#idp5394480"/>
+    <keyword type="" name="Configure clamav-milter" link="install-to-centos5.html#idp9993472"/>
+    <keyword type="" name="Configure milter-greylist" link="install-to-centos5.html#idp9999440"/>
+    <keyword type="" name="Configure milter-manager" link="install-to-centos5.html#idp11002128"/>
+    <keyword type="" name="Configure Sendmail" link="install-to-centos5.html#idp11017648"/>
+    <keyword type="" name="Configure spamass-milter" link="install-to-centos.html#idp9336032"/>
+    <keyword type="" name="Configure clamav-milter" link="install-to-centos.html#idp7182048"/>
+    <keyword type="" name="Configure milter-greylist" link="install-to-centos.html#idp11035632"/>
+    <keyword type="" name="Configure milter manager" link="install-to-centos.html#idp11046912"/>
+    <keyword type="" name="Configure Postfix" link="install-to-centos.html#idp11217408"/>
+    <keyword type="" name="Way 1: View via a Web server at the same host" link="install-options-to-centos.html#idp9267440"/>
+    <keyword type="" name="Way 2: View via Munin at other host" link="install-options-to-centos.html#install-options-to-centos.munin"/>
+    <keyword type="" name="Configure spamass-milter" link="install-to-freebsd.html#idp6104896"/>
+    <keyword type="" name="Configure clamav-milter" link="install-to-freebsd.html#idp6355136"/>
+    <keyword type="" name="Configure milter-greylist" link="install-to-freebsd.html#idp11299504"/>
+    <keyword type="" name="Configure milter-manager" link="install-to-freebsd.html#idp11314384"/>
+    <keyword type="" name="Configure Postfix" link="install-to-freebsd.html#idp11333488"/>
+    <keyword type="" name="Install packages" link="install-options-to-freebsd.html#idp9095376"/>
+    <keyword type="" name="Configure milter-manager-log-analyzer" link="install-options-to-freebsd.html#idp7809392"/>
+    <keyword type="" name="Way 1: View via a Web server at the same host" link="install-options-to-freebsd.html#idp5758848"/>
+    <keyword type="" name="Way 2: View via Munin at other host" link="install-options-to-freebsd.html#install-options-to-freebsd.munin"/>
+    <keyword type="" name="Upgrade from before 1.8.0" link="upgrade-on-debian.html#idp8339296"/>
+    <keyword type="" name="For squeeze" link="upgrade-on-debian.html#idp5645968"/>
+    <keyword type="" name="For wheezy" link="upgrade-on-debian.html#idp6652752"/>
+    <keyword type="" name="For jessie" link="upgrade-on-debian.html#idp8019952"/>
+    <keyword type="" name="For sid" link="upgrade-on-debian.html#idp7391456"/>
+    <keyword type="" name="Upgrade from before 1.8.0" link="upgrade-on-ubuntu.html#idp8869904"/>
+    <keyword type="" name="For Lucid Lynx" link="upgrade-on-ubuntu.html#idp10028368"/>
+    <keyword type="" name="For Precise Pangolin" link="upgrade-on-ubuntu.html#idp5516992"/>
+    <keyword type="" name="For Quantal Quetzal" link="upgrade-on-ubuntu.html#idp7801728"/>
+    <keyword type="" name="For Raring Ringtail" link="upgrade-on-ubuntu.html#idp9929712"/>
+    <keyword type="" name="Define child milter" link="configuration.html#idp13179968"/>
+    <keyword type="" name="Operate child milter" link="configuration.html#idp13253760"/>
+    <keyword type="" name="S25R" link="configuration.html#idp13269040"/>
+    <keyword type="" name="Remote Network" link="configuration.html#idp13295344"/>
+    <keyword type="" name="Authentication" link="configuration.html#configuration.authentication"/>
+    <keyword type="" name="Unauthentication" link="configuration.html#configuration.unauthentication"/>
+    <keyword type="" name="Sendmail Compatible" link="configuration.html#idp13311200"/>
+    <keyword type="" name="stress" link="configuration.html#idp13315280"/>
+    <keyword type="" name="Trust" link="configuration.html#configuration.trust"/>
+    <keyword type="" name="Restrict Accounts" link="configuration.html#idp13358944"/>
+    <keyword type="" name="context" link="configuration.html#idp13437440"/>
+    <keyword type="" name="socket_address" link="configuration.html#configuration.socket-address"/>
+    <keyword type="" name="Install to Debian GNU/Linux" link="reverse-dictionary.html#idp8669648"/>
+    <keyword type="" name="Install to Ubuntu Linux" link="reverse-dictionary.html#idp8493072"/>
+    <keyword type="" name="Install to CentOS" link="reverse-dictionary.html#idp7669968"/>
+    <keyword type="" name="Install to FreeBSD" link="reverse-dictionary.html#idp8534688"/>
+    <keyword type="" name="Generate graphs for statistics data" link="reverse-dictionary.html#idp2940368"/>
+    <keyword type="" name="Find a configuration file" link="reverse-dictionary.html#reverse-dictionary.configuration-basic-find-configuration-file"/>
+    <keyword type="" name="Connect milter-manager via TCP/IP" link="reverse-dictionary.html#idp10908176"/>
+    <keyword type="" name="Connect milter-manager via UNIX domain socket" link="reverse-dictionary.html#idp11242288"/>
+    <keyword type="" name="Cleanup UNIX domain socket" link="reverse-dictionary.html#idp11594848"/>
+    <keyword type="" name="Apply milters to messages only for specified accounts" link="reverse-dictionary.html#idp11606560"/>
+    <keyword type="" name="DKIM/DomainKeys" link="available-milters.html#idp10163248"/>
+    <keyword type="" name="SPF/Sender ID" link="available-milters.html#idp9964720"/>
+  </functions>
+</book>

@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# Copyright (C) 2010  Kouhei Sutou <kou@clear-code.com>
+#
+# This library is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this library.  If not, see <http://www.gnu.org/licenses/>.
+#
+#%# family=auto
+#%# capabilities=autoconf
+
+if [ "$1" = "config" ]; then
+	cat <<EOF
+graph_title Sendmail Processes
+graph_vlabel processes
+graph_category sendmail
+graph_info Number of sendmail server processes
+
+processes.label Processes
+processes.type GAUGE
+EOF
+	exit 0
+fi
+
+n_processes=$(ps ax | grep 'sendmail: server' | grep -v 'grep' | wc -l)
+
+case "$1" in
+    auto|autoconf|detect)
+    	if [ $n_processes -gt 0 ]; then
+	    echo "yes"
+	    exit 0
+	else
+	    echo "no (no sendmail server is running)"
+	    exit 1
+	fi
+	;;
+    *)
+	echo "processes.value ${n_processes}"
+	exit 0
+	;;
+esac
+

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="milter managerリファレンスマニュアル" link="index.html" author="" name="milter-manager" version="2" language="c">
+  <chapters>
+    <sub name="はじめよう" link="start.html">
+      <sub name="お知らせ" link="news.html"/>
+      <sub name="README" link="readme.html"/>
+      <sub name="コマンド" link="commands.html">
+        <sub name="milter-manager" link="milter-manager.html"/>
+        <sub name="milter-test-server" link="milter-test-server.html"/>
+        <sub name="milter-test-client" link="milter-test-client.html"/>
+        <sub name="milter-performance-check" link="milter-performance-check.html"/>
+        <sub name="milter-statistics-report" link="milter-report-statistics.html"/>
+        <sub name="milter-manager-log-analyzer" link="milter-manager-log-analyzer.html"/>
+      </sub>
+      <sub name="はじめに" link="introduction.html"/>
+      <sub name="インストール" link="install.html"/>
+      <sub name="プラットフォーム毎のmilter managerのインストール方法" link="install-to.html">
+        <sub name="Debianへインストール" link="install-to-debian.html"/>
+        <sub name="Debianへインストール（任意）" link="install-options-to-debian.html"/>
+        <sub name="Ubuntuへインストール" link="install-to-ubuntu.html"/>
+        <sub name="Ubuntuへインストール（任意）" link="install-options-to-ubuntu.html"/>
+        <sub name="CentOS 5へインストール" link="install-to-centos5.html"/>
+        <sub name="CentOS 6へインストール" link="install-to-centos.html"/>
+        <sub name="CentOSへインストール（任意）" link="install-options-to-centos.html"/>
+        <sub name="FreeBSDへインストール" link="install-to-freebsd.html"/>
+        <sub name="FreeBSDへインストール（任意）" link="install-options-to-freebsd.html"/>
+        <sub name="その他のプラットフォームへインストール" link="install-to-others.html"/>
+      </sub>
+      <sub name="プラットフォーム毎のmilter managerの更新方法" link="upgrade.html">
+        <sub name="Debianで更新" link="upgrade-on-debian.html"/>
+        <sub name="Debianで更新（任意）" link="upgrade-options-on-debian.html"/>
+        <sub name="Ubuntuで更新" link="upgrade-on-ubuntu.html"/>
+        <sub name="Ubuntuで更新（任意）" link="upgrade-options-on-ubuntu.html"/>
+        <sub name="CentOSで更新" link="upgrade-on-centos.html"/>
+        <sub name="CentOSで更新（任意）" link="upgrade-options-on-centos.html"/>
+        <sub name="FreeBSDで更新" link="upgrade-on-freebsd.html"/>
+        <sub name="FreeBSDで更新（任意）" link="upgrade-options-on-freebsd.html"/>
+      </sub>
+      <sub name="設定" link="configuration.html"/>
+      <sub name="ログ一覧" link="log-list.html"/>
+      <sub name="逆引きリファレンス" link="reverse-dictionary.html"/>
+      <sub name="ユーザ" link="users.html"/>
+      <sub name="利用可能なmilter" link="available-milters.html"/>
+    </sub>
+    <sub name="Ruby support" link="ruby.html">
+      <sub name="Rubyでmilter開発" link="ruby-milter-tutorial.html"/>
+      <sub name="Ruby用milter APIリファレンス" link="ruby-milter-reference.html"/>
+      <sub name="Ruby製milterの設定" link="ruby-milter-configuration.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <keyword type="" name="milter-test-server" link="news.html#idp7904288"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7911408"/>
+    <keyword type="" name="パッケージ" link="news.html#idp4146896"/>
+    <keyword type="" name="milter manager" link="news.html#idp44256"/>
+    <keyword type="" name="パッケージ" link="news.html#idp49200"/>
+    <keyword type="" name="既知の問題" link="news.html#idp62368"/>
+    <keyword type="" name="感謝" link="news.html#idp64720"/>
+    <keyword type="" name="パッケージ" link="news.html#idp70368"/>
+    <keyword type="" name="milter manager" link="news.html#idm39936"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idm34448"/>
+    <keyword type="" name="Admin" link="news.html#idm31184"/>
+    <keyword type="" name="感謝" link="news.html#idm28944"/>
+    <keyword type="" name="milter-core" link="news.html#idp6876000"/>
+    <keyword type="" name="milter manager" link="news.html#idp6881536"/>
+    <keyword type="" name="milter-client" link="news.html#idp6884896"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp6888000"/>
+    <keyword type="" name="Document" link="news.html#idp6893248"/>
+    <keyword type="" name="Package" link="news.html#idp6901040"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp6904112"/>
+    <keyword type="" name="感謝" link="news.html#idp6906320"/>
+    <keyword type="" name="Package" link="news.html#idp6910176"/>
+    <keyword type="" name="milter manager" link="news.html#idp6918288"/>
+    <keyword type="" name="milter-core" link="news.html#idp6924864"/>
+    <keyword type="" name="Admin" link="news.html#idp6931200"/>
+    <keyword type="" name="Document" link="news.html#idp6934336"/>
+    <keyword type="" name="感謝" link="news.html#idp6937552"/>
+    <keyword type="" name="Package" link="news.html#idp6944096"/>
+    <keyword type="" name="milter manager" link="news.html#idp6947376"/>
+    <keyword type="" name="milter-core" link="news.html#idp6953888"/>
+    <keyword type="" name="Document" link="news.html#idp6956992"/>
+    <keyword type="" name="感謝" link="news.html#idp6961264"/>
+    <keyword type="" name="milter-core" link="news.html#idp6966912"/>
+    <keyword type="" name="パッケージ" link="news.html#idp6973184"/>
+    <keyword type="" name="milter manager" link="news.html#idp6977200"/>
+    <keyword type="" name="milter-core" link="news.html#idp6985968"/>
+    <keyword type="" name="milter-client" link="news.html#idp6989072"/>
+    <keyword type="" name="milter-server" link="news.html#idp6994656"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7001056"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp7009504"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp7014448"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp7018464"/>
+    <keyword type="" name="感謝" link="news.html#idp7021728"/>
+    <keyword type="" name="全体" link="news.html#idp7030976"/>
+    <keyword type="" name="パッケージ" link="news.html#idp7034128"/>
+    <keyword type="" name="milter manager" link="news.html#idp7044976"/>
+    <keyword type="" name="milter-core" link="news.html#idp7058432"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp7064864"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp7068080"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp7071232"/>
+    <keyword type="" name="感謝" link="news.html#idp7074496"/>
+    <keyword type="" name="全体" link="news.html#idp7080144"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp7083248"/>
+    <keyword type="" name="milter manager" link="news.html#idp7086432"/>
+    <keyword type="" name="milter-client" link="news.html#idp7093616"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp7096848"/>
+    <keyword type="" name="感謝" link="news.html#idp7105776"/>
+    <keyword type="" name="全体" link="news.html#idp7110528"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp7113776"/>
+    <keyword type="" name="milter-manager" link="news.html#idp7119184"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10367088"/>
+    <keyword type="" name="milter-core" link="news.html#idp10371936"/>
+    <keyword type="" name="milter-server" link="news.html#idp10374752"/>
+    <keyword type="" name="感謝" link="news.html#idp10379472"/>
+    <keyword type="" name="全体" link="news.html#idp10382784"/>
+    <keyword type="" name="パッケージ" link="news.html#idp10387680"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10392896"/>
+    <keyword type="" name="milter-core" link="news.html#idp10395584"/>
+    <keyword type="" name="milter-client" link="news.html#idp10399040"/>
+    <keyword type="" name="感謝" link="news.html#idp10402496"/>
+    <keyword type="" name="全体" link="news.html#idp10405808"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10409392"/>
+    <keyword type="" name="パッケージ" link="news.html#idp10412192"/>
+    <keyword type="" name="milter-core" link="news.html#idp10415648"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10422880"/>
+    <keyword type="" name="libmilter-compatible" link="news.html#idp10430944"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10435744"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10439200"/>
+    <keyword type="" name="milter-report-statistics" link="news.html#idp10450336"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10454560"/>
+    <keyword type="" name="感謝" link="news.html#idp10472992"/>
+    <keyword type="" name="milter manager" link="news.html#idp10477072"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10480864"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10483632"/>
+    <keyword type="" name="感謝" link="news.html#idp10486320"/>
+    <keyword type="" name="milter-client" link="news.html#idp10489632"/>
+    <keyword type="" name="milter manager" link="news.html#idp10494096"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10509504"/>
+    <keyword type="" name="milter-client" link="news.html#idp10512288"/>
+    <keyword type="" name="milter-server" link="news.html#idp10518592"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10523312"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10529456"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10535728"/>
+    <keyword type="" name="milter-report-statistics" link="news.html#idp10543296"/>
+    <keyword type="" name="パッケージ" link="news.html#idp10546608"/>
+    <keyword type="" name="感謝" link="news.html#idp10548624"/>
+    <keyword type="" name="milter manager" link="news.html#idp10551936"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10557664"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10560480"/>
+    <keyword type="" name="感謝" link="news.html#idp10566064"/>
+    <keyword type="" name="milter manager" link="news.html#idp10570144"/>
+    <keyword type="" name="感謝" link="news.html#idp10572960"/>
+    <keyword type="" name="milter manager" link="news.html#idp10576272"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10580464"/>
+    <keyword type="" name="milter manager" link="news.html#idp10585248"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10593248"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10595936"/>
+    <keyword type="" name="milter-core" link="news.html#idp10600640"/>
+    <keyword type="" name="Ruby milter" link="news.html#idp10603424"/>
+    <keyword type="" name="感謝" link="news.html#idp10607856"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10611728"/>
+    <keyword type="" name="milter manager" link="news.html#idp10615808"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10619744"/>
+    <keyword type="" name="milter-toolkit" link="news.html#idp10622432"/>
+    <keyword type="" name="感謝" link="news.html#idp10626016"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10630720"/>
+    <keyword type="" name="libmilter-core" link="news.html#idp10636368"/>
+    <keyword type="" name="milter manager" link="news.html#idp10639936"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10643472"/>
+    <keyword type="" name="感謝" link="news.html#idp10646784"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10650864"/>
+    <keyword type="" name="milter manager" link="news.html#idp10662640"/>
+    <keyword type="" name="milter-toolkit" link="news.html#idp10700400"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10704256"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10707024"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10710720"/>
+    <keyword type="" name="パッケージ" link="news.html#idp10718592"/>
+    <keyword type="" name="テスト" link="news.html#idp10721280"/>
+    <keyword type="" name="感謝" link="news.html#idp10723824"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10728672"/>
+    <keyword type="" name="milter manager" link="news.html#idp10732304"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10737488"/>
+    <keyword type="" name="milter manager" link="news.html#idp10740944"/>
+    <keyword type="" name="感謝" link="news.html#idp10752112"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10756960"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10758880"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10765168"/>
+    <keyword type="" name="milter-toolkit" link="news.html#idp10774048"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10775968"/>
+    <keyword type="" name="milter-test-client" link="news.html#idp10777888"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10779888"/>
+    <keyword type="" name="感謝" link="news.html#idp10781808"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10785888"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10792416"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10795104"/>
+    <keyword type="" name="感謝" link="news.html#idp10797024"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10801104"/>
+    <keyword type="" name="感謝" link="news.html#idp10806880"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10811040"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10829872"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10832000"/>
+    <keyword type="" name="感謝" link="news.html#idp10834688"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10838528"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10855488"/>
+    <keyword type="" name="milter-test-server" link="news.html#idp10857408"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10862864"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10864784"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10867856"/>
+    <keyword type="" name="milter manager admin" link="news.html#idp10869888"/>
+    <keyword type="" name="ドキュメント" link="news.html#idp10873040"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10876688"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10878608"/>
+    <keyword type="" name="milter-manager" link="news.html#idp10881792"/>
+    <keyword type="" name="新適用規則" link="news.html#idp10891584"/>
+    <keyword type="" name="milter-performance-check" link="news.html#idp10896992"/>
+    <keyword type="" name="milter-manager-log-analyzer" link="news.html#idp10903424"/>
+    <keyword type="" name="あるとよいソフトウェア" link="readme.html#idp8236208"/>
+    <keyword type="" name="Postfixのmilterシステム対応" link="introduction.html#idp6195792"/>
+    <keyword type="" name="より効率的・効果的なmilterの利用" link="introduction.html#idp6319888"/>
+    <keyword type="" name="MTAの設定の問題点" link="introduction.html#idp10927888"/>
+    <keyword type="" name="milter manager" link="introduction.html#idp10933792"/>
+    <keyword type="" name="必須" link="install.html#idp8619744"/>
+    <keyword type="" name="任意: テスト実行" link="install.html#idp8254144"/>
+    <keyword type="" name="任意: グラフ生成" link="install.html#idp9155392"/>
+    <keyword type="" name="squeezeの場合" link="install-to-debian.html#idp8776352"/>
+    <keyword type="" name="wheezyの場合" link="install-to-debian.html#idp10004960"/>
+    <keyword type="" name="jessieの場合" link="install-to-debian.html#idp7422656"/>
+    <keyword type="" name="sidの場合" link="install-to-debian.html#idp5998720"/>
+    <keyword type="" name="インストール" link="install-to-debian.html#idp5574944"/>
+    <keyword type="" name="spamass-milterの設定" link="install-to-debian.html#idp10274128"/>
+    <keyword type="" name="clamav-milterの設定" link="install-to-debian.html#idp9169712"/>
+    <keyword type="" name="milter-greylistの設定" link="install-to-debian.html#idp9175056"/>
+    <keyword type="" name="milter-managerの設定" link="install-to-debian.html#idp5300432"/>
+    <keyword type="" name="Postfixの設定" link="install-to-debian.html#idp10985840"/>
+    <keyword type="" name="同じホストにWebサーバを設置する場合" link="install-options-to-debian.html#idp10364288"/>
+    <keyword type="" name="別ホストにあるMuninを利用する方法" link="install-options-to-debian.html#install-options-to-debian.munin"/>
+    <keyword type="" name="Lucid Lynxの場合" link="install-to-ubuntu.html#idp5754432"/>
+    <keyword type="" name="Precise Pangolinの場合" link="install-to-ubuntu.html#idp8929648"/>
+    <keyword type="" name="Quantal Quetzalの場合" link="install-to-ubuntu.html#idp7356400"/>
+    <keyword type="" name="Raring Ringtailの場合" link="install-to-ubuntu.html#idp5799584"/>
+    <keyword type="" name="インストール" link="install-to-ubuntu.html#idp5803120"/>
+    <keyword type="" name="spamass-milterの設定" link="install-to-ubuntu.html#idp9966288"/>
+    <keyword type="" name="clamav-milterの設定" link="install-to-ubuntu.html#idp9973424"/>
+    <keyword type="" name="milter-greylistの設定" link="install-to-ubuntu.html#idp7658496"/>
+    <keyword type="" name="milter-managerの設定" link="install-to-ubuntu.html#idp11225360"/>
+    <keyword type="" name="Postfixの設定" link="install-to-ubuntu.html#idp11244016"/>
+    <keyword type="" name="同じホストにWebサーバを設置する場合" link="install-options-to-ubuntu.html#idp9359280"/>
+    <keyword type="" name="別ホストにあるMuninを利用する方法" link="install-options-to-ubuntu.html#install-options-to-ubuntu.munin"/>
+    <keyword type="" name="spamass-milterの設定" link="install-to-centos5.html#idp9953856"/>
+    <keyword type="" name="clamav-milterの設定" link="install-to-centos5.html#idp11628096"/>
+    <keyword type="" name="milter-greylistの設定" link="install-to-centos5.html#idp11634512"/>
+    <keyword type="" name="milter-managerの設定" link="install-to-centos5.html#idp5216560"/>
+    <keyword type="" name="Sendmailの設定" link="install-to-centos5.html#idp11274096"/>
+    <keyword type="" name="spamass-milterの設定" link="install-to-centos.html#idp9929888"/>
+    <keyword type="" name="clamav-milterの設定" link="install-to-centos.html#idp9792528"/>
+    <keyword type="" name="milter-greylistの設定" link="install-to-centos.html#idp9798848"/>
+    <keyword type="" name="milter-managerの設定" link="install-to-centos.html#idp9862656"/>
+    <keyword type="" name="Postfixの設定" link="install-to-centos.html#idp7718224"/>
+    <keyword type="" name="同じホストにWebサーバを設置する場合" link="install-options-to-centos.html#idp6444272"/>
+    <keyword type="" name="別ホストにあるMuninを利用する方法" link="install-options-to-centos.html#install-options-to-centos.munin"/>
+    <keyword type="" name="spamass-milterの設定" link="install-to-freebsd.html#idp2874160"/>
+    <keyword type="" name="clamav-milterの設定" link="install-to-freebsd.html#idp2851424"/>
+    <keyword type="" name="milter-greylistの設定" link="install-to-freebsd.html#idp11198112"/>
+    <keyword type="" name="milter-managerの設定" link="install-to-freebsd.html#idp11472000"/>
+    <keyword type="" name="Postfixの設定" link="install-to-freebsd.html#idp11491328"/>
+    <keyword type="" name="パッケージのインストール" link="install-options-to-freebsd.html#idp6207632"/>
+    <keyword type="" name="milter-manager-log-analyzerの設定" link="install-options-to-freebsd.html#idp8568256"/>
+    <keyword type="" name="同じホストにWebサーバを設置する場合" link="install-options-to-freebsd.html#idp8572048"/>
+    <keyword type="" name="別ホストにあるMuninを利用する方法" link="install-options-to-freebsd.html#install-options-to-freebsd.munin"/>
+    <keyword type="" name="1.8.0 以前から 1.8.1 への更新" link="upgrade-on-debian.html#idp7337488"/>
+    <keyword type="" name="squeezeの場合" link="upgrade-on-debian.html#idp5748880"/>
+    <keyword type="" name="wheezyの場合" link="upgrade-on-debian.html#idp10332032"/>
+    <keyword type="" name="jessieの場合" link="upgrade-on-debian.html#idp8898192"/>
+    <keyword type="" name="sidの場合" link="upgrade-on-debian.html#idp5483312"/>
+    <keyword type="" name="1.8.0 以前からの更新" link="upgrade-on-ubuntu.html#idp10176768"/>
+    <keyword type="" name="Lucid Lynxの場合" link="upgrade-on-ubuntu.html#idp11359008"/>
+    <keyword type="" name="Precise Pangolinの場合" link="upgrade-on-ubuntu.html#idp9964656"/>
+    <keyword type="" name="Quantal Quetzalの場合" link="upgrade-on-ubuntu.html#idp8001184"/>
+    <keyword type="" name="Raring Ringtail の場合" link="upgrade-on-ubuntu.html#idp2865104"/>
+    <keyword type="" name="子milter定義" link="configuration.html#idp12919600"/>
+    <keyword type="" name="子milter操作" link="configuration.html#idp12994896"/>
+    <keyword type="" name="S25R" link="configuration.html#idp13010176"/>
+    <keyword type="" name="Remote Network" link="configuration.html#idp13037488"/>
+    <keyword type="" name="Authentication" link="configuration.html#configuration.authentication"/>
+    <keyword type="" name="Unauthentication" link="configuration.html#configuration.unauthentication"/>
+    <keyword type="" name="Sendmail Compatible" link="configuration.html#idp13053968"/>
+    <keyword type="" name="stress" link="configuration.html#idp13058928"/>
+    <keyword type="" name="Trust" link="configuration.html#configuration.trust"/>
+    <keyword type="" name="Restrict Accounts" link="configuration.html#idp13103760"/>
+    <keyword type="" name="context" link="configuration.html#idp13183216"/>
+    <keyword type="" name="socket_address" link="configuration.html#configuration.socket-address"/>
+    <keyword type="" name="core" link="log-list.html#idp11416832"/>
+    <keyword type="" name="client" link="log-list.html#idp12265664"/>
+    <keyword type="" name="server" link="log-list.html#idp12322944"/>
+    <keyword type="" name="manager" link="log-list.html#idp12405936"/>
+    <keyword type="" name="Debian GNU/Linuxにインストールする" link="reverse-dictionary.html#idp10116176"/>
+    <keyword type="" name="Ubuntuにインストールする" link="reverse-dictionary.html#idp8396480"/>
+    <keyword type="" name="CentOSにインストールする" link="reverse-dictionary.html#idp5780112"/>
+    <keyword type="" name="FreeBSDにインストールする" link="reverse-dictionary.html#idp7259040"/>
+    <keyword type="" name="統計情報をグラフ化する" link="reverse-dictionary.html#idp9370928"/>
+    <keyword type="" name="設定ファイルを見つける" link="reverse-dictionary.html#reverse-dictionary.configuration-basic-find-configuration-file"/>
+    <keyword type="" name="TCP/IPでmilter-managerに接続する" link="reverse-dictionary.html#idp5610944"/>
+    <keyword type="" name="UNIXドメインソケットでmilter-managerに接続する" link="reverse-dictionary.html#idp11125616"/>
+    <keyword type="" name="UNIXドメインソケットの後始末する" link="reverse-dictionary.html#idp12679456"/>
+    <keyword type="" name="特定のアカウントのみmilterを適用する" link="reverse-dictionary.html#idp12691264"/>
+    <keyword type="" name="DKIM/DomainKeys" link="available-milters.html#idp12059744"/>
+    <keyword type="" name="SPF/Sender ID" link="available-milters.html#idp11421072"/>
+  </functions>
+</book>

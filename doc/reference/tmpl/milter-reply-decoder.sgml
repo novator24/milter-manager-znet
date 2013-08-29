@@ -1,0 +1,63 @@
+<!-- ##### SECTION Title ##### -->
+MilterReplyDecoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_REPLY_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterReplyDecoderError ##### -->
+<para>
+
+</para>
+
+@MILTER_REPLY_DECODER_ERROR_UNEXPECTED_MACRO_STAGE: 
+
+<!-- ##### STRUCT MilterReplyDecoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_reply_decoder_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_reply_decoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+

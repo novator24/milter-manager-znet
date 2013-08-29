@@ -1,0 +1,72 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerControlCommandEncoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterManagerControlCommandEncoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_control_command_encoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_control_command_encoder_encode_set_configuration ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@configuration: 
+@configuration_size: 
+
+
+<!-- ##### FUNCTION milter_manager_control_command_encoder_encode_reload ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_manager_control_command_encoder_encode_get_status ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+

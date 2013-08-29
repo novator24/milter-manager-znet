@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-test-server">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-test-server.top_of_page'>milter-test-server</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-test-server</refname>
+  <refpurpose>MTA側のmilterプロトコルを実装したプログラム</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>名前</title>
+  <para>milter-test-server - MTA側のmilterプロトコルを実装したプログラム</para>
+</refsect1>
+
+<refsect1>
+  <title>書式</title>
+  <para>
+  <code>milter-test-server</code>
+   [
+  <emphasis>オプション ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>説明</title>
+  <para>milter-test-serverはMTA側のmilterプロトコルを話します。つまり、 MTA無しでmilterに接続することができます。現時点では、同様のツー ルは存在しないため、MTA+milterではなくmilter単体のテストを行 うためには有用なツールです。例えば、以下のような用途に利用で きます。</para>
+  <itemizedlist>
+  <listitem>
+  <para>milterの性能計測</para>
+</listitem>
+  <listitem>
+  <para>milterの動作確認</para>
+</listitem>
+</itemizedlist>
+  <para>milter-test-serverは実行時間を表示するので、簡単な性能計測に も利用できます。このとき、MTAとは関係なくmilter単体での実行時 間を確認できるため、MTA経由で試す場合よりも問題点の発見が容易 になります。</para>
+  <para>
+  milter-test-serverはヘッダや本文が変更された場合は、変更され た内容を表示します。そのため、ヘッダや本文を変更するmilterの テストも容易に行うことができます。
+  <ulink url='http://cutter.sourceforge.net/index.html.ja'>C言語用テスティングフレームワークCutter</ulink>
+  などと組み合わせて自動化された単体テストを作成することもでき ます。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>オプション</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-test-server.--help'>--help</term>
+  <listitem>
+  <para>利用できるオプションを表示して終了します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--name'>--name=NAME</term>
+  <listitem>
+  <para>milter-test-serverの名前としてNAMEを使用します。名前は &quot;{daemon_name}&quot;マクロの値などで利用されます。</para>
+  <para>デフォルトはmilter-test-server（コマンドファイル名）です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connection-spec'>--connection-spec=SPEC</term>
+  <listitem>
+  <para>接続先のmilterのソケットを指定します。SPECの書式は次のう ちのどれかです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:パス</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号@ホスト名</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号@[アドレス]</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号@ホスト名</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号@[アドレス]</para>
+</listitem>
+</itemizedlist>
+  <para>例:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:/var/run/milter/milter-manager.sock</para>
+</listitem>
+  <listitem>
+  <para>inet:10025</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@[127.0.0.1]</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--negotiate-version'>--negotiate-version=VERSION</term>
+  <listitem>
+  <para>クライアントへ送信するmilterプロトコルのバージョンとして VERSIONを使用します。</para>
+  <para>デフォルトは8（Sendmail 8.14のデフォルトと同じ）です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connect-host'>--connect-host=HOST</term>
+  <listitem>
+  <para>接続元のホスト名としてHOSTを使用します。</para>
+  <para>このホスト名はmilterのxxfi_connect()コールバックに渡りま す。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connect-address'>--connect-address=SPEC</term>
+  <listitem>
+  <para>接続元のアドレスとしてSPECを使用します。SPECの書式 は--connection-specの書式と同じです。</para>
+  <para>このアドレスはmilterのxxfi_connect()コールバックに渡りま す。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connect-macro'>--connect-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_connect()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_connect()コールバック時にclient_connectionsという名 前で値が1のマクロを送信したい場合は以下のように指定します。</para>
+  <programlisting>--connect-macro client_connections:1</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--helo-fqdn'>--helo-fqdn=FQDN</term>
+  <listitem>
+  <para>HELO/EHLO時の引数としてFQDNを使用します。</para>
+  <para>このfqdnはmilterのxxfi_helo()コールバックに渡ります。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--helo-macro'>--helo-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_helo()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_helo()コールバック時にclient_ptrという名 前で値がunknownのマクロを送信したい場合は以下のように指定します。</para>
+  <programlisting>--helo-macro client_ptr:unknown</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-from'>--envelope-from=FROM, -fFROM</term>
+  <listitem>
+  <para>MAIL FROM時の引数としてFROMを使用します。</para>
+  <para>このアドレスはmilterのxxfi_envfrom()コールバックに渡ります。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-from-macro'>--envelope-from-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_envfrom()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_envfrom()コールバック時にclient_addrという名 前で値が192.168.0.1のマクロを送信したい場合は以下のように 指定します。</para>
+  <programlisting>--envelope-from-macro client_addr:192.168.0.1</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-recipient'>--envelope-recipient=RECIPIENT, -rRECIPIENT</term>
+  <listitem>
+  <para>RCPT TO時の引数としてRECIPIENTを使用します。複数の宛先を 指定したい場合は--envelope-recipientオプションを複数回指 定してください。</para>
+  <para>このアドレスはmilterのxxfi_envrcpt()コールバックに渡りま す。xxfi_envrcpt()は1つの宛先につき1回呼ばれるので、宛先 が複数個ある場合はその分だけxxfi_envrcpt()が呼ばれます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--envelope-recipient-macro'>--envelope-recipient-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_envrcpt()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_envrcpt()コールバック時にclient_portという名 前で値が2929のマクロを送信したい場合は以下のように 指定します。</para>
+  <programlisting>--envelope-recipient-macro client_port:2929</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--data-macro'>--data-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_data()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_data()コールバック時にclient_nameという名 前で値がunknownのマクロを送信したい場合は以下のように 指定します。</para>
+  <programlisting>--data-macro client_name:unknown</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--header'>--header=NAME:VALUE</term>
+  <listitem>
+  <para>名前がNAMEで値がVALUEのヘッダを追加します。複数のヘッダ を追加したい場合は--headerオプションを複数回指定してくだ さい。</para>
+  <para>このヘッダはmilterのxxfi_header()コールバックに渡ります。 xxfi_header()は1つのヘッダにつき1回呼ばれるので、ヘッダ が複数個ある場合はその分だけxxfi_header()が呼ばれます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--end-of-header-macro'>--end-of-header-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_eoh()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_eoh()コールバック時にn_headersという名前で値が100の マクロを送信したい場合は以下のように指定します。</para>
+  <programlisting>--end-of-header-macro n_headers:100</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--body'>--body=CHUNK</term>
+  <listitem>
+  <para>本文の一片としてCHUNKを追加します。複数のまとまりを追加 する場合は--bodyオプションを複数回指定してください。</para>
+  <para>この本文のまとまりはmilterのxxfi_body()コールバックに渡り ます。xxfi_body()は1つのまとまりにつき1回呼ばれるので、 まとまりが複数個ある場合はその分だけxxfi_body()が呼ばれま す。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--end-of-message-macro'>--end-of-message-macro=NAME:VALUE</term>
+  <listitem>
+  <para>xxfi_eom()コールバック時に送信するマクロを追加します。 マクロの名前はNAMEで値はVALUEになります。複数のマクロを設 定する場合はこのオプションを複数指定します。</para>
+  <para>xxfi_eom()コールバック時にelapsedという名前で値が0.29の マクロを送信したい場合は以下のように指定します。</para>
+  <programlisting>--end-of-message-macro elapsed:0.29</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--unknown'>--unknown=COMMAND</term>
+  <listitem>
+  <para>未知のSMTPコマンドとしてCOMMANDを使います。</para>
+  <para>このコマンドはmilterのxxfi_unknown()コールバックに渡りま す。xxfi_unknown()コールバックは、xxfi_envrcpt()コールバッ クとxxfi_data()コールバックの間に呼ばれます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--authenticated-name'>--authenticated-name=NAME</term>
+  <listitem>
+  <para>
+  SMTP Authで認証されたユーザ名を指定します。SASLでのログ イン名に相当します。このオプションを指定するとMAIL FROM のときに
+  <code>{auth_authen}</code>
+  の値として
+  <varname>NAME</varname>
+  を渡しま す。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--authenticated-type'>--authenticated-type=TYPE</term>
+  <listitem>
+  <para>
+  SMTP Authの認証に使用した方法を指定します。SASLでのログ インメソッドに相当します。このオプションを指定するとMAIL FROMのときに
+  <code>{auth_type}</code>
+  の値として
+  <varname>TYPE</varname>
+  を渡しま す。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--authenticated-author'>--authenticated-author=AUTHOR</term>
+  <listitem>
+  <para>
+  SMTP Authで認証された送信者を指定します。SASL送信者に相 当します。このオプションを指定するとMAIL FROMのときに
+  <code>{auth_author}</code>
+  の値として
+  <varname>AUTHOR</varname>
+  を渡します。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--mail-file'>--mail-file=PATH</term>
+  <listitem>
+  <para>
+  メールの内容として
+  <varname>PATH</varname>
+  にあるメールを使います。メー ル中にFrom:やTo:があった場合は、それらの値を送信元や宛先 のアドレスとして使用します。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--output-message'>--output-message</term>
+  <listitem>
+  <para>milter適用後のメッセージを表示します。ヘッダを追加・削除 したり、本文を置換するmilterの動作を確認したい場合はこの オプションを指定してください。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--color'>--color=[yes|true|no|false|auto]</term>
+  <listitem>
+  <para>--colorのみ、またはyes、trueを指定した場合はmilter適用後 のメッセージを色付きで表示します。autoを指定した場合は、 ターミナル上で実行していそうなら色を付けます。</para>
+  <para>既定値はnoです。色付けしません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--connection-timeout'>--connection-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  milterとの接続確立に使える時間を指定します。
+  <varname>SECONDS</varname>
+  秒以内に接続を確立できない場合はエラー になります。
+</para>
+  <para>既定値は300秒（5分）です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--reading-timeout'>--reading-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  milterからのレスポンスを待つ時間を指定します。
+  <varname>SECONDS</varname>
+  秒以内にレスポンスがこない場合はエラーにな ります。
+</para>
+  <para>既定値は10秒です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--writing-timeout'>--writing-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  milterへのコマンド送信に使える時間を指定します。
+  <varname>SECONDS</varname>
+  秒以内に送信できない場合はエラーにな ります。
+</para>
+  <para>既定値は10秒です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--end-of-message-timeout'>--end-of-message-timeout=SECONDS</term>
+  <listitem>
+  <para>
+  milterからのend-of-messageコマンドのレスポンスを待つ時間 を指定します。
+  <varname>SECONDS</varname>
+  秒以内にレスポンスが完了しない場合はエラーにな ります。
+</para>
+  <para>既定値は300秒（5分）です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--threads'>--threads=N</term>
+  <listitem>
+  <para>Nスレッドで同時にリクエストを送ります。</para>
+  <para>既定値は0で、メインスレッドのみでリクエストを送ります。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--verbose'>--verbose</term>
+  <listitem>
+  <para>実行時のログをより詳細に出力します。</para>
+  <para>「MILTER_LOG_LEVEL=all」というように環境変数を設定している 場合と同じ効果があります。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-server.--version'>--version</term>
+  <listitem>
+  <para>バージョンを表示して終了します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>終了ステータス</title>
+  <para>milterセッションが始まった場合は0で、そうでない場合は0以外に なります。ソケットの書式が間違っている場合か milter-test-serverがmilterに接続できない場合は、milterセッショ ンを始めることができません。</para>
+</refsect1>
+
+<refsect1>
+  <title>例</title>
+  <para>以下の例では、ホスト192.168.1.29上の10025番ポートで待ち受け ているmilterに接続します。</para>
+  <programlisting>% milter-test-server -s inet:10025@192.168.1.29</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>関連項目</title>
+  <para>
+  <link linkend='milter-test-client'>milter-test-client.rd.ja</link>
+  (1),
+  <link linkend='milter-performance-check'>milter-performance-check.rd.ja</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

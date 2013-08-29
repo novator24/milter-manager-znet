@@ -1,0 +1,71 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerLaunchCommandDecoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_LAUNCH_COMMAND_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_LAUNCH_COMMAND_DECODER ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerLaunchCommandDecoderError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_LAUNCH_COMMAND_DECODER_ERROR_UNEXPECTED_COMMAND: 
+
+<!-- ##### STRUCT MilterManagerLaunchCommandDecoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_launch_command_decoder_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_launch_command_decoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+

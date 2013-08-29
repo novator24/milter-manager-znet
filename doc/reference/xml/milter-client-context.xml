@@ -1,0 +1,2715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterClientContext">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterClientContext.top_of_page">MilterClientContext</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterClientContext</refname>
+<refpurpose>Process milter protocol.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="MilterClientContext.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-CLIENT-CONTEXT-ERROR:CAPS">MILTER_CLIENT_CONTEXT_ERROR</link>
+enum                <link linkend="MilterClientContextError">MilterClientContextError</link>;
+enum                <link linkend="MilterClientContextState">MilterClientContextState</link>;
+                    <link linkend="MilterClientContext-struct">MilterClientContext</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-client-context-error-quark">milter_client_context_error_quark</link>   (<parameter><type>void</type></parameter>);
+<link linkend="MilterClientContext"><returnvalue>MilterClientContext</returnvalue></link> * <link linkend="milter-client-context-new">milter_client_context_new</link>         (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-feed">milter_client_context_feed</link>          (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gpointer"><returnvalue>gpointer</returnvalue></link>            <link linkend="milter-client-context-get-private-data">milter_client_context_get_private_data</link>
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-context-set-private-data">milter_client_context_set_private_data</link>
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> destroy</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-set-reply">milter_client_context_set_reply</link>     (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *extended_code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-client-context-format-reply">milter_client_context_format_reply</link>  (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-add-header">milter_client_context_add_header</link>    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-insert-header">milter_client_context_insert_header</link> (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> index</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-change-header">milter_client_context_change_header</link> (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> index</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-delete-header">milter_client_context_delete_header</link> (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> index</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-change-from">milter_client_context_change_from</link>   (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *parameters</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-add-recipient">milter_client_context_add_recipient</link> (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *parameters</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-delete-recipient">milter_client_context_delete_recipient</link>
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-replace-body">milter_client_context_replace_body</link>  (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *body</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> body_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-progress">milter_client_context_progress</link>      (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-context-quarantine">milter_client_context_quarantine</link>    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *reason</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-context-set-timeout">milter_client_context_set_timeout</link>   (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> timeout</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-client-context-get-timeout">milter_client_context_get_timeout</link>   (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-context-set-state">milter_client_context_set_state</link>     (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterClientContextState"><type>MilterClientContextState</type></link> state</parameter>);
+<link linkend="MilterClientContextState"><returnvalue>MilterClientContextState</returnvalue></link> <link linkend="milter-client-context-get-state">milter_client_context_get_state</link>
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-context-set-option">milter_client_context_set_option</link>    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      <link linkend="milter-client-context-get-option">milter_client_context_get_option</link>    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterClientContext.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="MilterAgent">MilterAgent</link>
+         +----<link linkend="MilterProtocolAgent">MilterProtocolAgent</link>
+               +----MilterClientContext
+</synopsis>
+</refsect1>
+<refsect1 id="MilterClientContext.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+MilterClientContext implements
+ <link linkend="MilterErrorEmittable">MilterErrorEmittable</link> and  <link linkend="MilterFinishedEmittable">MilterFinishedEmittable</link>.</para>
+</refsect1>
+<refsect1 id="MilterClientContext.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="MilterClientContext--client">client</link>&quot;                   <link linkend="MilterClient"><type>MilterClient</type></link>*         : Read / Write / Construct Only
+  &quot;<link linkend="MilterClientContext--message-result">message-result</link>&quot;           <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link>*  : Read / Write
+  &quot;<link linkend="MilterClientContext--option">option</link>&quot;                   <link linkend="MilterOption"><type>MilterOption</type></link>*         : Read / Write
+  &quot;<link linkend="MilterClientContext--packet-buffer-size">packet-buffer-size</link>&quot;       <link linkend="guint"><type>guint</type></link>                 : Read / Write
+  &quot;<link linkend="MilterClientContext--quarantine-reason">quarantine-reason</link>&quot;        <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  &quot;<link linkend="MilterClientContext--state">state</link>&quot;                    <link linkend="MilterClientContextState"><type>MilterClientContextState</type></link>  : Read / Write
+  &quot;<link linkend="MilterClientContext--status">status</link>&quot;                   <link linkend="MilterStatus"><type>MilterStatus</type></link>          : Read / Write
+</synopsis>
+</refsect1>
+<refsect1 id="MilterClientContext.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="MilterClientContext-abort">abort</link>&quot;                                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-abort-response">abort-response</link>&quot;                                 : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-body">body</link>&quot;                                           : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-body-response">body-response</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-connect">connect</link>&quot;                                        : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-connect-response">connect-response</link>&quot;                               : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-data">data</link>&quot;                                           : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-data-response">data-response</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-define-macro">define-macro</link>&quot;                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-end-of-header">end-of-header</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-end-of-header-response">end-of-header-response</link>&quot;                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-end-of-message">end-of-message</link>&quot;                                 : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-end-of-message-response">end-of-message-response</link>&quot;                        : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-envelope-from">envelope-from</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-envelope-from-response">envelope-from-response</link>&quot;                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-envelope-recipient">envelope-recipient</link>&quot;                             : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-envelope-recipient-response">envelope-recipient-response</link>&quot;                    : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-header">header</link>&quot;                                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-header-response">header-response</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-helo">helo</link>&quot;                                           : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-helo-response">helo-response</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-message-processed">message-processed</link>&quot;                              : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-negotiate">negotiate</link>&quot;                                      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-negotiate-response">negotiate-response</link>&quot;                             : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-timeout">timeout</link>&quot;                                        : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-unknown">unknown</link>&quot;                                        : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="MilterClientContext-unknown-response">unknown-response</link>&quot;                               : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+</synopsis>
+</refsect1>
+
+<refsect1 id="MilterClientContext.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link> processes one milter protocol
+session. It means <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link> instance is
+created for each milter protocol session.
+</para>
+<para>
+To process each milter protocol command, you need to
+connect signals of
+<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>. <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link> has signals
+that correspond to milter protocol events:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;ulink'>
+  <ulink url='https://www.milter.org/developers/api/xxfi_negotiate'>xxfi_negotiate</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-negotiate"><type>&quot;negotiate&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_connect'>xxfi_connect</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-connect"><type>&quot;connect&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_helo'>xxfi_helo</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-helo"><type>&quot;helo&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_envfrom'>xxfi_envfrom</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-envelope-from"><type>&quot;envelope-from&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_envrcpt'>xxfi_envrcpt</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-envelope-recipient"><type>&quot;envelope-recipient&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_data'>xxfi_data</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-data"><type>&quot;data&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_unknown'>xxfi_unknown</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-unknown"><type>&quot;unknown&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_header'>xxfi_header</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-header"><type>&quot;header&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_eoh'>xxfi_eoh</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-end-of-header"><type>&quot;end-of-header&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_body'>xxfi_body</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-body"><type>&quot;body&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_eom'>xxfi_eom</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-end-of-message"><type>&quot;end-of-message&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_abort'>xxfi_abort</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link>.
+</para>
+  <para>
+  NOTE: You will need to check whether the current state is message processing or not. You can use <link linkend="MILTER-CLIENT-CONTEXT-STATE-IN-MESSAGE-PROCESSING:CAPS"><literal>MILTER_CLIENT_CONTEXT_STATE_IN_MESSAGE_PROCESSING</literal></link> for it.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <ulink url='https://www.milter.org/developers/api/xxfi_close'>xxfi_close</ulink>
+</term>
+  <listitem>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link>
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+Here is an example to connect signals. It connects all
+signals and each connected signal handler prints its
+event name:
+</para>
+<para>
+<informalexample><programlisting>
+static MilterStatus
+cb_negotiate (MilterClientContext *context, MilterOption *option,
+              gpointer user_data)
+{
+    g_print("negotiate\n");
+    return MILTER_STATUS_ALL_OPTIONS;
+}
+
+static MilterStatus
+cb_connect (MilterClientContext *context, const gchar *host_name,
+            const struct sockaddr *address, socklen_t address_length,
+            gpointer user_data)
+{
+    g_print("connect\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_helo (MilterClientContext *context, const gchar *fqdn, gpointer user_data)
+{
+    g_print("helo\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_envelope_from (MilterClientContext *context, const gchar *from,
+                  gpointer user_data)
+{
+    g_print("envelope-from\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_envelope_recipient (MilterClientContext *context, const gchar *to,
+                       gpointer user_data)
+{
+    g_print("envelope-recipient\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_data (MilterClientContext *context, gpointer user_data)
+{
+    g_print("data\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_header (MilterClientContext *context, const gchar *name, const gchar *value,
+           gpointer user_data)
+{
+    g_print("header\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_end_of_header (MilterClientContext *context, gpointer user_data)
+{
+    g_print("end-of-header\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_body (MilterClientContext *context, const gchar *chunk, gsize length,
+         gpointer user_data)
+{
+    g_print("body\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_end_of_message (MilterClientContext *context,
+                   const gchar *chunk, gsize length,
+                   gpointer user_data)
+{
+    g_print("end-of-message\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_abort (MilterClientContext *context, MilterClientContextState state,
+          gpointer user_data)
+{
+    g_print("abort\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static MilterStatus
+cb_unknown (MilterClientContext *context, const gchar *command,
+            gpointer user_data)
+{
+    g_print("unknown\n");
+    return MILTER_STATUS_CONTINUE;
+}
+
+static void
+setup_context_signals (MilterClientContext *context)
+{
+#define CONNECT(name)                                                   \
+    g_signal_connect(context, <link linkend="name">name</link>, G_CALLBACK(cb_ ## name), NULL)
+
+    CONNECT(negotiate);
+    CONNECT(connect);
+    CONNECT(helo);
+    CONNECT(envelope_from);
+    CONNECT(envelope_recipient);
+    CONNECT(data);
+    CONNECT(header);
+    CONNECT(end_of_header);
+    CONNECT(body);
+    CONNECT(end_of_message);
+    CONNECT(abort);
+    CONNECT(unknown);
+
+#undef CONNECT
+}
+</programlisting></informalexample>
+</para>
+</refsect1>
+<refsect1 id="MilterClientContext.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-CLIENT-CONTEXT-ERROR:CAPS" role="macro">
+<title>MILTER_CLIENT_CONTEXT_ERROR</title>
+<indexterm zone="MILTER-CLIENT-CONTEXT-ERROR:CAPS"><primary>MILTER_CLIENT_CONTEXT_ERROR</primary></indexterm>
+<programlisting>#define MILTER_CLIENT_CONTEXT_ERROR           (milter_client_context_error_quark())
+</programlisting>
+<para>
+Used to get the <link linkend="GError"><type>GError</type></link> quark for <link linkend="MilterClientContext"><type>MilterClientContext</type></link> errors.
+</para></refsect2>
+<refsect2 id="MilterClientContextError" role="enum">
+<title>enum MilterClientContextError</title>
+<indexterm zone="MilterClientContextError"><primary>MilterClientContextError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_CLIENT_CONTEXT_ERROR_INVALID_CODE,
+    MILTER_CLIENT_CONTEXT_ERROR_IO_ERROR,
+    MILTER_CLIENT_CONTEXT_ERROR_NULL,
+    MILTER_CLIENT_CONTEXT_ERROR_INVALID_STATE,
+    MILTER_CLIENT_CONTEXT_ERROR_INVALID_ACTION,
+    MILTER_CLIENT_CONTEXT_ERROR_EMPTY
+} MilterClientContextError;
+</programlisting>
+<para>
+These identify the variable errors that can occur while
+calling <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link> functions.
+</para><variablelist role="enum">
+<varlistentry id="MILTER-CLIENT-CONTEXT-ERROR-INVALID-CODE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_ERROR_INVALID_CODE</literal></term>
+<listitem><simpara>Indicates a
+status code specified by
+<link linkend="milter-client-context-set-reply"><function>milter_client_context_set_reply()</function></link> is invalid.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-ERROR-IO-ERROR:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_ERROR_IO_ERROR</literal></term>
+<listitem><simpara>Indicates an IO
+error causing on writing/reading milter protocol data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-ERROR-NULL:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_ERROR_NULL</literal></term>
+<listitem><simpara>Indicates unexpected
+<link linkend="NULL:CAPS"><literal>NULL</literal></link> is passed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-ERROR-INVALID-STATE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_ERROR_INVALID_STATE</literal></term>
+<listitem><simpara>Indicates
+unexpected operation is requested on the current
+<link linkend="MilterClientContextState"><literal>MilterClientContextState</literal></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-ERROR-INVALID-ACTION:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_ERROR_INVALID_ACTION</literal></term>
+<listitem><simpara>Indicates
+unexpected operation is requested on the context's
+<link linkend="MilterActionFlags"><literal>MilterActionFlags</literal></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-ERROR-EMPTY:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_ERROR_EMPTY</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterClientContextState" role="enum">
+<title>enum MilterClientContextState</title>
+<indexterm zone="MilterClientContextState"><primary>MilterClientContextState</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_CLIENT_CONTEXT_STATE_INVALID,
+    MILTER_CLIENT_CONTEXT_STATE_START,
+    MILTER_CLIENT_CONTEXT_STATE_NEGOTIATE,
+    MILTER_CLIENT_CONTEXT_STATE_NEGOTIATE_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_CONNECT,
+    MILTER_CLIENT_CONTEXT_STATE_CONNECT_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_HELO,
+    MILTER_CLIENT_CONTEXT_STATE_HELO_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_FROM,
+    MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_FROM_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_RECIPIENT,
+    MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_RECIPIENT_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_DATA,
+    MILTER_CLIENT_CONTEXT_STATE_DATA_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_UNKNOWN,
+    MILTER_CLIENT_CONTEXT_STATE_UNKNOWN_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_HEADER,
+    MILTER_CLIENT_CONTEXT_STATE_HEADER_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_END_OF_HEADER,
+    MILTER_CLIENT_CONTEXT_STATE_END_OF_HEADER_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_BODY,
+    MILTER_CLIENT_CONTEXT_STATE_BODY_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_END_OF_MESSAGE,
+    MILTER_CLIENT_CONTEXT_STATE_END_OF_MESSAGE_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_QUIT,
+    MILTER_CLIENT_CONTEXT_STATE_QUIT_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_ABORT,
+    MILTER_CLIENT_CONTEXT_STATE_ABORT_REPLIED,
+    MILTER_CLIENT_CONTEXT_STATE_FINISHED
+} MilterClientContextState;
+</programlisting>
+<para>
+These identify the state of <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.
+</para><variablelist role="enum">
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-INVALID:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_INVALID</literal></term>
+<listitem><simpara>Invalid state.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-START:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_START</literal></term>
+<listitem><simpara>Just started.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-NEGOTIATE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_NEGOTIATE</literal></term>
+<listitem><simpara>Starting negotiation.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-NEGOTIATE-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_NEGOTIATE_REPLIED</literal></term>
+<listitem><simpara>Received
+negotiation response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-CONNECT:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_CONNECT</literal></term>
+<listitem><simpara>Sent connection
+information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-CONNECT-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_CONNECT_REPLIED</literal></term>
+<listitem><simpara>Received
+connection information response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-HELO:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_HELO</literal></term>
+<listitem><simpara>Starting HELO.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-HELO-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_HELO_REPLIED</literal></term>
+<listitem><simpara>Received
+HELO response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-ENVELOPE-FROM:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_FROM</literal></term>
+<listitem><simpara>Starting MAIL
+FROM command.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-ENVELOPE-FROM-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_FROM_REPLIED</literal></term>
+<listitem><simpara>Receive
+MAIL FROM response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-ENVELOPE-RECIPIENT:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_RECIPIENT</literal></term>
+<listitem><simpara>Starting
+RCPT TO command.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-ENVELOPE-RECIPIENT-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_RECIPIENT_REPLIED</literal></term>
+<listitem><simpara>Receive
+RCPT TO response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-DATA:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_DATA</literal></term>
+<listitem><simpara>Starting DATA command.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-DATA-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_DATA_REPLIED</literal></term>
+<listitem><simpara>Receive
+DATA response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-UNKNOWN:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_UNKNOWN</literal></term>
+<listitem><simpara>Receiving unknown
+SMTP command.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-UNKNOWN-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_UNKNOWN_REPLIED</literal></term>
+<listitem><simpara>Receive
+unknown SMTP command response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-HEADER:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_HEADER</literal></term>
+<listitem><simpara>Sent a header.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-HEADER-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_HEADER_REPLIED</literal></term>
+<listitem><simpara>Receive
+header response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-END-OF-HEADER:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_END_OF_HEADER</literal></term>
+<listitem><simpara>All headers are
+sent.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-END-OF-HEADER-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_END_OF_HEADER_REPLIED</literal></term>
+<listitem><simpara>Receive
+end-of-header response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-BODY:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_BODY</literal></term>
+<listitem><simpara>Sending body chunks.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-BODY-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_BODY_REPLIED</literal></term>
+<listitem><simpara>Received
+body response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-END-OF-MESSAGE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_END_OF_MESSAGE</literal></term>
+<listitem><simpara>All body
+chunks are sent.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-END-OF-MESSAGE-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_END_OF_MESSAGE_REPLIED</literal></term>
+<listitem><simpara>Receive
+end-of-message response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-QUIT:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_QUIT</literal></term>
+<listitem><simpara>Starting quitting.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-QUIT-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_QUIT_REPLIED</literal></term>
+<listitem><simpara>Receive
+quit response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-ABORT:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_ABORT</literal></term>
+<listitem><simpara>Starting aborting.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-ABORT-REPLIED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_ABORT_REPLIED</literal></term>
+<listitem><simpara>Receive
+abort response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-CONTEXT-STATE-FINISHED:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_CONTEXT_STATE_FINISHED</literal></term>
+<listitem><simpara>Finished.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterClientContext-struct" role="struct">
+<title>MilterClientContext</title>
+<indexterm zone="MilterClientContext-struct"><primary>MilterClientContext</primary></indexterm>
+<programlisting>typedef struct _MilterClientContext MilterClientContext;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-client-context-error-quark" role="function">
+<title>milter_client_context_error_quark ()</title>
+<indexterm zone="milter-client-context-error-quark"><primary>milter_client_context_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_client_context_error_quark   (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-client-context-new" role="function">
+<title>milter_client_context_new ()</title>
+<indexterm zone="milter-client-context-new"><primary>milter_client_context_new</primary></indexterm>
+<programlisting><link linkend="MilterClientContext"><returnvalue>MilterClientContext</returnvalue></link> * milter_client_context_new         (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>
+Creates a new context object. Normally, context object is
+created by <link linkend="MilterClient"><literal>MilterClient</literal></link> and passed by
+<link linkend="MilterClient-connection-established"><type>"connection-established"</type></link> signal.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClient"><literal>MilterClient</literal></link> for the context.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link> object.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-feed" role="function">
+<title>milter_client_context_feed ()</title>
+<indexterm zone="milter-client-context-feed"><primary>milter_client_context_feed</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_feed          (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Feeds a chunk to the <parameter>context</parameter>. You can use it for testing
+or debugging.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chunk</parameter>&#160;:</term>
+<listitem><simpara>the string to be fed to <parameter>context</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the size of <parameter>chunk</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-get-private-data" role="function">
+<title>milter_client_context_get_private_data ()</title>
+<indexterm zone="milter-client-context-get-private-data"><primary>milter_client_context_get_private_data</primary></indexterm>
+<programlisting><link linkend="gpointer"><returnvalue>gpointer</returnvalue></link>            milter_client_context_get_private_data
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the private data of the <parameter>context</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the private data set by
+<link linkend="milter-client-context-set-private-data"><function>milter_client_context_set_private_data()</function></link> or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-set-private-data" role="function">
+<title>milter_client_context_set_private_data ()</title>
+<indexterm zone="milter-client-context-set-private-data"><primary>milter_client_context_set_private_data</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_context_set_private_data
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> destroy</parameter>);</programlisting>
+<para>
+Sets the private data of the <parameter>context</parameter>. <parameter>data</parameter> is
+destroyed by <parameter>destroy</parameter> when <parameter>data</parameter> is unset. <parameter>data</parameter> is unset
+when new private data is set or <parameter>context</parameter> is destroyed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>the private data.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>the destroy function for <parameter>data</parameter> or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-set-reply" role="function">
+<title>milter_client_context_set_reply ()</title>
+<indexterm zone="milter-client-context-set-reply"><primary>milter_client_context_set_reply</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_set_reply     (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *extended_code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Sets the error reply code. 4xx <parameter>code</parameter> is used on
+<link linkend="MILTER-REPLY-TEMPORARY-FAILURE:CAPS"><literal>MILTER_REPLY_TEMPORARY_FAILURE</literal></link>. 5xx <parameter>code</parameter> is used on
+<link linkend="MILTER-REPLY-REJECT:CAPS"><literal>MILTER_REPLY_REJECT</literal></link>.
+</para>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/smfi_setreply">
+smfi_setreply</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>code</parameter>&#160;:</term>
+<listitem><simpara>the three-digit SMTP error reply
+code. (RFC 2821) Only 4xx and 5xx are accepted.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>extended_code</parameter>&#160;:</term>
+<listitem><simpara>the extended reply code (RFC 1893/2034),
+or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara>the text part of the SMTP reply, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-format-reply" role="function">
+<title>milter_client_context_format_reply ()</title>
+<indexterm zone="milter-client-context-format-reply"><primary>milter_client_context_format_reply</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_client_context_format_reply  (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+Formats the current error reply code specified by
+<link linkend="milter-client-context-set-reply"><function>milter_client_context_set_reply()</function></link>. If error reply code
+isn't set, this function returns <link linkend="NULL:CAPS"><literal>NULL</literal></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>formatted reply code, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-add-header" role="function">
+<title>milter_client_context_add_header ()</title>
+<indexterm zone="milter-client-context-add-header"><primary>milter_client_context_add_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_add_header    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Adds a header to the current message's header list. This
+function can be called in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal.
+</para>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/smfi_addheader">
+smfi_addheader</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about <link linkend="MILTER-ACTION-ADD-HEADERS:CAPS"><literal>MILTER_ACTION_ADD_HEADERS</literal></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the header name.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara>the header value.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-insert-header" role="function">
+<title>milter_client_context_insert_header ()</title>
+<indexterm zone="milter-client-context-insert-header"><primary>milter_client_context_insert_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_insert_header (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> index</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Inserts a header into the current message's header lists
+at <parameter>index</parameter>. This function can be called in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal.  See also
+<ulink
+url="https://www.milter.org/developers/api/smfi_insheader">
+smfi_insheader</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_ADD_HEADERS.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter>&#160;:</term>
+<listitem><simpara>the index to be inserted.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the header name.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara>the header value.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-change-header" role="function">
+<title>milter_client_context_change_header ()</title>
+<indexterm zone="milter-client-context-change-header"><primary>milter_client_context_change_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_change_header (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> index</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Changes a header that is located at <parameter>index</parameter> in headers
+that all of them are named <parameter>name</parameter>. If <parameter>value</parameter> is <link linkend="NULL:CAPS"><literal>NULL</literal></link>, the
+header is deleted. This function can be
+called in <link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal.
+</para>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/smfi_chgheader">
+smfi_chgheader</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_CHANGE_HEADERS.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the header name.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter>&#160;:</term>
+<listitem><simpara>the index of headers that all of them are named
+<parameter>name</parameter>. (1-based) FIXME: should change 0-based?</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara>the header value. Use <link linkend="NULL:CAPS"><literal>NULL</literal></link> to delete the target
+header.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-delete-header" role="function">
+<title>milter_client_context_delete_header ()</title>
+<indexterm zone="milter-client-context-delete-header"><primary>milter_client_context_delete_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_delete_header (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint32"><type>guint32</type></link> index</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Deletes a header that is located at <parameter>index</parameter> in headers
+that all of them are named <parameter>name</parameter>. This function can be
+called in <link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal.
+This function works same as
+<link linkend="milter-client-context-change-header"><function>milter_client_context_change_header()</function></link> with <link linkend="NULL:CAPS"><literal>NULL</literal></link> as
+<parameter>value</parameter>.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_CHANGE_HEADERS.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the header name.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter>&#160;:</term>
+<listitem><simpara>the index of headers that all of them are named
+<parameter>name</parameter>. (1-based) FIXME: should change 0-based?</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-change-from" role="function">
+<title>milter_client_context_change_from ()</title>
+<indexterm zone="milter-client-context-change-from"><primary>milter_client_context_change_from</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_change_from   (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *parameters</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Changes the envelope from address of the current message.
+ESMTP's 'MAIL FROM' parameter can be set by
+<parameter>parameters</parameter>. <parameter>parameters</parameter> may be <link linkend="NULL:CAPS"><literal>NULL</literal></link>. This function can be
+called in <link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal.
+See also <ulink
+url="https://www.milter.org/developers/api/smfi_chgfrom">smfi_chgfrom
+</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_CHANGE_FROM.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>from</parameter>&#160;:</term>
+<listitem><simpara>the new envelope from address.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parameters</parameter>&#160;:</term>
+<listitem><simpara>the ESMTP's 'MAIL FROM' parameter. It can be
+<link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-add-recipient" role="function">
+<title>milter_client_context_add_recipient ()</title>
+<indexterm zone="milter-client-context-add-recipient"><primary>milter_client_context_add_recipient</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_add_recipient (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *parameters</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Adds a new envelope recipient address to the current
+message.  ESMTP's 'RCPT TO' parameter can be set by
+<parameter>parameters</parameter>. <parameter>parameters</parameter> may be <link linkend="NULL:CAPS"><literal>NULL</literal></link>. This function can
+be called in <link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link>
+signal. See also <ulink
+url="https://www.milter.org/developers/api/smfi_addrcpt">smfi_addrcpt
+</ulink> and <ulink
+url="https://www.milter.org/developers/api/smfi_addrcpt_par">smfi_addrcpt_par
+</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_ADD_RECIPIENT and
+MILTER_ACTION_ADD_ENVELOPE_RECIPIENT_WITH_PARAMETERS.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter>&#160;:</term>
+<listitem><simpara>the new envelope recipient address.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parameters</parameter>&#160;:</term>
+<listitem><simpara>the ESMTP's 'RCPT TO' parameter. It can be
+<link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-delete-recipient" role="function">
+<title>milter_client_context_delete_recipient ()</title>
+<indexterm zone="milter-client-context-delete-recipient"><primary>milter_client_context_delete_recipient</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_delete_recipient
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Removes a envelope recipient that named <parameter>recipient</parameter>. This
+function can be called in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal. See also
+<ulink
+url="https://www.milter.org/developers/api/smfi_delrcpt">smfi_delrcpt
+</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_DELETE_RECIPIENT.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter>&#160;:</term>
+<listitem><simpara>the envelope recipient address to be removed.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-replace-body" role="function">
+<title>milter_client_context_replace_body ()</title>
+<indexterm zone="milter-client-context-replace-body"><primary>milter_client_context_replace_body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_replace_body  (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *body</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> body_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+Replaces the body of the current message with <parameter>body</parameter>. This
+function can be called in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal. See also
+<ulink
+url="https://www.milter.org/developers/api/smfi_replacebody">smfi_replacebody
+</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_CHANGE_BODY.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>body</parameter>&#160;:</term>
+<listitem><simpara>the new body.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>body_size</parameter>&#160;:</term>
+<listitem><simpara>the size of <parameter>body</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>return location for an error, or <link linkend="NULL:CAPS"><literal>NULL</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-progress" role="function">
+<title>milter_client_context_progress ()</title>
+<indexterm zone="milter-client-context-progress"><primary>milter_client_context_progress</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_progress      (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+Notifies the MTA that this milter is still in
+progress. This function can be called in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal. See also
+<ulink
+url="https://www.milter.org/developers/api/smfi_progress">smfi_progress
+</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-quarantine" role="function">
+<title>milter_client_context_quarantine ()</title>
+<indexterm zone="milter-client-context-quarantine"><primary>milter_client_context_quarantine</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_context_quarantine    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *reason</parameter>);</programlisting>
+<para>
+Quarantines the current message with <parameter>reason</parameter>. This
+function can be called in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> signal. See also
+<ulink
+url="https://www.milter.org/developers/api/smfi_quarantine">smfi_quarantine
+</ulink> on milter.org.
+</para>
+<para>
+FIXME: write about MILTER_ACTION_QUARANTINE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reason</parameter>&#160;:</term>
+<listitem><simpara>the reason why the current message is quarantined.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-set-timeout" role="function">
+<title>milter_client_context_set_timeout ()</title>
+<indexterm zone="milter-client-context-set-timeout"><primary>milter_client_context_set_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_context_set_timeout   (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> timeout</parameter>);</programlisting>
+<para>
+Sets the timeout by seconds. If MTA doesn't responses in
+<parameter>timeout</parameter> seconds, <link linkend="MilterClientContext-timeout"><type>"timeout"</type></link>
+signal is emitted. See also
+<ulink
+url="https://www.milter.org/developers/api/smfi_settimeout">smfi_settimeout
+</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara>the timeout by seconds. (default is 7210 seconds)</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-get-timeout" role="function">
+<title>milter_client_context_get_timeout ()</title>
+<indexterm zone="milter-client-context-get-timeout"><primary>milter_client_context_get_timeout</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_client_context_get_timeout   (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the timeout by seconds.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>timeout by seconds.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-set-state" role="function">
+<title>milter_client_context_set_state ()</title>
+<indexterm zone="milter-client-context-set-state"><primary>milter_client_context_set_state</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_context_set_state     (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterClientContextState"><type>MilterClientContextState</type></link> state</parameter>);</programlisting>
+<para>
+Sets the current state.
+</para>
+<para>
+<note>This is for testing. Don't use it directory for normal use.</note>
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContextState"><literal>MilterClientContextState</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-get-state" role="function">
+<title>milter_client_context_get_state ()</title>
+<indexterm zone="milter-client-context-get-state"><primary>milter_client_context_get_state</primary></indexterm>
+<programlisting><link linkend="MilterClientContextState"><returnvalue>MilterClientContextState</returnvalue></link> milter_client_context_get_state
+                                                        (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the current state.
+</para>
+<para>
+<note>This is for testing. Don't use it directory for normal use.</note>
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the current state.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-set-option" role="function">
+<title>milter_client_context_set_option ()</title>
+<indexterm zone="milter-client-context-set-option"><primary>milter_client_context_set_option</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_context_set_option    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+Sets the option for the context.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>option</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterOption"><literal>MilterOption</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-context-get-option" role="function">
+<title>milter_client_context_get_option ()</title>
+<indexterm zone="milter-client-context-get-option"><primary>milter_client_context_get_option</primary></indexterm>
+<programlisting><link linkend="MilterOption"><returnvalue>MilterOption</returnvalue></link> *      milter_client_context_get_option    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+Gets the socket address of connected server for the context.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the socket address of connected server for the context.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="MilterClientContext.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="MilterClientContext--client" role="property"><title>The <literal>&quot;client&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--client"><primary>MilterClientContext:client</primary></indexterm>
+<programlisting>  &quot;client&quot;                   <link linkend="MilterClient"><type>MilterClient</type></link>*         : Read / Write / Construct Only</programlisting>
+<para>The client of the context.</para></refsect2>
+<refsect2 id="MilterClientContext--message-result" role="property"><title>The <literal>&quot;message-result&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--message-result"><primary>MilterClientContext:message-result</primary></indexterm>
+<programlisting>  &quot;message-result&quot;           <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link>*  : Read / Write</programlisting>
+<para>The message result of client context.</para></refsect2>
+<refsect2 id="MilterClientContext--option" role="property"><title>The <literal>&quot;option&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--option"><primary>MilterClientContext:option</primary></indexterm>
+<programlisting>  &quot;option&quot;                   <link linkend="MilterOption"><type>MilterOption</type></link>*         : Read / Write</programlisting>
+<para>The option of client context.</para></refsect2>
+<refsect2 id="MilterClientContext--packet-buffer-size" role="property"><title>The <literal>&quot;packet-buffer-size&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--packet-buffer-size"><primary>MilterClientContext:packet-buffer-size</primary></indexterm>
+<programlisting>  &quot;packet-buffer-size&quot;       <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>The packet buffer size of the client context.</para><para>Default value: 0</para>
+</refsect2>
+<refsect2 id="MilterClientContext--quarantine-reason" role="property"><title>The <literal>&quot;quarantine-reason&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--quarantine-reason"><primary>MilterClientContext:quarantine-reason</primary></indexterm>
+<programlisting>  &quot;quarantine-reason&quot;        <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>The quarantine reason of client context.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="MilterClientContext--state" role="property"><title>The <literal>&quot;state&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--state"><primary>MilterClientContext:state</primary></indexterm>
+<programlisting>  &quot;state&quot;                    <link linkend="MilterClientContextState"><type>MilterClientContextState</type></link>  : Read / Write</programlisting>
+<para>The state of client context.</para><para>Default value: MILTER_CLIENT_CONTEXT_STATE_INVALID</para>
+</refsect2>
+<refsect2 id="MilterClientContext--status" role="property"><title>The <literal>&quot;status&quot;</literal> property</title>
+<indexterm zone="MilterClientContext--status"><primary>MilterClientContext:status</primary></indexterm>
+<programlisting>  &quot;status&quot;                   <link linkend="MilterStatus"><type>MilterStatus</type></link>          : Read / Write</programlisting>
+<para>The status of client context.</para><para>Default value: MILTER_STATUS_DEFAULT</para>
+</refsect2>
+</refsect1>
+<refsect1 id="MilterClientContext.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="MilterClientContext-abort" role="signal"><title>The <literal>&quot;abort&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-abort"><primary>MilterClientContext::abort</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link>     *context,
+                                                        <link linkend="MilterClientContextState"><type>MilterClientContextState</type></link> Returns,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>                 user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal may be emitted at any time between
+<link linkend="MilterClientContext-envelope-from"><type>"envelope-from"</type></link> and
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link>. This signal is
+only emitted if the milter causes an internal error
+and the message processing isn't completed. For
+example, if the milter has already returned
+<link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>, <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>,
+<link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link> and
+<link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>, this signal will
+not emitted.
+</para>
+<para>
+If the milter has any resources allocated for the
+message between <link linkend="MilterClientContext-envelope-from"><type>"envelope-from"</type></link>
+and <link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link>, should be
+freed in this signal. But any resources allocated for
+the connection should not be freed in this signal. It
+should be freed in <link linkend="MilterFinishedEmittable-finished"><type>"finished"</type></link>.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message without further more processing.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-end-of-message-response"><type>&quot;end-of-message-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_abort">
+xxfi_abort</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-abort-response" role="signal"><title>The <literal>&quot;abort-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-abort-response"><primary>MilterClientContext::abort-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-abort"><type>"abort"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-abort"><type>"abort"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-body" role="signal"><title>The <literal>&quot;body&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-body"><primary>MilterClientContext::body</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *chunk,
+                                                        <link linkend="guint64"><type>guint64</type></link>              size,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on body data is received. This
+signal is emitted zero or more times between
+<link linkend="MilterClientContext-end-of-header"><type>"end-of-header"</type></link> and
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link>.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message without further more processing.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-SKIP:CAPS"><literal>MILTER_STATUS_SKIP</literal></link>
+</term>
+  <listitem>
+  <para>
+  Skips further body processing. <link linkend="MilterClientContext-end-of-message"><type>&quot;end-of-message&quot;</type></link> is emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-BODY:CAPS"><literal>MILTER_STEP_NO_REPLY_BODY</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-body-response"><type>&quot;body-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_body">
+xxfi_body</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chunk</parameter>&#160;:</term>
+<listitem><simpara>the body chunk.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the size of <parameter>chunk</parameter>.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-body-response" role="signal"><title>The <literal>&quot;body-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-body-response"><primary>MilterClientContext::body-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-body"><type>"body"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-body"><type>"body"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-connect" role="signal"><title>The <literal>&quot;connect&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-connect"><primary>MilterClientContext::connect</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *host_name,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             address,
+                                                        <link linkend="guint"><type>guint</type></link>                address_size,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on SMTP client is connected to
+MTA.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current connection.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current connection.</para>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link> will be emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current connection without further more processing.</para>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link> will be emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current connection with a temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link> will be emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-CONNECT:CAPS"><literal>MILTER_STEP_NO_REPLY_CONNECT</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-connect-response"><type>&quot;connect-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_connect">
+xxfi_connect</ulink>
+on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host_name</parameter>&#160;:</term>
+<listitem><simpara>the host name of connected SMTP client.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>the address of connected SMTP
+client. (struct sockaddr)</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address_size</parameter>&#160;:</term>
+<listitem><simpara>the size of <parameter>address</parameter>. (socklen_t)</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-connect-response" role="signal"><title>The <literal>&quot;connect-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-connect-response"><primary>MilterClientContext::connect-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-connect"><type>"connect"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-connect"><type>"connect"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-data" role="signal"><title>The <literal>&quot;data&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-data"><primary>MilterClientContext::data</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on SMTP's "DATA" command.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current envelope recipient.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-DATA:CAPS"><literal>MILTER_STEP_NO_REPLY_DATA</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-data-response"><type>&quot;data-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_data">
+xxfi_data</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-data-response" role="signal"><title>The <literal>&quot;data-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-data-response"><primary>MilterClientContext::data-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-data"><type>"data"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-data"><type>"data"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-define-macro" role="signal"><title>The <literal>&quot;define-macro&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-define-macro"><primary>MilterClientContext::define-macro</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterCommand"><type>MilterCommand</type></link>        command,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             macros,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted when macro definition is
+received. Normally, this signal isn't needed to be
+connected.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command</parameter>&#160;:</term>
+<listitem><simpara>the command to be defined macros.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>macros</parameter>&#160;:</term>
+<listitem><simpara>the macro definitions.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-end-of-header" role="signal"><title>The <literal>&quot;end-of-header&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-end-of-header"><primary>MilterClientContext::end-of-header</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on all headers are processed.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message without further more processing.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-END-OF-HEADER:CAPS"><literal>MILTER_STEP_NO_REPLY_END_OF_HEADER</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-end-of-header-response"><type>&quot;end-of-header-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_eof">
+xxfi_eof</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-end-of-header-response" role="signal"><title>The <literal>&quot;end-of-header-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-end-of-header-response"><primary>MilterClientContext::end-of-header-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-end-of-header"><type>"end-of-header"</type></link> returns a status
+except <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-end-of-header"><type>"end-of-header"</type></link>, you need to emit
+this signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-end-of-message" role="signal"><title>The <literal>&quot;end-of-message&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-end-of-message"><primary>MilterClientContext::end-of-message</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *Returns,
+                                                        <link linkend="guint64"><type>guint64</type></link>              arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted after all
+<link linkend="MilterClientContext-body"><type>"body"</type></link> are emitted. All message
+modifications can be done only in this signal
+handler. The modifications can be done with
+<link linkend="milter-client-context-add-header"><function>milter_client_context_add_header()</function></link>,
+<link linkend="milter-client-context-change-from"><function>milter_client_context_change_from()</function></link> and so on.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message without further more processing.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-end-of-message-response"><type>&quot;end-of-message-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_eom">
+xxfi_eom</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-end-of-message-response" role="signal"><title>The <literal>&quot;end-of-message-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-end-of-message-response"><primary>MilterClientContext::end-of-message-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link> returns a status
+except <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-end-of-message"><type>"end-of-message"</type></link>, you need to
+emit this signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-envelope-from" role="signal"><title>The <literal>&quot;envelope-from&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-envelope-from"><primary>MilterClientContext::envelope-from</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *from,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on SMTP's "MAIL FROM" command.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current envelope from address and message. A new envelope from may be specified.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message without further more processing.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current envelope from address and message with temporary failure. (i.e. 4xx status code in SMTP) A new envelope from address may be specified.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-ENVELOPE-FROM:CAPS"><literal>MILTER_STEP_NO_REPLY_ENVELOPE_FROM</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-envelope-from-response"><type>&quot;envelope-from-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_envfrom">
+xxfi_envfrom</ulink>
+on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>from</parameter>&#160;:</term>
+<listitem><simpara>the envelope from address in SMTP's "MAIL
+FROM" command.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-envelope-from-response" role="signal"><title>The <literal>&quot;envelope-from-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-envelope-from-response"><primary>MilterClientContext::envelope-from-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-envelope-from"><type>"envelope-from"</type></link> returns a status
+except <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-envelope-from"><type>"envelope-from"</type></link>, you need to emit
+this signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-envelope-recipient" role="signal"><title>The <literal>&quot;envelope-recipient&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-envelope-recipient"><primary>MilterClientContext::envelope-recipient</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *recipient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on SMTP's "RCPT TO" command.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current envelope recipient address. Processing the current messages is continued.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current envelope recipient.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current envelope recipient address with temporary failure. (i.e. 4xx status code in SMTP) Processing the current message is continued.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-ENVELOPE-RECIPIENT:CAPS"><literal>MILTER_STEP_NO_REPLY_ENVELOPE_RECIPIENT</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-envelope-recipient-response"><type>&quot;envelope-recipient-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_envrcpt">
+xxfi_envrcpt</ulink>
+on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter>&#160;:</term>
+<listitem><simpara>the envelope recipient address in SMTP's
+"RCPT TO" command.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-envelope-recipient-response" role="signal"><title>The <literal>&quot;envelope-recipient-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-envelope-recipient-response"><primary>MilterClientContext::envelope-recipient-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-envelope-recipient"><type>"envelope-recipient"</type></link> returns a
+status except <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's
+default handler replies a response to MTA. You don't
+need to connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-envelope-recipient"><type>"envelope-recipient"</type></link>, you need to
+emit this signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-header" role="signal"><title>The <literal>&quot;header&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-header"><primary>MilterClientContext::header</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *name,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *value,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on each header. If
+<link linkend="MILTER-STEP-HEADER-LEADING-SPACE:CAPS"><literal>MILTER_STEP_HEADER_LEADING_SPACE</literal></link> is set in
+<link linkend="MilterClientContext-negotiate"><type>"negotiate"</type></link>, <parameter>value</parameter> have spaces
+after header name and value separator ":".
+</para>
+<para>
+Example:
+</para>
+<para>
+<informalexample><programlisting>
+From: from &lt;from@example.com&gt;
+To: recipient &lt;recipient@example.com&gt;
+Subject:a subject
+</programlisting></informalexample>
+</para>
+<para>
+With <link linkend="MILTER-STEP-HEADER-VALUE-WITH-LEADING-SPACE:CAPS"><literal>MILTER_STEP_HEADER_VALUE_WITH_LEADING_SPACE</literal></link>:
+</para>
+<para>
+<informalexample><programlisting>
+"From", " from &lt;from@example.com&gt;"
+"To", " recipient &lt;recipient@example.com&gt;"
+"Subject", "a subject"
+</programlisting></informalexample>
+</para>
+<para>
+Without <link linkend="MILTER-STEP-HEADER-VALUE-WITH-LEADING-SPACE:CAPS"><literal>MILTER_STEP_HEADER_VALUE_WITH_LEADING_SPACE</literal></link>:
+</para>
+<para>
+<informalexample><programlisting>
+"From", "from &lt;from@example.com&gt;"
+"To", "recipient &lt;recipient@example.com&gt;"
+"Subject", "a subject"
+</programlisting></informalexample>
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current message.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-DISCARD:CAPS"><literal>MILTER_STATUS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message and discards it silently.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current message without further more processing.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-HEADER:CAPS"><literal>MILTER_STEP_NO_REPLY_HEADER</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-header-response"><type>&quot;header-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_header">
+xxfi_header</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the header name.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara>the header value. <parameter>value</parameter> may include folded
+white space.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-header-response" role="signal"><title>The <literal>&quot;header-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-header-response"><primary>MilterClientContext::header-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-header"><type>"header"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-header"><type>"header"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-helo" role="signal"><title>The <literal>&quot;helo&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-helo"><primary>MilterClientContext::helo</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *fqdn,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on SMTP's "HELO"/"EHLO"
+command.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>Continues processing the current connection.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current connection.</para>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link> will be emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-ACCEPT:CAPS"><literal>MILTER_STATUS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>Accepts the current connection without further more processing.</para>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link> will be emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current connection with a temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterFinishedEmittable-finished"><type>&quot;finished&quot;</type></link> will be emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-HELO:CAPS"><literal>MILTER_STEP_NO_REPLY_HELO</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-helo-response"><type>&quot;helo-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_helo">
+xxfi_helo</ulink>
+on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fqdn</parameter>&#160;:</term>
+<listitem><simpara>the FQDN in SMTP's "HELO"/"EHLO" command.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-helo-response" role="signal"><title>The <literal>&quot;helo-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-helo-response"><primary>MilterClientContext::helo-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-helo"><type>"helo"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-helo"><type>"helo"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-message-processed" role="signal"><title>The <literal>&quot;message-processed&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-message-processed"><primary>MilterClientContext::message-processed</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *milterclientcontext,
+                                                        <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link> *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterclientcontext</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-negotiate" role="signal"><title>The <literal>&quot;negotiate&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-negotiate"><primary>MilterClientContext::negotiate</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link>  *context,
+                                                        <link linkend="MilterOption"><type>MilterOption</type></link>         *option,
+                                                        <link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *macros_requests,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>              user_data)            : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on negotiate request from MTA.
+If you want to modify actions (<link linkend="MilterActionFlags"><literal>MilterActionFlags</literal></link>)
+and steps (<link linkend="MilterStepFlags"><literal>MilterStepFlags</literal></link>), you modify <parameter>option</parameter>. If
+you want to add macros that you want to receive, you
+modify <parameter>macros_requests</parameter>.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-ALL-OPTIONS:CAPS"><literal>MILTER_STATUS_ALL_OPTIONS</literal></link>
+</term>
+  <listitem>
+  <para>Enables all available actions and steps.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current session.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-CONTINUE:CAPS"><literal>MILTER_STATUS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>
+  Continues processing the current session with actions, steps and macros requests that are specified by <parameter>option</parameter> and <parameter>macros_requests</parameter>.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-negotiate-response"><type>&quot;negotiate-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_negotiate">
+xxfi_negotiate</ulink>
+on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>option</parameter>&#160;:</term>
+<listitem><simpara>the negotiate option from MTA.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>macros_requests</parameter>&#160;:</term>
+<listitem><simpara>the macros requests.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-negotiate-response" role="signal"><title>The <literal>&quot;negotiate-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-negotiate-response"><primary>MilterClientContext::negotiate-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link>  *context,
+                                                        <link linkend="MilterOption"><type>MilterOption</type></link>         *option,
+                                                        <link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *macros_requests,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>          status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>              user_data)            : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-negotiate"><type>"negotiate"</type></link> returns a status
+except <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-negotiate"><type>"negotiate"</type></link> handler, you need to
+emit this signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>option</parameter>&#160;:</term>
+<listitem><simpara>the negotiate option from MTA.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>macros_requests</parameter>&#160;:</term>
+<listitem><simpara>the macros requests.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-timeout" role="signal"><title>The <literal>&quot;timeout&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-timeout"><primary>MilterClientContext::timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted if MTA doesn't return the next
+command within <link linkend="milter-client-context-get-timeout"><function>milter_client_context_get_timeout()</function></link>
+seconds. If <link linkend="MilterClientContext-timeout"><type>"timeout"</type></link> is emitted,
+the current connection is aborted and
+<link linkend="MilterFinishedEmittable-finished"><type>"finished"</type></link> are emitted.
+<link linkend="MilterClientContext-abort"><type>"abort"</type></link> may be emitted before
+<link linkend="MilterFinishedEmittable-finished"><type>"finished"</type></link> if the milter
+is processing a message.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-unknown" role="signal"><title>The <literal>&quot;unknown&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-unknown"><primary>MilterClientContext::unknown</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *command,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted on unknown or unimplemented
+SMTP command is sent.
+</para>
+<para>
+All available response statuses are the followings:
+</para>
+<variablelist>
+  <varlistentry>
+  <term id='xml.&lt;link'>
+  <link linkend="MILTER-STATUS-REJECT:CAPS"><literal>MILTER_STATUS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message.</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-TEMPORARY-FAILURE:CAPS"><literal>MILTER_STATUS_TEMPORARY_FAILURE</literal></link>
+</term>
+  <listitem>
+  <para>Rejects the current message with temporary failure. (i.e. 4xx status code in SMTP)</para>
+  <para>
+  <link linkend="MilterClientContext-abort"><type>&quot;abort&quot;</type></link> is not emitted.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-NO-REPLY:CAPS"><literal>MILTER_STATUS_NO_REPLY</literal></link>
+</term>
+  <listitem>
+  <para>Doesn't send a reply back to MTA.</para>
+  <para>
+  The milter must set <link linkend="MILTER-STEP-NO-REPLY-DATA:CAPS"><literal>MILTER_STEP_NO_REPLY_DATA</literal></link> in <link linkend="MilerClientContext-negotiate"><type>&quot;negotiate&quot;</type></link> handler.
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>
+</term>
+  <listitem>
+  <para>It means that the processing in callback is in progress and returning response status is pending. The main loop for the milter is continued.</para>
+  <para>
+  If you returns this status, you need to emit <link linkend="MilterClientContext-unknown-response"><type>&quot;unknown-response&quot;</type></link> signal by yourself with one of the above <link linkend="MilterStatus"><literal>MilterStatus</literal></link><!-- -->es.
+</para>
+  <para>This status may be used for a milter that has IO wait. (e.g. The milter may need to connect to the its server like clamav-milter) Normally, this status will not be used.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>
+Note that the unknown or unimplemented SMTP command
+will always be rejected by MTA.
+</para>
+<para>
+See also <ulink
+url="https://www.milter.org/developers/api/xxfi_unknown">
+xxfi_unknown</ulink> on milter.org.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command</parameter>&#160;:</term>
+<listitem><simpara>the unknown SMTP command.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>response status.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClientContext-unknown-response" role="signal"><title>The <literal>&quot;unknown-response&quot;</literal> signal</title>
+<indexterm zone="MilterClientContext-unknown-response"><primary>MilterClientContext::unknown-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context,
+                                                        <link linkend="MilterStatus"><type>MilterStatus</type></link>         status,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)      : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+This signal is emitted implicitly after
+<link linkend="MilterClientContext-unknown"><type>"unknown"</type></link> returns a status except
+<link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link>. This signal's default
+handler replies a response to MTA. You don't need to
+connect this signal.
+</para>
+<para>
+If you returns <link linkend="MILTER-STATUS-PROGRESS:CAPS"><literal>MILTER_STATUS_PROGRESS</literal></link> in
+<link linkend="MilterClientContext-unknown"><type>"unknown"</type></link>, you need to emit this
+signal to <parameter>context</parameter> by yourself.
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>the context that received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the response status.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+</refentry>

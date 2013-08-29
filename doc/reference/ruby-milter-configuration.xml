@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ruby-milter-configuration">
+<refmeta>
+  <refentrytitle role='top_of_page' id='ruby-milter-configuration.top_of_page'>milter configuration written by Ruby</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter configuration written by Ruby</refname>
+  <refpurpose>How to write configuration file</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>Milters written by Ruby support configuration file that has the same syntax of milter-manager's one. But configuration items are different. This documents describes about how to write configuration file and configuration items.</para>
+</refsect1>
+
+<refsect1>
+  <title>Summary</title>
+  <para>You can specify configuration file by -c or --configuration option. For example, here is a command line that a milter, milter-regexp.rb, uses /etc/milter-regexp.conf as its configuration:</para>
+  <programlisting>% ruby milter-regexp.rb -c /etc/milter-regexp.conf</programlisting>
+  <para>Configuration file uses the following syntax:</para>
+  <programlisting>GROUP.ITEM = VALUE</programlisting>
+  <para>For example, set value of &quot;connection_spec&quot; item in &quot;milter&quot; group to &quot;inet:12345&quot; for set milter's listen socket address to IPv4 address and 12345 port:</para>
+  <programlisting>milter.connection_spec = &quot;inet:12345&quot;</programlisting>
+  <para>Here are available groups:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.security'>Security</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.log'>Log</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.milter'>Milter</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.database'>Database</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+  <para>Here are descriptions of configuration items.</para>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.security'>
+  <title>Security</title>
+  <para>You can use configuration items same as milter manager's &quot;log&quot; group. Please see milter-manager's document page for details.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.security-effective-user'>security.effective_user</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.security-effective-user'>security.effective_user</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.security-effective-group'>security.effective_group</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.security-effective-group'>security.effective_group</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.log'>
+  <title>Log</title>
+  <para>You can use configuration items same as milter manager's &quot;security&quot; group. Please see milter-manager's document page for details.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.log-level'>log.level</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.log-level'>log.level</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.log-use-syslog'>log.use_syslog</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.log-use-syslog'>log.use_syslog</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.log-syslog-facility'>log.syslog_facility</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.log-syslog-facility'>log.syslog_facility</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.milter'>
+  <title>Milter</title>
+  <para>You can use configuration items same as milter manager's &quot;manager&quot; group. Please see milter-manager's document page for details.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-connection-spec'>milter.connection_spec</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-connection-spec'>manager.connection_spec</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-unix-socket-mode'>milter.unix_socket_mode</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-unix-socket-mode'>manager.unix_socket_mode</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-unix-socket-group'>milter.unix_socket_group</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-unix-socket-group'>manager.unix_socket_group</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-remove-unix-socket-on-create'>milter.remove_unix_socket_on_create</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-remove-unix-socket-on-create'>manager.remove_unix_socket_on_create</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-remove-unix-socket-on-close'>milter.remove_unix_socket_on_close</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-remove-unix-socket-on-close'>manager.remove_unix_socket_on_close</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-daemon'>milter.daemon</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-daemon'>manager.daemon</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-pid-file'>milter.pid_file</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-pid-file'>manager.pid_file</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-maintenance-interval'>milter.maintenance_interval</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-maintenance-interval'>manager.maintenance_interval</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-suspend-time-on-unacceptable'>milter.suspend_time_on_unacceptable</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-suspend-time-on-unacceptable'>manager.suspend_time_on_unacceptable</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-max-connections'>milter.max_connections</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-max-connections'>manager.max_connections</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-max-file-descriptors'>milter.max_file_descriptors</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-max-file-descriptors'>manager.max_file_descriptors</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-event-loop-backend'>milter.event_loop_backend</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-event-loop-backend'>manager.event_loop_backend</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>milter.event_loop_backend</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-event-loop-backend'>manager.event_loop_backend</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-n-workers'>milter.n_workers</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-n-workers'>manager.n_workers</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-packet-buffer-size'>milter.packet_buffer_size</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-packet-buffer-size'>manager.packet_buffer_size</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-max-pending-finished-sessions'>milter.max_pending_finished_sessions</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-max-pending-finished-sessions'>manager.max_pending_finished_sessions</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-maintained'>milter.maintained</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-maintained'>manager.maintained</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-event-loop-created'>milter.event_loop_created</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.manager-event-loop-created'>manager.event_loop_created</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-name'>milter.name</term>
+  <listitem>
+  <para>Returns child milter's name. Since 1.8.1.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.database'>
+  <title>Database</title>
+  <para>
+  You can use configuration items same as 
+  <link linkend='configuration.database'>'&quot;database&quot; group'</link>
+  .  Please see milter-manager's document page for details. It includes setup document and tutorial.
+</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-type'>database.type</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-type'>database.type</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-name'>database.name</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-name'>database.name</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-host'>database.host</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-host'>database.host</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-port'>database.port</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-port'>database.port</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-path'>database.path</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-path'>database.path</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-user'>database.user</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-user'>database.user</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-password'>database.password</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-password'>database.password</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-setup'>database.setup</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-setup'>database.setup</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-load-models'>database.load_models(path)</term>
+  <listitem>
+  <para>
+  See 
+  <link linkend='configuration.database-load-models'>database.load_models</link>
+  .
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+</refentry>

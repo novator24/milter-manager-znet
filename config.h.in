@@ -1,0 +1,191 @@
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+
+/* always defined to indicate that i18n is enabled */
+#undef ENABLE_NLS
+
+/* Gettext package */
+#undef GETTEXT_PACKAGE
+
+/* Define to 1 if you have the `bind_textdomain_codeset' function. */
+#undef HAVE_BIND_TEXTDOMAIN_CODESET
+
+/* Define to 1 if you have the `clock_gettime' function. */
+#undef HAVE_CLOCK_GETTIME
+
+/* "use syscall interface for clock_gettime" */
+#undef HAVE_CLOCK_SYSCALL
+
+/* Define to 1 if you have the `dcgettext' function. */
+#undef HAVE_DCGETTEXT
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the `epoll_ctl' function. */
+#undef HAVE_EPOLL_CTL
+
+/* Define to 1 if you have the `eventfd' function. */
+#undef HAVE_EVENTFD
+
+/* Define to 1 if you have the <ev.h> header file. */
+#undef HAVE_EV_H
+
+/* Define if the GNU gettext() function is already present or preinstalled. */
+#undef HAVE_GETTEXT
+
+/* Define to 1 if you have the `inotify_init' function. */
+#undef HAVE_INOTIFY_INIT
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the `kqueue' function. */
+#undef HAVE_KQUEUE
+
+/* Define if your <locale.h> file defines LC_MESSAGES. */
+#undef HAVE_LC_MESSAGES
+
+/* Define to 1 if libev is available. */
+#undef HAVE_LIBEV
+
+/* Define to 1 if you have the `m' library (-lm). */
+#undef HAVE_LIBM
+
+/* Define to 1 if you have the `rt' library (-lrt). */
+#undef HAVE_LIBRT
+
+/* Define to 1 if you have the <locale.h> header file. */
+#undef HAVE_LOCALE_H
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `nanosleep' function. */
+#undef HAVE_NANOSLEEP
+
+/* Define to 1 if you have the `poll' function. */
+#undef HAVE_POLL
+
+/* Define to 1 if you have the <poll.h> header file. */
+#undef HAVE_POLL_H
+
+/* Define to 1 if you have the `port_create' function. */
+#undef HAVE_PORT_CREATE
+
+/* Define to 1 if you have the <port.h> header file. */
+#undef HAVE_PORT_H
+
+/* Define to 1 if you have the <rbgobject.h> header file. */
+#undef HAVE_RBGOBJECT_H
+
+/* Define to 1 if you have the `rb_errinfo' function. */
+#undef HAVE_RB_ERRINFO
+
+/* Define to 1 if you have the `rb_fork' function. */
+#undef HAVE_RB_FORK
+
+/* Define to 1 if you have the `rb_last_status_set' function. */
+#undef HAVE_RB_LAST_STATUS_SET
+
+/* Define to 1 if you have the `rb_thread_check_ints' function. */
+#undef HAVE_RB_THREAD_CHECK_INTS
+
+/* Define to 1 if you have the `recvmsg' function. */
+#undef HAVE_RECVMSG
+
+/* Define to 1 if you have the <ruby.h> header file. */
+#undef HAVE_RUBY_H
+
+/* Define to 1 if you have the `select' function. */
+#undef HAVE_SELECT
+
+/* Define to 1 if you have the `sendmsg' function. */
+#undef HAVE_SENDMSG
+
+/* Define to 1 if you have the `signalfd' function. */
+#undef HAVE_SIGNALFD
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if `msg_accrights' is a member of `struct msghdr'. */
+#undef HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS
+
+/* Define to 1 if `msg_control' is a member of `struct msghdr'. */
+#undef HAVE_STRUCT_MSGHDR_MSG_CONTROL
+
+/* Define to 1 if you have the <sys/epoll.h> header file. */
+#undef HAVE_SYS_EPOLL_H
+
+/* Define to 1 if you have the <sys/eventfd.h> header file. */
+#undef HAVE_SYS_EVENTFD_H
+
+/* Define to 1 if you have the <sys/event.h> header file. */
+#undef HAVE_SYS_EVENT_H
+
+/* Define to 1 if you have the <sys/inotify.h> header file. */
+#undef HAVE_SYS_INOTIFY_H
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#undef HAVE_SYS_SELECT_H
+
+/* Define to 1 if you have the <sys/signalfd.h> header file. */
+#undef HAVE_SYS_SIGNALFD_H
+
+/* Define to 1 if you have <sys/socket.h>. */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have <sys/un.h>. */
+#undef HAVE_SYS_UN_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to 1 if you use Cutter */
+#undef WITH_CUTTER

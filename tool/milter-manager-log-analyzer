@@ -1,0 +1,1234 @@
+#!/usr/bin/env ruby
+#
+# Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+require 'English'
+require 'pathname'
+require 'fileutils'
+require 'time'
+require 'optparse'
+require 'erb'
+require 'tempfile'
+
+begin
+  require 'RRD' unless Object.const_defined?(:RRD)
+rescue LoadError
+  module RRD
+    module_function
+    def method_missing(method_name, *args)
+      run(method_name.to_s, *args)
+    end
+
+    def last(file)
+      Time.at(Integer(run("last", file)))
+    end
+
+    def info(file)
+      _info = {}
+      run("info", file).each_line do |line|
+        key, value = line.split(/\s*=\s*/)
+        _info[key] = value.strip
+      end
+      _info
+    end
+
+    def run(command, *args)
+      command_line = ["rrdtool", command] + args.collect {|arg| arg.to_s}
+
+      stdin_pipe = IO.pipe
+      stdout_pipe = IO.pipe
+      stderr_pipe = IO.pipe
+
+      pid = fork do
+        stdin_pipe[1].close
+        STDIN.reopen(stdin_pipe[0])
+        stdin_pipe[0].close
+
+        stdout_pipe[0].close
+        STDOUT.reopen(stdout_pipe[1])
+        stdout_pipe[1].close
+
+        stderr_pipe[0].close
+        STDERR.reopen(stderr_pipe[1])
+        stderr_pipe[1].close
+
+        exec(*command_line)
+        exit!(1)
+      end
+
+      stdin_pipe[0].close
+      stdout_pipe[1].close
+      stderr_pipe[1].close
+      _, status = Process.waitpid2(pid)
+
+      stdout = stdout_pipe[0].read
+      stderr = stderr_pipe[0].read
+      [stdin_pipe[1], stdout_pipe[0], stderr_pipe[0]].each do |pipe|
+        pipe.close unless pipe.closed?
+      end
+
+      unless status.success?
+        raise "failed to run: #{command_line.join(' ')}: #{stderr}"
+      end
+      stdout
+    end
+  end
+end
+
+module RRD
+  module_function
+  def last_update_time(file)
+    time = last(file)
+    if time and time < Time.at(0)
+      time = Time.at(Integer(`rrdtool last '#{file}'`))
+    end
+    time
+  end
+end
+
+class MilterManagerLogAnalyzer
+  module GraphData
+    class TimeRange
+      def initialize(step, rows)
+        @step = step
+        @rows = rows
+      end
+
+      def tag
+        name.downcase
+      end
+
+      def steps
+        base_range.steps * n_times
+      end
+
+      def start_time
+        base_range.start_time * n_times
+      end
+    end
+
+    class DayRange < TimeRange
+      def name
+        "Day"
+      end
+
+      def steps
+        (3600 * 24) / (@step * @rows) + 1
+      end
+
+      def start_time
+        -(60 * 60 * 24)
+      end
+    end
+
+    class WeekRange < TimeRange
+      def name
+        "Week"
+      end
+
+      private
+      def base_range
+        DayRange.new(@step, @rows)
+      end
+
+      def n_times
+        7
+      end
+    end
+
+    class MonthRange < TimeRange
+      def name
+        "Month"
+      end
+
+      private
+      def base_range
+        WeekRange.new(@step, @rows)
+      end
+
+      def n_times
+        5
+      end
+    end
+
+    class YearRange < TimeRange
+      def name
+        "Year"
+      end
+
+      private
+      def base_range
+        MonthRange.new(@step, @rows)
+      end
+
+      def n_times
+        12
+      end
+    end
+
+    class Data
+      def initialize(counts)
+        @counts = counts
+      end
+
+      def empty?
+        return true unless @counts
+        @counts.each_value do |counting|
+          return false unless counting.empty?
+        end
+        true
+      end
+
+      def last_time
+        last_time = 0
+        @counts.each_value do |count|
+          next if count.empty?
+          _last_time = count.keys.sort.last
+          last_time = [last_time, _last_time].max
+        end
+        last_time || 0
+      end
+
+      def first_time
+        first_time = nil
+        @counts.each_value do |count|
+          next if count.empty?
+          _first_time = count.keys.sort.first
+          first_time ||= _first_time
+          first_time = [first_time, _first_time].min
+        end
+        first_time
+      end
+
+      def [](key)
+        @counts[key]
+      end
+
+      def []=(key, value)
+        @counts[key] = value
+      end
+    end
+  end
+
+  class GraphGenerator
+    attr_reader :last_update_time
+    def initialize(output_directory, update_time=nil)
+      @output_directory = output_directory
+      @data = []
+      @items = nil
+      @title = nil
+      @vertical_label = nil
+      @step = 60 # seconds
+      @width = 600
+      @points_per_sample = 3
+
+      @update_time = normalize_time(update_time)
+
+      @old_base_rrd_file_names = []
+
+      @last_update_time = nil
+    end
+
+    def rows
+      @width / @points_per_sample
+    end
+
+    def rrd_file
+      build_path(self.class.base_rrd_file_name)
+    end
+
+    def build_path(*paths)
+      File.join(*([@output_directory, *paths].compact))
+    end
+
+    def prepare
+      migrate_if_needed
+
+      if File.exist?(rrd_file)
+        @last_update_time = normalize_time(RRD.last_update_time(rrd_file))
+        @current_time = @last_update_time.to_i + @step
+      else
+        @last_update_time = nil
+        @current_time = nil
+      end
+      @data = {}
+    end
+
+    def feed(time_stamp, content)
+      time_stamp = normalize_time(time_stamp)
+      return if @last_update_time and time_stamp < @last_update_time
+      return if time_stamp >= @update_time
+
+      time_stamp = time_stamp.to_i
+      data = []
+      find_data(content) do |key, type, options|
+        data << [key, type, options]
+      end
+      return if data.empty?
+
+      @current_time ||= time_stamp
+      if time_stamp and @current_time > time_stamp
+        @data = {}
+      else
+        flush(time_stamp)
+        update_data(data)
+      end
+    end
+
+    def flush(next_time_stamp=nil)
+      return if @current_time == next_time_stamp
+      create_rrd(rrd_file, @current_time, *@items) unless File.exist?(rrd_file)
+
+      start_time = @current_time
+      unless @data.empty?
+        counts = []
+        @items.each do |item|
+          counts << @data[item]
+        end
+        RRD.update(rrd_file, "#{@current_time}:#{counts.join(':')}")
+        start_time += @step
+      end
+      @data = {}
+
+      if next_time_stamp
+        fill_no_data_span(rrd_file, start_time, next_time_stamp, @items.size)
+      end
+      @current_time = next_time_stamp || @current_time
+    end
+
+    def fill_no_data_span(file, start_time_stamp, end_time_stamp, n_items)
+      start_time_stamp.step(end_time_stamp - @step, @step) do |time_stamp|
+        empty_data = ([nil] * n_items).join(":")
+        RRD.update(file, "#{time_stamp}:#{empty_data}")
+      end
+    end
+
+    def output_graph(range_class, options={}, *args)
+      return nil unless File.exist?(rrd_file)
+      last_update_time = RRD.last_update_time(rrd_file)
+
+      range = range_class.new(@step, rows)
+      start_time = options[:start_time] || range.start_time
+      end_time = options[:end_time] || guess_end_time(start_time)
+      graph_tag = options[:graph_tag] || range.tag
+      width = options[:width] || @width
+      height = options[:height] || 200
+
+      vertical_label = "#{@vertical_label}/#{unit}"
+      name = graph_name(graph_tag)
+
+      items = @items.inject([]) do |_items, item|
+        _items + generate_definitions(rrd_file, range, item)
+      end
+
+      data = items + args
+      data << "COMMENT:[#{last_update_time.iso8601.gsub(/:/, '\:')}]\\r"
+      RRD.graph(name,
+                "--title", @title,
+                "--vertical-label", vertical_label,
+                "--start", start_time.to_s,
+                "--end", end_time.to_s,
+                "--width", width.to_s,
+                "--height", height.to_s,
+                "--alt-y-grid",
+                "--units-exponent", "0",
+                *data)
+      [name, @title]
+    end
+
+    private
+    def create_rrd(file, start_time, *sources)
+      ranges = [
+                GraphData::DayRange.new(@step, rows),
+                GraphData::WeekRange.new(@step, rows),
+                GraphData::MonthRange.new(@step, rows),
+                GraphData::YearRange.new(@step, rows),
+               ]
+
+      rra = []
+      ranges.each do |range|
+        rra << "RRA:MAX:0.5:#{range.steps}:#{rows}"
+        rra << "RRA:AVERAGE:0.5:#{range.steps}:#{rows}"
+        rra << "RRA:LAST:0.5:#{range.steps}:#{rows}"
+      end
+
+      data_sources = sources.collect do |source|
+        "DS:#{source}:GAUGE:#{heartbeat}:0:U"
+      end
+
+      RRD.create(file,
+                 "--start", (start_time - 1).to_i.to_s,
+                 "--step", @step,
+                 *(rra + data_sources))
+    end
+
+    def heartbeat
+      @step * 3
+    end
+
+    def recreate_rrd(*new_items)
+      dump_file = Tempfile.new("milter-manager-log-analyzer")
+      RRD.dump(rrd_file, dump_file.path)
+      data = dump_file.read
+      data.gsub!(/<last_ds><\/last_ds>/, "<last_ds>NaN</last_ds>")
+      data.sub!(/<!-- Round Robin Archives -->/) do |text|
+        ds = ""
+        new_items.each do |item|
+          ds << <<-EODS
+       <ds>
+               <name> #{item} </name>
+               <type> GAUGE </type>
+               <minimal_heartbeat> #{@step * 3} </minimal_heartbeat>
+               <min> 0.0000000000e+00 </min>
+               <max> NaN </max>
+
+               <!-- PDP Status -->
+               <last_ds> NaN </last_ds>
+               <value> 0.0000000000e+00 </value>
+               <unknown_sec> 0 </unknown_sec>
+       </ds>
+EODS
+        end
+        ds + text
+      end
+
+      data.gsub!(/<\/cdp_prep>/) do |text|
+        ds = ""
+        new_items.each do |item|
+          ds << <<-EODS
+                        <ds>
+                        <primary_value> 0.0000000000e+00 </primary_value>
+                        <secondary_value> 0.0000000000e+00 </secondary_value>
+                        <value> 0.0000000000e+00 </value>
+                        <unknown_datapoints> 0 </unknown_datapoints>
+                        </ds>
+EODS
+        end
+        ds + text
+      end
+
+      data.gsub!(/<\/row>/) do |text|
+        ("<v> NaN </v>" * new_items.size) + text
+      end
+
+      dump_file.open
+      dump_file.rewind
+      dump_file.print(data)
+      dump_file.close
+
+      new_rrd_file = rrd_file + ".new"
+      FileUtils.rm_f(new_rrd_file)
+      RRD.restore(dump_file.path, new_rrd_file)
+      FileUtils.mv(new_rrd_file, rrd_file)
+    end
+
+    def migrate_if_needed
+      history = @old_base_rrd_file_names.collect do |base_rrd_file_name|
+        build_path(base_rrd_file_name)
+      end + [rrd_file]
+      history.each_with_index do |file_name, i|
+        next unless File.exist?(file_name)
+        next_file_name = history[i + 1]
+        if next_file_name and !File.exist?(next_file_name)
+          FileUtils.mv(file_name, next_file_name)
+        end
+      end
+
+      return unless File.exist?(rrd_file)
+
+      data_names = []
+      RRD.info(rrd_file).each do |key, value|
+        main, = key.split(/\./)
+        case main
+        when /\Ads\[(.+?)\]\z/
+          data_names << $1
+        end
+      end
+      data_names = data_names.uniq
+      if data_names.size < @items.size
+        recreate_rrd(*@items[(data_names.size)..-1])
+      elsif data_names.size > @items.size
+        raise "data source can't be removed!"
+      end
+    end
+
+    def guess_end_time(start_time)
+      if start_time.is_a?(String)
+        "now"
+      else
+        end_time = Time.now.to_i
+        step = start_time.abs * @points_per_sample / @width
+        end_time - (end_time % step)
+      end
+    end
+
+    def normalize_time(time)
+      Time.at(time.to_i - time.to_i % @step).utc
+    end
+
+    def generate_definitions(rrd_file, range, item, label=nil)
+      label ||= item
+      [
+       "DEF:#{label}=#{rrd_file}:#{item}:AVERAGE",
+       "DEF:max_#{label}=#{rrd_file}:#{item}:MAX",
+       "CDEF:n_#{label}=#{label}",
+       "CDEF:real_#{label}=#{label}",
+       "CDEF:real_max_#{label}=max_#{label}",
+       "CDEF:real_n_#{label}=n_#{label},#{range.steps},*",
+       "CDEF:total_#{label}=PREV,UN,real_n_#{label},PREV,IF,real_n_#{label},+",
+      ]
+    end
+
+    def unit
+      case @step
+      when 60
+        "min"
+      when 60 * 60
+        "hour"
+      when 60 * 60 * 24
+        "day"
+      when 60 * 60 * 24 * 365
+        "year"
+      else
+        "unknown"
+      end
+    end
+
+    def update_data(data)
+      data.each do |key, type, options|
+        type ||= :count
+        options ||= {}
+        count = options[:count] || 1
+        @data[key] ||= 0
+        case type
+        when :count
+          @data[key] += count
+        when :max
+          @data[key] = [@data[key], count].max
+        end
+      end
+    end
+  end
+
+  class SessionGraphGenerator < GraphGenerator
+    class << self
+      def base_rrd_file_name
+        "session.rrd"
+      end
+    end
+
+    def initialize(output_directory, update_time)
+      super(output_directory, update_time)
+      @title = 'Sessions'
+      @vertical_label = "sessions"
+      @items = ["smtp", "child", "disconnected", "concurrent"]
+      @old_base_rrd_file_names = ["milter-log.session.rrd"]
+    end
+
+    def graph_name(tag)
+      build_path("session.#{tag}.png")
+    end
+
+    def find_data(content)
+      case content
+      when /\A\[milter\]\[end\]\[(.+?)\]\[(.+?)\]\[(.+?)\]\((.+?)\): (.+)\z/
+        state = $1
+        status = $2
+        elapsed = $3
+        id = $4
+        name = $5
+        yield("child")
+      when /\A\[milter\]\[end\]\[(.+)\]\(.+\): (.+)\z/
+        elapsed = $1
+        id = $2
+        name = $3
+        yield("child")
+      when /\A\[session\]\[end\]\[(.+)\]\[(.+)\]\[(.+)\]\(.+\)\z/
+        state = $1
+        status = $2
+        elapsed = $3
+        id = $4
+        yield("smtp")
+      when /\A\[session\]\[end\]\[(.+)\]\(.+\)\z/
+        elapsed = $1
+        id = $2
+        yield("smtp")
+      when /\A\[session\]\[disconnected\]\[(.+)\]\(.+\)\z/
+        elapsed = $1
+        id = $2
+        yield("disconnected")
+      when /\A\[sessions\]\[finished\] (\d+)\(\+(\d+)\) (\d+)\z/
+        n_processed = $1
+        n_finished = $2
+        n_rest = $3
+        yield("concurrent", :max, :count => n_rest.to_i)
+      end
+    end
+
+    def output_graph(range_class, options={})
+      super(range_class, options,
+            "AREA:n_smtp#0000ff:SMTP        ",
+            "GPRINT:total_smtp:MAX:total\\: %8.0lf sessions",
+            "GPRINT:smtp:AVERAGE:avg\\: %6.2lf sessions/#{unit}",
+            "GPRINT:max_smtp:MAX:max\\: %4.0lf sessions/#{unit}\\l",
+            "LINE2:n_child#00ff00:milter      ",
+            "GPRINT:total_child:MAX:total\\: %8.0lf sessions",
+            "GPRINT:child:AVERAGE:avg\\: %6.2lf sessions/#{unit}",
+            "GPRINT:max_child:MAX:max\\: %4.0lf sessions/#{unit}\\l",
+            "LINE2:n_disconnected#ff0000:Disconnected",
+            "GPRINT:total_disconnected:MAX:total\\: %8.0lf sessions",
+            "GPRINT:disconnected:AVERAGE:avg\\: %6.2lf sessions/#{unit}",
+            "GPRINT:max_disconnected:MAX:max\\: %4.0lf sessions/#{unit}\\l",
+            "LINE2:n_concurrent#cc00cc:Concurrent",
+            "GPRINT:total_concurrent:MAX:total\\: %8.0lf sessions",
+            "GPRINT:concurrent:AVERAGE:avg\\: %6.2lf sessions/#{unit}",
+            "GPRINT:max_concurrent:MAX:max\\: %4.0lf sessions/#{unit}\\l")
+    end
+  end
+
+  class MilterManagerStatusGraphGenerator < GraphGenerator
+    class << self
+      def base_rrd_file_name
+        "milter-manager.status.rrd"
+      end
+    end
+
+    def initialize(output_directory, update_time)
+      super(output_directory, update_time)
+      @vertical_label = "sessions"
+      @title = 'milter manager: status'
+      @items = ["pass",
+                "accept",
+                "reject",
+                "discard",
+                "temporary-failure",
+                "quarantine",
+                "abort",
+                "error"]
+      @old_base_rrd_file_names = ["milter-log.mail.rrd", "milter-manager.rrd"]
+    end
+
+    def graph_name(tag)
+      build_path("milter-manager.status.#{tag}.png")
+    end
+
+    def output_graph(range_class, options={})
+      entries = graph_entries
+      smtp_label = "SMTP"
+      disconnected_label = "Disconnected"
+      concurrent_label = "Concurrent"
+      labels = entries.collect {|_, _, _, label| label}
+      labels << smtp_label << disconnected_label << concurrent_label
+      max_label_size = labels.collect {|label| label.size}.max
+
+      items = []
+      entries.each do |type, name, color, label|
+        items << "#{type}:#{name}#{color}:#{label.ljust(max_label_size)}"
+        items << "GPRINT:total_#{name}:MAX:total\\: %8.0lf sessions"
+        items << "GPRINT:#{name}:AVERAGE:avg\\: %6.2lf sessions/#{unit}"
+        items << "GPRINT:max_#{name}:MAX:max\\: %4.0lf sessions/#{unit}\\l"
+      end
+
+      range = range_class.new(@step, rows)
+      path = build_path(SessionGraphGenerator.base_rrd_file_name)
+      items += generate_definitions(path, range, "smtp")
+      items += generate_definitions(path, range, "disconnected")
+      items += generate_definitions(path, range, "concurrent")
+
+      label = smtp_label.ljust(max_label_size)
+      items << "LINE2:n_smtp#000000:#{label}"
+      items << "GPRINT:total_smtp:MAX:total\\: %8.0lf sessions"
+      items << "GPRINT:smtp:AVERAGE:avg\\: %6.2lf sessions/#{unit}"
+      items << "GPRINT:max_smtp:MAX:max\\: %4.0lf sessions/#{unit}\\l"
+
+      label = disconnected_label.ljust(max_label_size)
+      items << "LINE2:n_disconnected#999999:#{label}"
+      items << "GPRINT:total_disconnected:MAX:total\\: %8.0lf sessions"
+      items << "GPRINT:disconnected:AVERAGE:avg\\: %6.2lf sessions/#{unit}"
+      items << "GPRINT:max_disconnected:MAX:max\\: %4.0lf sessions/#{unit}\\l"
+
+      label = concurrent_label.ljust(max_label_size)
+      items << "LINE2:n_concurrent#9999ff:#{label}"
+      items << "GPRINT:total_concurrent:MAX:total\\: %8.0lf sessions"
+      items << "GPRINT:concurrent:AVERAGE:avg\\: %6.2lf sessions/#{unit}"
+      items << "GPRINT:max_concurrent:MAX:max\\: %4.0lf sessions/#{unit}\\l"
+      super(range_class, options, *items)
+    end
+
+    private
+    def find_data(content)
+      case content
+      when /\A\[session\]\[end\]\[(.+)\]\[(.+)\]\[(.+)\]\((.+)\)\z/
+        state = $1
+        status = $2
+        elapsed = $3
+        id = $4
+        yield(status)
+      when /\A\[reply\]\[(.+)\]\[(.+)\]\z/
+        state = $1
+        status = $2
+        return if status == "continue" and state != "end-of-message"
+        status = "pass" if status == "continue"
+        yield(status)
+      when /\A\[abort\]\[(.+)\]\z/
+        state = $1
+        status = "abort"
+        yield(status)
+      end
+    end
+
+    def graph_entries
+      [
+       ["AREA", "pass", "#0000ff", "Pass"],
+       ["STACK", "accept", "#00ff00", "Accept"],
+       ["STACK", "reject", "#ff0000", "Reject"],
+       ["STACK", "discard", "#ffd400", "Discard"],
+       ["STACK", "temporary-failure", "#888888", "Temp-Fail"],
+       ["STACK", "quarantine", "#a52a2a", "Quarantine"],
+       ["STACK", "abort", "#ff9999", "Abort"],
+       ["STACK", "error", "#ff00ff", "Error"],
+      ]
+    end
+  end
+
+  class MilterManagerReportGraphGenerator < GraphGenerator
+    class << self
+      def base_rrd_file_name
+        "milter-manager.report.rrd"
+      end
+    end
+
+    def initialize(output_directory, update_time)
+      super(output_directory, update_time)
+      @vertical_label = "mails"
+      @title = 'milter manager: report'
+      @items = ["spam",
+                "virus",
+                "uribl",
+                "greylisting-pass",
+                "spf-pass",
+                "spf-fail",
+                "sender-id-pass",
+                "sender-id-fail",
+                "dkim-pass",
+                "dkim-fail",
+                "dkim-adsp-pass",
+                "dkim-adsp-fail",
+                "tarpitting-pass"]
+      @old_base_rrd_file_names = []
+    end
+
+    def graph_name(tag)
+      build_path("milter-manager.report.#{tag}.png")
+    end
+
+    def output_graph(range_class, options={})
+      entries = [
+                 ["AREA", "spam", "#ff0000", "spam"],
+                 ["STACK", "virus", "#ddbb00", "Virus"],
+                 ["STACK", "uribl", "#dd00bb", "URIBL"],
+                 ["STACK", "greylisting-pass", "#888888", "Greylisting (pass)"],
+                 ["STACK", "tarpitting-pass", "#000088", "Tarpitting (pass)"],
+                 ["STACK", "spf-pass", "#33cc33", "SPF (pass)"],
+                 ["STACK", "spf-fail", "#cc3333", "SPF (fail)"],
+                 ["STACK", "sender-id-pass", "#33cccc", "Sender ID (pass)"],
+                 ["STACK", "sender-id-fail", "#cccc33", "Sender ID (fail)"],
+                 ["STACK", "dkim-pass", "#3366cc", "DKIM (pass)"],
+                 ["STACK", "dkim-fail", "#cc6633", "DKIM (fail)"],
+                 ["STACK", "dkim-adsp-pass", "#3399cc", "DKIM ADSP (pass)"],
+                 ["STACK", "dkim-adsp-fail", "#cc9933", "DKIM ADSP (fail)"],
+                ]
+      max_label_size = entries.collect {|_, _, _, label| label.size}.max
+
+      items = []
+      entries.each do |type, name, color, label|
+        items << "#{type}:#{name}#{color}:#{label.ljust(max_label_size)}"
+        items << "GPRINT:total_#{name}:MAX:total\\: %8.0lf mails"
+        items << "GPRINT:#{name}:AVERAGE:avg\\: %6.2lf mails/#{unit}"
+        items << "GPRINT:max_#{name}:MAX:max\\: %4.0lf mails/#{unit}\\l"
+      end
+      super(range_class, options, *items)
+    end
+
+    private
+    def find_data(content, &block)
+      case content
+      when /\A\[milter\]\[header\]\[add\]\((.+)\): <(.+?)>=<(.+?)>: (.+)\z/
+        id = $1
+        name = $2
+        value = $3
+        milter_name = $4
+        report_key(name, value, milter_name, &block)
+      end
+    end
+
+    def report_key(header_name, header_value, milter_name, &block)
+      case header_name
+      when /\AX-Spam-Flag\z/i
+        parse_x_spam_flag(header_value, &block)
+      when /\AX-Spam-Status\z/i
+        parse_x_spam_status(header_value, &block)
+      when /\AAuthentication-Results\z/i
+        parse_authentication_results(header_value, &block)
+      when /\AX-Greylist\z/i
+        parse_x_greylist(header_value, &block)
+      when /\AX-Virus-Status\z/i
+        parse_x_virus_status(header_value, &block)
+      end
+    end
+
+    def parse_x_spam_flag(value)
+      case value
+      when /\Ayes\z/i
+        yield("spam")
+      end
+    end
+
+    def parse_x_spam_status(value)
+      return unless /tests=/ =~ value
+      uribl_used = false
+      results = $POSTMATCH.split(/\s*\S+=/, 2)[0].split(/\s*,\s*/)
+      results.each do |result|
+        case result
+        when /\AURIBL_/i
+          unless uribl_used
+            yield("uribl")
+            uribl_used = true
+          end
+        end
+      end
+    end
+
+    # TODO: fix this method.
+    #   see below urls to know formal definition of "Authentication-Results" header.
+    #   see section 2.2. of RFC5451 and section 3.2.2, 3.2.3 of RFC5322.
+    #   http://www.ietf.org/rfc/rfc5451.txt
+    #   http://www.ietf.org/rfc/rfc5322.txt
+    def parse_authentication_results(value)
+      id, *results = value.split(/;\s*/)
+      results.each do |result|
+        if /\A(\S+?)=(\S+)\s*/ =~ result
+          type = $1
+          result = $2
+          other_info = $POSTMATCH
+          case result
+          when "pass"
+            yield("#{type}-pass")
+          when "fail", "hardfail"
+            yield("#{type}-fail")
+          when "neutral"
+            yield("#{type}-fail") if /\A\(verification failed\)/ =~ other_info
+          end
+        end
+      end
+    end
+
+    def parse_x_greylist(value)
+      case value
+      when /Message whitelisted by tarpit (\d+)s/i
+        tarpit_second = $1.to_i
+        yield("tarpitting-pass")
+      when /\ADelayed for/i
+        yield("greylisting-pass")
+      when /Sender is SPF-compliant/i, /Sender passed SPF test/i
+        yield("spf-pass")
+      end
+    end
+
+    def parse_x_virus_status(value)
+      case value
+      when /\AInfected/i
+        yield("virus")
+      end
+    end
+  end
+
+  class MiltersGraphGenerator
+    attr_reader :last_update_time
+    def initialize(output_directory, update_time)
+      @output_directory = output_directory
+      @update_time = update_time
+      @last_update_time = nil
+    end
+
+    def prepare
+      @generators = []
+      last_update_times = []
+      glob = File.join(@output_directory, "milter.{status,report}.*.rrd")
+      Dir.glob(glob).each do |rrd|
+        last_update_times << RRD.last_update_time(rrd)
+      end
+      @last_update_time = last_update_times.min
+    end
+
+    def feed(time_stamp, content)
+      case content
+      when /\A\[milter\]\[end\]\[(.+?)\]\[(.+?)\]\[(.+?)\]\((.+?)\): (.+)\z/
+        state = $1
+        status = $2
+        elapsed = $3
+        id = $4
+        name = $5
+        unless @generators.find {|generator| generator.name == name}
+          [MilterStatusGraphGenerator,
+           MilterReportGraphGenerator].each do |generator_class|
+            generator = generator_class.new(name,
+                                            @output_directory,
+                                            @update_time)
+            generator.prepare
+            @generators << generator
+          end
+        end
+      end
+
+      @generators.each do |generator|
+        generator.feed(time_stamp, content)
+      end
+    end
+
+    def flush
+      @generators.each do |generator|
+        generator.flush
+      end
+    end
+
+    def output_graphs(range_class, options={})
+      @generators.collect do |generator|
+        generator.output_graph(range_class, options)
+      end.compact
+    end
+  end
+
+  class MilterStatusGraphGenerator < MilterManagerStatusGraphGenerator
+    attr_reader :name
+    def initialize(name, output_directory, update_time)
+      super(output_directory, update_time)
+      @name = name
+      @title = "milter: status: #{@name}"
+      @items << "stop"
+      @old_base_rrd_file_names = [
+        "milter-log.milter.#{@name}.rrd",
+        "milter.#{@name}.rrd",
+      ]
+    end
+
+    def rrd_file
+      build_path("milter.status.#{@name}.rrd")
+    end
+
+    def graph_name(tag)
+      build_path("milter.status.#{@name}.#{tag}.png")
+    end
+
+    private
+    def find_data(content)
+      case content
+      when /\A\[milter\]\[end\]\[(.+?)\]\[(.+?)\]\[(.+?)\]\((.+?)\): (.+)\z/
+        state = $1
+        status = $2
+        elapsed = $3
+        id = $4
+        name = $5
+        yield(status) if name == @name
+      end
+    end
+
+    def graph_entries
+      entries = super
+      entries << ["STACK", "stop", "#99ffff", "Stop"]
+      entries
+    end
+  end
+
+  class MilterReportGraphGenerator < MilterManagerReportGraphGenerator
+    attr_reader :name
+    def initialize(name, output_directory, update_time)
+      super(output_directory, update_time)
+      @name = name
+      @title = "milter: report: #{@name}"
+      @old_base_rrd_file_names = []
+    end
+
+    def rrd_file
+      build_path("milter.report.#{@name}.rrd")
+    end
+
+    def graph_name(tag)
+      build_path("milter.report.#{@name}.#{tag}.png")
+    end
+
+    private
+    def report_key(header_name, header_value, milter_name, &block)
+      return if @name != milter_name
+      super(header_name, header_value, milter_name, &block)
+    end
+  end
+
+  class HTMLGenerator
+    include ERB::Util
+
+    def initialize(graph_info)
+      @graph_info = graph_info
+    end
+
+    def generate
+      header + index + graphs + footer
+    end
+
+    private
+    def header
+      <<-EOH
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Refresh" content="300" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <style>
+ul.index li.range
+{
+  display: block;
+  float: left;
+  margin-bottom: 1em;
+  margin-right: 1em;
+}
+
+h2
+{
+  clear: both;
+}
+    </style>
+    <title>milter-manager statistics</title>
+  </head>
+
+  <body>
+    <h1>milter-manager statistics</h1>
+EOH
+    end
+
+    def index
+      result = "<ul class=\"index\">\n"
+      @graph_info.each do |label, graphs|
+        next if graphs.empty?
+        id = label_to_id(label)
+        result << %Q[  <li class="range"><a href="\##{h(id)}">#{h(label)}</a>\n]
+        result << %Q[    <ul class="graph-index">\n]
+        graphs.each do |file_name, title|
+          graph_id = graph_title_to_id(label, title)
+          result << %Q[      <li><a href="\##{h(graph_id)}">#{h(title)}</a>\n]
+        end
+        result << %Q[    </ul>\n]
+        result << %Q[  </li>\n]
+      end
+      result << "</ul>\n"
+      result
+    end
+
+    def graphs
+      result = ""
+      @graph_info.each do |label, graphs|
+        next if graphs.empty?
+        id = label_to_id(label)
+        result << %Q[<h2 id=\"#{h(id)}\">#{h(label)}</h2>\n]
+        graphs.each do |file_name, title|
+          graph_id = graph_title_to_id(label, title)
+          result << %Q[  <p id="#{graph_id}">\n]
+          result << %Q[    <img src="#{h(File.basename(file_name))}" />\n]
+          result << %Q[  </p>\n]
+        end
+        result << "\n"
+      end
+      result
+    end
+
+    def footer
+      <<-EOF
+  </body>
+</html>
+EOF
+    end
+
+    def label_to_id(label)
+      normalize_value(label)
+    end
+
+    def graph_title_to_id(label, title)
+      [normalize_value(label), normalize_value(title)].join("-")
+    end
+
+    def normalize_value(value)
+      value.downcase.gsub(/[ :]+/, '-')
+    end
+  end
+
+  attr_accessor :log, :output_directory, :now
+  def initialize
+    @log = ARGF
+    @update_db = true
+    @output_directory = "."
+    @output_graphs = []
+  end
+
+  def parse_options(argv)
+    opts = OptionParser.new do |opts|
+      opts.on("--log=LOG_FILE",
+              "The log file name in which is stored Milter log",
+              "(STDIN)") do |log|
+        @log = File.open(log)
+      end
+
+      opts.on("--output-directory=DIRECTORY",
+              "Output graph, HTML and graph data to DIRECTORY",
+              "(#{@output_directory})") do |directory|
+        @output_directory = directory
+        unless File.exist?(@output_directory)
+          FileUtils.mkdir_p(@output_directory)
+        end
+      end
+
+      opts.on("--[no-]update-db",
+              "Update RRD database with log file",
+              "(#{@update_db})") do |boolean|
+        @update_db = boolean
+      end
+    end
+    opts.parse!(argv)
+  end
+
+  def prepare
+    all_listeners.each do |listener|
+      listener.prepare
+    end
+  end
+
+  def update
+    return unless @update_db
+
+    listeners = all_listeners
+    last_update_times = []
+    listeners.each do |listener|
+      last_update_times << (listener.last_update_time || Time.at(0))
+    end
+    last_update_time = last_update_times.max || Time.at(0)
+
+    year = now.year
+    @log.each_line do |line|
+      if line.respond_to?(:force_encoding)
+        line.force_encoding("ASCII-8BIT")
+      end
+      case line
+      when /\A(\w{3}) +(\d+) (\d+):(\d+):(\d+) [\w\-]+ ([\w\-]+)\[\d+\]: /
+        month_name = $1
+        day = $2
+        hour = $3
+        minute = $4
+        second = $5
+        name = $6
+        content = $POSTMATCH
+        next unless name == "milter-manager"
+        if /\A\[statistics\] / =~ remove_message_id(content)
+          content = $POSTMATCH.chomp
+        else
+          next
+        end
+        month = Time::RFC2822_MONTH_NAME.index(month_name)
+        next if month.nil?
+        time_stamp = Time.local(year, month + 1, day.to_i,
+                                hour.to_i, minute.to_i, second.to_i)
+        next if time_stamp < last_update_time
+        listeners.each do |listener|
+          listener.feed(time_stamp, content)
+        end
+      else
+      end
+    end
+
+    listeners.each do |listener|
+      listener.flush
+    end
+  end
+
+  def remove_message_id(log)
+    log.sub(/\A\[ID \d+ \w+\.\w+\] /, '')
+  end
+
+  def all_listeners
+    [sessions, milter_manager_status, milter_manager_report, milters]
+  end
+
+  def output
+    output_all_graph
+    output_html
+  end
+
+  private
+  def output_graph(range, label, options={})
+    output_graph_info = []
+    [milter_manager_status, milter_manager_report].each do |generator|
+      info = generator.output_graph(range, options)
+      output_graph_info << info if info
+    end
+    output_graph_info.concat(milters.output_graphs(range, options))
+    @output_graphs << [label, output_graph_info]
+  end
+
+  def output_all_graph
+    output_graph(GraphData::DayRange, "Last Day")
+    output_graph(GraphData::WeekRange, "Last Week")
+    output_graph(GraphData::MonthRange, "Last Month")
+    output_graph(GraphData::YearRange, "Last Year")
+  end
+
+  def output_html
+    File.open(File.join(@output_directory, "index.html"), "w") do |html|
+      generator = HTMLGenerator.new(@output_graphs)
+      html.print(generator.generate)
+    end
+  end
+
+  def now
+    @now ||= Time.now.utc
+  end
+
+  def sessions
+    @sessions ||= SessionGraphGenerator.new(@output_directory, now)
+  end
+
+  def milter_manager_status
+    @milter_manager_status ||=
+      MilterManagerStatusGraphGenerator.new(@output_directory, now)
+  end
+
+  def milter_manager_report
+    @milter_manager_report ||=
+      MilterManagerReportGraphGenerator.new(@output_directory, now)
+  end
+
+  def milters
+    @milters ||= MiltersGraphGenerator.new(@output_directory, now)
+  end
+end
+
+if __FILE__ == $0
+  milter_log_analyzer = MilterManagerLogAnalyzer.new
+  milter_log_analyzer.parse_options(ARGV)
+  milter_log_analyzer.prepare
+  milter_log_analyzer.update
+  milter_log_analyzer.output
+end
+
+# vi:ts=2:nowrap:ai:expandtab:sw=2

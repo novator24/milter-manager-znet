@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install-to-debian">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install-to-debian.top_of_page'>Debianへインストール</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Debianへインストール</refname>
+  <refpurpose>Debian GNU/Linuxへのmilter managerのインストール方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  Debian GNU/Linuxに特化したmilter managerのインストール方法に ついて説明します。Debianに依存しない一般的なインストール情報 は
+  <link linkend='install'>インストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>パッケージのインストール</title>
+  <para>milter managerのサイトで現在の安定版squeezeと開発版wheezyと不 安定版sid用のパッケージを配布しています。</para>
+  <para>まず、以下の内容の /etc/apt/sources.list.d/milter-manager.listを作成します。</para>
+  <refsect2>
+  <title>squeezeの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>wheezyの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>jessieの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>sidの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>インストール</title>
+  <para>パッケージは milter manager リリース用の鍵でサインされています。信用 する場合は鍵を登録します。</para>
+  <programlisting>% sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1</programlisting>
+  <para>milter managerをインストールします。</para>
+  <programlisting>% sudo aptitude update
+% sudo aptitude -V -D -y install milter-manager</programlisting>
+  <para>MTAはPostfixを利用することとします。</para>
+  <programlisting>% sudo aptitude -V -D -y install postfix</programlisting>
+  <para>milterはspamass-milter、clamav-milter、milter-greylistを使用 することとします。</para>
+  <programlisting>% sudo aptitude -V -D -y install spamass-milter clamav-milter milter-greylist</programlisting>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>設定</title>
+  <para>milterの基本的な設定方針は以下の通りです。</para>
+  <para>UNIXドメインソケットで接続を受け付けるようにします。これは、 セキュリティ面と速度面の理由からです。</para>
+  <para>UNIXドメインソケットはpostfixグループでの読み書き権限を設定し ます。これは、既存のmilterパッケージの設定をできるだけ利用す るためです。</para>
+  <para>
+  必要のない配送遅延をできるだけ抑えるため、milter-greylistは
+  <ulink url='http://gabacho.reto.jp/anti-spam/'>S25R</ulink>
+  にマッチする ときのみ適用します。しかし、これはmilter-managerが自動で行う ため、特に設定する必要はありません。
+</para>
+  <refsect2>
+  <title>spamass-milterの設定</title>
+  <para>まず、spamdの設定をします。</para>
+  <para>/etc/spamassassin/local.cfに以下の内容を追加します。これで、 スパム判定された場合のみ、その詳細をヘッダに追加するようにな ります。</para>
+  <programlisting>report_safe 0
+
+remove_header ham Status
+remove_header ham Level</programlisting>
+  <para>spamdを有効にするため、/etc/default/spamassassinを以下のよう に変更します。</para>
+  <para>変更前:</para>
+  <programlisting>ENABLED=0</programlisting>
+  <para>変更後:</para>
+  <programlisting>ENABLED=1</programlisting>
+  <para>spamdを起動します。</para>
+  <programlisting>% sudo /etc/init.d/spamassassin start</programlisting>
+  <para>spamass-milterはデフォルトの設定で問題ありません。</para>
+</refsect2>
+
+  <refsect2>
+  <title>clamav-milterの設定</title>
+  <para>clamav-milterのソケットはpostfixグループに読み書き権限を与え るようにします。</para>
+  <para>以下のように/etc/default/clamav-milterを変更します。</para>
+  <para>変更前:</para>
+  <programlisting>#SOCKET_RWGROUP=postfix</programlisting>
+  <para>変更後:</para>
+  <programlisting>SOCKET_RWGROUP=postfix</programlisting>
+  <para>clamav-milterを再起動します。</para>
+  <programlisting>% sudo /etc/init.d/clamav-milter restart</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>milter-greylistの設定</title>
+  <para>/etc/milter-greylist/greylist.confを編集し、以下のような設定 にします。</para>
+  <itemizedlist>
+  <listitem>
+  <para>IPアドレスのマッチには前半24ビットのみを使う（送信元が複 数のMTAを利用している場合のGreylistの悪影響を抑えるため）</para>
+</listitem>
+  <listitem>
+  <para>再送チェック時間を30分後（デフォルト）から10分後に短くす る（Greylistの悪影響を抑えるため）</para>
+</listitem>
+  <listitem>
+  <para>オートホワイトリストの期間を1日（デフォルト）から1週間に 伸ばす（Greylistの悪影響を抑えるため）</para>
+</listitem>
+  <listitem>
+  <para>デフォルトでGreylistを使う</para>
+</listitem>
+</itemizedlist>
+  <note>Greylistの悪影響を抑えるために制限を緩めているため、迷惑
+メールが通過する確率がやや高くなりますが、誤判定時の悪影響を
+抑える方を重視するべきです。Greylistですべての迷惑メールをブ
+ロックしようとするのではなく、Greylistで検出できない迷惑メー
+ルはSpamAssassinなど他の手法で対応します。milter managerはそ
+のように複数のmilterを組み合わせた迷惑メール対策システムの構
+築を支援します。</note>
+  <para>変更前:</para>
+  <programlisting>racl whitelist default</programlisting>
+  <para>変更後:</para>
+  <programlisting>subnetmatch /24
+greylist 10m
+autowhite 1w
+racl greylist default</programlisting>
+  <para>次に、/etc/default/milter-greylistを変更し、milter-greylist を有効にします。milter-greylistの起動ファイルではソケットファ イルをpostfixグループで作成できないため、IPv4で接続すること とします。ただし、ローカルホストからの接続のみを受け付けること にします。</para>
+  <para>変更前:</para>
+  <programlisting>ENABLED=0</programlisting>
+  <para>変更後:</para>
+  <programlisting>ENABLED=1
+SOCKET=&quot;inet:11125@[127.0.0.1]&quot;</programlisting>
+  <para>milter-greylistを起動します。</para>
+  <programlisting>% sudo /etc/init.d/milter-greylist start</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>milter-managerの設定</title>
+  <para>milter-managerはシステムにインストールされているmilterを検出 します。以下のコマンドでspamass-milter、clamav-milter、 milter-greylistを検出していることを確認してください。</para>
+  <programlisting>% sudo /usr/sbin/milter-manager -u milter-manager --show-config</programlisting>
+  <para>以下のように表示されていれば検出は成功しています。</para>
+  <programlisting>...
+define_milter(&quot;milter-greylist&quot;) do |milter|
+  milter.connection_spec = &quot;inet:11125@[127.0.0.1]&quot;
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter(&quot;clamav-milter&quot;) do |milter|
+  milter.connection_spec = &quot;unix:/var/run/clamav/clamav-milter.ctl&quot;
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter(&quot;spamass-milter&quot;) do |milter|
+  milter.connection_spec = &quot;unix:/var/spool/postfix/spamass/spamass.sock&quot;
+  ...
+  milter.enabled = true
+  ...
+end
+..</programlisting>
+  <para>
+  milterの名前、ソケットのパス、enabledがtrueになっていることを 確認してください。異なっていた場合は、
+  <link linkend='configuration'>設定</link>
+  を参考に /etc/milter-manager/milter-manager.confを編集してく ださい。ただ、できれば、設定を変更せずに使用できるようにした いと考えています。もし、検出できなかった環境のことを教えても らえれば、milter-manager.confを編集しなくとも使用できるように 検出方法を改良することができるかもしれません。
+</para>
+  <para>Postfixと一緒に動作するように/etc/default/milter-managerを編 集します。</para>
+  <para>変更前:</para>
+  <programlisting># For postfix, you might want these settings:
+# SOCKET_GROUP=postfix
+# CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</programlisting>
+  <para>変更後:</para>
+  <programlisting># For postfix, you might want these settings:
+SOCKET_GROUP=postfix
+CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</programlisting>
+  <para>milter-managerユーザーをpostfixグループに所属させます。</para>
+  <programlisting>% sudo adduser milter-manager postfix</programlisting>
+  <para>milter-managerの設定が完了したので、起動します。</para>
+  <programlisting>% sudo /etc/init.d/milter-manager restart</programlisting>
+  <para>milter-test-serverで起動の確認をすることができます。</para>
+  <programlisting>% sudo -u postfix milter-test-server -s unix:/var/spool/postfix/milter-manager/milter-manager.sock</programlisting>
+  <para>このように表示されれば成功です。</para>
+  <programlisting>status: accept
+elapsed-time: 0.128 seconds</programlisting>
+  <para>起動に失敗しているときはこのように表示されます。</para>
+  <programlisting>Failed to connect to unix:/var/spool/postfix/milter-manager/milter-manager.sock: No such file or directory</programlisting>
+  <para>失敗している時はログを頼りに問題を解決します。--verboseオプショ ンをつけると詳細なログが表示されます。また、デーモンプロセス にしないことにより、標準出力にもログが表示されます。</para>
+  <para>/etc/default/milter-managerに以下の内容を追加します。これによ り、標準出力に詳細なログが表示されます。</para>
+  <programlisting>OPTION_ARGS=&quot;--verbose --no-daemon&quot;</programlisting>
+  <para>milter-managerをもう一度起動します。</para>
+  <programlisting>% sudo /etc/init.d/milter-manager restart</programlisting>
+  <para>問題があればログが表示されます。起動しているmilter-managerは Ctrl+cで終了することができます。</para>
+  <para>問題が解決した後は、/etc/default/milter-managerに追加した OPTION_ARGSをコメントアウトし、デーモンプロセスで起動するよう に戻してから、milter-managerを起動しなおしてください。</para>
+</refsect2>
+
+  <refsect2>
+  <title>Postfixの設定</title>
+  <para>まず、milterの設定をします。</para>
+  <para>/etc/postfix/main.cfに以下を追加します。</para>
+  <programlisting>milter_protocol = 6
+milter_default_action = accept
+milter_mail_macros = {auth_author} {auth_type} {auth_authen}</programlisting>
+  <para>それぞれ以下のような設定です。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='install-to-debian.milter-protocol'>milter_protocol = 6</term>
+  <listitem>
+  <para>milterプロトコルバージョン6を使います。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='install-to-debian.milter-default-action'>milter_default_action = accept</term>
+  <listitem>
+  <para>milterに接続できないときはメールを受信します。milterとの 通信に問題がある場合でもメールサーバの機能を停止させない ためには、この設定が有効です。ただし、milterを復旧させる までの間に、スパムメールやウィルスメールを受信してしまう 可能性が高くなります。</para>
+  <para>迅速に復旧できる体制がととのっているのであれば、acceptで はなく、tempfailを指定するのがよいでしょう。デフォルトで はtempfailになっています。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='install-to-debian.milter-mail-macros'>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</term>
+  <listitem>
+  <para>SMTP Auth関連の情報をmilterに渡します。milter-greylistな どが使用します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>続いて、Postfixにmilter-managerを登録します。spamass-milter、 clamav-milter、milter-greylistはmilter-manager経由で利用する ので、Postfixにはmilter-managerだけを登録すればよいことに注 意してください。</para>
+  <para>/etc/postfix/main.cfに以下を追加します。Postfixは /var/spool/postfix/にchrootすることに注意してください。</para>
+  <programlisting>smtpd_milters = unix:/milter-manager/milter-manager.sock</programlisting>
+  <para>Postfixの設定を再読み込みします。</para>
+  <programlisting>% sudo /etc/init.d/postfix reload</programlisting>
+  <para>以上で設定は完了です。</para>
+  <para>milter-managerはいくつかsyslogにログを出力します。mail.info に出力するので、正常に動作していればmilter-managerからのログ が/var/log/mail.infoにログがでるはずです。テストメールを送信 して確認してください。</para>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>milter-managerを導入することにより、milterとPostfixを連携さ せる手間が削減されています。</para>
+  <para>通常であれば、Postfixのsmtpd_miltersにspamass-milter、 clamav-milter、miler-greylistのソケットを指定する必要がありま す。しかし、milter-managerを導入することにより、 milter-managerのソケットのみを指定するだけですむようになりま した。各milterのソケットはmilter-managerが検出するため、typo などの小さいですが気づきにくいミスに惑わされることがなくなり ます。</para>
+  <para>また、ここでは触れませんでしたが、milter-managerは /etc/default/milter-greylist内にあるようなENABLEDの設定も検出 します。そのため、milterを無効にしたい場合は、以下のような手 順になります。</para>
+  <programlisting>% sudo /etc/init.d/milter-greylist stop
+% sudo vim /etc/default/milter-greylist # ENABLED=1 =&gt; ENABLED=0</programlisting>
+  <para>milterを無効にしたら、milter-managerの設定を再読み込みします。 milter-managerはmilterが無効になったことを検出し、無効になっ たmilter とは接続しなくなります。</para>
+  <programlisting>% sudo /etc/init.d/milter-manager reload</programlisting>
+  <para>Postfixのmain.cfを変更する必要はありません。</para>
+  <para>Debian GNU/Linux上でmilterを複数使っている場合は、 milter-managerを導入して、管理コストを削減することができます。</para>
+  <para>
+  milter managerは運用を支援するツールも提供しています。インス トールは必須ではありませんが、それらを導入することで運用コス トを削減することができます。それらのツールもインストールする 場合は
+  <link linkend='install-options-to-debian'>Debianへインストール（任 意）</link>
+  を参照してください。
+</para>
+</refsect1>
+</refentry>

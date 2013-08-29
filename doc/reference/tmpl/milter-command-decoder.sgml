@@ -1,0 +1,65 @@
+<!-- ##### SECTION Title ##### -->
+MilterCommandDecoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_COMMAND_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterCommandDecoderError ##### -->
+<para>
+
+</para>
+
+@MILTER_COMMAND_DECODER_ERROR_UNKNOWN_MACRO_CONTEXT: 
+@MILTER_COMMAND_DECODER_ERROR_INVALID_FORMAT: 
+@MILTER_COMMAND_DECODER_ERROR_UNKNOWN_SOCKET_FAMILY: 
+
+<!-- ##### STRUCT MilterCommandDecoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_command_decoder_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_command_decoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+

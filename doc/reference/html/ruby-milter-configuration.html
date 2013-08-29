@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter configuration written by Ruby</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="ruby.html" title="Part II. Ruby support">
+<link rel="prev" href="ruby-milter-reference.html" title="milter API for Ruby">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="ruby-milter-reference.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ruby.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td> </td>
+</tr></table>
+<div class="refentry">
+<a name="ruby-milter-configuration"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="ruby-milter-configuration.top_of_page"></a>milter configuration written by Ruby</span></h2>
+<p>milter configuration written by Ruby — How to write configuration file</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp8029584"></a><h2>About this document</h2>
+<p>Milters written by Ruby support configuration file that has the same syntax of milter-manager's one. But configuration items are different. This documents describes about how to write configuration file and configuration items.</p>
+</div>
+<div class="refsect1">
+<a name="idp5663344"></a><h2>Summary</h2>
+<p>You can specify configuration file by -c or --configuration option. For example, here is a command line that a milter, milter-regexp.rb, uses /etc/milter-regexp.conf as its configuration:</p>
+<pre class="programlisting">% ruby milter-regexp.rb -c /etc/milter-regexp.conf</pre>
+<p>Configuration file uses the following syntax:</p>
+<pre class="programlisting">GROUP.ITEM = VALUE</pre>
+<p>For example, set value of "connection_spec" item in "milter" group to "inet:12345" for set milter's listen socket address to IPv4 address and 12345 port:</p>
+<pre class="programlisting">milter.connection_spec = "inet:12345"</pre>
+<p>Here are available groups:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="ruby-milter-configuration.html#ruby-milter-configuration.security" title="Security">Security</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="ruby-milter-configuration.html#ruby-milter-configuration.log" title="Log">Log</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="ruby-milter-configuration.html#ruby-milter-configuration.milter" title="Milter">Milter</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="ruby-milter-configuration.html#ruby-milter-configuration.database" title="Database">Database</a>
+  
+</p></li>
+</ul></div>
+<p>Here are descriptions of configuration items.</p>
+</div>
+<div class="refsect1">
+<a name="ruby-milter-configuration.security"></a><h2>Security</h2>
+<p>You can use configuration items same as milter manager's "log" group. Please see milter-manager's document page for details.</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.security-effective-user"></a>security.effective_user</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.security-effective-user">security.effective_user</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.security-effective-group"></a>security.effective_group</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.security-effective-group">security.effective_group</a>
+  .
+</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="ruby-milter-configuration.log"></a><h2>Log</h2>
+<p>You can use configuration items same as milter manager's "security" group. Please see milter-manager's document page for details.</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.log-level"></a>log.level</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.log-level">log.level</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.log-use-syslog"></a>log.use_syslog</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.log-use-syslog">log.use_syslog</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.log-syslog-facility"></a>log.syslog_facility</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.log-syslog-facility">log.syslog_facility</a>
+  .
+</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="ruby-milter-configuration.milter"></a><h2>Milter</h2>
+<p>You can use configuration items same as milter manager's "manager" group. Please see milter-manager's document page for details.</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-connection-spec"></a>milter.connection_spec</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-connection-spec">manager.connection_spec</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-unix-socket-mode"></a>milter.unix_socket_mode</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-unix-socket-mode">manager.unix_socket_mode</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-unix-socket-group"></a>milter.unix_socket_group</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-unix-socket-group">manager.unix_socket_group</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-remove-unix-socket-on-create"></a>milter.remove_unix_socket_on_create</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-remove-unix-socket-on-create">manager.remove_unix_socket_on_create</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-remove-unix-socket-on-close"></a>milter.remove_unix_socket_on_close</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-remove-unix-socket-on-close">manager.remove_unix_socket_on_close</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-daemon"></a>milter.daemon</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-daemon">manager.daemon</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-pid-file"></a>milter.pid_file</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-pid-file">manager.pid_file</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-maintenance-interval"></a>milter.maintenance_interval</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-maintenance-interval">manager.maintenance_interval</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-suspend-time-on-unacceptable"></a>milter.suspend_time_on_unacceptable</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-suspend-time-on-unacceptable">manager.suspend_time_on_unacceptable</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-max-connections"></a>milter.max_connections</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-max-connections">manager.max_connections</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-max-file-descriptors"></a>milter.max_file_descriptors</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-max-file-descriptors">manager.max_file_descriptors</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-event-loop-backend"></a>milter.event_loop_backend</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-event-loop-backend">manager.event_loop_backend</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term">milter.event_loop_backend</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-event-loop-backend">manager.event_loop_backend</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-n-workers"></a>milter.n_workers</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-n-workers">manager.n_workers</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-packet-buffer-size"></a>milter.packet_buffer_size</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-packet-buffer-size">manager.packet_buffer_size</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-max-pending-finished-sessions"></a>milter.max_pending_finished_sessions</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-max-pending-finished-sessions">manager.max_pending_finished_sessions</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-maintained"></a>milter.maintained</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-maintained">manager.maintained</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-event-loop-created"></a>milter.event_loop_created</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.manager-event-loop-created">manager.event_loop_created</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.milter-name"></a>milter.name</span></p></td>
+<td><p>Returns child milter's name. Since 1.8.1.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="ruby-milter-configuration.database"></a><h2>Database</h2>
+<p>
+  You can use configuration items same as 
+  <a class="link" href="configuration.html#configuration.database" title="Database">'"database" group'</a>
+  .  Please see milter-manager's document page for details. It includes setup document and tutorial.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-type"></a>database.type</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-type">database.type</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-name"></a>database.name</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-name">database.name</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-host"></a>database.host</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-host">database.host</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-port"></a>database.port</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-port">database.port</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-path"></a>database.path</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-path">database.path</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-user"></a>database.user</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-user">database.user</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-password"></a>database.password</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-password">database.password</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-setup"></a>database.setup</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-setup">database.setup</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="ruby-milter-configuration.database-load-models"></a>database.load_models(path)</span></p></td>
+<td><p>
+  See 
+  <a class="link" href="configuration.html#configuration.database-load-models">database.load_models</a>
+  .
+</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

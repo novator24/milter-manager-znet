@@ -1,0 +1,197 @@
+<!-- ##### SECTION Title ##### -->
+MilterCommandEncoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterCommandEncoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_command_encoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_negotiate ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@option: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_define_macro ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@context: 
+@macros: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_connect ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@host_name: 
+@address: 
+@address_size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_helo ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@fqdn: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_envelope_from ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@from: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_envelope_recipient ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@to: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_data ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_header ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@name: 
+@value: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_end_of_header ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_body ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@chunk: 
+@size: 
+@packed_size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_end_of_message ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@chunk: 
+@size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_abort ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_quit ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_command_encoder_encode_unknown ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@command: 
+
+

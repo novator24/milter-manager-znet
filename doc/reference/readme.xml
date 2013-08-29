@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="readme">
+<refmeta>
+  <refentrytitle role='top_of_page' id='readme.top_of_page'>README</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>README</refname>
+  <refpurpose>milter manager: a milter to use milters effectively.</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>Name</title>
+  <para>milter manager</para>
+</refsect1>
+
+<refsect1>
+  <title>Site</title>
+  <para>
+  <ulink url='http://milter-manager.sourceforge.net/'>&lt;URL:http://milter-manager.sourceforge.net/&gt;</ulink>
+  
+</para>
+</refsect1>
+
+<refsect1>
+  <title>License</title>
+  <para>Use the following rules:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Files that describe their license: their license</para>
+</listitem>
+  <listitem>
+  <para>Commands: GPL3(license/gpl.txt)</para>
+</listitem>
+  <listitem>
+  <para>Documents: GFDL(license/fdl.txt)</para>
+</listitem>
+  <listitem>
+  <para>Images: Public Domain</para>
+</listitem>
+  <listitem>
+  <para>Libraries: LGPL3(license/lgpl.txt)</para>
+</listitem>
+</itemizedlist>
+  <para>Here is a concrete list:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Files that describe their license:</para>
+  <itemizedlist>
+  <listitem>
+  <para>milter/core/milter-memory-profile.c: LGPL2+</para>
+</listitem>
+  <listitem>
+  <para>binding/ruby/lib/milter/compatible.rb: Ruby's</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Commands: GPL3</para>
+  <itemizedlist>
+  <listitem>
+  <para>src/*</para>
+</listitem>
+  <listitem>
+  <para>tool/*</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Documents: GFDL</para>
+  <itemizedlist>
+  <listitem>
+  <para>README, README.ja</para>
+</listitem>
+  <listitem>
+  <para>doc/*</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Images: Public Domain</para>
+  <itemizedlist>
+  <listitem>
+  <para>doc/*.svg, doc/*.png, html/*.svg, html/*.png</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Libraries: LGPL3</para>
+  <itemizedlist>
+  <listitem>
+  <para>others than those above</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>milter manager</title>
+  <para>milter manager is a milter to use multiple milters effectively.</para>
+  <para>If milter manager is introduced, milter manager administrates milters instead of MTA. The has some advantages:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reduce milter administration cost</para>
+</listitem>
+  <listitem>
+  <para>combine milters flexibly</para>
+</listitem>
+</itemizedlist>
+  <para>
+  See 
+  <link linkend='introduction'>Introduction</link>
+   for more details.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Dependencies</title>
+  <itemizedlist>
+  <listitem>
+  <para>MTA that supports milter</para>
+  <itemizedlist>
+  <listitem>
+  <para>Sendmail &gt;= 8.13.8</para>
+</listitem>
+  <listitem>
+  <para>Postfix &gt;= 2.3.3</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>GLib &gt;= 2.12.3</para>
+</listitem>
+  <listitem>
+  <para>Ruby &gt;= 1.8.5</para>
+</listitem>
+  <listitem>
+  <para>UN*X OS</para>
+  <itemizedlist>
+  <listitem>
+  <para>Linux（Debian GNU/Linux, Ubuntu, CentOS）</para>
+</listitem>
+  <listitem>
+  <para>FreeBSD, NetBSD</para>
+</listitem>
+  <listitem>
+  <para>Solaris</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+  <refsect2>
+  <title>Optional dependencies</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://cutter.sourceforge.net/'>Cutter: unit testing framework for C</ulink>
+  &gt;= 1.0.6
+</para>
+  <para>It is needed for 'make check' and 'make coverage'.</para>
+</listitem>
+  <listitem>
+  <para>LCOV: graphical front-end for GCC's coverage testing tool gcov</para>
+  <para>It is needed for 'make coverage'.</para>
+  <para>
+  <ulink url='http://ltp.sourceforge.net/coverage/lcov.php'>LCOV - the LTP GCOV extension</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>RRDtool (It's better that bundled Ruby bindings are also installed)</para>
+  <para>It is needed for milter-manager-log-analyzer.</para>
+  <para>
+  <ulink url='http://oss.oetiker.ch/rrdtool/'>RRDtool</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>Install</title>
+  <para>
+  See 
+  <link linkend='install'>Install</link>
+  .
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Configuration</title>
+  <para>
+  See 
+  <link linkend='configuration'>Configuration</link>
+  .
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Usage</title>
+  <para>milter-manager command is installed into sbin/ not bin/. In most cases, normal user doesn't include sbin/ in PATH. You will need to use absolute path.</para>
+  <para>If you don't specify --prefix option for configure script, milter-manager is installed into /usr/local/sbin/. You can run milter-manager like the following:</para>
+  <programlisting>% /usr/local/sbin/milter-manager --help</programlisting>
+  <para>
+  Available options are shown if installation is succeeded. See 
+  <link linkend='milter-manager'>milter-manager</link>
+   for more details.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Tools</title>
+  <para>milter manager includes some useful tools. They are installed into bin/.</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='milter-test-server'>milter-test-server</link>
+  : It talks MTA side milter protocol. It can be used for testing a milter without MTA.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-test-client'>milter-test-client</link>
+  : It is a milter that just shows received data from MTA. It can be used for confirming what data is sent from MTA.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-performance-check'>milter-performance-check</link>
+  : It is a SMTP client that measures MTA performance.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-manager-log-analyzer'>milter-manager-log-analyzer</link>
+  : It analyzes log of milter-manager and visualizes behavior of milters registered to milter-manager.
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>Mailing list</title>
+  <para>
+  There is
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en'>milter-manager-users-en</ulink>
+  mailing list. Questions and bug reports are accepted on it. New release announce is also done on the mailing list. If you are using milter manager, it's a good idea that you subscribe the mailling list.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Source code</title>
+  <para>The latest source is available from the Git repository:</para>
+  <programlisting>% git clone https://github.com/milter-manager/milter-manager.git</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>OBATA Akio: reported a bug.</para>
+</listitem>
+  <listitem>
+  <para>Павел Гришин: reported bugs.</para>
+</listitem>
+  <listitem>
+  <para>Fumihisa Tonaka:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reported bugs.</para>
+</listitem>
+  <listitem>
+  <para>suggested new features.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>sgyk: reported bugs.</para>
+</listitem>
+  <listitem>
+  <para>Tsuchiya: reported bugs.</para>
+</listitem>
+  <listitem>
+  <para>Syunsuke Komma: reported a bug.</para>
+</listitem>
+  <listitem>
+  <para>Yuto Hayamizu:</para>
+  <itemizedlist>
+  <listitem>
+  <para>cleaned test.</para>
+</listitem>
+  <listitem>
+  <para>added useful features for creating milter by Ruby.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>gorimaru: suggested usage improvements.</para>
+</listitem>
+  <listitem>
+  <para>ZnZ:</para>
+  <itemizedlist>
+  <listitem>
+  <para>fixed typos.</para>
+</listitem>
+  <listitem>
+  <para>reported useful advises.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Antuan Avdioukhine: suggestions.</para>
+</listitem>
+  <listitem>
+  <para>SATOH Fumiyasu:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reported bugs.</para>
+</listitem>
+  <listitem>
+  <para>improved Solaris support.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>ROSSO: reported a bug.</para>
+</listitem>
+  <listitem>
+  <para>akira yamada:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reported a bug.</para>
+</listitem>
+  <listitem>
+  <para>suggested about Debian package.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Kenji Shiono:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reported bugs.</para>
+</listitem>
+  <listitem>
+  <para>suggested new features.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Jordao:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reported a bug.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Mitsuru Ogino:</para>
+  <itemizedlist>
+  <listitem>
+  <para>reported bugs.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>moto kawasaki:</para>
+  <itemizedlist>
+  <listitem>
+  <para>added /etc/rc.conf.local loading support on FreeBSD.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

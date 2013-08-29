@@ -1,0 +1,3548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="news">
+<refmeta>
+  <refentrytitle role='top_of_page' id='news.top_of_page'>NEWS</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>NEWS</refname>
+  <refpurpose>The history of milter manager</refpurpose>
+</refnamediv>
+<refsect1 id='news.release-2-0-0'>
+  <title>2.0.0: 2013-07-25</title>
+  <para>A bug fix release of 1.8.9.</para>
+  <refsect2>
+  <title>milter-test-server</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Support multiline header</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+</refsect2>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fix a bug that reject/temporary failure on envelope recipient calls reset.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-9'>
+  <title>1.8.9: 2013-06-28</title>
+  <para>A bug fix release of 1.8.8.</para>
+  <refsect2>
+  <title>Package</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>[rpm] Update Ruby1.9.3 package for CentOS6 to Ruby1.9.3-p448 released on 2013-06-27</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+</refsect2>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[binding][ruby] Fixed a bug that milter-manager couldn't detect socket path if greylist.conf includes socket path with permission.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-8'>
+  <title>1.8.8: 2013-06-25</title>
+  <para>A bug fix release of 1.8.7.</para>
+  <refsect2>
+  <title>Package</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[rpm] milter-manager-log-analyzer should include cron configuration. [Reported by Satoru Sakashita][milter-manager-users-ja:00200]</para>
+</listitem>
+  <listitem>
+  <para>[deb] Remove old configuration file installed by milter-manager. [Reported by Youhei SASAKI][milter-manager-users-ja:00202]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Known Issues</title>
+  <itemizedlist>
+  <listitem>
+  <para>[test] Failed some test cases using rrdtool on some environments. [Reported by Hirohisa Yamaguchi][GitHub #29]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Satoru Sakashita</para>
+</listitem>
+  <listitem>
+  <para>Youhei SASAKI</para>
+</listitem>
+  <listitem>
+  <para>Hirohisa Yamaguchi</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-7'>
+  <title>1.8.7: 2013-06-14</title>
+  <para>A bug fix release of 1.8.6.</para>
+  <refsect2>
+  <title>Package</title>
+  <itemizedlist>
+  <listitem>
+  <para>[rpm] Keep user configuration settings on upgrade.</para>
+</listitem>
+  <listitem>
+  <para>[deb][rpm] Separate milter-manager-log-analyzer from milter-manager. [Reported by Kazuhiro NISHIYAMA][GitHub #21]</para>
+</listitem>
+  <listitem>
+  <para>Use Ruby1.9 on CentOS6 or later.</para>
+</listitem>
+  <listitem>
+  <para>Drop Ubuntu Oneiric Ocelot(11.10) support.</para>
+</listitem>
+  <listitem>
+  <para>Add Ubuntu Raring Ringtail(13.04) support.</para>
+</listitem>
+  <listitem>
+  <para>Add Debian jessie support.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Support Ruby2.0.0.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[debian] Support init file that contains non-ASCII characters. [Reported by Kazuhiro NISHIYAMA][GitHub #23]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Process mail log even if it includes invalid byte sequence. [Reported by Satoru Sakashita][GitHub #24]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Admin</title>
+  <itemizedlist>
+  <listitem>
+  <para>Dropped.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Kazuhiro NISHIYAMA</para>
+</listitem>
+  <listitem>
+  <para>Satoru Sakashita</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-6'>
+  <title>1.8.6: 2013-03-07</title>
+  <para>A bug fix release of 1.8.5.</para>
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>[core][event-loop] Add an API to customize event loop on your own.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[core][event-loop] Fix to work broken libev backend with Ruby 1.9.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Add max-pending-finished-sessions as configuration option. If the number of current pending finished sessions is larger than 'max-pending-finished-sessions', the current pending finished sessions are freed immediately.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Add --max-pending-finished-sessions command line option.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Add an API to customize event loop on your own from Ruby.</para>
+</listitem>
+  <listitem>
+  <para>Support manager.max_pending_finished_sessions.</para>
+</listitem>
+  <listitem>
+  <para>Add API to reset when transaction is finished. Use this API to avoid not to share instance information for each transaction unexpectedly.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+</refsect2>
+
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Add documentation about manager.max_pending_finished_sessions</para>
+</listitem>
+  <listitem>
+  <para>Add API to reset transaction.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fix the default value of manager.maitenance_interval which is not correct.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-5'>
+  <title>1.8.5: 2012-12-03</title>
+  <para>A bug fix release of 1.8.4.</para>
+  <refsect2>
+  <title>Package</title>
+  <itemizedlist>
+  <listitem>
+  <para>Drop Ubuntu Natty Narwhal support.</para>
+</listitem>
+  <listitem>
+  <para>Fix broken documents.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fix a typo in test for Ruby1.8. [Pull requested by umq]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>umq</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-4'>
+  <title>1.8.4: 2012-11-21</title>
+  <para>A bug fix release of 1.8.3.</para>
+  <refsect2>
+  <title>Package</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added Ubuntu Quantal Quetzal support.</para>
+</listitem>
+  <listitem>
+  <para>Provided packages built by using Ruby1.9 on following distributions: Debian wheezy, Debian sid, Ubuntu Precise Pangolin, Ubuntu Quantal Quetzal</para>
+</listitem>
+  <listitem>
+  <para>Added missing fixture files into tar.gz. [Reported by Hirohisa Yamaguchi]</para>
+</listitem>
+  <listitem>
+  <para>Solaris: Added missing SMF method file into tar.gz. [Reported by @ftnk]</para>
+</listitem>
+  <listitem>
+  <para>yum: Rename yum repository pacakge. milter-manager-repository -&gt; milter-manager-release</para>
+</listitem>
+  <listitem>
+  <para>deb: Use Ruby1.9 by default.</para>
+</listitem>
+  <listitem>
+  <para>deb: Rename packages for Ruby binding. libmilter-*-ruby1.8 -&gt; ruby-milter-*</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>configure: Specify Ruby/GLib2 version to --with-bundled-ruby-glib2 option</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>manager: Suppressed compiler type warnings. [GitHub #12] [Reported by Hirohisa Yamaguchi]</para>
+</listitem>
+  <listitem>
+  <para>debian cron: used mail.log instead of mail.info [milter-manager-users-ja:00171] [Reported by Kazuhiro NISHIYAMA]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported MILTER_DEBUG=fatal-criticals.</para>
+</listitem>
+  <listitem>
+  <para>binding ruby: milter callback arguments are ASCII_8BIT. [GitHub #3]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed an issue which a following warning is shown when running at high loads. &quot;g_io_channel_write_chars: assertion `channel-&gt;is_writeable' failed&quot;</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Admin</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Upgraded to Rails2.3.14</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed about install sequence on CentOS. [GitHub #13] [Reported by Kunkichi]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Hirohisa Yamaguchi</para>
+</listitem>
+  <listitem>
+  <para>Kazuhiro NISHIYAMA</para>
+</listitem>
+  <listitem>
+  <para>@ftnk</para>
+</listitem>
+  <listitem>
+  <para>Kunkichi</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-3'>
+  <title>1.8.3: 2012-05-22</title>
+  <para>A bug fix release of 1.8.2.</para>
+  <refsect2>
+  <title>Package</title>
+  <itemizedlist>
+  <listitem>
+  <para>[ubuntu] Added Ubuntu Precise Pangolin support.</para>
+</listitem>
+  <listitem>
+  <para>[solaris] Use pkgutil instead of pkg-get. [GitHub #6] [Reported by h0lzi]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>binding ruby: update bundled ruby-glib2 to 1.1.3</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[manager] support manager.event_loop_backend = &quot;libev&quot; on CentOS. [Reported by SHIONO Kenji]</para>
+</listitem>
+  <listitem>
+  <para>[manager][children] use gulong instead of guint. g_signal_connect() returns gulong.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[libev] check whether the next id is used or not.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>doc install debian ubuntu: add missing postfix group related configuration milter-manager user should belong to postfix group to access a socket of other milter. [milter-manager-users-ja:00163] [Suggested by Satoru Sakashita]</para>
+</listitem>
+  <listitem>
+  <para>doc debian: adjust to the latest squeeze environment [Suggested by Satoru Sakashita]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Satoru Sakashita</para>
+</listitem>
+  <listitem>
+  <para>SHIONO Kenji</para>
+</listitem>
+  <listitem>
+  <para>h0lzi</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-2'>
+  <title>1.8.2: 2011-11-29</title>
+  <para>A bug fix release of 1.8.1.</para>
+  <refsect2>
+  <title>milter-core</title>
+</refsect2>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[event-loop][glib] fix memory leaks since 1.6.6.</para>
+</listitem>
+  <listitem>
+  <para>[core] fix memory leak when delete header.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-1'>
+  <title>1.8.1: 2011-11-12</title>
+  <para>A bug fix release of 1.8.0.</para>
+  <para>Now, manager.event_loop_backend and manager.n_workers aren't experimental!</para>
+  <refsect2>
+  <title>Package</title>
+  <itemizedlist>
+  <listitem>
+  <para>[ubuntu] Added Ubuntu Oneiric Ocelot support.</para>
+</listitem>
+  <listitem>
+  <para>[centos] Added CentOS 6 support.</para>
+</listitem>
+  <listitem>
+  <para>Changed GPG key to sign packages.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>[applicable-condition][sendmail] clear DNS cache for each 100 IP addresses.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>detach IO for launcher on daemon mode. use milter_client_is_run_as_daemon() to get whether daemonize or not. [Reported by OBATA Akio]</para>
+</listitem>
+  <listitem>
+  <para>add a workaround for Ruby cleanup. If environment variable MILTER_MANAGER_RUBY_STOP_TIMER_THREAD_BEFORE_CLEANUP=yes, skip timer thread before cleanup.</para>
+</listitem>
+  <listitem>
+  <para>use rb_fork() as fork implementation. This will fix --daemon doesn't work on *BSD. [Reported by OBATA Akio]</para>
+</listitem>
+  <listitem>
+  <para>use INCLUDES to use configured libev include path rather than CPPFLAGS. [Reported by moto kawasaki]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>fix missing null FD close by inverted condition. [Reported by OBATA Akio]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>use higher priority for accepting connection.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>fix a bug that workers don't shutdown on master shutdown. It's GLib evnet loop backend specific problem.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-server</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>add more information to error message.</para>
+</listitem>
+  <listitem>
+  <para>[server] unify unknown name logging.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>fix a bug that all milters can't find on 2nd RCPT in the same session.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>add Milter::Client::Configuration::MilterConfiguration#name.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>fix event_loop_created hook can't get event loop.</para>
+</listitem>
+  <listitem>
+  <para>do not raise error if process raw shift_jis mail file. Ruby 1.9.</para>
+</listitem>
+  <listitem>
+  <para>udpate bundled test-unit file list. [Reported by Hirohisa Yamaguchi]</para>
+</listitem>
+  <listitem>
+  <para>[ruby][glib2] fix a SEGV bug on Solaris10.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-server</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>fix quoted charset detection. [Reported by nobu]</para>
+</listitem>
+  <listitem>
+  <para>fix multiline header parsing.</para>
+</listitem>
+  <listitem>
+  <para>--mail-file keeps new line type of the original mail.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>add log list to HTML.</para>
+</listitem>
+  <listitem>
+  <para>fix typos. [Pull requested by Norio Suzuki]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Admin</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>use locale &quot;en&quot; if Accept-Language is not &quot;ja&quot;. [Reported by Larry G. Wapnitsky]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Mitsuru Ogino</para>
+</listitem>
+  <listitem>
+  <para>OBATA Akio</para>
+</listitem>
+  <listitem>
+  <para>moto kawasaki</para>
+</listitem>
+  <listitem>
+  <para>nobu</para>
+</listitem>
+  <listitem>
+  <para>Hirohisa Yamaguchi</para>
+</listitem>
+  <listitem>
+  <para>Norio Suzuki</para>
+</listitem>
+  <listitem>
+  <para>Larry G. Wapnitsky</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-8-0'>
+  <title>1.8.0: 2011-06-10</title>
+  <para>The first release of stable 1.8.x series.</para>
+  <refsect2>
+  <title>All</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Removed unused variables.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Package</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>[debian] Removed Debian GNU/Linux lenny support.</para>
+</listitem>
+  <listitem>
+  <para>[debian] Added Debian GNU/Linux wheezy support.</para>
+</listitem>
+  <listitem>
+  <para>[ubuntu] Removed Ubuntu Hardy Heron support.</para>
+</listitem>
+  <listitem>
+  <para>[ubuntu] Removed Ubuntu Maverick Meerkat support.</para>
+</listitem>
+  <listitem>
+  <para>[ubuntu] Added Ubuntu Natty Narwhal support.</para>
+</listitem>
+  <listitem>
+  <para>[redhat] Specified PID file in init file explicitly.</para>
+</listitem>
+  <listitem>
+  <para>[freebsd] Supported /etc/rc.conf.local. [Patch by moto kawasaki]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[debian] Added missing milter.rb. [Reported by Mitsuru Ogino]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>[trust applicable condition] Normalized domain name.</para>
+</listitem>
+  <listitem>
+  <para>
+  Added 
+  <link linkend='configuration.trust-clear'>trust.clear</link>
+  configuration item.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.trust-load-envelope-from-domains'>trust.load_envelope_from_domains</link>
+  configuration item.
+</para>
+</listitem>
+  <listitem>
+  <para>[trust applicable condition] Added ezweb.ne.jp and docomo.ne.jp to built-in trusted domain list.</para>
+</listitem>
+  <listitem>
+  <para>Used fallback status on negotiate.</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-chunk-size'>manager.chunk_size</link>
+  configuration item.
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that child milter process launcher isn't exited. [Reported by OBATA Akio]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that child milters that return reject, temporary failure or discard aren't used in the same session.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added trace log level that is more verbose than debug log level.</para>
+</listitem>
+  <listitem>
+  <para>Supported +/- log level prefix to add/remove log level from the current log levels in MILTER_LOG_LEVEL environment environment.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a read block bug when readable data is available.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>[configuration] Used 'accept' as default value for fallback status.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-performance-check</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported CentOS 5.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Used Milter::VERSION instead of Milter::TOOLKIT_VERSION for confirming Ruby milter's version. [Reported by Mitsuru Ogino]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Mitsuru Ogino</para>
+</listitem>
+  <listitem>
+  <para>OBATA Akio</para>
+</listitem>
+  <listitem>
+  <para>moto kawasaki</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-9'>
+  <title>1.6.9: 2011-04-26</title>
+  <para>A bug fix release of 1.6.8.</para>
+  <refsect2>
+  <title>All</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>autogen.sh supports bash. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Followed Ruby milter's change. [Reported by akira yamada]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.database-extra-options'>database.extra_options</link>
+  configuration item.
+</para>
+</listitem>
+  <listitem>
+  <para>Supported exception handling in callback.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that define_connection_checker raises an exception. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported error report when UNIX domain socket mode change is failed.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-performance-check</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --starttls option.</para>
+</listitem>
+  <listitem>
+  <para>Added --auth-user option.</para>
+</listitem>
+  <listitem>
+  <para>Added --auth-password option.</para>
+</listitem>
+  <listitem>
+  <para>Added --auth-mechanism option.</para>
+</listitem>
+  <listitem>
+  <para>Added --auth-map option.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that --smtp-port is ignored.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Kenji Shiono</para>
+</listitem>
+  <listitem>
+  <para>akira yamada</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-8'>
+  <title>1.6.8: 2011-04-15</title>
+  <para>A bug fix release of 1.6.7.</para>
+  <refsect2>
+  <title>All</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Don't create needless directories on install. [Reported by OBATA Akio]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Changed target CentOS version to 5.6.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed wrong internal links.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-event-loop-created'>manager.event_loop_created</link>
+  configuration item.
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added
+  <link linkend='ruby-milter-configuration.milter-event-loop-created'>milter.event_loop_created</link>
+  configuration item.
+</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#worker_id.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#[].</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Followed the Sendmail behavior rather than Postfix behavior on adding a header.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-server</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Don't require Ruby's header files until they are needed.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that milter-test-server can't be detected.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>OBATA Akio</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-7'>
+  <title>1.6.7: 2011-04-08</title>
+  <para>A bug fix release of 1.6.6.</para>
+  <refsect2>
+  <title>All</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Don't create needless directories on install. [Reported by OBATA Akio]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that Ruby/GLib2 in system can't be found. [Reported by OBATA Akio]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Package</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[RPM] Fixed dependencies.</para>
+</listitem>
+  <listitem>
+  <para>[Debian] Fixed dependencies.</para>
+</listitem>
+  <listitem>
+  <para>[Debian] Don't use deprecated option in init script.</para>
+</listitem>
+  <listitem>
+  <para>[RPM] Don't use deprecated option in init script.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[S25R] Fixed a bug that milter is always run.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added &quot;+LEVEL1|LEVEL2|...&quot; syntax to add log levels.</para>
+</listitem>
+  <listitem>
+  <para>Added &quot;-LEVEL1|LEVEL2|...&quot; syntax to remove log levels.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --log-level option.</para>
+</listitem>
+  <listitem>
+  <para>Added --quiet option.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>OBATA Akio</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-6'>
+  <title>1.6.6: 2011-04-07</title>
+  <para>This release improves Ruby support and Solaris support.</para>
+  <refsect2>
+  <title>All</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --with-bundled-ruby-glib2 configure option for using bundled Ruby/GLib2 anytime.</para>
+</listitem>
+  <listitem>
+  <para>Supported Solaris.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>[Debian] add missing GROUP=postfix in configuration. [Reported by Jordao]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Package</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported Solaris.</para>
+</listitem>
+  <listitem>
+  <para>Fedora 13 -&gt; 14.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Set 'warning' log level by default.</para>
+</listitem>
+  <listitem>
+  <para>Set 'statistics' log level by default.</para>
+</listitem>
+  <listitem>
+  <para>Set 'message' log level by default.</para>
+</listitem>
+  <listitem>
+  <para>Changed syslog level for statistics log to LOG_NOTICE level from LOG_INFO level .</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a memory leak on read error.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported database connection.</para>
+</listitem>
+  <listitem>
+  <para>Disabled S25R applicable condition for IPv6 connection by default. It's customizable by s25r.check_only_ipv4=.</para>
+</listitem>
+  <listitem>
+  <para>Added --n-workers option.</para>
+</listitem>
+  <listitem>
+  <para>Added --event-loop-backend option.</para>
+</listitem>
+  <listitem>
+  <para>Supported log configuration in configuration file.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a crash bug on reloading. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>libmilter-compatible</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported event loop backend customize by environment variable:</para>
+  <itemizedlist>
+  <listitem>
+  <para>MILTER_EVENT_LOOP_BACKEND=libev -&gt; libev is used</para>
+</listitem>
+  <listitem>
+  <para>MILTER_EVENT_LOOP_BACKEND=glib -&gt; GLib is used (default)</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --pid-file option.</para>
+</listitem>
+  <listitem>
+  <para>Supported shutdown by SIGTERM.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-server</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --envelope-from option.</para>
+</listitem>
+  <listitem>
+  <para>Deprecated --from option.</para>
+</listitem>
+  <listitem>
+  <para>Added --envelope-recipient option.</para>
+</listitem>
+  <listitem>
+  <para>Deprecated --recipient option.</para>
+</listitem>
+  <listitem>
+  <para>Added --connect-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Added --helo-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Added --envelope-from-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Added --envelope-recipient-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Added --data-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Added --end-of-header-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Added --end-of-message-macro option.</para>
+</listitem>
+  <listitem>
+  <para>Supported result body output in non-ASCII encoding.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-report-statistics</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported Solaris.</para>
+</listitem>
+  <listitem>
+  <para>Added --pid option.</para>
+</listitem>
+  <listitem>
+  <para>Added --pid-directory option.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --maintenance-interval option.</para>
+</listitem>
+  <listitem>
+  <para>Added --run-gc-on-maintain option.</para>
+</listitem>
+  <listitem>
+  <para>Added --environment option.</para>
+</listitem>
+  <listitem>
+  <para>Added --max-file-descriptors option.</para>
+</listitem>
+  <listitem>
+  <para>Added --pid-file option.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#delete_header.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#insert_header.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#replace_body.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#change_from.</para>
+</listitem>
+  <listitem>
+  <para>Added. Milter::ClientSession#add_recipient.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#delete_recipient.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#delay_response.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#progress.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::ClientSession#discard.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::EventLoop.</para>
+</listitem>
+  <listitem>
+  <para>Supported configuration file.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::SocketAddress#ipv4?.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::SocketAddress#ipv6?.</para>
+</listitem>
+  <listitem>
+  <para>Added Milter::SocketAddress#unix?.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a crash bug.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Jordao</para>
+</listitem>
+  <listitem>
+  <para>Kenji Shiono</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-5'>
+  <title>1.6.5: 2011-01-26</title>
+  <para>A bug fix release of 1.6.4.</para>
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that &quot;Sendmail Compatible&quot; applicable condition doesn't set applicable if_addr and id_name macro value. [Patch by Kenji Shiono]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a crash bug that may be caused SMTP client disconnection is detected. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported parsing Authentication-Results added by ENMA.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported effective user and group change.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Kenji Shiono</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-4'>
+  <title>1.6.4: 2011-01-21</title>
+  <para>A bug fix release of 1.6.3.</para>
+  <refsect2>
+  <title>milter-client</title>
+</refsect2>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Used event loop usage as before when event loop backend is GLib.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-3'>
+  <title>1.6.3: 2011-01-20</title>
+  <para>A performance improvement release. This release includes a few performance improvement features but they are marked 'experimental'. They will be 'stable' feature in 1.8.0.</para>
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Upgraded bundled Ruby/GLib2 to 0.90.5 from 0.19.4.</para>
+</listitem>
+  <listitem>
+  <para>Supported Ruby 1.9.2.</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-fallback-status'>manager.fallback_status</link>
+  that specifies a status returned to SMTP server on internal error.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-fallback-status-at-disconnect'>manager.fallback_status_at_disconnect</link>
+  that specifies a status returned to SMTP server when disconnection is detected. [Suggested by Kenji Shiono]
+</para>
+</listitem>
+  <listitem>
+  <para>Added DATA event emuration that is enabled when SMTP server uses milter protocol version 3 or smaller.</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-event-loop-backend'>manager.event_loop_backend</link>
+  that specifies event loop backend. (experimiental)
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-n-workers'>manager.n_workers</link>
+  that specifies number of worker processes. (experimental)
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='configuration.manager-packet-buffer-sizea'>manager.packet_buffer_size</link>
+  that specifies buffer size for send packets. (experimental)
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Fixed a bug that
+  <link linkend='configuration.manager-use-netstat-connection-checker'>manager.use_netstat_connection_checker</link>
+  doesn't work with Postfix 2.3. [Reported by Kenji Shiono]
+</para>
+</listitem>
+  <listitem>
+  <para>Fixed a DATA event timing when some child milters exist. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Described about Postfix's {client_addr}. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported multi process. (experimental)</para>
+</listitem>
+  <listitem>
+  <para>Supported libev as event loop backend. (experimental)</para>
+  <itemizedlist>
+  <listitem>
+  <para>Bundled libev 4.03.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Made write asyncronize.</para>
+</listitem>
+  <listitem>
+  <para>Supported send packets buffering. (experimental)</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-server</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added more condition checks on evnets.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that timeout detection doesn't work. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added ruby-milter.pc.</para>
+</listitem>
+  <listitem>
+  <para>Added --packet-buffer-size option that specifies send packet buffer size. (experimental)</para>
+</listitem>
+  <listitem>
+  <para>Added --n-workers option thst specifies number of worker processes. (epxerimental)</para>
+</listitem>
+  <listitem>
+  <para>Added --event-loop-backend option that specifies event loop backend. (experimental)</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-test-client.--n-workers'>--n-workers</link>
+   option that specifies number of worker processes. (experimental)
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-test-client.--event-loop-backend'>--event-loop-backend</link>
+  option that specifies event loop backend. (experimental)
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-test-client.--packet-buffer-size'>--packet-buffer-size</link>
+  option that specifies send packets buffer size. (experimental)
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-performance-check</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-performance-check.--n-additional-lines'>--n-additional-lines</link>
+  option that grows body size.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-performance-check.--report-failure-responses'>--report-failure-responses</link>
+  option that enables failure SMTP sesseion response report on the last.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-performance-check.--report-periodically'>--report-periodically</link>
+  option that enables periodical statistics report.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-performance-check.--flood'>--flood</link>
+  option that enables flood mood that sends flood of mails in specified period.
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-report-statistics</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added: 
+  <link linkend='milter-report-statistics'>milter-report-statistics.rd.ja</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Packet</title>
+  <itemizedlist>
+  <listitem>
+  <para>Updated package repository RPM for CentOS: 1.0.0-0 -&gt; 1.0.0-1.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Kenji Shiono</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-2'>
+  <title>1.6.2: 2010-11-23</title>
+  <para>A bug fix release of 1.6.1.</para>
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Made PID file directory prepareing process in init script on Debian robust. [Reported by Kenji Shiono]</para>
+</listitem>
+  <listitem>
+  <para>Used gint64 for time_t. [Suggested by OBATA Akio]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed missing temporary file close. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager admin</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Documented required sqlite3-ruby version on CentOS. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Made milter-tarpit.rb, a sample milter, asynchronous. [Reported by Kenji Shiono]</para>
+</listitem>
+  <listitem>
+  <para>Provided all milter API.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a typo in command line option. [Reported by Kenji Shiono]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Kenji Shiono</para>
+</listitem>
+  <listitem>
+  <para>OBATA Akio</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-1'>
+  <title>1.6.1: 2010-08-21</title>
+  <para>A bug fix release of 1.6.0.</para>
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that no statistics information isn't logged to syslog. [Reported by akira yamada]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>akira yamada</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-6-0'>
+  <title>1.6.0: 2010-08-11</title>
+  <para>The first release of stable 1.6.x series.</para>
+  <refsect2>
+  <title>milter manager</title>
+</refsect2>
+
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added parsers for Postfix cidr_table(5) and regexp_table(5): PostfixCIDRTable, PostfixRegexpTable</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-5-3'>
+  <title>1.5.3: 2010-08-03</title>
+  <para>The last release of 1.5.x series. (plan)</para>
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added a description for
+  <link linkend='configuration.to-ip-address'>SocketAddress#to_ip_address</link>
+  .
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Ensured to reply for negotiation on negotiation failure.</para>
+</listitem>
+  <listitem>
+  <para>Reduced the default timeout for reporting timeout error to MTA. The previous default timeout is the same as MTA default. With the value, we can't have a time to report timeout error to MTA.</para>
+</listitem>
+  <listitem>
+  <para>command launcher: Supported syslog.</para>
+</listitem>
+  <listitem>
+  <para>Added an applicable condition:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.trust'>Trust</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Supported Solaris. [Patched by SATOH Fumiyasu]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager admin</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported Rails 2.3.8.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-server</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added 
+  <link linkend='milter-test-server.--color'>--color</link>
+   option.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Added 
+  <link linkend='milter-test-server.--threads'>--threads</link>
+   option.
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Chanaged default log level to output error and critical message.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Ruby milter</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --user, --gorup, --unix-socket-group, --unix-socket-mode, --syslog, --library-version options.</para>
+</listitem>
+  <listitem>
+  <para>Added milter-test-client implemented by Ruby as a sample.</para>
+</listitem>
+  <listitem>
+  <para>Added milter-regexp.rb as a sample.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>SATOH Fumiyasu</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-5-2'>
+  <title>1.5.2: 2010-05-29</title>
+  <para>A bug fix release of 1.5.1.</para>
+  <para>We recommend development version users who use a milter that uses NO_REPLY_* or milter-greylist 4.3.x upgrade to this version.</para>
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Created 
+  <link linkend='available-milters'>available milters</link>
+   list.
+</para>
+</listitem>
+  <listitem>
+  <para>Updated recommended milter-greylist configuration.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Supported S25R 
+  <link linkend='configuration.s25r-add-whitelist'>whitelist customize</link>
+   and
+  <link linkend='configuration.s25r-add-blacklist'>blacklist customize</link>
+  .
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported milter-greylist 4.3.x.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-toolkit</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Used inet_pton()/inet_pton() instead of inet_aton()/inet_ntoa(). [Suggested by SATOH Fumiyasu]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>SATOH Fumiyasu</para>
+</listitem>
+  <listitem>
+  <para>ROSSO</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-5-1'>
+  <title>1.5.1: 2010-04-20</title>
+  <para>A bug fix release of 1.5.0.</para>
+  <para>It includes a memory leak fix derived from Ruby/GLib2 because bundled Ruby/GLib2 is updated. If bundled Ruby/GLib2 is used, upgrade is recommended.</para>
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added install document for development release on Ubuntu Karmic Koara.</para>
+</listitem>
+  <listitem>
+  <para>Added a description that installs Rack explicitly. [Reported by Tsuchiya]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>FreeBSD: Fixed package name [Reported by Tsuchiya]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>libmilter-core</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported syslog level change by MILTER_LOG_SYSLOG_LEVEL environment variable.</para>
+</listitem>
+  <listitem>
+  <para>Added memory profiler.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported Solaris. [Reported and patched by SATOH Fumiyasu]</para>
+</listitem>
+  <listitem>
+  <para>Bundled Ruby/GLib2 0.19.4.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-client</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added
+  <link linkend='milter-test-client.--report-memory-profile'>--report-memory-profile</link>
+   option.
+</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Tsuchiya</para>
+</listitem>
+  <listitem>
+  <para>SATOH Fumiyasu</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-5-0'>
+  <title>1.5.0: 2010-03-29</title>
+  <para>A development release.</para>
+  <refsect2>
+  <title>Document</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>For Debian GNU/Linux・Ubuntu:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Removed needless group change description [Suggested by ZnZ]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>For CentOS:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Used Yum instead of RPM directly.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>For FreeBSD:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Upgraded target version: 7.2-RELEASE -&gt; 8.0-RELEASE</para>
+</listitem>
+  <listitem>
+  <para>Changed to use CPPFLAGS instead of CFLAGS for configure.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>For FreeBSD:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed pw command options.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>init script for Debian GNU/Linux:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Supported 'status'. [Suggested by ZnZ]</para>
+</listitem>
+  <listitem>
+  <para>Delayed parameter checks until they are needed. [Suggested by ZnZ]</para>
+</listitem>
+  <listitem>
+  <para>Removed needless dependencies. [Suggested by ZnZ]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>[#2921072] Showed loaded configuration file path on verbose mode. [Suggested by Antuan Avdioukhine]</para>
+</listitem>
+  <listitem>
+  <para>[#2921072] Showed file and line that are changed the configuration item. [Suggested by Antuan Avdioukhine]</para>
+</listitem>
+  <listitem>
+  <para>[#2921078] Supported no child milter work. [Suggested by Antuan Avdioukhine]</para>
+</listitem>
+  <listitem>
+  <para>Added configuration items:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.remove-milter'>remove_milter</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-connection-check-interval'>manager.connection_check_interval</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-define-connection-checker'>manager.define_connection_checker</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-use-netstat-connection-checker'>manager.use_netstat_connection_checker</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-report-memory-statistics'>manager.report_memory_statistics</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-maintained'>manager.maintained</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.stress-threshold-n-connections'>stress.threshold_n_connections</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.stress-threshold-n-connections'>stress.threshold_n_connections=</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.remote-network-add-local-address'>remote_network.add_local_address</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Added new applicable conditions</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.no-stress'>No Stress</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.stress-notify'>Stress Notify</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Bundled Ruby/GLib 0.19.3. (For FreeBSD)</para>
+</listitem>
+  <listitem>
+  <para>Changed to use /usr/sbin/service or /sbin/service if it is available.</para>
+</listitem>
+  <listitem>
+  <para>Supported OpenDKIM detection on CentOS.</para>
+</listitem>
+  <listitem>
+  <para>Supported Syslog facility change: MILTER_LOG_SYSLOG_FACILITY environment variable is used.</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-max-file-descriptors'>manager.max_file_descriptors</link>
+  : Changed both of soft and hard limit not only soft limit.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  Supported 
+  <ulink url='http://munin-monitoring.org/'>Munin</ulink>
+  .
+</para>
+</listitem>
+  <listitem>
+  <para>Speed up and effective memory usage.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>FreeBSD: Fixed OpenDKIM detection when any profiles aren't used in /etc/rc.conf. [Reported by Tsuchiya]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that applicable condition is ignored by Ruby's GC.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Experimental</title>
+  <itemizedlist>
+  <listitem>
+  <para>Introduced policy framework to specify condition and milter all together.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-toolkit</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Supported milter development by Ruby bindings: 
+  <link linkend='ruby'>Ruby integration</link>
+  
+</para>
+  <itemizedlist>
+  <listitem>
+  <para>Specify --enable-ruby-milter option in configure.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <itemizedlist>
+  <listitem>
+  <para>Speed up (almost 2 times faster)</para>
+</listitem>
+  <listitem>
+  <para>Supported visualization about number connections that is disconnection from SMTP clients.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-performance-check</title>
+  <itemizedlist>
+  <listitem>
+  <para>New options</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='milter-performance-check.--n-concurrent-connections'>--n-concurrent-connections</link>
+  : Specifies maximum number of concurrency connections.
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-client</title>
+  <itemizedlist>
+  <listitem>
+  <para>New options:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='milter-test-client.--no-report-request'>--no-report-request</link>
+  : Doesn't dump requests from MTA.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-test-client.--user'>--user</link>
+  : Specifies effective user.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-test-client.--group'>--group</link>
+  : Specifies effective group.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-test-client.--unix-socket-group'>--unix-socket-group</link>
+  : Specifies UNIX domain socket's group.
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Package</title>
+  <refsect3>
+  <title>CentOS</title>
+  <itemizedlist>
+  <listitem>
+  <para>Split to some packages.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Test</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Supported 
+  <ulink url='http://cutter.sourceforge.net/'>Cutter</ulink>
+   1.1.0
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>ZnZ</para>
+</listitem>
+  <listitem>
+  <para>Tsuchiya</para>
+</listitem>
+  <listitem>
+  <para>Antuan Avdioukhine</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-4-2'>
+  <title>1.4.2: 2010-03-29</title>
+  <para>A bug fix release for 1.4.1.</para>
+  <refsect2>
+  <title>Document</title>
+  <itemizedlist>
+  <listitem>
+  <para>Upgraded target FreeBSD version: 7.2-RELEASE -&gt; 8.0-RELEASE</para>
+</listitem>
+  <listitem>
+  <para>Changed to use CPPFLAGS instead of CFLAGS for configure on FreeBSD.</para>
+</listitem>
+  <listitem>
+  <para>Fixed pw command options on FreeBSD.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+</refsect2>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that socket group isn't effected when both effective user and socket group are specified.</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that auto milter detection is failed on no OpenDKIM installed FreeBSD environment.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-4-1'>
+  <title>1.4.1: 2009-10-29</title>
+  <para>A bug fix release for 1.4.0.</para>
+  <refsect2>
+  <title>Document</title>
+  <itemizedlist>
+  <listitem>
+  <para>Upgraded target CentOS version: 5.3 -&gt; 5.4.</para>
+</listitem>
+  <listitem>
+  <para>Fixed types. [Yuto Hayamizu]</para>
+</listitem>
+  <listitem>
+  <para>Fixed typos. [ZnZ]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Bundled Ruby/GLib2 for CentOS.</para>
+</listitem>
+  <listitem>
+  <para>add configure options for default configuration value:</para>
+  <itemizedlist>
+  <listitem>
+  <para>--with-default-effective-user: effective user</para>
+</listitem>
+  <listitem>
+  <para>--with-default-effective-group: effective group</para>
+</listitem>
+  <listitem>
+  <para>--with-default-socket-group: group of UNIX domain socket</para>
+</listitem>
+  <listitem>
+  <para>--with-default-pid-file: PID file</para>
+</listitem>
+  <listitem>
+  <para>--with-default-connection-spec: listen address</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that init script overwrites default configuration value on CentOS. [Reported by gorimaru]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that needless commands are sent to finished child milter on evaluation mode.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Yuto Hayamizu</para>
+</listitem>
+  <listitem>
+  <para>gorimaru</para>
+</listitem>
+  <listitem>
+  <para>ZnZ</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-4-0'>
+  <title>1.4.0: 2009-10-13</title>
+  <para>A stable release.</para>
+  <refsect2>
+  <title>Document</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added install documents for Debian.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager</title>
+</refsect2>
+
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported OpenDKIM detection on Debian/Ubuntu/FreeBSD.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that adding header statistics isn't logged on evaluation mode.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect1>
+
+<refsect1 id='news.release-1-3-1'>
+  <title>1.3.1: 2009-09-16</title>
+  <para>A development release. Evaluation mode was added.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  Added 
+  <link linkend='configuration.milter-evaluation-mode'>evaluation mode</link>
+  that ignores a result of child milter.
+</para>
+</listitem>
+  <listitem>
+  <para>Added configuration items:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  max number of concurrent connections:
+  <link linkend='configuration.manager-max-connections'>manager.max_connections</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  max number of file descriptors:
+  <link linkend='configuration.manager-max-file-descriptors'>manager.max_file_descriptors</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Supported EPEL [Reported by Syunsuke Komma]</para>
+</listitem>
+  <listitem>
+  <para>Supported timeout configuration based on milter-greylist's tarpit configuration.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-toolkit</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added more the Ruby bindings [Yuto Hayamizu]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager admin</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported Rails 2.3.4</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-client</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added --syslog options that logs to syslog.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported milter-greylist's SPF result.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Yuto Hayamizu</para>
+</listitem>
+  <listitem>
+  <para>Syunsuke Komma</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-3-0'>
+  <title>1.3.0: 2009-08-12</title>
+  <para>A development release.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Improved a process for multi messages in a SMTP session.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that quarantine is ignored. [Reported by Tsuchiya]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that discard is ignored. [Reported by Tsuchiya]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that SEGV on non header mail. [Reported by Павел Гришин]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-server</title>
+  <itemizedlist>
+  <listitem>
+  <para>Suppressed needless abort.</para>
+</listitem>
+  <listitem>
+  <para>Changed to send 'continue' on 'quarantine'.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported virus detection result of clamav-milter.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Tsuchiya</para>
+</listitem>
+  <listitem>
+  <para>Павел Гришин</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-2-0'>
+  <title>1.2.0: 2009-07-17</title>
+  <para>A stable release.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported DATA stopper independently of MTA's milter protocol.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a timeout problem when all milters are stopped on message processing. [Reported by sgyk]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a problem that milter-manager doesn't work with Postfix 2.3.3. [Reported by Fumihisa Tonaka]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>sgyk</para>
+</listitem>
+  <listitem>
+  <para>Fumihisa Tonaka</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1 id='news.release-1-1-1'>
+  <title>1.1.1: 2009-07-03</title>
+  <para>A release to be the next stable release 1.2.0.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <refsect3>
+  <title>Improvements</title>
+  <itemizedlist>
+  <listitem>
+  <para>Reduced needless abort calls.</para>
+</listitem>
+  <listitem>
+  <para>Reduced statistics logs.</para>
+</listitem>
+  <listitem>
+  <para>Supported multiple instances.</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-custom-configuration-directory'>manager.custom_configuration_directory</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Added a configuration item that milter-manager waits how many seconds when milter-manager can't accept connections from MTA.</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-suspend-time-on-unacceptable'>manager.suspend_time_on_unacceptable</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Supported Momonga Linux [Suggested by Fumihisa Tonaka]</para>
+</listitem>
+  <listitem>
+  <para>Supported absolute configuration file path.</para>
+</listitem>
+  <listitem>
+  <para>Changed milter stop behavior on RCPT TO. A milter process for a stopped recipient is skipped. A milter process for other recipients are not effected.</para>
+</listitem>
+  <listitem>
+  <para>Supported stopper callback on all events even if an event is ignored by milter. (events marked as SMFIP_NO*)</para>
+</listitem>
+  <listitem>
+  <para>Supported multi mail transactions [Reported by sgyk]</para>
+</listitem>
+  <listitem>
+  <para>Supported local configuration file &quot;milter-manager.local.conf&quot; that is loaded automatically if it exists.</para>
+</listitem>
+  <listitem>
+  <para>[experimental] Added a sample to only apply a milter to restricted users.</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+  <refsect3>
+  <title>Bug fixes</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a race condition on multiple milters running.</para>
+</listitem>
+  <listitem>
+  <para>Fixed a problem that error status isn't replied to MTA. [Reported by Fumihisa Tonaka]</para>
+</listitem>
+  <listitem>
+  <para>Fixed a problem that a milter application stopped effects other milter application stopped. [Reported by sgyk]</para>
+</listitem>
+</itemizedlist>
+</refsect3>
+
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-server</title>
+  <itemizedlist>
+  <listitem>
+  <para>Changed to report a message is rejected or temporary failed if all recipients are rejected or temporary failed.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported application result graphs for each milter.</para>
+</listitem>
+  <listitem>
+  <para>Supported statistics graphs for each method.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Thanks</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fumihisa Tonaka</para>
+</listitem>
+  <listitem>
+  <para>sgyk</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>1.1.0: 2009-06-02</title>
+  <para>A development release leading up to the next stable release 1.2.0.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <itemizedlist>
+  <listitem>
+  <para>Reduced needless logs.</para>
+</listitem>
+  <listitem>
+  <para>Supported ENMA auto detection on FreeBSD.</para>
+</listitem>
+  <listitem>
+  <para>Supported ClamAV 0.95 auto detection.</para>
+</listitem>
+  <listitem>
+  <para>Fixed dkim-filter's skip action is ignored for a mail over 65535 bytes.</para>
+</listitem>
+  <listitem>
+  <para>Supported unknown address family on connect.</para>
+</listitem>
+  <listitem>
+  <para>Supported fallback status for each child milter. (milter.fallback_status)</para>
+</listitem>
+  <listitem>
+  <para>Added milter ID to debug log.</para>
+</listitem>
+  <listitem>
+  <para>Fixed memory leaks.</para>
+</listitem>
+  <listitem>
+  <para>Supported periodical maintenance process. (manager.maintenance_interval)</para>
+</listitem>
+  <listitem>
+  <para>Added workaround for Ruby/GLib 0.17.0.</para>
+</listitem>
+  <listitem>
+  <para>Supported backtrace log on crash.</para>
+</listitem>
+  <listitem>
+  <para>Added callback events to stop milter application:</para>
+  <itemizedlist>
+  <listitem>
+  <para>condition.define_helo_stopper</para>
+</listitem>
+  <listitem>
+  <para>condition.define_data_stopper</para>
+</listitem>
+  <listitem>
+  <para>condition.define_end_of_header_stopper</para>
+</listitem>
+  <listitem>
+  <para>condition.define_body_stopper</para>
+</listitem>
+  <listitem>
+  <para>condition.define_end_of_message_stopper</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Fixed a milter-manager related process isn't terminated on kill.</para>
+</listitem>
+  <listitem>
+  <para>Stopped accepting new connection on too many file descriptors opened.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager admin</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported Ruby on Rails 2.3.2.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-test-server</title>
+  <itemizedlist>
+  <listitem>
+  <para>Supported reply-code.</para>
+</listitem>
+  <listitem>
+  <para>Added options for authentication related macros:</para>
+  <itemizedlist>
+  <listitem>
+  <para>--authenticated-name=NAME</para>
+</listitem>
+  <listitem>
+  <para>--authenticated-type=TYPE</para>
+</listitem>
+  <listitem>
+  <para>--authenticated-author=AUTHOR</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <itemizedlist>
+  <listitem>
+  <para>Reduced memory usage.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>Documentation</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a link: [Павел Гришин]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>1.0.1: 2009-05-14</title>
+  <para>A bug fix release of 1.0.0.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that milter-manager isn't restarted on updating RPM package.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter manager admin</title>
+  <itemizedlist>
+  <listitem>
+  <para>Specified used gem version [Reported by nhisa]</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>1.0.0: 2009-04-16</title>
+  <para>The first stable release.</para>
+  <refsect2>
+  <title>Documentation</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added man pages for commands.</para>
+</listitem>
+  <listitem>
+  <para>Added --external option to clamav-milter's configuration.</para>
+</listitem>
+  <listitem>
+  <para>Changed install documents for Ubuntu and CentOS to package based installation.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added ENMA detection on CentOS.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-performance-check</title>
+  <itemizedlist>
+  <listitem>
+  <para>Worked --n-mails option with --period/--interval option.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>0.9.0: 2009-03-10</title>
+  <para>Speed and stability are improved.</para>
+  <refsect2>
+  <title>milter-manager</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added a feature to change group of UNIX domain socket.</para>
+</listitem>
+  <listitem>
+  <para>Speed up:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Changed to send milter commands in a packet.</para>
+</listitem>
+  <listitem>
+  <para>Changed to process mail body on memory as far as possible.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>configure:</para>
+  <itemizedlist>
+  <listitem>
+  <para>--with-rcddir: Add a option to specify pkgsrc's rc.d directory.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Bug fixes:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Fixed a bug that a file descriptor is too closed.</para>
+</listitem>
+  <listitem>
+  <para>Fixed a bug that 'temporary failure' is reported as 'reject' in log.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>New applicable conditions</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  sendmail-compatible: It's a feature to avoid macro related incompatibility between Sendmail's milter implementation and Postfix's milter implementation. (ref. 
+  <ulink url='http://www.postfix.org/MILTER_README.html#workarounds'>Postfix before-queue Milter support - Workarounds</ulink>
+  )
+</para>
+  <para>It's not an applicable condition but it uses applicable condition framework to convert macros passed to a milter by MTA. dnsbl-milter can be worked with Postfix without a patch(*) by the feature.</para>
+  <para>
+  (*) 
+  <ulink url='http://sourceforge.net/tracker/?func=detail&amp;atid=1015126&amp;aid=2594714&amp;group_id=210782'>[2594714] Postfix support</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>authentication: It's an applicable condition to apply a milter only when a connection is authenticated or unauthenticated.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-performance-check</title>
+  <itemizedlist>
+  <listitem>
+  <para>Added a feature to send a file as a mail.</para>
+</listitem>
+  <listitem>
+  <para>Added a feature to send each file under specified directories as a mail.</para>
+</listitem>
+  <listitem>
+  <para>--from, --recipient, --force-from, --force-recipient: Added features to override from address and/or recipient address.</para>
+</listitem>
+  <listitem>
+  <para>--interval: Added a feature to send a mail at intervals.</para>
+</listitem>
+  <listitem>
+  <para>--period: Added a feature to send mails at the same interval in period.</para>
+</listitem>
+  <listitem>
+  <para>--shuffle: Added a feature to send mails in random order.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzer</title>
+  <itemizedlist>
+  <listitem>
+  <para>[incompatible]: Added an item &quot;abort&quot; to processed mail graph.</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>0.8.0: 2009-02-06</title>
+  <itemizedlist>
+  <listitem>
+  <para>New features</para>
+  <itemizedlist>
+  <listitem>
+  <para>New tools:</para>
+  <itemizedlist>
+  <listitem>
+  <para>milter-manager-log-analyzer: It visualizes milter-manager's log.</para>
+</listitem>
+  <listitem>
+  <para>milter manager admin: Web interface for administrating milter-manager.</para>
+</listitem>
+  <listitem>
+  <para>
+  Screenshots of the above two tools: The bottom of 
+  <link linkend='install'>Install</link>
+   page.
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Add milter detection method for pkgsrc.</para>
+</listitem>
+  <listitem>
+  <para>Support CentOS.</para>
+</listitem>
+  <listitem>
+  <para>Applicable condition</para>
+  <itemizedlist>
+  <listitem>
+  <para>Support getting status of other milter.</para>
+</listitem>
+  <listitem>
+  <para>Support getting/setting macros of milter.</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Update S25R (2009/02/01 version)</para>
+</listitem>
+  <listitem>
+  <para>Bug fixes</para>
+  <itemizedlist>
+  <listitem>
+  <para>[#2518782] typo in configure: [OBATA Akio]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>0.7.0: 2009-01-16</title>
+  <itemizedlist>
+  <listitem>
+  <para>Initial release on SF.net.</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

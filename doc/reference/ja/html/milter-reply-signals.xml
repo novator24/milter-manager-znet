@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterReplySignals">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterReplySignals.top_of_page">MilterReplySignals</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterReplySignals</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="MilterReplySignals.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>                    <link linkend="MilterReplySignals-struct">MilterReplySignals</link>;
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterReplySignals.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GInterface">GInterface</link>
+   +----MilterReplySignals
+</synopsis>
+</refsect1>
+<refsect1 id="MilterReplySignals.implementations" role="implementations">
+<title role="implementations.title">Known Implementations</title>
+<para>MilterReplySignalsは<link linkend="MilterServerContext">MilterServerContext</link>が実装しています。</para>
+</refsect1>
+
+<refsect1 id="MilterReplySignals.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="MilterReplySignals.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterReplySignals-struct" role="struct">
+<title>MilterReplySignals</title>
+<indexterm zone="MilterReplySignals-struct"><primary>MilterReplySignals</primary></indexterm>
+<programlisting>typedef struct _MilterReplySignals MilterReplySignals;</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

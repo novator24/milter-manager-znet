@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ruby-milter-configuration">
+<refmeta>
+  <refentrytitle role='top_of_page' id='ruby-milter-configuration.top_of_page'>Ruby製milterの設定</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Ruby製milterの設定</refname>
+  <refpurpose>設定ファイルの書き方</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>Rubyで作成したmilterはmilter-managerと同じ書式の設定ファイル をサポートしています。ただし、書式は同じですが設定項目は違い ます。この文書ではRubyで作成したmilterの設定ファイルの書き方 と設定項目について説明します。</para>
+</refsect1>
+
+<refsect1>
+  <title>概要</title>
+  <para>設定ファイルは-cまたは--configurationオプションで指定します。 例えば、milter-regexp.rbというmilterで /etc/milter-regexp.confという設定ファイルを読み込む場合は以 下のように指定します。</para>
+  <programlisting>% ruby milter-regexp.rb -c /etc/milter-regexp.conf</programlisting>
+  <para>設定ファイルは以下のような書式になります。</para>
+  <programlisting>グループ名.項目名 = 値</programlisting>
+  <para>例えば、milterが接続を受け付けるソケットのアドレスをIPv4の 12345番ポートに設定する場合は、以下のように「milter」グループ の「connection_spec」項目の値を「&quot;inet:12345&quot;」にします。</para>
+  <programlisting>milter.connection_spec = &quot;inet:12345&quot;</programlisting>
+  <para>設定項目は以下のように分類されています。</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.security'>セキュリティ関連</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.log'>ログ関連</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.milter'>milter関連</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='ruby-milter-configuration.database'>データベース関連</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+  <para>それでは、それぞれの分類毎に説明します。</para>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.security'>
+  <title>セキュリティ関連</title>
+  <para>セキュリティの設定はmilter-managerと同じ以下の項目が利用可能 です。指定方法の説明はmilter-managerの説明ページを参照してく ださい。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.security-effective-user'>security.effective_user</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.security-effective-user'>security.effective_user</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.security-effective-group'>security.effective_group</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.security-effective-group'>security.effective_group</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.log'>
+  <title>ログ関連</title>
+  <para>ログの設定はmilter-managerと同じ以下の項目が利用可能です。指 定方法の説明はmilter-managerの説明ページを参照してください。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.log-level'>log.level</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.log-level'>log.level</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.log-use-syslog'>log.use_syslog</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.log-use-syslog'>log.use_syslog</link>
+  と 同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.log-syslog-facility'>log.syslog_facility</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.log-syslog-facility'>log.syslog_facility</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.milter'>
+  <title>milter関連</title>
+  <para>milterの設定もmilter-managerの「manager」グループの設定と同 様です。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-connection-spec'>milter.connection_spec</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-connection-spec'>manager.connection_spec</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-unix-socket-mode'>milter.unix_socket_mode</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-unix-socket-mode'>manager.unix_socket_mode</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-unix-socket-group'>milter.unix_socket_group</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-unix-socket-group'>manager.unix_socket_group</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-remove-unix-socket-on-create'>milter.remove_unix_socket_on_create</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-remove-unix-socket-on-create'>manager.remove_unix_socket_on_create</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-remove-unix-socket-on-close'>milter.remove_unix_socket_on_close</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-remove-unix-socket-on-close'>manager.remove_unix_socket_on_close</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-daemon'>milter.daemon</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-daemon'>manager.daemon</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-pid-file'>milter.pid_file</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-pid-file'>manager.pid_file</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-maintenance-interval'>milter.maintenance_interval</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-maintenance-interval'>manager.maintenance_interval</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-suspend-time-on-unacceptable'>milter.suspend_time_on_unacceptable</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-suspend-time-on-unacceptable'>manager.suspend_time_on_unacceptable</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-max-connections'>milter.max_connections</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-max-connections'>manager.max_connections</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-max-file-descriptors'>milter.max_file_descriptors</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-max-file-descriptors'>manager.max_file_descriptors</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-fallback-status'>milter.fallback_status</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-fallback-status'>manager.fallback_status</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-event-loop-backend'>milter.event_loop_backend</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-event-loop-backend'>manager.event_loop_backend</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-n-workers'>milter.n_workers</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-n-workers'>manager.n_workers</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-packet-buffer-size'>milter.packet_buffer_size</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-packet-buffer-size'>manager.packet_buffer_size</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-max-pending-finished-sessions'>milter.max_pending_finished_sessions</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-max-pending-finished-sessions'>manager.max_pending_finished_sessions</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-maintained'>milter.maintained</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-maintained'>manager.maintained</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-event-loop-created'>milter.event_loop_created</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-event-loop-created'>manager.event_loop_created</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.milter-name'>milter.name</term>
+  <listitem>
+  <para>子milterの名前を取得します。1.8.1から利用可能。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id='ruby-milter-configuration.database'>
+  <title>データベース関連</title>
+  <para>
+  データベースの設定もmilter-managerの
+  <link linkend='configuration.database'>「database」グループの設 定</link>
+  と同様です。セットアップ方 法や簡単なチュートリアルはmilter-managerのドキュメントを参照 してください。
+</para>
+  <variablelist>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-type'>database.type</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-type'>database.type</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-name'>database.name</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-name'>database.name</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-host'>database.host</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-host'>database.host</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-port'>database.port</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-port'>database.port</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-path'>database.path</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-path'>database.path</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-user'>database.user</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-user'>database.user</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-password'>database.password</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-password'>database.password</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-setup'>database.setup</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-setup'>database.setup</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='ruby-milter-configuration.database-load-models'>database.load_models(path)</term>
+  <listitem>
+  <para>
+  <link linkend='configuration.database-load-models'>database.load_models</link>
+  と同じ。
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+</refentry>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<book xmlns:xi="http://www.w3.org/2003/XInclude" id="index" lang="en">
+  <bookinfo>
+    <title>milter manager Reference Manual</title>
+    <releaseinfo>for milter manager &version;</releaseinfo>
+  </bookinfo>
+
+  <part id="start">
+    <title>Getting start</title>
+    <xi:include href="news.xml"/>
+    <xi:include href="readme.xml"/>
+    <chapter id="commands">
+      <title>Commands</title>
+      <xi:include href="milter-manager.xml"/>
+      <xi:include href="milter-test-server.xml"/>
+      <xi:include href="milter-test-client.xml"/>
+      <xi:include href="milter-performance-check.xml"/>
+      <xi:include href="milter-report-statistics.xml"/>
+      <xi:include href="milter-manager-log-analyzer.xml"/>
+    </chapter>
+    <xi:include href="introduction.xml"/>
+    <!--xi:include href="performance.xml"/-->
+    <xi:include href="install.xml"/>
+    <chapter id="install-to">
+      <title>Install milter manager to your platform</title>
+      <xi:include href="install-to-debian.xml"/>
+      <xi:include href="install-options-to-debian.xml"/>
+      <xi:include href="install-to-ubuntu.xml"/>
+      <xi:include href="install-options-to-ubuntu.xml"/>
+      <xi:include href="install-to-centos5.xml"/>
+      <xi:include href="install-to-centos.xml"/>
+      <xi:include href="install-options-to-centos.xml"/>
+      <xi:include href="install-to-freebsd.xml"/>
+      <xi:include href="install-options-to-freebsd.xml"/>
+      <xi:include href="install-to-others.xml"/>
+    </chapter>
+    <chapter id="upgrade">
+      <title>Upgrade milter manager on your platform</title>
+      <xi:include href="upgrade-on-debian.xml"/>
+      <xi:include href="upgrade-options-on-debian.xml"/>
+      <xi:include href="upgrade-on-ubuntu.xml"/>
+      <xi:include href="upgrade-options-on-ubuntu.xml"/>
+      <xi:include href="upgrade-on-centos.xml"/>
+      <xi:include href="upgrade-options-on-centos.xml"/>
+      <xi:include href="upgrade-on-freebsd.xml"/>
+      <xi:include href="upgrade-options-on-freebsd.xml"/>
+      <!--xi:include href="upgrade-on-others.xml"/-->
+    </chapter>
+    <xi:include href="configuration.xml"/>
+    <xi:include href="log-list.xml"/>
+    <xi:include href="reverse-dictionary.xml"/>
+    <xi:include href="users.xml"/>
+    <xi:include href="available-milters.xml"/>
+  </part>
+
+  <!--part id="reference">
+    <title>Reference</title>
+    <chapter id="libmilter">
+      <title>libmilter</title>
+      <xi:include href="xml/mfapi.xml"/>
+    </chapter>
+    <chapter id="milter-core">
+      <title>milter-core</title>
+      <xi:include href="xml/core.xml"/>
+      <xi:include href="xml/milter-error-emittable.xml"/>
+      <xi:include href="xml/milter-finished-emittable.xml"/>
+    </chapter>
+    <chapter id="milter-client">
+      <title>milter-client</title>
+      <xi:include href="xml/client.xml"/>
+      <xi:include href="xml/milter-client-context.xml"/>
+    </chapter>
+    <chapter id="milter-server">
+      <title>milter-server</title>
+      <xi:include href="xml/milter-server-context.xml"/>
+    </chapter>
+  </part-->
+
+  <part id="ruby">
+    <title>Ruby support</title>
+    <xi:include href="ruby-milter-tutorial.xml"/>
+    <xi:include href="ruby-milter-reference.xml"/>
+    <xi:include href="ruby-milter-configuration.xml"/>
+  </part>
+
+  <!--index id="index-all">
+    <title>Index of all symbols</title>
+  </index>
+  <index id="index-deprecated" role="deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+  <index id="index-1-0-0" role="1.0.0">
+    <title>Index of new symbols in 1.0.0</title>
+  </index-->
+</book>

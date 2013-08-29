@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="reverse-dictionary">
+<refmeta>
+  <refentrytitle role='top_of_page' id='reverse-dictionary.top_of_page'>Reverse Dictionary</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Reverse Dictionary</refname>
+  <refpurpose>Find how to do by want to do</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>This is a document to find how to do by want to do as key.</para>
+</refsect1>
+
+<refsect1>
+  <title>Install</title>
+  <refsect2>
+  <title>Install to Debian GNU/Linux</title>
+  <para>
+  <link linkend='install-to-debian'>Install to Debian GNU/Linux</link>
+  describes it. You can maintain milter manager package easily because milter manager can be installed with aptitude.
+</para>
+</refsect2>
+
+  <refsect2>
+  <title>Install to Ubuntu Linux</title>
+  <para>
+  <link linkend='install-to-ubuntu'>Install to Ubuntu Linux</link>
+   describes it. You can maintain milter manager package easily because milter manager can be installed with aptitude.
+</para>
+</refsect2>
+
+  <refsect2>
+  <title>Install to CentOS</title>
+  <para>
+  <link linkend='install-to-centos'>Install to CentOS</link>
+   describes it. You can maintain milter manager package easily because milter manager can be installed as RPM package.
+</para>
+</refsect2>
+
+  <refsect2>
+  <title>Install to FreeBSD</title>
+  <para>
+  <link linkend='install-to-freebsd'>Install to FreeBSD</link>
+   describes it.
+</para>
+</refsect2>
+
+  <refsect2>
+  <title>Generate graphs for statistics data</title>
+  <para>There are documents for each platform:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-debian.milter-manager-log-analyzer'>For Debian</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-ubuntu.milter-manager-log-analyzer'>For Ubuntu</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-centos.milter-manager-log-analyzer'>For CentOS</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-freebsd.milter-manager-log-analyzer'>For FreeBSD</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>Configuration: Basic</title>
+  <refsect2 id='reverse-dictionary.configuration-basic-find-configuration-file'>
+  <title>Find a configuration file</title>
+  <para>Here are configuration file locations when you install milter manager followed by install manual for your platform:</para>
+  <itemizedlist>
+  <listitem>
+  <para>Ubuntu: /etc/milter-manager/milter-manager.local.conf</para>
+</listitem>
+  <listitem>
+  <para>CentOS: /etc/milter-manager/milter-manager.local.conf</para>
+</listitem>
+  <listitem>
+  <para>Ubuntu: /usr/local/etc/milter-manager/milter-manager.local.conf</para>
+</listitem>
+</itemizedlist>
+  <para>milter-manager.local.conf is a file what you create newly. milter-manager.conf loads milter-manager.local.conf in the same directory by default.</para>
+</refsect2>
+
+  <refsect2>
+  <title>Connect milter-manager via TCP/IP</title>
+  <para>
+  &quot;inet:&quot; is used for 
+  <link linkend='configuration.manager-connection-spec'>manager.connection_spec</link>
+  .
+</para>
+  <programlisting># Listen on 10025 port. milter-manager accepts a connection from localhost
+manager.connection_spec = &quot;inet:10025@localhost&quot;</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>Connect milter-manager via UNIX domain socket</title>
+  <para>
+  &quot;unix:&quot; is used for 
+  <link linkend='configuration.manager-connection-spec'>manager.connection_spec</link>
+  .
+</para>
+  <programlisting># Listen on /var/run/milter/milter-manager.sock.
+manager.connection_spec = &quot;unix://var/run/milter/milter-manager.sock&quot;</programlisting>
+  <para>
+  A socket file permission can be specified by
+  <link linkend='configuration.manager-unix-socket-mode'>manager.unix_socket_mode</link>
+  .
+</para>
+  <programlisting># Users who belongs to the same group that owns the socket
+# can connect to milter-manager.
+manager.unix_socket_mode = 0660</programlisting>
+  <para>
+  A group for socket file can be specified by
+  <link linkend='configuration.manager-unix-socket-group'>manager.unix_socket_group</link>
+  .
+</para>
+  <programlisting># Socket file is belongs to &quot;milter&quot; group.
+manager.unix_socket_group = &quot;milter&quot;</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>Cleanup UNIX domain socket</title>
+  <para>Creating socket is failed when the same name of newly UNIX domain socket. To avoid the situation, milter-manager provides features that remove socket file on the following points:</para>
+  <orderedlist>
+  <listitem>
+  <para>before creating a UNIX domain socket</para>
+</listitem>
+  <listitem>
+  <para>after finishing a UNIX domain socket use</para>
+</listitem>
+</orderedlist>
+  <para>Normally, milter-manager doesn't fail to create a socket by 'socket file already exists' reason because milter-manager enables both of them by default.</para>
+  <para>If you want to disable the features, change the following configuration respectively:</para>
+  <orderedlist>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-remove-unix-socket-on-create'>manager.remove_unix_socket_on_create</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='configuration.manager-remove-unix-socket-on-close'>manager.remove_unix_socket_on_close</link>
+  
+</para>
+</listitem>
+</orderedlist>
+  <para>Here is an configuration to disable both of them:</para>
+  <programlisting># Don't remove an existing socket file before creating a socket file
+manager.remove_unix_socket_on_create = false
+# Don't remove a socket file after its use
+manager.remove_unix_socket_on_close = false</programlisting>
+</refsect2>
+
+</refsect1>
+
+
+<refsect1>
+  <title>Configuration: Application</title>
+  <refsect2>
+  <title>Apply milters to messages only for specified accounts</title>
+  <para>milter-manager provides a sample configuration to restrict milter application to specified account. This section shows an example that all registered milters only applied to the following accounts:</para>
+  <orderedlist>
+  <listitem>
+  <para>test-user@example.com</para>
+</listitem>
+  <listitem>
+  <para>all accounts in test.example.com domain</para>
+</listitem>
+</orderedlist>
+  <para>
+  Here is a configuration to be appended to
+  <link linkend='reverse-dictionary.configuration-basic-find-configuration-file'>milter-manager.local.conf</link>
+  :
+</para>
+  <programlisting>restrict_accounts_by_list(&quot;test-user@example.com&quot;,
+                          /@test\.example\.com\z/)</programlisting>
+  <para>This configuration syntax may be changed because this is still sample. But a feature provided by this configuration will be still provided. The feature will be more powerful by supporting database and LDAP as an account source in the future.</para>
+</refsect2>
+</refsect1>
+</refentry>

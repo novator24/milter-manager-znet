@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-connection">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-connection.top_of_page">milter-connection</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-connection</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-connection.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-CONNECTION-DEFAULT-BACKLOG:CAPS">MILTER_CONNECTION_DEFAULT_BACKLOG</link>
+#define             <link linkend="MILTER-CONNECTION-ERROR:CAPS">MILTER_CONNECTION_ERROR</link>
+struct              <link linkend="MilterGenericSocketAddress">MilterGenericSocketAddress</link>;
+enum                <link linkend="MilterConnectionError">MilterConnectionError</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-connection-error-quark">milter_connection_error_quark</link>       (<parameter><type>void</type></parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-connection-parse-spec">milter_connection_parse_spec</link>        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *domain</parameter>,
+                                                         <parameter><type>struct sockaddr</type> **address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> *address_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="GIOChannel"><returnvalue>GIOChannel</returnvalue></link> *        <link linkend="milter-connection-listen">milter_connection_listen</link>            (<parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> backlog</parameter>,
+                                                         <parameter><type>struct sockaddr</type> **address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> *address_size</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove_unix_socket</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-connection-address-to-spec">milter_connection_address_to_spec</link>   (<parameter>const <type>struct sockaddr</type> *address</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-connection.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-connection.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-CONNECTION-DEFAULT-BACKLOG:CAPS" role="macro">
+<title>MILTER_CONNECTION_DEFAULT_BACKLOG</title>
+<indexterm zone="MILTER-CONNECTION-DEFAULT-BACKLOG:CAPS"><primary>MILTER_CONNECTION_DEFAULT_BACKLOG</primary></indexterm>
+<programlisting>#  define MILTER_CONNECTION_DEFAULT_BACKLOG SOMAXCONN
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-CONNECTION-ERROR:CAPS" role="macro">
+<title>MILTER_CONNECTION_ERROR</title>
+<indexterm zone="MILTER-CONNECTION-ERROR:CAPS"><primary>MILTER_CONNECTION_ERROR</primary></indexterm>
+<programlisting>#define MILTER_CONNECTION_ERROR           (milter_connection_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterGenericSocketAddress" role="struct">
+<title>struct MilterGenericSocketAddress</title>
+<indexterm zone="MilterGenericSocketAddress"><primary>MilterGenericSocketAddress</primary></indexterm>
+<programlisting>struct MilterGenericSocketAddress {
+    union {
+        struct sockaddr base;
+        struct sockaddr_un un;
+        struct sockaddr_in inet;
+        struct sockaddr_in6 inet6;
+    } address;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterConnectionError" role="enum">
+<title>enum MilterConnectionError</title>
+<indexterm zone="MilterConnectionError"><primary>MilterConnectionError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_CONNECTION_ERROR_INVALID_FORMAT,
+    MILTER_CONNECTION_ERROR_SOCKET_FAILURE,
+    MILTER_CONNECTION_ERROR_SET_SOCKET_OPTION_FAILURE,
+    MILTER_CONNECTION_ERROR_ACCEPT_FAILURE,
+    MILTER_CONNECTION_ERROR_BIND_FAILURE,
+    MILTER_CONNECTION_ERROR_LISTEN_FAILURE,
+    MILTER_CONNECTION_ERROR_UNIX_SOCKET
+} MilterConnectionError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-connection-error-quark" role="function">
+<title>milter_connection_error_quark ()</title>
+<indexterm zone="milter-connection-error-quark"><primary>milter_connection_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_connection_error_quark       (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-connection-parse-spec" role="function">
+<title>milter_connection_parse_spec ()</title>
+<indexterm zone="milter-connection-parse-spec"><primary>milter_connection_parse_spec</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_connection_parse_spec        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *domain</parameter>,
+                                                         <parameter><type>struct sockaddr</type> **address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> *address_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-connection-listen" role="function">
+<title>milter_connection_listen ()</title>
+<indexterm zone="milter-connection-listen"><primary>milter_connection_listen</primary></indexterm>
+<programlisting><link linkend="GIOChannel"><returnvalue>GIOChannel</returnvalue></link> *        milter_connection_listen            (<parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> backlog</parameter>,
+                                                         <parameter><type>struct sockaddr</type> **address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> *address_size</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove_unix_socket</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-connection-address-to-spec" role="function">
+<title>milter_connection_address_to_spec ()</title>
+<indexterm zone="milter-connection-address-to-spec"><primary>milter_connection_address_to_spec</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_connection_address_to_spec   (<parameter>const <type>struct sockaddr</type> *address</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

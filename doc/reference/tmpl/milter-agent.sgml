@@ -1,0 +1,131 @@
+<!-- ##### SECTION Title ##### -->
+MilterAgent
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_AGENT_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterAgentError ##### -->
+<para>
+
+</para>
+
+@MILTER_AGENT_ERROR_IO_ERROR: 
+@MILTER_AGENT_ERROR_DECODE_ERROR: 
+@MILTER_AGENT_ERROR_NO_EVENT_LOOP_ERROR: 
+
+<!-- ##### STRUCT MilterAgent ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION milter_agent_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_agent_get_encoder ##### -->
+<para>
+
+</para>
+
+@agent: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_agent_get_decoder ##### -->
+<para>
+
+</para>
+
+@agent: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_agent_set_writer ##### -->
+<para>
+
+</para>
+
+@agent: 
+@writer: 
+
+
+<!-- ##### FUNCTION milter_agent_set_reader ##### -->
+<para>
+
+</para>
+
+@agent: 
+@reader: 
+
+
+<!-- ##### FUNCTION milter_agent_write_packet ##### -->
+<para>
+
+</para>
+
+@agent: 
+@packet: 
+@packet_size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_agent_flush ##### -->
+<para>
+
+</para>
+
+@agent: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_agent_start ##### -->
+<para>
+
+</para>
+
+@agent: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_agent_shutdown ##### -->
+<para>
+
+</para>
+
+@agent: 
+
+

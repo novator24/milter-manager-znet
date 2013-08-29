@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-on-ubuntu">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-on-ubuntu.top_of_page'>Upgrade on Ubuntu</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Upgrade on Ubuntu</refname>
+  <refpurpose>How to upgrade milter manager on Ubuntu Linux</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes how to upgrade milter manager on Ubuntu Linux. See 
+  <link linkend='install-to-ubuntu'>Install to Ubuntu</link>
+   for newly install information.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Upgrade</title>
+  <para>We just upgrade milter manager package.</para>
+  <programlisting>% sudo apt-get -V -y upgrade</programlisting>
+  <refsect2>
+  <title>Upgrade from before 1.8.0</title>
+  <para>We have changed the GPG key to sign packages on 2011-11-15. Please import new GPG key.</para>
+  <programlisting>% sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1</programlisting>
+  <para>We have changed sources.list URI. We are going to delete old URI support, when we release milter manager 1.9.0.</para>
+  <para>Please update your source.list as soon as possible.</para>
+</refsect2>
+
+  <refsect2>
+  <title>For Lucid Lynx</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>For Precise Pangolin</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>For Quantal Quetzal</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>For Raring Ringtail</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe</programlisting>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>Conclusion</title>
+  <para>milter manager can be upgraded easily. It means that milter manager is a low maintenance cost software.</para>
+  <para>If we want to use improvements in a new version, please upgrade your milter manager.</para>
+  <para>
+  If we've also installed optional packages, we will go to
+  <link linkend='upgrade-options-on-ubuntu'>Upgrade on Ubuntu (optional)</link>
+  .
+</para>
+</refsect1>
+</refentry>

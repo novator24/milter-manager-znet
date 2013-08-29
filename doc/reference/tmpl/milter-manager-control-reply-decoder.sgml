@@ -1,0 +1,71 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerControlReplyDecoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROL_REPLY_DECODER ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerControlReplyDecoderError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_CONTROL_REPLY_DECODER_ERROR_UNEXPECTED_REPLY: 
+
+<!-- ##### STRUCT MilterManagerControlReplyDecoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_control_reply_decoder_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_control_reply_decoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+

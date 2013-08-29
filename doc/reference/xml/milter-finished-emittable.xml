@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterFinishedEmittable">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterFinishedEmittable.top_of_page">MilterFinishedEmittable</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterFinishedEmittable</refname>
+<refpurpose>An interface for "finished" signal.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="MilterFinishedEmittable.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>                    <link linkend="MilterFinishedEmittable-struct">MilterFinishedEmittable</link>;
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-finished-emittable-emit">milter_finished_emittable_emit</link>      (<parameter><link linkend="MilterFinishedEmittable"><type>MilterFinishedEmittable</type></link> *emittable</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterFinishedEmittable.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GInterface">GInterface</link>
+   +----MilterFinishedEmittable
+</synopsis>
+</refsect1>
+<refsect1 id="MilterFinishedEmittable.implementations" role="implementations">
+<title role="implementations.title">Known Implementations</title>
+<para>
+MilterFinishedEmittable is implemented by
+ <link linkend="MilterAgent">MilterAgent</link>,  <link linkend="MilterClientContext">MilterClientContext</link>,  <link linkend="MilterProtocolAgent">MilterProtocolAgent</link>,  <link linkend="MilterReader">MilterReader</link> and  <link linkend="MilterServerContext">MilterServerContext</link>.</para>
+</refsect1>
+
+<refsect1 id="MilterFinishedEmittable.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="MilterFinishedEmittable"><literal>MilterFinishedEmittable</literal></link> interface provides
+<link linkend="MilterFinishedEmittable-finished"><type>"finished"</type></link>
+signal. <link linkend="MilterFinishedEmittable-finished"><type>"finished"</type></link> signal will be
+emitted on finishing something.
+</para>
+</refsect1>
+<refsect1 id="MilterFinishedEmittable.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MilterFinishedEmittable-struct" role="struct">
+<title>MilterFinishedEmittable</title>
+<indexterm zone="MilterFinishedEmittable-struct"><primary>MilterFinishedEmittable</primary></indexterm>
+<programlisting>typedef struct _MilterFinishedEmittable MilterFinishedEmittable;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-finished-emittable-emit" role="function">
+<title>milter_finished_emittable_emit ()</title>
+<indexterm zone="milter-finished-emittable-emit"><primary>milter_finished_emittable_emit</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_finished_emittable_emit      (<parameter><link linkend="MilterFinishedEmittable"><type>MilterFinishedEmittable</type></link> *emittable</parameter>);</programlisting>
+<para>
+Emits <link linkend="MilterFinishedEmittable-finished"><type>"finished"</type></link> signal.
+</para><variablelist role="params">
+<varlistentry><term><parameter>emittable</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="MilterFinishedEmittable"><literal>MilterFinishedEmittable</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+</refentry>

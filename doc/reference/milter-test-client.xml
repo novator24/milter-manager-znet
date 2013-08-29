@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-test-client">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-test-client.top_of_page'>milter-test-client</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-test-client</refname>
+  <refpurpose>milter side milter protocol implemented program</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>NAME</title>
+  <para>milter-test-client - milter side milter protocol implemented program</para>
+</refsect1>
+
+<refsect1>
+  <title>SYNOPSIS</title>
+  <para>
+  <code>milter-test-client</code>
+   [
+  <emphasis>option ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>DESCRIPTION</title>
+  <para>milter-test-client is a milter that just shows received data from MTA. It also shows macros received from MTA, it can be used for confirming MTA's milter configuration.</para>
+  <para>Postfix's source archive includes similar tool. It's src/milter/test-milter.c. It seems that it's used for testing Postfix's milter implementation. But test-milter doesn't show macros. If you have a milter that doesn't work as you expect and uses macro, milter-test-client is useful tool for looking into the problems.</para>
+</refsect1>
+
+<refsect1>
+  <title>Options</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-test-client.--help'>--help</term>
+  <listitem>
+  <para>Shows available options and exits.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--connection-spec'>--connection-spec=SPEC</term>
+  <listitem>
+  <para>Specifies a socket that accepts connections from MTA. SPEC should be formatted as one of the followings:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:PATH</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT@HOST</para>
+</listitem>
+  <listitem>
+  <para>inet:PORT@[ADDRESS]</para>
+</listitem>
+  <listitem>
+  <para>inet6:POST</para>
+</listitem>
+  <listitem>
+  <para>inet6:PORT@HOST</para>
+</listitem>
+  <listitem>
+  <para>inet6:PORT@[ADDRESS]</para>
+</listitem>
+</itemizedlist>
+  <para>Examples:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:/tmp/milter-test-client.sock</para>
+</listitem>
+  <listitem>
+  <para>inet:10025</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@[127.0.0.1]</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--verbose'>--verbose</term>
+  <listitem>
+  <para>Logs verbosely.</para>
+  <para>&quot;MILTER_LOG_LEVEL=all&quot; environment variable configuration has the same effect.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--syslog'>--syslog</term>
+  <listitem>
+  <para>Logs Syslog too.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--no-report-request'>--no-report-request</term>
+  <listitem>
+  <para>Doesn't show any information received from MTA.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--report-memory-profile'>--report-memory-profile</term>
+  <listitem>
+  <para>Reports memory usage each milter session finished.</para>
+  <para>When MILTER_MEMORY_PROFILE environment variable is set to 'yes', details are reported.</para>
+  <para>Example:</para>
+  <programlisting>% MILTER_MEMORY_PROFILE=yes milter-test-client -s inet:10025</programlisting>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--daemon'>--daemon</term>
+  <listitem>
+  <para>Runs as daemon process.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--user'>--user=USER</term>
+  <listitem>
+  <para>Runs as USER's process. root privilege is needed.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--group'>--group=GROUP</term>
+  <listitem>
+  <para>Runs as GROUP's process. root privilege is needed.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--unix-socket-group'>--unix-socket-group=GROUP</term>
+  <listitem>
+  <para>Changes UNIX domain socket group to GROUP when &quot;unix:PATH&quot; format SPEC is used.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--n-workers'>--n-workers=N_WORKERS</term>
+  <listitem>
+  <para>
+  Runs 
+  <varname>N_WORKERS</varname>
+   processes to process mails. Availble value is between 0 and 1000. If it is 0, no worker processes will be used.
+</para>
+  <para>
+  <emphasis>NOTE: This item is an experimental feature.</emphasis>
+  
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--event-loop-backend'>--event-loop-backend=BACKEDN</term>
+  <listitem>
+  <para>
+  Uses 
+  <varname>BACKEND</varname>
+   as event loop backend. Availble values are 
+  <command>glib</command>
+   or 
+  <command>libev</command>
+  .
+</para>
+  <para>
+  <emphasis>NOTE: This item is an experimental feature.</emphasis>
+  
+</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--packet-buffer-size'>--packet-buffer-size=SIZE</term>
+  <listitem>
+  <para>
+  Uses 
+  <varname>SIZE</varname>
+   as send packets buffer size on end-of-message. Buffered packets are sent when buffer size is rather than 
+  <varname>SIZE</varname>
+   bytes. Buffering is disabled when 
+  <varname>SIZE</varname>
+   is 0.
+</para>
+  <para>The default is 0KB. It means packet buffering is disabled by default.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-test-client.--version'>--version</term>
+  <listitem>
+  <para>Shows version and exits.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>EXIT STATUS</title>
+  <para>The exit status is 0 if milter starts to listen and non 0 otherwise. milter-test-client can't start to listen when connection spec is invalid format or other connection specific problems. e.g. the port number is already used, permission isn't granted for create UNIX domain socket and so on.</para>
+</refsect1>
+
+<refsect1>
+  <title>EXAMPLE</title>
+  <para>The following example runs a milter which listens at 10025 port and waits a connection from MTA.</para>
+  <programlisting>% milter-test-client -s inet:10025</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>SEE ALSO</title>
+  <para>
+  <link linkend='milter-test-server'>milter-test-server.rd</link>
+  (1),
+  <link linkend='milter-performance-check'>milter-performance-check.rd</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

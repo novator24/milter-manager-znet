@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-Client-library">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-Client-library.top_of_page">クライアントライブラリ</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>クライアントライブラリ</refname>
+<refpurpose>milterを実装するためのクライアントライブラリ。</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-Client-library.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+<anchor id="MilterClient"/>
+<synopsis>#define             <link linkend="MILTER-CLIENT-ERROR:CAPS">MILTER_CLIENT_ERROR</link>
+enum                <link linkend="MilterClientError">MilterClientError</link>;
+                    <link linkend="MilterClient-struct">MilterClient</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-client-error-quark">milter_client_error_quark</link>           (<parameter><type>void</type></parameter>);
+<link linkend="MilterClient"><returnvalue>MilterClient</returnvalue></link> *      <link linkend="milter-client-new">milter_client_new</link>                   (<parameter><type>void</type></parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-client-get-default-connection-spec">milter_client_get_default_connection_spec</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-set-connection-spec">milter_client_set_connection_spec</link>   (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="GIOChannel"><returnvalue>GIOChannel</returnvalue></link> *        <link linkend="milter-client-get-listen-channel">milter_client_get_listen_channel</link>    (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-listen-channel">milter_client_set_listen_channel</link>    (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *channel</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-listen-backlog">milter_client_set_listen_backlog</link>    (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> backlog</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-is-remove-unix-socket-on-create">milter_client_is_remove_unix_socket_on_create</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-remove-unix-socket-on-create">milter_client_set_remove_unix_socket_on_create</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-timeout">milter_client_set_timeout</link>           (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> timeout</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-client-get-unix-socket-mode">milter_client_get_unix_socket_mode</link>  (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-client-get-default-unix-socket-mode">milter_client_get_default_unix_socket_mode</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-default-unix-socket-mode">milter_client_set_default_unix_socket_mode</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mode</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-client-get-unix-socket-group">milter_client_get_unix_socket_group</link> (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-client-get-default-unix-socket-group">milter_client_get_default_unix_socket_group</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-default-unix-socket-group">milter_client_set_default_unix_socket_group</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *group</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-is-remove-unix-socket-on-close">milter_client_is_remove_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-get-default-remove-unix-socket-on-close">milter_client_get_default_remove_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-set-default-remove-unix-socket-on-close">milter_client_set_default_remove_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-client-main">milter_client_main</link>                  (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-client-shutdown">milter_client_shutdown</link>              (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="milter-manager-Client-library.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----MilterClient
+</synopsis>
+</refsect1>
+<refsect1 id="milter-manager-Client-library.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">実装されたインターフェイス</title>
+<para>MilterClientは<link linkend="MilterErrorEmittable">MilterErrorEmittable</link>を実装しています。</para>
+</refsect1>
+<refsect1 id="milter-manager-Client-library.properties" role="properties">
+<title role="properties.title">プロパティ</title>
+<synopsis>
+  "<link linkend="MilterClient--connection-spec">connection-spec</link>"          <link linkend="gchar"><type>gchar</type></link>*                : Read
+  "<link linkend="MilterClient--custom-fork">custom-fork</link>"              <link linkend="gpointer"><type>gpointer</type></link>              : Read / Write
+  "<link linkend="MilterClient--default-packet-buffer-size">default-packet-buffer-size</link>" <link linkend="guint"><type>guint</type></link>                 : Read / Write
+  "<link linkend="MilterClient--event-loop">event-loop</link>"               <link linkend="MilterEventLoop"><type>MilterEventLoop</type></link>*      : Read
+  "<link linkend="MilterClient--event-loop-backend">event-loop-backend</link>"       <link linkend="MilterClientEventLoopBackend"><type>MilterClientEventLoopBackend</type></link>  : Read / Write
+  "<link linkend="MilterClient--maintenance-interval">maintenance-interval</link>"     <link linkend="guint"><type>guint</type></link>                 : Read / Write
+  "<link linkend="MilterClient--max-pending-finished-sessions">max-pending-finished-sessions</link>" <link linkend="guint"><type>guint</type></link>                 : Read / Write
+  "<link linkend="MilterClient--n-workers">n-workers</link>"                <link linkend="guint"><type>guint</type></link>                 : Read / Write
+  "<link linkend="MilterClient--pid-file">pid-file</link>"                 <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  "<link linkend="MilterClient--remove-pid-file-on-exit">remove-pid-file-on-exit</link>"  <link linkend="gboolean"><type>gboolean</type></link>              : Read / Write
+  "<link linkend="MilterClient--run-as-daemon">run-as-daemon</link>"            <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  "<link linkend="MilterClient--start-syslog">start-syslog</link>"             <link linkend="gboolean"><type>gboolean</type></link>              : Write
+  "<link linkend="MilterClient--syslog-facility">syslog-facility</link>"          <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  "<link linkend="MilterClient--syslog-identify">syslog-identify</link>"          <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  "<link linkend="MilterClient--worker-id">worker-id</link>"                <link linkend="guint"><type>guint</type></link>                 : Read
+</synopsis>
+</refsect1>
+<refsect1 id="milter-manager-Client-library.signals" role="signal_proto">
+<title role="signal_proto.title">シグナル</title>
+<synopsis>
+  "<link linkend="MilterClient-connection-established">connection-established</link>"                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterClient-event-loop-created">event-loop-created</link>"                             : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterClient-listen-started">listen-started</link>"                                 : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterClient-maintain">maintain</link>"                                       : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterClient-sessions-finished">sessions-finished</link>"                              : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+</synopsis>
+</refsect1>
+
+<refsect1 id="milter-manager-Client-library.description" role="desc">
+<title role="desc.title">説明</title>
+<para>milter-clientライブラリはクライアント側のすべてのmilterプロトコルを処理する機能を提供します。「クライアント側」というのは「milter側」ということで、「MTA側」ではありません。</para>
+<para>milter-clientライブラリでの主要なクラスは<link linkend="MilterClient"><literal>MilterClient</literal></link>と<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>です。<link linkend="MilterClient"><literal>MilterClient</literal></link>はMTAからの複数の接続を受け付け、各接続は<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>が処理します。</para>
+<refsect2>
+  <title>使用法概観</title>
+  <para>メインループに入る前に、接続指定をし、<link linkend="MilterClient-connection-established"><type>"connection-established"</type></link>シグナルに接続します。</para>
+  <para>接続指定はMTAが<link linkend="MilterClient"><literal>MilterClient</literal></link>に接続するためのエントリポイントです。接続指定は「プロトコル:情報」という形式になっています。IPv4ソケットでは「inet:ポート番号」、「inet:ポート番号&commat;ホスト名」、「inet:ポート番号&commat;[IPv4アドレス]」が正しい形式です。IPv6ソケットでは、「inet6:ポート番号」、「inet6:ポート番号&commat;ホスト名」、「inet6:ポート番号&commat;[IPv6アドレス]」が正しい形式です。UNIXドメインソケットでは「unix:パス」が正しい形式です。</para>
+  <para><link linkend="MilterClient"><literal>MilterClient</literal></link>は<link linkend="MilterClient-connection-established"><type>"connection-established"</type></link>シグナルを発行します。<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>のセットアップはこのシグナルの中で行います。多くの場合、渡された<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>にコールバックを接続します。利用可能なシグナルは<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>を見てください。</para>
+  <para><link linkend="milter-client-main"><function>milter_client_main()</function></link>はメインループ関数です。<link linkend="MilterClient"><literal>MilterClient</literal></link>の準備が終わったらメインループには行ってください。</para>
+  <para>milter-clientライブラリを使った例です。tool/milter-test-client.cも見てください。milter-test-client.cはmilter-clientライブラリを使ったmilterの実装例です。</para>
+  <informalexample><programlisting>
+#include &lt;stdlib.h&gt;
+#include &lt;milter/client.h&gt;
+
+static void
+cb_connection_established (MilterClient *client,
+                           MilterClientContext *context,
+                           gpointer user_data)
+{
+   connect_to_your_interesting_signals(client, context, user_data);
+}
+
+int
+main (int argc, char **argv)
+{
+    gboolean success;
+    const gchar spec[] = "inet:10025@localhost";
+    MilterClient *client;
+    GError *error = NULL;
+
+    milter_init();
+    milter_client_init();
+
+    client = milter_client_new();
+    if (!milter_client_set_connection_spec(client, spec, &amp;error)) {
+        g_print("%s\n", error-&gt;message);
+        g_error_free(error);
+        return EXIT_FAILURE;
+    }
+    g_signal_connect(client, "connection-established",
+                     G_CALLBACK(cb_connection_established), NULL);
+    milter_client_run(client);
+
+    milter_client_quit();
+    milter_quit();
+
+    return success ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+</programlisting></informalexample>
+
+</refsect2>
+
+<refsect2>
+  <title>処理モデル</title>
+  <para>Sendmailが提供するlibmilterは各接続毎にスレッドを生成するモデルです。しかし、milter-clientライブラリはこのモデルを使いません。milter-clientライブラリは2つのスレッドを使います。1つのスレッドは<link linkend="MilterClient"><literal>MilterClient</literal></link>用のスレッドで、もう1つのスレッドは<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>用のスレッドです。1つ目のスレッドでは<link linkend="MilterClient"><literal>MilterClient</literal></link>がMTAからの接続を受け付けて、それを割り振るだけです。<link linkend="MilterClientContext"><literal>MilterClientContext</literal>GMainLoop</link></para>
+  <para>libmilterのモデルは接続を受け付けるためにmilter-clientライブラリのモデルよりも多くコストがかかります。これは、libmilterのモデルがスレッドを生成するのに対して、milter-clientライブラリは単に<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>オブジェクトを生成するだけだからです。ただし、多くの場合、この違いはボトルネックとはなりません。:-|</para>
+</refsect2>
+
+</refsect1>
+<refsect1 id="milter-manager-Client-library.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-CLIENT-ERROR:CAPS" role="macro">
+<title>MILTER_CLIENT_ERROR</title>
+<indexterm zone="MILTER-CLIENT-ERROR:CAPS"><primary>MILTER_CLIENT_ERROR</primary></indexterm>
+<programlisting>#define MILTER_CLIENT_ERROR           (milter_client_error_quark())
+</programlisting>
+<para><link linkend="MilterClient"><type>MilterClient</type></link>のエラー用の<link linkend="GError"><type>GError</type></link>クォークを取得するために使われます。</para></refsect2>
+<refsect2 id="MilterClientError" role="enum">
+<title>enum MilterClientError</title>
+<indexterm zone="MilterClientError"><primary>MilterClientError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_CLIENT_ERROR_RUNNING,
+    MILTER_CLIENT_ERROR_UNIX_SOCKET,
+    MILTER_CLIENT_ERROR_IO_ERROR,
+    MILTER_CLIENT_ERROR_THREAD,
+    MILTER_CLIENT_ERROR_PASSWORD_ENTRY,
+    MILTER_CLIENT_ERROR_GROUP_ENTRY,
+    MILTER_CLIENT_ERROR_DROP_PRIVILEGE,
+    MILTER_CLIENT_ERROR_DETACH_IO,
+    MILTER_CLIENT_ERROR_DAEMONIZE,
+    MILTER_CLIENT_ERROR_NOT_LISTENED_YET,
+    MILTER_CLIENT_ERROR_PROCESS,
+    MILTER_CLIENT_ERROR_PID_FILE
+} MilterClientError;
+</programlisting>
+<para><link linkend="MilterClient"><literal>MilterClient</literal></link>の関数呼び出し中に発生するエラーを識別します。</para><variablelist role="enum">
+<varlistentry id="MILTER-CLIENT-ERROR-RUNNING:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_RUNNING</literal></term>
+<listitem><simpara>メインループがすでに回っていることを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-UNIX-SOCKET:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_UNIX_SOCKET</literal></term>
+<listitem><simpara>UNIXドメインソケット関連のエラーであることを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-IO-ERROR:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_IO_ERROR</literal></term>
+<listitem><simpara>IO関連のエラーであることを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-THREAD:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_THREAD</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-PASSWORD-ENTRY:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_PASSWORD_ENTRY</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-GROUP-ENTRY:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_GROUP_ENTRY</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-DROP-PRIVILEGE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_DROP_PRIVILEGE</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-DETACH-IO:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_DETACH_IO</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-DAEMONIZE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_DAEMONIZE</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-NOT-LISTENED-YET:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_NOT_LISTENED_YET</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-PROCESS:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_PROCESS</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-CLIENT-ERROR-PID-FILE:CAPS" role="constant">
+<term><literal>MILTER_CLIENT_ERROR_PID_FILE</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterClient-struct" role="struct">
+<title>MilterClient</title>
+<indexterm zone="MilterClient-struct"><primary>MilterClient</primary></indexterm>
+<programlisting>typedef struct _MilterClient MilterClient;</programlisting>
+<para><link linkend="MilterClient"><literal>MilterClient</literal></link>は前面にでるオブジェクトです。このオブジェクトがMTAからの接続を受け付けて、各コンテキストに割り振ります。</para></refsect2>
+<refsect2 id="milter-client-error-quark" role="function">
+<title>milter_client_error_quark ()</title>
+<indexterm zone="milter-client-error-quark"><primary>milter_client_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_client_error_quark           (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-client-new" role="function">
+<title>milter_client_new ()</title>
+<indexterm zone="milter-client-new"><primary>milter_client_new</primary></indexterm>
+<programlisting><link linkend="MilterClient"><returnvalue>MilterClient</returnvalue></link> *      milter_client_new                   (<parameter><type>void</type></parameter>);</programlisting>
+<para>新しいクライアントを生成します。</para><variablelist role="params">
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>新しい<link linkend="MilterClient"><literal>MilterClient</literal></link>オブジェクト。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-default-connection-spec" role="function">
+<title>milter_client_get_default_connection_spec ()</title>
+<indexterm zone="milter-client-get-default-connection-spec"><primary>milter_client_get_default_connection_spec</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_client_get_default_connection_spec
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>既定の接続指定を取得します。必要がなくなったら、既定の接続指定を開放してください。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>既定の接続指定のコピー。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-connection-spec" role="function">
+<title>milter_client_set_connection_spec ()</title>
+<indexterm zone="milter-client-set-connection-spec"><primary>milter_client_set_connection_spec</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_set_connection_spec   (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>接続指定を設定します。<parameter>spec</parameter>が不正な形式で、<parameter>error</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>でない場合は、エラーの詳細は<parameter>error</parameter>に設定されます。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>spec</parameter> :</term>
+<listitem><simpara>inet:10025のような接続指定。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter> :</term>
+<listitem><simpara>エラーを受け取る場所のアドレス、または<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-listen-channel" role="function">
+<title>milter_client_get_listen_channel ()</title>
+<indexterm zone="milter-client-get-listen-channel"><primary>milter_client_get_listen_channel</primary></indexterm>
+<programlisting><link linkend="GIOChannel"><returnvalue>GIOChannel</returnvalue></link> *        milter_client_get_listen_channel    (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>接続待ち用のチャンネルを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>接続待ち用チャンネル。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-listen-channel" role="function">
+<title>milter_client_set_listen_channel ()</title>
+<indexterm zone="milter-client-set-listen-channel"><primary>milter_client_set_listen_channel</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_listen_channel    (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *channel</parameter>);</programlisting>
+<para>接続待ち用チャンネルを設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>channel</parameter> :</term>
+<listitem><simpara>接続待ち用のチャンネル。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-listen-backlog" role="function">
+<title>milter_client_set_listen_backlog ()</title>
+<indexterm zone="milter-client-set-listen-backlog"><primary>milter_client_set_listen_backlog</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_listen_backlog    (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> backlog</parameter>);</programlisting>
+<para>listen(2)用のバックログを設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>backlog</parameter> :</term>
+<listitem><simpara>listen(2)用のバックログ。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-is-remove-unix-socket-on-create" role="function">
+<title>milter_client_is_remove_unix_socket_on_create ()</title>
+<indexterm zone="milter-client-is-remove-unix-socket-on-create"><primary>milter_client_is_remove_unix_socket_on_create</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_is_remove_unix_socket_on_create
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>新しいUNIXドメインソケットを作成する前に既存のUNIXドメインソケットを削除するかどうかを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>作成時に既存のUNIXドメインソケットを削除する場合は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>、そうでない場合は<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-remove-unix-socket-on-create" role="function">
+<title>milter_client_set_remove_unix_socket_on_create ()</title>
+<indexterm zone="milter-client-set-remove-unix-socket-on-create"><primary>milter_client_set_remove_unix_socket_on_create</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_remove_unix_socket_on_create
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);</programlisting>
+<para>新しいUNIXドメインソケットを作成する前に既存のUNIXドメインソケットを削除するかどうかを設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>remove</parameter> :</term>
+<listitem><simpara>新しいUNIXドメインソケットを作成する前に既存のUNIXドメインソケットを削除するなら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-timeout" role="function">
+<title>milter_client_set_timeout ()</title>
+<indexterm zone="milter-client-set-timeout"><primary>milter_client_set_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_timeout           (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> timeout</parameter>);</programlisting>
+<para>接続が確立した<link linkend="MilterClientContext"><literal>MilterClientContext</literal></link>に設定するタイムアウト値を設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter> :</term>
+<listitem><simpara>秒単位でのタイムアウト。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-unix-socket-mode" role="function">
+<title>milter_client_get_unix_socket_mode ()</title>
+<indexterm zone="milter-client-get-unix-socket-mode"><primary>milter_client_get_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_client_get_unix_socket_mode  (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>UNIXドメインソケットのモードを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>UNIXドメインソケットのモード。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-default-unix-socket-mode" role="function">
+<title>milter_client_get_default_unix_socket_mode ()</title>
+<indexterm zone="milter-client-get-default-unix-socket-mode"><primary>milter_client_get_default_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_client_get_default_unix_socket_mode
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>既定のUNIXドメインソケットのモードを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>既定のUNIXドメインソケットのモード。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-default-unix-socket-mode" role="function">
+<title>milter_client_set_default_unix_socket_mode ()</title>
+<indexterm zone="milter-client-set-default-unix-socket-mode"><primary>milter_client_set_default_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_default_unix_socket_mode
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mode</parameter>);</programlisting>
+<para>既定のUNIXドメインソケットモードを設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mode</parameter> :</term>
+<listitem><simpara>UNIXドメインソケットのモード。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-unix-socket-group" role="function">
+<title>milter_client_get_unix_socket_group ()</title>
+<indexterm zone="milter-client-get-unix-socket-group"><primary>milter_client_get_unix_socket_group</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_client_get_unix_socket_group (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>UNIXドメインソケットのグループを設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>UNIXドメインソケットのグループ名。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-default-unix-socket-group" role="function">
+<title>milter_client_get_default_unix_socket_group ()</title>
+<indexterm zone="milter-client-get-default-unix-socket-group"><primary>milter_client_get_default_unix_socket_group</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_client_get_default_unix_socket_group
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>既定のUNIXドメインソケットグループを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>既定のUNIXドメインソケットグループ名。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-default-unix-socket-group" role="function">
+<title>milter_client_set_default_unix_socket_group ()</title>
+<indexterm zone="milter-client-set-default-unix-socket-group"><primary>milter_client_set_default_unix_socket_group</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_default_unix_socket_group
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *group</parameter>);</programlisting>
+<para>既定のUNIXドメインソケットグループを設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>group</parameter> :</term>
+<listitem><simpara>グループ名。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-is-remove-unix-socket-on-close" role="function">
+<title>milter_client_is_remove_unix_socket_on_close ()</title>
+<indexterm zone="milter-client-is-remove-unix-socket-on-close"><primary>milter_client_is_remove_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_is_remove_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>UNIXドメインソケットを閉じた後に削除するかどうかを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>UNIXドメインソケットを閉じたときに削除するなら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>、そうでなければ<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-get-default-remove-unix-socket-on-close" role="function">
+<title>milter_client_get_default_remove_unix_socket_on_close ()</title>
+<indexterm zone="milter-client-get-default-remove-unix-socket-on-close"><primary>milter_client_get_default_remove_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_get_default_remove_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>ソケットを閉じた後にUNIXドメインソケットを削除するかどうかの既定の値を取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>UNIXドメインソケットを閉じたときに削除するなら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>、そうでなければ<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-set-default-remove-unix-socket-on-close" role="function">
+<title>milter_client_set_default_remove_unix_socket_on_close ()</title>
+<indexterm zone="milter-client-set-default-remove-unix-socket-on-close"><primary>milter_client_set_default_remove_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_set_default_remove_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);</programlisting>
+<para>ソケットを閉じた後にUNIXドメインソケットを削除するかどうかの既定の値を取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>remove</parameter> :</term>
+<listitem><simpara>ソケットを閉じた後にUNIXドメインソケットを削除するなら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-main" role="function" condition="deprecated:1.6.2: Use milter_client_run() instead.">
+<title>milter_client_main ()</title>
+<indexterm zone="milter-client-main" role="deprecated"><primary>milter_client_main</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_client_main                  (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<warning><para><literal>milter_client_main</literal> has been deprecated since version 1.6.2 and should not be used in newly-written code. Use <link linkend="milter-client-run"><function>milter_client_run()</function></link> instead.</para></warning>
+<para>メインループを実行します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if main loop is quitted successfully,
+<link linkend="FALSE:CAPS"><literal>FALSE</literal></link> otherwise.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-client-shutdown" role="function">
+<title>milter_client_shutdown ()</title>
+<indexterm zone="milter-client-shutdown"><primary>milter_client_shutdown</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_client_shutdown              (<parameter><link linkend="MilterClient"><type>MilterClient</type></link> *client</parameter>);</programlisting>
+<para>メインループを終了します。</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter> :</term>
+<listitem><simpara><link linkend="MilterClient"><literal>MilterClient</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="milter-manager-Client-library.property-details" role="property_details">
+<title role="property_details.title">プロパティ詳細</title>
+<refsect2 id="MilterClient--connection-spec" role="property"><title><literal>"connection-spec"</literal>プロパティ</title>
+<indexterm zone="MilterClient--connection-spec"><primary>MilterClient:connection-spec</primary></indexterm>
+<programlisting>  "connection-spec"          <link linkend="gchar"><type>gchar</type></link>*                : Read</programlisting>
+<para>クライアントの接続指定。</para><para>デフォルト値: NULL</para>
+</refsect2>
+<refsect2 id="MilterClient--custom-fork" role="property"><title><literal>"custom-fork</literal>プロパティ</title>
+<indexterm zone="MilterClient--custom-fork"><primary>MilterClient:custom-fork</primary></indexterm>
+<programlisting>  "custom-fork"              <link linkend="gpointer"><type>gpointer</type></link>              : Read / Write</programlisting>
+<para>The custom fork.</para></refsect2>
+<refsect2 id="MilterClient--default-packet-buffer-size" role="property"><title><literal>"default-packet-buffer-size"</literal>プロパティ</title>
+<indexterm zone="MilterClient--default-packet-buffer-size"><primary>MilterClient:default-packet-buffer-size</primary></indexterm>
+<programlisting>  "default-packet-buffer-size" <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>The default packet buffer size of each client context of the client.</para><para>デフォルト値: 0</para>
+</refsect2>
+<refsect2 id="MilterClient--event-loop" role="property"><title><literal>"event-loop"</literal>プロパティ</title>
+<indexterm zone="MilterClient--event-loop"><primary>MilterClient:event-loop</primary></indexterm>
+<programlisting>  "event-loop"               <link linkend="MilterEventLoop"><type>MilterEventLoop</type></link>*      : Read</programlisting>
+<para>クライアントのイベントループ。</para></refsect2>
+<refsect2 id="MilterClient--event-loop-backend" role="property"><title><literal>"event-loop-backend"</literal>プロパティ</title>
+<indexterm zone="MilterClient--event-loop-backend"><primary>MilterClient:event-loop-backend</primary></indexterm>
+<programlisting>  "event-loop-backend"       <link linkend="MilterClientEventLoopBackend"><type>MilterClientEventLoopBackend</type></link>  : Read / Write</programlisting>
+<para>クライアントのイベントループバックエンド。</para><para>Default value: MILTER_CLIENT_EVENT_LOOP_BACKEND_DEFAULT</para>
+</refsect2>
+<refsect2 id="MilterClient--maintenance-interval" role="property"><title><literal>"maintenance-interval"</literal>プロパティ</title>
+<indexterm zone="MilterClient--maintenance-interval"><primary>MilterClient:maintenance-interval</primary></indexterm>
+<programlisting>  "maintenance-interval"     <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>Maintenance interval of the client. each 'maintenance-interval' sessions finished 'maintenance' signal is emitted. 0 means 'disabled'.</para><para>デフォルト値: 0</para>
+</refsect2>
+<refsect2 id="MilterClient--max-pending-finished-sessions" role="property"><title>The <literal>"max-pending-finished-sessions"</literal> property</title>
+<indexterm zone="MilterClient--max-pending-finished-sessions"><primary>MilterClient:max-pending-finished-sessions</primary></indexterm>
+<programlisting>  "max-pending-finished-sessions" <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>The maximum number of pending finished sessions of the client.</para><para>デフォルト値: 0</para>
+</refsect2>
+<refsect2 id="MilterClient--n-workers" role="property"><title><literal>"n-workers"</literal>プロパティ</title>
+<indexterm zone="MilterClient--n-workers"><primary>MilterClient:n-workers</primary></indexterm>
+<programlisting>  "n-workers"                <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>The Number of worker processes of the client.</para><para>Allowed values: &lt;= 1000</para>
+<para>デフォルト値: 0</para>
+</refsect2>
+<refsect2 id="MilterClient--pid-file" role="property"><title><literal>"pid-file"</literal>プロパティ</title>
+<indexterm zone="MilterClient--pid-file"><primary>MilterClient:pid-file</primary></indexterm>
+<programlisting>  "pid-file"                 <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>クライアントのPIDファイル。</para><para>デフォルト値: NULL</para>
+</refsect2>
+<refsect2 id="MilterClient--remove-pid-file-on-exit" role="property"><title><literal>"remove-pid-file-on-exit"</literal>プロパティ</title>
+<indexterm zone="MilterClient--remove-pid-file-on-exit"><primary>MilterClient:remove-pid-file-on-exit</primary></indexterm>
+<programlisting>  "remove-pid-file-on-exit"  <link linkend="gboolean"><type>gboolean</type></link>              : Read / Write</programlisting>
+<para>Whether removing PID file of the client on exist.</para><para>デフォルト値: TRUE</para>
+</refsect2>
+<refsect2 id="MilterClient--run-as-daemon" role="property"><title><literal>"run-as-daemon"</literal>プロパティ</title>
+<indexterm zone="MilterClient--run-as-daemon"><primary>MilterClient:run-as-daemon</primary></indexterm>
+<programlisting>  "run-as-daemon"            <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>Whether running the client as a daemon or not.</para><para>デフォルト値: NULL</para>
+</refsect2>
+<refsect2 id="MilterClient--start-syslog" role="property"><title>The <literal>"start-syslog"</literal> property</title>
+<indexterm zone="MilterClient--start-syslog"><primary>MilterClient:start-syslog</primary></indexterm>
+<programlisting>  "start-syslog"             <link linkend="gboolean"><type>gboolean</type></link>              : Write</programlisting>
+<para>Start syslog for the client.</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="MilterClient--syslog-facility" role="property"><title><literal>"syslog-facility"</literal>プロパティ</title>
+<indexterm zone="MilterClient--syslog-facility"><primary>MilterClient:syslog-facility</primary></indexterm>
+<programlisting>  "syslog-facility"          <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>クライアントのsyslogファシリティ名。</para><para>デフォルト値: NULL</para>
+</refsect2>
+<refsect2 id="MilterClient--syslog-identify" role="property"><title><literal>"syslog-identify"</literal>プロパティ</title>
+<indexterm zone="MilterClient--syslog-identify"><primary>MilterClient:syslog-identify</primary></indexterm>
+<programlisting>  "syslog-identify"          <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>Syslog identify of the client.</para><para>デフォルト値: NULL</para>
+</refsect2>
+<refsect2 id="MilterClient--worker-id" role="property"><title><literal>"worker-id"</literal>プロパティ</title>
+<indexterm zone="MilterClient--worker-id"><primary>MilterClient:worker-id</primary></indexterm>
+<programlisting>  "worker-id"                <link linkend="guint"><type>guint</type></link>                 : Read</programlisting>
+<para>クライアントのワーカープロセスID。</para><para>Allowed values: &lt;= 1000</para>
+<para>デフォルト値: 0</para>
+</refsect2>
+</refsect1>
+<refsect1 id="milter-manager-Client-library.signal-details" role="signals">
+<title role="signals.title">シグナル詳細</title>
+<refsect2 id="MilterClient-connection-established" role="signal"><title><literal>"connection-established"</literal>シグナル</title>
+<indexterm zone="MilterClient-connection-established"><primary>MilterClient::connection-established</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClient"><type>MilterClient</type></link>        *milterclient,
+                                                        <link linkend="MilterClientContext"><type>MilterClientContext</type></link> *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterclient</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClient-event-loop-created" role="signal"><title><literal>"event-loop-created"</literal>シグナル</title>
+<indexterm zone="MilterClient-event-loop-created"><primary>MilterClient::event-loop-created</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClient"><type>MilterClient</type></link>    *milterclient,
+                                                        <link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>         user_data)         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterclient</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClient-listen-started" role="signal"><title><literal>"listen-started"</literal>シグナル</title>
+<indexterm zone="MilterClient-listen-started"><primary>MilterClient::listen-started</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClient"><type>MilterClient</type></link> *milterclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>      arg1,
+                                                        <link linkend="guint"><type>guint</type></link>         arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>      user_data)         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterclient</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClient-maintain" role="signal"><title><literal>"maintain"</literal>シグナル</title>
+<indexterm zone="MilterClient-maintain"><primary>MilterClient::maintain</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClient"><type>MilterClient</type></link> *milterclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>      user_data)         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterclient</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterClient-sessions-finished" role="signal"><title><literal>"sessions-finished"</literal>シグナル</title>
+<indexterm zone="MilterClient-sessions-finished"><primary>MilterClient::sessions-finished</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterClient"><type>MilterClient</type></link> *milterclient,
+                                                        <link linkend="guint"><type>guint</type></link>         arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>      user_data)         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterclient</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+</refentry>

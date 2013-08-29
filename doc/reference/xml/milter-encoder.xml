@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-MilterEncoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-MilterEncoder.top_of_page">MilterEncoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterEncoder</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-MilterEncoder.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="MilterEncoder">MilterEncoder</link>;
+<link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     <link linkend="milter-encoder-new">milter_encoder_new</link>                  (<parameter><type>void</type></parameter>);
+<link linkend="GString"><returnvalue>GString</returnvalue></link> *           <link linkend="milter-encoder-get-buffer">milter_encoder_get_buffer</link>           (<parameter><link linkend="MilterEncoder"><type>MilterEncoder</type></link> *encoder</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-encoder-pack">milter_encoder_pack</link>                 (<parameter><link linkend="MilterEncoder"><type>MilterEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-encoder-encode-negotiate">milter_encoder_encode_negotiate</link>     (<parameter><link linkend="MilterEncoder"><type>MilterEncoder</type></link> *encoder</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-MilterEncoder.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-MilterEncoder.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MilterEncoder" role="struct">
+<title>struct MilterEncoder</title>
+<indexterm zone="MilterEncoder"><primary>MilterEncoder</primary></indexterm>
+<programlisting>struct MilterEncoder {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-encoder-new" role="function">
+<title>milter_encoder_new ()</title>
+<indexterm zone="milter-encoder-new"><primary>milter_encoder_new</primary></indexterm>
+<programlisting><link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     milter_encoder_new                  (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-encoder-get-buffer" role="function">
+<title>milter_encoder_get_buffer ()</title>
+<indexterm zone="milter-encoder-get-buffer"><primary>milter_encoder_get_buffer</primary></indexterm>
+<programlisting><link linkend="GString"><returnvalue>GString</returnvalue></link> *           milter_encoder_get_buffer           (<parameter><link linkend="MilterEncoder"><type>MilterEncoder</type></link> *encoder</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-encoder-pack" role="function">
+<title>milter_encoder_pack ()</title>
+<indexterm zone="milter-encoder-pack"><primary>milter_encoder_pack</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_encoder_pack                 (<parameter><link linkend="MilterEncoder"><type>MilterEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-encoder-encode-negotiate" role="function">
+<title>milter_encoder_encode_negotiate ()</title>
+<indexterm zone="milter-encoder-encode-negotiate"><primary>milter_encoder_encode_negotiate</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_encoder_encode_negotiate     (<parameter><link linkend="MilterEncoder"><type>MilterEncoder</type></link> *encoder</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

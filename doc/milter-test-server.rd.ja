@@ -1,0 +1,328 @@
+= milter-test-server / milter manager / milter managerのマニュアル
+
+== 名前
+
+milter-test-server - MTA側のmilterプロトコルを実装したプログラム
+
+== 書式
+
+(({milter-test-server})) [((*オプション ...*))]
+
+== 説明
+
+milter-test-serverはMTA側のmilterプロトコルを話します。つまり、
+MTA無しでmilterに接続することができます。現時点では、同様のツー
+ルは存在しないため、MTA+milterではなくmilter単体のテストを行
+うためには有用なツールです。例えば、以下のような用途に利用で
+きます。
+
+  * milterの性能計測
+  * milterの動作確認
+
+milter-test-serverは実行時間を表示するので、簡単な性能計測に
+も利用できます。このとき、MTAとは関係なくmilter単体での実行時
+間を確認できるため、MTA経由で試す場合よりも問題点の発見が容易
+になります。
+
+milter-test-serverはヘッダや本文が変更された場合は、変更され
+た内容を表示します。そのため、ヘッダや本文を変更するmilterの
+テストも容易に行うことができます。
+((<C言語用テスティングフレームワークCutter|URL:http://cutter.sourceforge.net/index.html.ja>))
+などと組み合わせて自動化された単体テストを作成することもでき
+ます。
+
+== オプション
+
+: --help
+
+   利用できるオプションを表示して終了します。
+
+: --name=NAME
+
+   milter-test-serverの名前としてNAMEを使用します。名前は
+   "{daemon_name}"マクロの値などで利用されます。
+
+   デフォルトはmilter-test-server（コマンドファイル名）です。
+
+: --connection-spec=SPEC
+
+   接続先のmilterのソケットを指定します。SPECの書式は次のう
+   ちのどれかです。
+
+     * unix:パス
+     * inet:ポート番号
+     * inet:ポート番号@ホスト名
+     * inet:ポート番号@[アドレス]
+     * inet6:ポート番号
+     * inet6:ポート番号@ホスト名
+     * inet6:ポート番号@[アドレス]
+
+   例:
+     * unix:/var/run/milter/milter-manager.sock
+     * inet:10025
+     * inet:10025@localhost
+     * inet:10025@[127.0.0.1]
+     * inet6:10025
+     * inet6:10025@localhost
+     * inet6:10025@[::1]
+
+: --negotiate-version=VERSION
+
+    クライアントへ送信するmilterプロトコルのバージョンとして
+    VERSIONを使用します。
+
+    デフォルトは8（Sendmail 8.14のデフォルトと同じ）です。
+
+: --connect-host=HOST
+
+    接続元のホスト名としてHOSTを使用します。
+
+    このホスト名はmilterのxxfi_connect()コールバックに渡りま
+    す。
+
+: --connect-address=SPEC
+
+    接続元のアドレスとしてSPECを使用します。SPECの書式
+    は--connection-specの書式と同じです。
+
+    このアドレスはmilterのxxfi_connect()コールバックに渡りま
+    す。
+
+: --connect-macro=NAME:VALUE
+
+   xxfi_connect()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_connect()コールバック時にclient_connectionsという名
+   前で値が1のマクロを送信したい場合は以下のように指定します。
+
+     --connect-macro client_connections:1
+
+: --helo-fqdn=FQDN
+
+    HELO/EHLO時の引数としてFQDNを使用します。
+
+    このfqdnはmilterのxxfi_helo()コールバックに渡ります。
+
+: --helo-macro=NAME:VALUE
+
+   xxfi_helo()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_helo()コールバック時にclient_ptrという名
+   前で値がunknownのマクロを送信したい場合は以下のように指定します。
+
+     --helo-macro client_ptr:unknown
+
+: --envelope-from=FROM, -fFROM
+
+    MAIL FROM時の引数としてFROMを使用します。
+
+    このアドレスはmilterのxxfi_envfrom()コールバックに渡ります。
+
+: --envelope-from-macro=NAME:VALUE
+
+   xxfi_envfrom()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_envfrom()コールバック時にclient_addrという名
+   前で値が192.168.0.1のマクロを送信したい場合は以下のように
+   指定します。
+
+     --envelope-from-macro client_addr:192.168.0.1
+
+: --envelope-recipient=RECIPIENT, -rRECIPIENT
+
+    RCPT TO時の引数としてRECIPIENTを使用します。複数の宛先を
+    指定したい場合は--envelope-recipientオプションを複数回指
+    定してください。
+
+    このアドレスはmilterのxxfi_envrcpt()コールバックに渡りま
+    す。xxfi_envrcpt()は1つの宛先につき1回呼ばれるので、宛先
+    が複数個ある場合はその分だけxxfi_envrcpt()が呼ばれます。
+
+: --envelope-recipient-macro=NAME:VALUE
+
+   xxfi_envrcpt()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_envrcpt()コールバック時にclient_portという名
+   前で値が2929のマクロを送信したい場合は以下のように
+   指定します。
+
+     --envelope-recipient-macro client_port:2929
+
+: --data-macro=NAME:VALUE
+
+   xxfi_data()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_data()コールバック時にclient_nameという名
+   前で値がunknownのマクロを送信したい場合は以下のように
+   指定します。
+
+     --data-macro client_name:unknown
+
+: --header=NAME:VALUE
+
+    名前がNAMEで値がVALUEのヘッダを追加します。複数のヘッダ
+    を追加したい場合は--headerオプションを複数回指定してくだ
+    さい。
+
+    このヘッダはmilterのxxfi_header()コールバックに渡ります。
+    xxfi_header()は1つのヘッダにつき1回呼ばれるので、ヘッダ
+    が複数個ある場合はその分だけxxfi_header()が呼ばれます。
+
+: --end-of-header-macro=NAME:VALUE
+
+   xxfi_eoh()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_eoh()コールバック時にn_headersという名前で値が100の
+   マクロを送信したい場合は以下のように指定します。
+
+     --end-of-header-macro n_headers:100
+
+: --body=CHUNK
+
+    本文の一片としてCHUNKを追加します。複数のまとまりを追加
+    する場合は--bodyオプションを複数回指定してください。
+
+    この本文のまとまりはmilterのxxfi_body()コールバックに渡り
+    ます。xxfi_body()は1つのまとまりにつき1回呼ばれるので、
+    まとまりが複数個ある場合はその分だけxxfi_body()が呼ばれま
+    す。
+
+: --end-of-message-macro=NAME:VALUE
+
+   xxfi_eom()コールバック時に送信するマクロを追加します。
+   マクロの名前はNAMEで値はVALUEになります。複数のマクロを設
+   定する場合はこのオプションを複数指定します。
+
+   xxfi_eom()コールバック時にelapsedという名前で値が0.29の
+   マクロを送信したい場合は以下のように指定します。
+
+     --end-of-message-macro elapsed:0.29
+
+: --unknown=COMMAND
+
+    未知のSMTPコマンドとしてCOMMANDを使います。
+
+    このコマンドはmilterのxxfi_unknown()コールバックに渡りま
+    す。xxfi_unknown()コールバックは、xxfi_envrcpt()コールバッ
+    クとxxfi_data()コールバックの間に呼ばれます。
+
+: --authenticated-name=NAME
+
+    SMTP Authで認証されたユーザ名を指定します。SASLでのログ
+    イン名に相当します。このオプションを指定するとMAIL FROM
+    のときに(({{auth_authen}}))の値として((|NAME|))を渡しま
+    す。
+
+: --authenticated-type=TYPE
+
+    SMTP Authの認証に使用した方法を指定します。SASLでのログ
+    インメソッドに相当します。このオプションを指定するとMAIL
+    FROMのときに(({{auth_type}}))の値として((|TYPE|))を渡しま
+    す。
+
+: --authenticated-author=AUTHOR
+
+    SMTP Authで認証された送信者を指定します。SASL送信者に相
+    当します。このオプションを指定するとMAIL FROMのときに
+    (({{auth_author}}))の値として((|AUTHOR|))を渡します。
+
+: --mail-file=PATH
+
+    メールの内容として((|PATH|))にあるメールを使います。メー
+    ル中にFrom:やTo:があった場合は、それらの値を送信元や宛先
+    のアドレスとして使用します。
+
+: --output-message
+
+    milter適用後のメッセージを表示します。ヘッダを追加・削除
+    したり、本文を置換するmilterの動作を確認したい場合はこの
+    オプションを指定してください。
+
+: --color=[yes|true|no|false|auto]
+
+    --colorのみ、またはyes、trueを指定した場合はmilter適用後
+    のメッセージを色付きで表示します。autoを指定した場合は、
+    ターミナル上で実行していそうなら色を付けます。
+
+    既定値はnoです。色付けしません。
+
+: --connection-timeout=SECONDS
+
+    milterとの接続確立に使える時間を指定します。
+    ((|SECONDS|))秒以内に接続を確立できない場合はエラー
+    になります。
+
+    既定値は300秒（5分）です。
+
+: --reading-timeout=SECONDS
+
+    milterからのレスポンスを待つ時間を指定します。
+    ((|SECONDS|))秒以内にレスポンスがこない場合はエラーにな
+    ります。
+
+    既定値は10秒です。
+
+: --writing-timeout=SECONDS
+
+    milterへのコマンド送信に使える時間を指定します。
+    ((|SECONDS|))秒以内に送信できない場合はエラーにな
+    ります。
+
+    既定値は10秒です。
+
+: --end-of-message-timeout=SECONDS
+
+    milterからのend-of-messageコマンドのレスポンスを待つ時間
+    を指定します。
+    ((|SECONDS|))秒以内にレスポンスが完了しない場合はエラーにな
+    ります。
+
+    既定値は300秒（5分）です。
+
+: --threads=N
+
+   Nスレッドで同時にリクエストを送ります。
+
+   既定値は0で、メインスレッドのみでリクエストを送ります。
+
+: --verbose
+
+   実行時のログをより詳細に出力します。
+
+   「MILTER_LOG_LEVEL=all」というように環境変数を設定している
+   場合と同じ効果があります。
+
+: --version
+
+    バージョンを表示して終了します。
+
+== 終了ステータス
+
+milterセッションが始まった場合は0で、そうでない場合は0以外に
+なります。ソケットの書式が間違っている場合か
+milter-test-serverがmilterに接続できない場合は、milterセッショ
+ンを始めることができません。
+
+== 例
+
+以下の例では、ホスト192.168.1.29上の10025番ポートで待ち受け
+ているmilterに接続します。
+
+  % milter-test-server -s inet:10025@192.168.1.29
+
+== 関連項目
+
+((<milter-test-client.rd.ja>))(1),
+((<milter-performance-check.rd.ja>))(1)

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-syslog-logger">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-syslog-logger.top_of_page">MilterSyslogLogger</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterSyslogLogger</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-syslog-logger.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-TYPE-SYSLOG-LOGGER:CAPS">MILTER_TYPE_SYSLOG_LOGGER</link>
+#define             <link linkend="MILTER-SYSLOG-LOGGER:CAPS">MILTER_SYSLOG_LOGGER</link>                (obj)
+#define             <link linkend="MILTER-SYSLOG-LOGGER-IS:CAPS">MILTER_SYSLOG_LOGGER_IS</link>             (obj)
+#define             <link linkend="MILTER-SYSLOG-LOGGER-GET-CLASS:CAPS">MILTER_SYSLOG_LOGGER_GET_CLASS</link>      (obj)
+struct              <link linkend="MilterSyslogLogger">MilterSyslogLogger</link>;
+<link linkend="MilterSyslogLogger"><returnvalue>MilterSyslogLogger</returnvalue></link> * <link linkend="milter-syslog-logger-new">milter_syslog_logger_new</link>           (<parameter>const <link linkend="gchar"><type>gchar</type></link> *identity</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *facility</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-syslog-logger.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-syslog-logger.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-TYPE-SYSLOG-LOGGER:CAPS" role="macro">
+<title>MILTER_TYPE_SYSLOG_LOGGER</title>
+<indexterm zone="MILTER-TYPE-SYSLOG-LOGGER:CAPS"><primary>MILTER_TYPE_SYSLOG_LOGGER</primary></indexterm>
+<programlisting>#define MILTER_TYPE_SYSLOG_LOGGER            (milter_syslog_logger_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-SYSLOG-LOGGER:CAPS" role="macro">
+<title>MILTER_SYSLOG_LOGGER()</title>
+<indexterm zone="MILTER-SYSLOG-LOGGER:CAPS"><primary>MILTER_SYSLOG_LOGGER</primary></indexterm>
+<programlisting>#define MILTER_SYSLOG_LOGGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_SYSLOG_LOGGER, MilterSyslogLogger))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-SYSLOG-LOGGER-IS:CAPS" role="macro">
+<title>MILTER_SYSLOG_LOGGER_IS()</title>
+<indexterm zone="MILTER-SYSLOG-LOGGER-IS:CAPS"><primary>MILTER_SYSLOG_LOGGER_IS</primary></indexterm>
+<programlisting>#define MILTER_SYSLOG_LOGGER_IS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), MILTER_TYPE_SYSLOG_LOGGER))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-SYSLOG-LOGGER-GET-CLASS:CAPS" role="macro">
+<title>MILTER_SYSLOG_LOGGER_GET_CLASS()</title>
+<indexterm zone="MILTER-SYSLOG-LOGGER-GET-CLASS:CAPS"><primary>MILTER_SYSLOG_LOGGER_GET_CLASS</primary></indexterm>
+<programlisting>#define MILTER_SYSLOG_LOGGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), MILTER_TYPE_SYSLOG_LOGGER, MilterSyslogLoggerClass))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterSyslogLogger" role="struct">
+<title>struct MilterSyslogLogger</title>
+<indexterm zone="MilterSyslogLogger"><primary>MilterSyslogLogger</primary></indexterm>
+<programlisting>struct MilterSyslogLogger {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-syslog-logger-new" role="function">
+<title>milter_syslog_logger_new ()</title>
+<indexterm zone="milter-syslog-logger-new"><primary>milter_syslog_logger_new</primary></indexterm>
+<programlisting><link linkend="MilterSyslogLogger"><returnvalue>MilterSyslogLogger</returnvalue></link> * milter_syslog_logger_new           (<parameter>const <link linkend="gchar"><type>gchar</type></link> *identity</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *facility</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

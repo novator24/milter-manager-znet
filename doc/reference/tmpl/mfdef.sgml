@@ -1,0 +1,178 @@
+<!-- ##### SECTION Title ##### -->
+mfdef
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO SMFIR_ADDRCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_DELRCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_ADDRCPT_PAR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_SHUTDOWN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_ACCEPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_REPLBODY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_CONTINUE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_DISCARD ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_CHGFROM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_CONN_FAIL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_ADDHEADER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_INSHEADER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_SETSYMLIST ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_CHGHEADER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_PROGRESS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_QUARANTINE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_REJECT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_SKIP ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_TEMPFAIL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIR_REPLYCODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_FIRST ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_LAST ##### -->
+<para>
+
+</para>
+
+
+

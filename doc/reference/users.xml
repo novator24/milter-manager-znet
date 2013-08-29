@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="users">
+<refmeta>
+  <refentrytitle role='top_of_page' id='users.top_of_page'>Users</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Users</refname>
+  <refpurpose>milter manager users</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>This document shows milter manager users.</para>
+</refsect1>
+
+<refsect1>
+  <title>Companies</title>
+  <para>Here is a list of companies that uses milter manager:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  ... (Please send a mail to 
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en'>mailing list</ulink>
+  or kou@clear-code.com if your company can be listed.)
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>Others</title>
+  <para>Here is a list of milter manager users that can be found on the Web:</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  ... (Please send a mail to 
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en'>mailing list</ulink>
+  or kou@clear-code.com if you find a blog post or install memo of milter manager.)
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

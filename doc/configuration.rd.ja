@@ -1,0 +1,2416 @@
+# -*- rd -*-
+
+= 設定 --- milter-manager.confの書き方
+
+== このドキュメントについて
+
+milter-managerの設定ファイルmilter-manager.confの書き方につ
+いて説明します。
+
+== 場所
+
+ここでは/usr/local/以下にインストールされたものとして説明しま
+す。configure時に--prefix=/usr/local/オプションを指定する
+か、--prefixオプションを省略した場合は/usr/local/以下にインス
+トールされます。
+
+この場合は、設定ファイルは
+/usr/local/etc/milter-manager/milter-manager.confになります。
+インストールが成功していれば、もうすでにファイルが存在するは
+ずです。
+
+== 概要
+
+設定ファイルの先頭は以下のようになっています。
+
+  # -*- ruby -*-
+
+  load("applicable-conditions/*.conf")
+  load_default
+  load_if_exist("milter-manager.local.conf")
+
+通常は、この部分はそのままにしておき、milter-manager.confと
+同じディレクトリにmilter-manager.local.confというファイルを
+作成し、そのファイルに設定を記述します。
+
+設定項目は以下のように分類されています。
+
+  * ((<パッケージ関連|.#package>))
+  * ((<セキュリティ関連|.#security>))
+  * ((<ログ関連|.#log>))
+  * ((<milter-manager関連|.#milter-manager>))
+  * ((<コントローラ関連|.#controller>))
+  * ((<子milter関連|.#child-milter>))
+  * ((<組み込み適用条件|.#built-in-applicable-conditions>))
+  * ((<適用条件定義関連|.#applicable-condition>))
+  * ((<データベース関連|.#database>))
+
+このうち、適用条件関連とデータベース関連はRubyの知識が必要に
+なります。((<S25R|URL:http://gabacho.reto.jp/anti-spam/>))な
+どの有用な適用条件は標準で提供されているので、必ずしも自分で
+適用条件を定義できる必要はありません。そのため、適用条件の説
+明は一番最後にあります。適用条件を定義する必要がない場合は、
+適用条件関連の部分は読み飛ばしても構いません。
+
+それぞれ順に説明する前に、設定をする上で便利なmilter-manager
+機能を紹介します。milter-managerを--show-configオプションを付
+きで起動すると、現在の設定内容が表示されます。
+
+  % /usr/local/sbin/milter-manager --show-config
+  package.platform = "debian"
+  package.options = nil
+
+  security.privilege_mode = false
+  security.effective_user = nil
+  security.effective_group = nil
+
+  log.level = "default"
+  log.use_syslog = true
+  log.syslog_facility = "mail"
+
+  manager.connection_spec = nil
+  manager.unix_socket_mode = 0660
+  manager.unix_socket_group = nil
+  manager.remove_unix_socket_on_create = true
+  manager.remove_unix_socket_on_close = true
+  manager.daemon = false
+  manager.pid_file = nil
+  manager.maintenance_interval = 10
+  manager.suspend_time_on_unacceptable = 5
+  manager.max_connections = 0
+  manager.custom_configuration_directory = nil
+  manager.fallback_status = "accept"
+  manager.fallback_status_at_disconnect = "temporary-failure"
+  manager.event_loop_backend = "glib"
+  manager.n_workers = 0
+  manager.packet_buffer_size = 0
+  manager.connection_check_interval = 0
+  manager.chunk_size = 65535
+  manager.max_pending_finished_sessions = 0
+
+  controller.connection_spec = nil
+  controller.unix_socket_mode = 0660
+  controller.remove_unix_socket_on_create = true
+  controller.remove_unix_socket_on_close = true
+
+  define_applicable_condition("S25R") do |condition|
+    condition.description = "Selective SMTP Rejection"
+  end
+
+  define_applicable_condition("Remote Network") do |condition|
+    condition.description = "Check only remote network"
+  end
+
+この内容で設定内容を確認することができます。
+
+また、この書式はそのまま設定ファイルの書式になっているので、
+設定の書き方を忘れたときにはこの内容をヒントにすることができ
+ます。
+
+それでは、それぞれの分類毎に説明します。
+
+== [package] パッケージ関連
+
+: package.platform
+
+   ((*この項目は通常は変更する必要はありません。*))
+
+   milterの自動検出方法はプラットフォーム毎に異なります。自
+   動検出はmilterがプラットフォームで用いているパッケージシ
+   ステムでインストールされていることを前提としています。そ
+   のため、実際のプラットフォームとmilter-managerが認識して
+   いるプラットフォームが異なると、自動検出がうまく動きませ
+   ん。
+
+   プラットフォームはビルド時に検出しています。検出結果が間
+   違っている場合は、ビルド時に修正することができます。検出
+   結果が間違っているが、ビルドをやり直すことができない場合
+   に、この設定項目を利用します。
+
+   現在、標準で利用可能なプラットフォームは以下の通りです。
+
+     * debian: Debian GNU/LinuxやUbuntu LinuxなどDebian系Linux用
+     * redhat: CentOSなどRedHat系Linux
+     * freebsd: FreeBSD用
+     * pkgsrc: NetBSDやDragonFly BSDなどpkgsrcを利用している*BSD用
+
+   プラットフォーム名は「"」で囲んて"debian"というように指定
+   します。
+
+   注意: 変更する場合はload_defaultの((*前*))に行って下さい。
+
+   例:
+     package.platform = "pkgsrc"
+
+   既定値:
+     package.platform = "debian" # 環境に依存
+
+: package.options
+
+   ((*この項目は通常は変更する必要はありません。*))
+
+   package.platformと同様にビルド時に決定しています。
+
+   milter自動検出処理へ付加情報を渡すための項目です。
+   "名前1=値1,名前2=値2,.."という形式で複数の情報を渡すこと
+   ができます。
+
+   現在、この付加情報を使っているのはpkgsrcプラットフォーム
+   のときだけで、"prefix=rc.dがあるディレクトリのパス"という
+   情報を使っています。例えば、/etc/rc.d/以下に起動スクリプ
+   トをインストールしている時は、"prefix=/etc"と指定します。
+
+   注意: 変更する場合はload_defaultの((*前*))に行って下さい。
+
+   例:
+     package.options = "prefix=/etc,name=value"
+
+   既定値:
+     package.options = nil # 環境に依存
+
+== [security] セキュリティ関連
+
+: security.privilege_mode
+
+   特権モードで動作するかどうかを指定します。子milter自動起
+   動機能を利用する場合は有効にする必要があります。
+
+   有効にする場合はtrueを指定します。無効にする場合はfalseを
+   指定します。
+
+   例:
+     security.privilege_mode = true
+
+   既定値:
+     security.privilege_mode = false
+
+: security.effective_user
+
+   milter-managerプロセスの実効ユーザを指定します。ユーザを
+   切り替えるにはmilter-managerコマンドをroot権限で起動する
+   必要があります。
+
+   実効ユーザは「"」で囲んて"nobody"というように指定します。
+   ユーザを指定しない場合はnilを指定します。
+
+   例:
+     security.effective_user = "nobody"
+
+   既定値:
+     security.effective_user = nil
+
+: security.effective_group
+
+   milter-managerプロセスの実効グループを指定します。グルー
+   プを切り替えるにはmilter-managerコマンドをroot権限で起動
+   する必要があります。
+
+   実効グループは「"」で囲んで"nogroup"というように指定します。
+   グループを指定しない場合はnilを指定します。
+
+   例:
+     security.effective_group = "nogroup"
+
+   既定値:
+     security.effective_group = nil
+
+== [log] ログ関連
+
+1.6.6から使用可能。
+
+: log.level
+
+   ログレベルを指定します。ログレベルはすべて独立しているの
+   で、必要なログレベルを組み合わせて指定します。例えば、
+   「infoとdebugとerrorレベルのログを出力する」というような
+   指定になります
+
+   指定可能なログレベルは以下の通りです。
+
+     : default
+        critical、error、warnings、message、
+        statisticsレベルのログを出力。既定値。
+     : all
+        すべてのレベルのログを出力。
+     : critical
+        致命的な問題のログを出力。
+     : error
+        エラー時のログを出力。
+     : warning
+        警告時のログを出力。
+     : message
+        重要なメッセージを出力。
+     : info
+        通常のメッセージを出力。
+     : debug
+        デバッグログを出力。
+     : statistics
+        統計用ログを出力。
+     : profile
+        プロファイル用ログを出力。
+
+   ログレベルは「"」で囲んで"all"というように指定します。
+   複数のログレベルを指定する場合は"critical|error|warning"
+   というように「|」で区切ります。
+
+   例:
+     log.level = "all"        # すべてのログを出力
+
+   既定値:
+     log.level = "default"
+
+: log.use_syslog
+
+   syslogにもログを出力するかどうかを指定します。
+
+   出力する場合はtrueを指定します。出力しない場合はfalseを指
+   定します。
+
+   例:
+     log.use_syslog = false   # syslogに出力しない
+
+   既定値:
+     log.use_syslog = true
+
+: log.syslog_facility
+
+   syslog出力時に利用するファシリティを指定します。
+
+   指定可能なファシリティと対応するsyslogの定数は以下の通りで
+   す。
+
+     : authpriv
+        LOG_AUTHPRIV
+     : cron
+        LOG_CRON
+     : daemon
+        LOG_DAEMON
+     : kern
+        LOG_KERN
+     : local0
+        LOG_LOCAL0
+     : local1
+        LOG_LOCAL1
+     : local2
+        LOG_LOCAL2
+     : local3
+        LOG_LOCAL3
+     : local4
+        LOG_LOCAL4
+     : local5
+        LOG_LOCAL5
+     : local6
+        LOG_LOCAL6
+     : local7
+        LOG_LOCAL7
+     : lpr
+        LOG_LPR
+     : mail
+        LOG_MAIL
+     : news
+        LOG_NEWS
+     : user
+        LOG_USER
+     : uucp
+        LOG_UUCP
+
+   ファシリティは「"」で囲んで"mail"というように指定します。
+
+   例:
+     log.syslog_facility = "local4"   # LOG_LOCAL4を使う
+
+   既定値:
+     log.syslog_facility = "mail"
+
+== [milter-manager] milter-manager関連
+
+: manager.connection_spec
+
+   milter-managerが接続を受け付けるソケットを指定します。
+
+   ソケットは「"」で囲んて"inet:10025"というように指定します。
+   指定できる書式は以下の通りです。
+
+     * UNIXドメインソケット: unix:パス
+       * 例: unix:/var/run/milter/milter-manager.sock
+
+     * IPv4ソケット: inet:ポート番号
+       * 例: inet:10025
+
+     * IPv4ソケット: inet:ポート番号@ホスト名
+       * 例: inet:10025@localhost
+
+     * IPv4ソケット: inet:ポート番号@[アドレス]
+       * 例: inet:10025@[127.0.0.1]
+
+     * IPv6ソケット: inet6:ポート番号
+       * 例: inet6:10025
+
+     * IPv6ソケット: inet6:ポート番号@ホスト名
+       * 例: inet6:10025@localhost
+
+     * IPv6ソケット: inet6:ポート番号@[アドレス]
+       * 例: inet6:10025@[::1]
+
+   もし、security.effective_user, security.effective_groupを
+   指定している場合は、その権限でUNIXドメインソケットを作成し
+   ます。ソケットを作成するディレクトリのパーミッションに注意
+   してください。
+
+   IPv4ソケット・IPv6ソケットでホスト名を省略した場合は、す
+   べてのネットワークインターフェイスから接続を受け付けます。
+   ホスト名やアドレスを指定した場合はそのアドレスからのみ接
+   続を受け付けます。
+
+   例:
+     manager.connection_spec = "unix:/var/run/milter/milter-manager.sock"
+
+   既定値:
+     manager.connection_spec = "inet:10025@[127.0.0.1]"
+
+: manager.unix_socket_mode
+
+   milter-managerが接続を受け付けるUNIXドメインソケットのパー
+   ミッションを指定します。manager.connection_specでUNIXドメ
+   インソケットを使用している場合のみ利用されます。
+
+   8進数で値を指定するために、先頭に「0」をつけることを忘れ
+   ないでください。
+
+   例:
+     manager.unix_socket_mode = 0600
+
+   既定値:
+     manager.unix_socket_mode = 0660
+
+: manager.unix_socket_group
+
+   milter-managerが接続を受け付けるUNIXドメインソケットのグ
+   ループを指定します。manager.connection_specでUNIXドメイン
+   ソケットを使用している場合のみ利用されます。
+
+   ソケットのグループは
+   security.effective_user/security.effective_group権限で作
+   成された後に、chown(2)で変更します。そのため、指定するグルー
+   プはsecurity.effective_userの補助グループである必要があり
+   ます。
+
+   グループは「"」で囲んて"nogroup"というように指定します。
+   グループを指定しない場合はnilを指定します。
+
+   例:
+     manager.unix_socket_group = "nobody"
+
+   既定値:
+     manager.unix_socket_group = nil
+
+: manager.remove_unix_socket_on_create
+
+   milter-managerが接続を受け付けるUNIXドメインソケットを作
+   成する前にすでにファイルが存在した場合、削除するかどうか
+   を指定します。manager.connection_specでUNIXドメインソケッ
+   トを使用している場合のみ利用されます。
+
+   削除する場合はtrueを指定します。削除しない場合はfalseを指
+   定します。
+
+   例:
+     manager.remove_unix_socket_on_create = false
+
+   既定値:
+     manager.remove_unix_socket_on_create = true
+
+: manager.remove_unix_socket_on_close
+
+   milter-managerが終了するときに、接続を受け付けていたUNIX
+   ドメインソケットを削除するかどうかを指定します。
+   manager.connection_specでUNIXドメインソケットを使用してい
+   る場合のみ利用されます。
+
+   削除する場合はtrueを指定します。削除しない場合はfalseを指
+   定します。
+
+   例:
+     manager.remove_unix_socket_on_close = false
+
+   既定値:
+     manager.remove_unix_socket_on_close = true
+
+: manager.daemon
+
+   デーモンプロセスとして動作するかどうかを指定します。デー
+   モンプロセスで動作する場合は、端末を切り離し、バックグラ
+   ウンドで動作します。運用時はバックグラウンドで起動するこ
+   とをお勧めします。この設定項目はmilter-managerの--daemon
+   コマンドラインオプションで上書きできるため、必ずしも設定ファ
+   イル内で設定する必要はありません。
+
+   デーモンプロセスとして動作する場合はtrueを指定します。そ
+   うでない場合はfalseを指定します。
+
+   例:
+     manager.daemon = true
+
+   既定値:
+     manager.daemon = false
+
+: manager.pid_file
+
+   起動したmilter-managerのプロセスIDを保存するファイルを指
+   定します。
+
+   もし、security.effective_user, security.effective_groupを
+   指定して場合は、その権限でファイルへ書き込みます。ファイ
+   ルのパーミッションに注意してください。
+
+   ファイルのパスは「"」で囲んで
+   "/var/run/milter/milter-manager.pid"というように指定しま
+   す。保存しない場合はnilを指定します。
+
+   例:
+     manager.pid_file = "/var/run/milter/milter-manager.pid"
+
+   既定値:
+     manager.pid_file = nil
+
+: manager.maintenance_interval
+
+   何セッション終了毎にメンテナンス処理を実行するかを指定し
+   ます。
+
+   現時点でのメンテナンス処理とはメモリ解放処理のことです。
+   同時アクセス数が少ない環境では各セッション終了毎にメンテ
+   ナンス処理を実行することによりメモリ使用量を抑えることが
+   できます。同時アクセス数が多い環境では複数セッション終了
+   毎にまとめてメンテナンス処理を実行することにより処理効率
+   をあげることができます。
+
+   0またはnilを指定した場合はメンテナンス処理を実行しません。
+
+   例:
+     manager.maintenance_interval = nil
+
+   既定値:
+     manager.maintenance_interval = 10
+
+: manager.suspend_time_on_unacceptable
+
+   同時に多数の接続があり、MTAからの接続を受け付けることがで
+   きないときに何秒待つかを指定します。ulimitやlimitで同時に
+   開くことができるファイルディスクリプタ数を増やすことも検
+   討してください。
+
+   例:
+     manager.suspend_time_on_unacceptable = 10
+
+   既定値:
+     manager.suspend_time_on_unacceptable = 5
+
+: manager.max_connections
+
+   1.3.1から使用可能。
+
+   最大同時接続数を指定します。0を指定すると無制限になります。
+   既定値では無制限です。
+
+   最大同時接続数の処理を行っているときに新しく接続要求があ
+   ると、処理中の接続が終了するのを待ちます。処理中の接続が
+   終了したかどうかは
+   ((<manager.suspend_time_on_unacceptable|.#manager.suspend_time_on_unacceptable>))
+   で指定した秒数毎に確認します。
+
+   例:
+     manager.max_connections = 10 # 同時に最大10接続のみ受け付ける
+
+   既定値:
+     manager.max_connections = 0 # 制限無し
+
+: manager.max_file_descriptors
+
+   1.3.1から使用可能。
+
+   プロセスが開くことができるファイルディスクリプタ数を指定
+   します。0を指定するとシステムの既定値を変更しません。
+   既定値は0なので、システムの既定値をそのまま使います。
+
+   milter-managerは1つのリクエストに対して「子milter数 +
+   1（MTAとの接続用）」個のファイルディスクリプタを開きます。
+   milter-manager内部でも数個のファイルディスクリプタを開く
+   ので少なくとも以下の個数のファイルディスクリプタが開ける
+   ようにしてください。
+     (子milter数 + 1) * 最大同時接続数 + 10（milter-manager内部で使用 + α）
+
+   プロセスが開くことができるファイルディスクリプタ数は
+   setrlimit(2)でソフトリミットとハードリミットを変更します。
+
+   例:
+     manager.max_file_descriptors = 65535
+
+   既定値:
+     manager.max_file_descriptors = 0
+
+: manager.custom_configuration_directory
+
+   Webインターフェイスから変更した設定内容を保存するディレク
+   トリを指定します。
+
+   ディレクトリのパスは「"」で囲んで"/tmp/milter-manager/"と
+   いうように指定します。
+
+   nilを指定した場合は実効ユーザのホームディレクトリ直下に
+   ".milter-manager"というディレクトリを作成し、そのディレク
+   トリを利用します。
+
+   例:
+     manager.custom_configuration_directory = "/tmp/milter-manager/"
+
+   既定値:
+     manager.custom_configuration_directory = nil
+
+: manager.fallback_status
+
+   1.6.3から使用可能。
+
+   milter-manager内部で問題があったときにSMTPサーバへ返すス
+   テータスを指定します。milter-manager内部で問題が起こるの
+   は以下のような場合です。
+
+     * 子milterが1つも登録されていない。
+     * メール本文用の一時ファイルを作成できない。
+     * など…
+
+   指定できる値は以下のいずれかの値です。
+
+     * "accept": メールを受信します。既定値です。
+     * "temporary-failure": メールを一時的に拒否します。
+     * "reject": メールを拒否します。
+     * "discard": メールを破棄します。
+
+   例:
+     manager.fallback_status = "reject"
+
+   既定値:
+     manager.fallback_status = "accept"
+
+: manager.fallback_status_at_disconnect
+
+   1.6.3から使用可能。
+
+   SMTPクライアントがSMTPセッションの途中でSMTPサーバとの接
+   続を切断したことを検出した時に返すステータスを指定します。
+   切断の検出は既定値では無効になっているので、既定値ではこ
+   の設定が利用されることがありません。切断の検出を有効にす
+   る場合は
+   ((<manager.use_netstat_connection_checker|.#manager.use_netstat_connection-checker>))
+   を利用してください。
+
+   指定できる値は以下のいずれかの値です。
+
+     * "accept": メールを受信します。
+     * "temporary-failure": メールを一時的に拒否します。既定値です。
+     * "reject": メールを拒否します。
+     * "discard": メールを破棄します。
+
+   例:
+     manager.fallback_status_at_disconnect = "discard"
+
+   既定値:
+     manager.fallback_status_at_disconnect = "temporary-failure"
+
+: manager.event_loop_backend
+
+   ((*この項目は通常は使用する必要はありません。*))
+
+   1.6.3から使用可能。
+
+   イベントループのバックエンドを指定します。100メール/秒以
+   下のメール流量を処理するような中小規模のメールシステムで
+   はこの値を変更する必要はありません。100メール/秒以上のメー
+   ル流量を処理するような大規模のメールシステムではこの値を
+   "libev"に設定する必要があります。
+
+   指定できる値は以下のいずれかの値です。
+
+     * "glib": GLibのイベントループを使います。GLibのイベン
+       トループではI/O多重化にpoll(2)を使っています。既定値
+       です。
+     * "libev": I/O多重化に
+       ((<libev|URL:http://libev.schmorp.de/>))を使います。
+       システムによってepoll、kqueueまたはevent portsを使い
+       ます。
+
+   例:
+     manager.event_loop_backend = "libev"
+
+   既定値:
+     manager.event_loop_backend = "glib"
+
+: manager.n_workers
+
+   ((*この項目は通常は使用する必要はありません。*))
+
+   1.6.3から使用可能。
+
+   メールを処理するプロセス数を指定します。100メール/秒以下のメール流量
+   を処理するような中小規模のメールシステムや、非常に重いmilterを使用し
+   ないようなメールシステムではこの値を変更する必要はありません。非常に
+   重いmilterを使用しながら100メール/秒以上のメール流量を処理するような
+   大規模のメールシステムではこの値を増やす必要があります。
+
+   指定できる値は0以上、1000以下です。0のときはワーカープロセスを使用し
+   ません。
+
+   例:
+     manager.n_workers = 10
+
+   既定値:
+     manager.n_workers = 0 # ワーカープロセスを使用しない
+
+: manager.packet_buffer_size
+
+   ((*この項目は通常は使用する必要はありません。*))
+
+   1.6.3から使用可能。
+
+   end-of-message時に送信パケットをバッファリングするための
+   バッファサイズを指定します。バッファリングしているパケット
+   の量が指定したバイト以上になるとまとめてパケットを送信し
+   ます。0を指定するとバッファリングしません。
+
+   end-of-message時にadd_headerやdelete_recipientなどメッセー
+   ジ変更操作を多くする場合にパフォーマンスがよくなる可能性
+   があります。通常はほとんど影響がありません。
+
+   例:
+     manager.packet_buffer_size = 4096 # 4KB溜まるまで送信しない。
+
+   既定値:
+     manager.packet_buffer_size = 0 # バッファリングを無効にする。
+
+: manager.chunk_size
+
+   ((*この項目は通常は使用する必要はありません。*))
+
+   1.8.0から使用可能。
+
+   2番目以降の子milterにbodyパケットを送るときのデータサイズ
+   を指定します。最大値は65535バイトで、これが既定値です。デー
+   タサイズを小さくすることにより通信のオーバーヘッドが少し増
+   えますが、それでも1回あたりのデータサイズを小さくしたい場
+   合のみ使ってください。
+
+   例:
+     manager.chunk_size = 4096 # 本文データを4KBずつ送る
+
+   既定値:
+     manager.chunk_size = 65535 # 本文データを64KBずつ送る
+
+: manager.max_pending_finished_sessions
+
+   ((*この項目は通常は使用する必要はありません。*))
+
+   1.8.6から使用可能。
+
+   milter managerはスループットを向上させるため、スループットに影響しな
+   い処理は何も処理がないときまで処理を遅延します。終了したmilterセッショ
+   ンの後始末処理もそのような遅延される処理の1つです。
+
+   この項目を設定することで、他に処理があるときでもmilterセッションの後
+   始末処理を行うようになります。通常は、複数のmilterセッションを処理し
+   ている場合でも途中に他に何も処理するものがない状態になりますが、同時
+   接続数が非常に多くなると常になんらかの処理を実施し続けるため、後始末
+   処理が実行されなくなります。後始末処理ではソケットのクローズも行って
+   いるため、長い間、後始末処理が実行されないと開けるファイルディスクリ
+   プタ数が足りなくなる危険性があります。
+
+   常になんらかの処理を実行し続けている状態は過負荷の状態なので、本来で
+   あれば、そうならないように
+   ((<manager.n_workers|.#manager.n-workers>))を設定してワーカー
+   数を増やした構成にすることが望ましいです。
+
+   この項目に0より大きい値を設定すると、他に処理があるときでも、指定した
+   値分セッションを処理した後に後始末処理を実行します。もちろん、他に処
+   理がないときも後始末処理を実行するので、通常時はスループットへの影響
+   はありません。負荷が高くなった時のみこの値が影響します。
+
+   規定値は0でこの機能は無効になっています。
+
+   例:
+     # セッションが終了したら毎回すぐに終了処理を行う
+     manager.max_pending_finished_sessions = 1
+
+   既定値:
+     # なにも処理がないときのみセッションの終了処理を行う
+     manager.max_pending_finished_sessions = 0
+
+: manager.use_netstat_connection_checker
+
+   1.5.0から使用可能。
+
+   ((%netstat%))コマンドの出力を解析してSMTPクライアントがま
+   だSMTPサーバと接続しているかを確認します。
+
+   この機能はmilter（milter-greylist）を用いた
+   ((<taRgrey|URL:http://k2net.hakuba.jp/targrey/>))を
+   実現しているときなど、SMTPクライアントが自発的に切断した
+   ことを検出して途中で処理を止めたい場合に有用です。この機
+   能を用いることによりtaRgreyの問題点の1つであるSMTPサーバ
+   のプロセス数増大を抑えることができます。プロセス数が増大
+   するとメモリ使用量が増えるため、プロセス数増大を抑えるこ
+   とはメモリ使用量を抑えることにつながります。
+
+   接続は5秒毎に確認します。この間隔は変更することも可能です
+   が、通常は変更する必要はありません。
+
+   例:
+     manager.use_netstat_connection_checker    # 5秒間隔で確認
+     manager.use_netstat_connection_checker(1) # 1秒間隔で確認
+
+   初期値:
+     確認しない
+
+: manager.connection_check_interval
+
+   ((*この項目は通常は直接使用する必要はありません。*))
+
+   1.5.0から使用可能。
+
+   SMTPクライアントがまだSMTPサーバと接続しているかどうかを
+   確認する間隔を秒単位で指定します。
+
+   0を指定すると確認しません。
+
+   どのようにして接続しているかどうかを確認するかは
+   ((<manager.define_connection_checker|.#manager.define_connection_checker>))
+   で定義します。
+
+   例:
+     manager.connection_check_interval = 5 # 5秒間隔で確認
+
+   既定値:
+     manager.connection_check_interval = 0
+
+
+: manager.define_connection_checker(name) {|context| ... # -> true/false}
+
+   ((*この項目は通常は直接使用する必要はありません。*))
+
+   1.5.0から使用可能。
+
+   ((<manager.connection_check_interval|.#manager.connection_check_interval>))
+   で指定した秒毎にSMTPクライアントがまだSMTPサーバと接続し
+   ているかを確認します。ブロックがtrueを返したときはまだ接
+   続していることを示し、falseを返したときは接続が切れたこと
+   を示します。
+
+   : name
+      確認処理につける名前です。
+
+   : context
+      ブロックに渡される現在の状況を知っているオブジェクトで
+      す。以下の情報を取得できます。
+
+   : context.smtp_client_address
+      接続確認対象のSMTPクライアントのIPアドレスです。
+      ((<socket_address|.#socket-address>))と同じオブジェ
+      クトです。
+
+   : context.smtp_server_address
+      SMTPクライアントの接続を受け付けたSMTPサーバ側のIPアド
+      レスです。((<socket_address|.#socket-address>))と同じ
+      オブジェクトです。
+
+   例:
+     # ローカルネットワーク以外からの接続は強制的に切断したとみなす
+     manager.define_connection_checker("netstat-check") do |context|
+       context.smtp_client_address.local?
+     end
+
+: manager.report_memory_statistics
+
+   1.5.0から使用可能。
+
+   メンテナンス処理が実行される度にメモリ使用量をログに出力
+   します。
+
+   現在は以下のようなフォーマットで出力されますが、変更され
+   る可能性があります。
+
+     Mar 28 15:16:58 mail milter-manager[19026]: [statistics] [maintain][memory] (28048KB) total:6979 Proc:44 GLib::Object:18
+
+   使用例:
+     manager.report_memory_statistics
+
+: manager.maintained {...}
+
+   ((*この項目は通常は直接使用する必要はありません。*))
+
+   1.5.0から使用可能。
+
+   メンテナンス処理が実行される度に指定した処理を実行します。
+
+   以下の例はメンテナンス処理が実行する度にログを出力する設
+   定です。
+
+   使用例:
+     manager.maintained do
+       Milter::Logger.info("maintained!")
+     end
+
+: manager.event_loop_created {|loop| ...}
+
+   ((*この項目は通常は直接使用する必要はありません。*))
+
+   1.6.8から使用可能。
+
+   イベントループが作成されたときに指定した処理を実行します。
+   イベントループが作成されるのは初期化時のみです。
+   時のみ指定した実行します。
+
+   以下の例は1秒ごとにログを出力するコールバックを登録する設
+   定です。
+
+   使用例:
+     manager.event_loop_created do |loop|
+       loop.add_timeout(1) do
+         Milter::Logger.info("timeout!")
+         true
+       end
+     end
+
+== [controller] コントローラ関連
+
+: controller.connection_spec
+
+   milter-managerを制御するための接続を受け付けるソケットを指
+   定します。
+
+   書式はmanager.connection_specと同じです。
+
+   例:
+     controller.connection_spec = "inet:10026@localhost"
+
+   既定値:
+     controller.connection_spec = nil
+
+: controller.unix_socket_mode
+
+   milter-managerを制御するための接続を受け付けるUNIXドメイン
+   ソケットのパーミッションを指定します。
+   controller.connection_specでUNIXドメインソケットを使用し
+   ている場合のみ利用されます。
+
+   8進数で値を指定するために、先頭に「0」をつけることを忘れ
+   ないでください。
+
+   例:
+     controller.unix_socket_mode = 0600
+
+   既定値:
+     controller.unix_socket_mode = 0660
+
+: controller.remove_unix_socket_on_create
+
+   milter-managerを制御するための接続を受け付けるUNIXドメイン
+   ソケットを作成する前にすでにファイルが存在した場合、削除
+   するかどうかを指定します。controller.connection_specで
+   UNIXドメインソケットを使用している場合のみ利用されます。
+
+   削除する場合はtrueを指定します。削除しない場合はfalseを指
+   定します。
+
+   例:
+     controller.remove_unix_socket_on_create = false
+
+   既定値:
+     controller.remove_unix_socket_on_create = true
+
+: controller.remove_unix_socket_on_close
+
+   milter-managerが終了するときに、milter-managerを制御する
+   ための接続を受け付けていたUNIXドメインソケットを削除する
+   かどうかを指定します。controller.connection_specでUNIXドメ
+   インソケットを使用している場合のみ利用されます。
+
+   削除する場合はtrueを指定します。削除しない場合はfalseを指
+   定します。
+
+   例:
+     controller.remove_unix_socket_on_close = false
+
+   既定値:
+     controller.remove_unix_socket_on_close = true
+
+== [child-milter] 子milter関連
+
+子milterに関連する設定項目について説明します。
+
+=== 子milter定義
+
+子milterは以下の書式で登録します。
+
+  define_milter("名前") do |milter|
+    milter.XXX = ...
+    milter.YYY = ...
+    milter.ZZZ = ...
+  end
+
+例えば、「inet:10026@localhost」で接続待ちしているmilterを
+「test-milter」という名前で登録する場合は以下のようになります。
+
+  define_milter("test-milter") do |milter|
+    milter.connection_spec = "inet:10026@localhost"
+  end
+
+define_milter do ... end内で設定できる項目は以下の通りです。
+
+必須の項目はmilter.connection_specだけです。
+
+
+: milter.connection_spec
+
+   子milterが接続待ちしているソケットを指定します。
+   ((*必須項目*))です。
+
+   書式はmanager.connection_specと同じです。
+
+   例:
+     milter.connection_spec = "inet:10026@localhost"
+
+   既定値:
+     milter.connection_spec = nil
+
+: milter.description
+
+   子milterの説明を指定します。
+
+   説明は「"」で囲んで"test milter"というように指定します。
+
+   例:
+     milter.description = "test milter"
+
+   既定値:
+     milter.description = nil
+
+: milter.enabled
+
+   子milterを利用するかどうかを指定します。
+
+   利用する場合はtrueを指定します。利用しない場合はfalseを指
+   定します。
+
+   例:
+     milter.enabled = false
+
+   既定値:
+     milter.enabled = true
+
+: milter.fallback_status
+
+   子milterに問題があったとき、指定したステータスを返したと
+   して扱います。
+
+   指定できる値は以下のいずれかの値です。
+
+     * "accept": メールを受信します。既定値です。
+     * "temporary-failure": メールを一時的に拒否します。
+     * "reject": メールを拒否します。
+     * "discard": メールを破棄します。
+
+   例:
+     milter.fallback_status = "temporary-failure"
+
+   既定値:
+     milter.fallback_status = "accept"
+
+: milter.evaluation_mode
+
+   1.3.1から使用可能。
+
+   評価モードにするかどうかを指定します。評価モードでは子
+   milterの結果をMTAに返さないので、既存のメールシステムには
+   影響を与えません。
+
+   評価モードでも統計用のログが出力されるため、本来なら子
+   milterがMTAにどのような結果を返していたかを視覚化できます。
+
+   評価モードにする場合はtrueを指定します。
+
+   false（既定値）の場合は、子milterがrejectを返すとMTAに
+   rejectと返し、処理が終了してします。trueの場合は子milterが
+   rejectを返してもMTAにはrejectを返さず、処理が継続します。
+   継続している処理の中では「子milterがrejectを返した」とい
+   う情報を利用できます。その情報を利用して適用条件を記述する
+   ことができます。
+
+   例:
+     milter.evaluation_mode = true
+
+   既定値:
+     milter.evaluation_mode = false
+
+: milter.applicable_conditions
+
+   子milterを適用する条件を指定します。
+   条件は複数指定できます。1つでも条件を満たさない場合は子
+   milterの適用は中止されます。
+
+   利用可能は適用条件は以下のコマンドで確認できます。
+
+     % /usr/local/sbin/milter-manager --show-config | grep define_applicable_condition
+     define_applicable_condition("S25R") do |condition|
+     define_applicable_condition("Remote Network") do |condition|
+
+   この場合は"S25R"と"Remote Network"が利用可能です。
+
+   適用条件は標準で提供されているだけではなく、独自に定義す
+   ることもできます。定義方法については
+   ((<適用条件定義|.#applicable-condition>))
+   を見てください。ただし、独自に定義する場合にはRubyの知識が
+   必要になります。
+
+   適用条件は以下のように「,」でくぎって複数指定できます。
+
+     milter.applicable_conditions = ["S25R", "Remote Network"]
+
+   例:
+     milter.applicable_conditions = ["S25R"]
+
+   既定値:
+     milter.applicable_conditions = []
+
+: milter.add_applicable_condition(name)
+
+   子milterを適用する条件を追加します。適用する条件について
+   はmilter.applicable_conditionsを見てください。
+
+   例:
+     milter.add_applicable_condition("S25R")
+
+: milter.command
+
+   子milterを起動するコマンドを指定します。
+   security.privilege_modeがtrueでmilter-managerコマンドが
+   root権限で実行されている場合、milter.connection_specへの
+   接続が失敗した時に、子milterを自動で起動します。そのとき
+   に利用するコマンドです。
+
+   /etc/init.d/以下や/usr/local/etc/rc.d/以下にある起動スク
+   リプトを指定することを想定しています。
+
+   コマンドは「"」で囲んで"/etc/init.d/milter-greylist"とい
+   うように指定します。自動で起動しない場合はnilを指定します。
+
+   例:
+     milter.command = "/etc/init.d/milter-greylist"
+
+   既定値:
+     milter.command = nil
+
+: milter.command_options
+
+   milter.commandに渡すオプションを指定します。
+
+   オプションは「"」で囲んで"start"というように指定します。
+   複数のオプションを指定するときは"--option1 --option2"とい
+   うように指定します。あるいは、全体を「[]」で囲み、それぞれ
+   のオプションを「,」で区切り、["--option1", "--option2"]と
+   いうように指定することもできます。
+
+   例:
+     milter.command_options = "start"
+     milter.command_options = ["--option1", "--option2"]
+
+   既定値:
+     milter.command_options = nil
+
+: milter.user_name
+
+   milter.commandを実行するユーザ名を指定します。
+
+   ユーザ名は「"」で囲んで"nobody"というように指定します。
+   root権限で実行する場合はnilを指定します。
+
+   例:
+     milter.user_name = "nobody"
+
+   既定値:
+     milter.user_name = nil
+
+: milter.connection_timeout
+
+   子milterに接続したときのタイムアウト時間を秒単位で指定しま
+   す。
+
+   例:
+     milter.connection_timeout = 60
+
+   既定値:
+     milter.connection_timeout = 297.0
+
+: milter.writing_timeout
+
+   子milterへデータを送信したときのタイムアウト時間を秒単位で
+   指定します。
+
+   例:
+     milter.writing_timeout = 15
+
+   既定値:
+     milter.writing_timeout = 7.0
+
+: milter.reading_timeout
+
+   子milterからデータを受信するときのタイムアウト時間を秒単位で
+   指定します。
+
+   例:
+     milter.reading_timeout = 15
+
+   既定値:
+     milter.reading_timeout = 7.0
+
+: milter.end_of_message_timeout
+
+   子milterからxxfi_eom()のレスポンスを受信するときのタイム
+   アウト時間を秒単位で指定します。
+
+   例:
+     milter.end_of_message_timeout = 60
+
+   既定値:
+     milter.end_of_message_timeout = 297.0
+
+: milter.name
+
+  1.8.1 から利用可能。
+
+  define_milter で設定した名前を返します。
+
+
+=== 子milter操作
+
+定義された子milterを操作するために便利な機能があります。ただ
+し、これらの機能を利用するには多少Rubyの知識が必要になります。
+
+定義されている子milter名の一覧を取得することができます。
+
+  define_milter("milter1") do |milter|
+    ...
+  end
+
+  define_milter("milter2") do |milter|
+    ...
+  end
+
+  defined_milters # => ["milter1", "milter2"]
+
+これを利用することにより、すべての子milterの設定をまとめて変
+更するということが簡単にできるようになります。
+
+以下はすべての子milterを無効にする例です。
+
+  defined_milters.each do |name|
+    define_milter(name) do |milter|
+      milter.enabled = false
+    end
+  end
+
+以下はすべての子milterの定義を削除にする例です。無効にした場
+合と違い、再び子milterを使いたい場合は一から定義しなおす必要
+があります。
+
+  defined_milters.each do |name|
+    remove_milter(name)
+  end
+
+以下はすべての子milterの適用条件にS25Rを追加する例です。
+
+  defined_milters.each do |name|
+    define_milter(name) do |milter|
+      milter.add_applicable_condition("S25R")
+    end
+  end
+
+: defined_milters
+   定義されている子milterの名前の一覧を返します。返される値
+   は文字列の配列です。
+
+   例:
+     defined_milters # => ["milter1", "milter2"]
+
+: remove_milter(name)
+   定義されているnameという名前のmilterを削除します。milter
+   定義を削除せずに、単に無効にするだけでよいなら
+   ((<milter.enabled|.#milter.enabled>))を使ってください。
+
+   例:
+     # "milter1"という名前で定義されたmilterの定義を削除
+     remove_milter("milter1")
+
+== [built-in-applicable-conditions] 組み込み適用条件
+
+組み込みの適用条件を説明します。
+
+=== S25R
+
+この適用条件を使うと、MTAっぽいSMTPクライアントには子milter
+を適用せず、一般PCっぽいSMTPクライアントにのみ子milterを適用
+します。
+
+以下の例では一般PCっぽいSMTPクライアントにのみGreylistingを
+適用することで、Greylistingによる遅延の悪影響を軽減していま
+す。これは((<Rgrey|URL:http://k2net.hakuba.jp/rgrey/>))と呼
+ばれる手法です。（milter-greylistで"racl greylist default"と
+設定している場合）
+
+使用例:
+
+  define_milter("milter-greylist") do |milter|
+    milter.add_applicable_condition("S25R")
+  end
+
+SMTPクライアントが一般PCっぽいかどうかは
+((<S25R|URL:http://www.gabacho-net.jp/anti-spam/>))の一般規則
+を用います。
+
+S25Rの一般規則は一般PC以外のホストにもマッチしてしまいます。
+そのため、明示的にホワイトリストを設定して誤検出を防ぐことが
+できます。デフォルトではgoogle.comドメインのホストと
+obsmtp.comドメインのホストはS25Rの一般規則にマッチしても子
+milterを適用しません。
+
+また、逆にS25Rの一般規則に規則を追加して例外的なホスト名に対
+応することもできます。
+
+S25R適用条件は以下の設定でカスタマイズできます。
+
+: s25r.add_whitelist(matcher)
+
+   1.5.2から使用可能。
+
+   ((|matcher|))にマッチするホストをMTAと判断し、ホワイト
+   リストに追加します。ホワイトリストに入っているホストに対
+   しては子milterを適用しません。
+
+   ((|matcher|))にはホスト名にマッチする正規表現、またはホス
+   ト名を文字列で指定します。
+
+   例えば、google.comドメインをホワイトリストに入れる場合は
+   以下のようにします。
+
+     s25r.add_whitelist(/\.google\.com\z/)
+
+   mx.example.comというホストをホワイトリストに入れる場合は
+   以下のようにします。
+
+     s25r.add_whitelist("mx.example.com")
+
+   [上級者向け] 複雑な条件を指定したい場合はブロックを指定す
+   ることができます。ブロックにはホスト名が引数として渡され
+   ます。例えば、午前8:00から午後7:59までの間だけ.jpトップレ
+   ベルドメインをホワイトリストに入れる場合は以下のようにします。
+
+     s25r.add_whitelist do |host|
+       (8..19).include?(Time.now.hour) and /\.jp\z/ === host
+     end
+
+: s25r.add_blacklist(matcher)
+
+   1.5.2から使用可能。
+
+   ((|matcher|))にマッチするホストを一般PCと判断し、ブラック
+   リストに追加します。ブラックリストに入っているホストに対
+   して子milterを適用します。ただし、ホワイトリストとブラッ
+   クリストの両方に入っている場合はホワイトリストを優先しま
+   す。つまり、両方に入っている場合は子milterを適用しません。
+
+   ((|matcher|))にはホスト名にマッチする正規表現、またはホス
+   ト名を文字列で指定します。
+
+   例えば、evil.example.comドメインをブラックリストに入れる場
+   合は以下のようにします。
+
+     s25r.add_blacklist(/\.evil\.example\.com\z/)
+
+   black.example.comというホストをブラックリストに入れる場合
+   は以下のようにします。
+
+     s25r.add_blacklist("black.example.com")
+
+   [上級者向け] 複雑な条件を指定したい場合はブロックを指定す
+   ることができます。ブロックにはホスト名が引数として渡され
+   ます。例えば、午後8:00から午前7:59までの間だけ.jpトップレ
+   ベルドメインをブラックリストに入れる場合は以下のようにし
+   ます。
+
+     s25r.add_blacklist do |host|
+       !(8..19).include?(Time.now.hour) and /\.jp\z/ === host
+     end
+
+: s25r.check_only_ipv4=(boolean)
+
+   1.6.6から使用可能。
+
+   (({true}))を指定した場合はIPv4からの接続してきた場合のみ
+   S25Rのチェックを有効にします。(({false}))を指定するとIPv6
+   からの接続の場合でもチェックします。
+
+   例:
+     s25r.check_only_ipv4 = false # IPv4以外のときもチェック
+
+   初期値:
+     IPv4の場合のみチェックする
+
+=== Remote Network
+
+この適用条件を使うと、外部ネットワークからアクセスしてきた
+SMTPクライアントにのみ子milterを適用します。
+
+以下の例ではローカルネットワークからのメールにはスパムチェッ
+クを行わない事で誤検出を回避しています。
+
+使用例:
+
+  define_milter("spamass-milter") do |milter|
+    milter.add_applicable_condition("Remote Network")
+  end
+
+192.168.0.0/24などのプライベートIPアドレス以外を外部ネットワー
+クとして扱います。プライベートIPアドレス以外もローカルネット
+ワークとして扱いたい場合は以下の設定で追加することができます。
+
+: remote_network.add_local_address(address)
+
+   1.5.0から使用可能。
+
+   指定したIPv4/IPv6アドレスまたはIPv4/IPv6ネットワークをローカ
+   ルネットワークに追加します。ローカルネットワークに追加したア
+   ドレス・ネットワークには子milterを適用しません。
+
+   使用例:
+
+     # 160.29.167.10からのアクセスは子milterを適用しない
+     remote_network.add_local_address("160.29.167.10")
+     # 160.29.167.0/24のネットワークからのアクセスは子milterを適用しない
+     remote_network.add_local_address("160.29.167.0/24")
+     # 2001:2f8:c2:201::fff0からのアクセスは子milterを適用しない
+     remote_network.add_local_address("2001:2f8:c2:201::fff0")
+     # 2001:2f8:c2:201::/64からのアクセスは子milterを適用しない
+     remote_network.add_local_address("2001:2f8:c2:201::/64")
+
+=== [authentication] Authentication
+
+SMTP Authで認証済みのSMTPクライアントにのみ子milterを適用しま
+す。この適用条件を利用する場合は、MTAが認証関連のマクロを
+milterに渡すようにしなければいけません。Sendmailは特に設定を
+する必要はありません。Postfixの場合は以下の設定を追加する必
+要があります。
+
+main.cf:
+  milter_mail_macros = {auth_author} {auth_type} {auth_authen}
+
+以下の例は認証済みのSMTPクライアントが送ったメール（内部から
+送信したメール）を監査用にBccする設定です。
+
+使用例:
+
+  define_milter("milter-bcc") do |milter|
+    milter.add_applicable_condition("Authentication")
+  end
+
+=== [unauthentication] Unauthentication
+
+SMTP Authで認証されていないSMTPクライアントにのみ子milterを適
+用します。((<Authentication|.#authentication>))と同様に、MTAが
+認証関連のマクロをmilterに渡すようにしなければいけません。
+
+以下の例は認証されていないSMTPクライアントからのメールにのみ
+スパムチェックを行い、誤検出を回避する設定です。
+
+使用例:
+
+  define_milter("spamass-milter") do |milter|
+    milter.add_applicable_condition("Unauthentication")
+  end
+
+=== Sendmail Compatible
+
+この適用条件は少し変わっています。この適用条件を設定してもす
+べての子milterを適用します。では何をするのかというと、
+SendmailとPostfixのmilter実装の非互換を吸収し、Sendmailでし
+か動かないmilterをPostfixでも動くようにします。
+
+SendmailとPostfixではmilterの実装に互換性がない部分があります。
+例えば、マクロ名が異なったり、マクロを渡すタイミングが異なっ
+たりします。
+
+この適用条件を設定すると、それらの差異を吸収し、同じmilterが
+SendmailでもPostfixでも動作するようになります。ただし、最近
+のmilterはどちらでも動くように作られているのでこの適用条件が
+必要なくなる日は近いでしょう。これはとてもよいことです。
+
+MTAがPostfixの場合にこの適用条件を設定しても悪影響はないので、
+安心してください。
+
+以下の例はSendmail用にビルドしたmilter-greylistをPostfixでも
+使えるようにする設定です。
+
+使用例:
+
+  define_milter("milter-greylist") do |milter|
+    milter.add_applicable_condition("Sendmail Compatible")
+  end
+
+=== stress
+
+1.5.0から使用可能。
+
+負荷に応じて動的に処理を変更する適用条件をいくつか提供してい
+ます。負荷は同時接続数で判断します。
+
+: stress.threshold_n_connections
+
+   1.5.0から使用可能。
+
+   負荷が高いと判断する同時接続数を返します。
+
+   Postfixを利用している場合はsmtpdの最大プロセス数を自動検出し、
+   自動検出した最大プロセス数の3/4以上の同時接続数がある場合に負
+   荷が高いと判断します。
+
+   Sendmailの場合は自動検出されないので、
+   ((<stress.threshold_n_connections=|.#stress.threshold_n_connections=>))
+   で手動で設定する必要があります。
+
+   例:
+     # Postfixのデフォルト設定の場合（環境によって異なる）
+     stress.threshold_n_connections # => 75
+
+: stress.threshold_n_connections=(n)
+
+   1.5.0から使用可能。
+
+   負荷が高いと判断する同時接続数を設定します。
+
+   0を指定すると常に負荷が低いと判断します。
+
+   例:
+     # 同時接続数が75以上の場合、負荷が高いと判断
+     stress.threshold_n_connections = 75
+
+==== [no-stress] No Stress
+
+1.5.0から使用可能。
+
+負荷が小さいときのみ、子milterを適用する適用条件です。
+
+以下の例は負荷が高いときはspamass-milterを適用しない設定です。
+
+使用例:
+
+  define_milter("spamass-milter") do |milter|
+    milter.add_applicable_condition("No Stress")
+  end
+
+==== [stress-notify] Stress Notify
+
+1.5.0から使用可能。
+
+負荷が高いときに"{stress}=yes"マクロを設定し、子milterに負荷
+が高いことを通知する適用条件です。この適用条件は通知するだけ
+なので、設定しても常にすべての子milterは適用されます。
+
+以下の例は負荷が高いときはmilter-greylistにマクロで通知をす
+る設定です。
+
+使用例:
+
+  define_milter("milter-greylist") do |milter|
+    milter.add_applicable_condition("Stress Notify")
+  end
+
+milter-greylist側で「負荷が高いときはGreylisting、負荷が低い
+ときはTarpittingを使う」設定は以下のようになります。この設定
+を使う場合はmilter-greylist 4.3.4以降が必要です。
+
+greylist.conf:
+  sm_macro "no_stress" "{stress}" unset
+  racl whitelist sm_macro "no_stress" tarpit 125s
+  racl greylist default
+
+=== [trust] Trust
+
+1.6.0から使用可能。
+
+信用できるセッションには「trusted_XXX=yes」というマクロを設
+定します。設定されるマクロの一覧は以下の通りです。
+
+: trusted_domain
+
+   envelope-fromのドメインが信用できる場合は「yes」になりま
+   す。
+
+以下は信用するドメインに対しては、SPFの検証が成功したらそのま
+ま受信し、失敗したらGreylistを適用する例です。
+
+milter-manager.local.conf:
+
+  define_milter("milter-greylist") do |milter|
+    milter.add_applicable_condition("Trust")
+  end
+
+greylist.conf:
+
+  sm_macro "trusted_domain" "{trusted_domain}" "yes"
+  racl whitelist sm_macro "trusted_domain" spf pass
+  racl greylist sm_macro "trusted_domain" not spf pass
+
+どの情報を使って信用するかどうかを判断するかは、以下の設定を
+使ってカスタマイズできます。
+
+: trust.add_envelope_from_domain(domain)
+
+   1.6.0から使用可能。
+
+   信用するenvelope-fromのドメインを追加します。
+
+   デフォルトでは、以下のドメインを信用しています。
+
+     * gmail.com
+     * hotmail.com
+     * msn.com
+     * yahoo.co.jp
+     * softbank.ne.jp
+     * clear-code.com
+
+   例:
+     trust.add_envelope_from_domain("example.com")
+
+: trust.clear
+
+    1.8.0から使用可能。
+
+    信用するenvelope-fromのドメインリストを消去します。
+
+    例:
+      trust.clear
+
+: trust.load_envelope_from_domains(path)
+
+    1.8.0から使用可能。
+
+    ((|path|))から信用するenvelope-fromのドメインリストを読
+    み込みます。((|path|))には以下のような書式で信用するドメ
+    インを記述します。
+
+      # コメント。この行は無視される。
+      gmail.com
+      # ↑の行はgmail.comを信用するという意味
+      /\.example\.com/
+      # ↑の行はexample.comのサブドメインすべてを信用するという意味
+
+      # ↑の行は空白だけの行。空行は無視する。
+
+    例:
+      trust.load_envelope_from_domains("/etc/milter-manager/trusted-domains.list")
+      # /etc/milter-manager/trusted-domains.listから信用する
+      # ドメインのリストを読み込みます。
+
+=== Restrict Accounts
+
+TODO
+
+== [applicable-condition] 適用条件定義
+
+ここからは本格的にRubyの知識が必要になります。標準でS25Rなど
+の有用な適用条件は用意されています。それらで十分ではない場合
+は、適用条件を定義することができます。適用条件を定義すること
+により、子milterを適用するかを動的に判断することができます。
+
+適用条件は以下の書式で定義します。適用条件の定義にはRubyの知
+識が必要になります。
+
+  define_applicable_condition("名前") do |condition|
+    condition.description = ...
+    condition.define_connect_stopper do |...|
+      ...
+    end
+    ...
+  end
+
+例えば、S25Rを実現する適用条件は以下のようになります。
+
+  define_applicable_condition("S25R") do |condition|
+    condition.description = "Selective SMTP Rejection"
+
+    condition.define_connect_stopper do |context, host, socket_address|
+      case host
+      when "unknown",
+        /\A\[.+\]\z/,
+        /\A[^.]*\d[^\d.]+\d.*\./,
+        /\A[^.]*\d{5}/,
+        /\A(?:[^.]+\.)?\d[^.]*\.[^.]+\..+\.[a-z]/i,
+        /\A[^.]*\d\.[^.]*\d-\d/,
+        /\A[^.]*\d\.[^.]*\d\.[^.]+\..+\./,
+        /\A(?:dhcp|dialup|ppp|[achrsvx]?dsl)[^.]*\d/i
+        false
+      else
+        true
+      end
+    end
+  end
+
+名前解決ができなかったときはhostは"unknown"ではなく、"[IPア
+ドレス]"になります。そのため、本当は"unknown"は必要なく、
+/\A\[.+\]\z/で十分ですが、念のため入れています。 :-)
+
+define_applicable_condition do ... end内で設定できる項目は以
+下の通りです。
+
+必須の項目はありません。
+
+: condition.description
+
+   適用条件の説明を指定します。
+
+   説明は「"」で囲んで"test condition"というように指定します。
+
+   例:
+     condition.description = "test condition"
+
+   既定値:
+     condition.description = nil
+
+: condition.define_connect_stopper {|context, host, socket_address| ...}
+
+   SMTPクライアントがSMTPサーバに接続してきたときのホスト名
+   とIPアドレスを利用して子milterを適用するかどうかを判断し
+   ます。このときに利用できる情報はmilterのxxfi_connectで利用
+   可能な情報と同じです。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   : host
+      接続してきたIPアドレスを名前解決して得られたホスト名
+      （文字列）です。名前解決に失敗した場合はIPアドレスが
+      「[]」で囲まれた文字列になります。例えば、"[1.2.3.4]"
+      となります。
+
+   : [] socket_address
+      接続してきたIPアドレスを表すオブジェクトです。詳細は後述
+      します。
+
+   以下はクライアントからの接続が名前解決できた場合はmilter
+   を適用しない例です。
+
+     condition.define_connect_stopper do |context, host, socket_address|
+       if /\A\[.+\]\z/ =~ host
+         false
+       else
+         true
+       end
+     end
+
+: condition.define_helo_stopper {|context, fqdn| ...}
+
+   SMTPクライアントがHELO/EHLOのときに送ってきたFQDNを利用し
+   て子milterを適用するかどうかを判断します。このときに利用で
+   きる情報はmilterのxxfi_heloで利用可能な情報と同じです。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   : fqdn
+      SMTPクライアントがHELO/EHLOのときに送ってきたFQDNです。
+
+   以下はクライアントから送られてきたFQDNが
+   "localhost.localdomain"の場合はmilterを適用しない例です。
+
+     condition.define_helo_stopper do |context, helo|
+       helo == "localhost.localdomain"
+     end
+
+: define_envelope_from_stopper {|context, from| ...}
+
+   SMTPのMAIL FROMコマンドで渡された送信元アドレスを利用して
+   子milterを適用するかどうかを判断します。このときに利用で
+   きる情報はmilterのxxfi_envfromで利用可能な情報と同じです。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   : from
+      MAIL FROMコマンドに渡された送信元です。
+      例えば、"<sender@example.com>"となります。
+
+   以下はexample.comから送信された場合はmilterを適用しない例
+   です。
+
+     condition.define_envelope_from_stopper do |context, from|
+       if /@example.com>\z/ =~ from
+         true
+       else
+         false
+       end
+     end
+
+: define_envelope_recipient_stopper {|context, recipient| ...}
+
+   SMTPのRCPT TOコマンドで渡された宛先アドレスを利用して子
+   milterを適用するかどうかを判断します。このときに利用でき
+   る情報はmilterのxxfi_envrcptで利用可能な情報と同じです。
+   宛先が複数ある場合は複数回呼ばれます。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   : recipient
+      RCPT TOコマンドに渡された宛先です。
+      例えば、"<receiver@example.com>"となります。
+
+   以下はml.example.com宛の場合はmilterを適用しない例です。
+
+     condition.define_envelope_recipient_stopper do |context, recipient|
+       if /@ml.example.com>\z/ =~ recipient
+         true
+       else
+         false
+       end
+     end
+
+: condition.define_data_stopper {|context| ...}
+
+   SMTPクライアントがDATAを送ってきたときに子milterを適用す
+   るかどうかを判断します。このときに利用で
+   きる情報はmilterのxxfi_dataで利用可能な情報と同じです。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   以下はDATAまで処理が進んだらmilterを終了する例です。
+   milterがヘッダや本文を書き換えるのはメール全体を処理した
+   後です。DATAの時点でmilterを終了させることにより、milter
+   がヘッダや本文を書き換えないことが保証されます。milterに
+   よっては途中の処理結果をログに出力するので、それを見て
+   DATAまでのmilterの動作を確認することができます。
+
+     condition.define_data_stopper do |context|
+       true
+     end
+
+: define_header_stopper {|context, name, value| ...}
+
+   メールのヘッダを利用して子milterを適用するかどうかを判断
+   します。このときに利用できる情報はmilterのxxfi_headerで利
+   用可能な情報と同じです。各ヘッダ毎に呼ばれます。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   : name
+      ヘッダ名です。例えば、"From"となります。
+
+   : value
+      ヘッダの値です。例えば、"sender@example.com"となります。
+
+   以下は"X-Spam-Flag"ヘッダの値が"YES"の場合はmilterを適用
+   しない例です。
+
+     condition.define_header_stopper do |context, name, value|
+       if ["X-Spam-Flag", "YES"] == [name, value]
+         true
+       else
+         false
+       end
+     end
+
+: condition.define_end_of_header_stopper {|context| ...}
+
+   ヘッダをすべて処理した後に子milterを適用するかどうかを
+   判断します。このときに利用できる情報はmilterのxxfi_eohで
+   利用可能な情報と同じです。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   以下はヘッダの処理が完了したらmilterを終了する例です。
+
+     condition.define_end_of_header_stopper do |context|
+       true
+     end
+
+: condition.define_body_stopper {|context, chunk| ...}
+
+   本文の一部を利用して子milterを適用するかどうかを判断しま
+   す。このときに利用できる情報はmilterのxxfi_bodyで利用可能
+   な情報と同じです。本文が大きい場合は複数回呼ばれます。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   : chunk
+      本文の一部です。サイズが大きな本文は一度には処理されず
+      に、いくつかの固まりに分割されて処理されます。最大で
+      65535バイトのデータになります。
+
+   以下は本文が署名されていたらmilterを終了する例です。
+
+     condition.define_body_stopper do |context, chunk|
+       if /^-----BEGIN PGP SIGNATURE-----$/ =~ chunk
+         true
+       else
+         false
+       end
+     end
+
+: condition.define_end_of_message_stopper {|context| ...}
+
+   本文をすべて処理した後に子milterを適用するかどうかを
+   判断します。このときに利用できる情報はmilterのxxfi_eomで
+   利用可能な情報と同じです。
+
+   子milterの適用を中止する場合はtrueを返し、続ける場合は
+   falseを返します。
+
+   : context
+      その時点での様々な情報を持ったオブジェクトです。詳細は
+      後述します。
+
+   以下は本文の処理が完了したらmilterを終了する例です。
+
+     condition.define_end_of_message_stopper do |context|
+       true
+     end
+
+=== context
+
+子milterを適用するかどうかを判断する時点での様々な情報を持っ
+たオブジェクトです。（クラスはMilter::Manager::ChildContextで
+す。）
+
+以下の情報を持っています。
+
+: context.name
+
+   子milterの名前です。define_milterで使った名前になります。
+
+   例:
+     context.name # -> "clamav-milter"
+
+: context[name]
+
+   子milterが利用可能なマクロの値を返します。libmilterのAPI
+   では1文字より長いマクロ名の場合は「{}」で囲まなければいけ
+   ませんが、context[]では囲んでも囲まなくてもどちらでも構い
+   ません。
+
+   例:
+     context["j"] # -> "mail.example.com"
+     context["rcpt_address"] # -> "receiver@example.com"
+     context["{rcpt_address}"] # -> "receiver@example.com"
+
+: context.reject?
+
+   子milterがrejectを返したときにtrueを返します。
+   子milterは
+   ((<milter.evaluation_mode|.#milter.evaluation_mode>))
+   を有効にしてください。
+
+   引数として渡ってくるcontextは処理中のため、
+   context.reject?がtrueを返すことはありません。
+   context.children[]で取得した別の子milterの結果を利用する
+   ときに有用です。
+
+   例:
+     context.reject? # -> false
+     context.children["milter-greylist"].reject? # -> true or false
+
+: context.temporary_failure?
+
+   子milterがtemporary failureを返したときにtrueを返します。
+   子milterは
+   ((<milter.evaluation_mode|.#milter.evaluation_mode>))
+   を有効にしてください。
+
+   引数として渡ってくるcontextは処理中のため、
+   context.temporary_failure?がtrueを返すことはありません。
+   context.children[]で取得した別の子milterの結果を利用する
+   ときに有用です。
+
+   例:
+     context.temporary_failure? # -> false
+     context.children["milter-greylist"].temporary_failure? # -> true or false
+
+: context.accept?
+
+   子milterがacceptを返したときにtrueを返します。
+
+   引数として渡ってくるcontextは処理中のため、
+   context.accept?がtrueを返すことはありません。
+   context.children[]で取得した別の子milterの結果を利用する
+   ときに有用です。
+
+   例:
+     context.accept? # -> false
+     context.children["milter-greylist"].accept? # -> true or false
+
+: context.discard?
+
+   子milterがdiscardを返したときにtrueを返します。
+   子milterは
+   ((<milter.evaluation_mode|.#milter.evaluation_mode>))
+   を有効にしてください。
+
+   引数として渡ってくるcontextは処理中のため、
+   context.discard?がtrueを返すことはありません。
+   context.children[]で取得した別の子milterの結果を利用する
+   ときに有用です。
+
+   例:
+     context.discard? # -> false
+     context.children["milter-greylist"].discard? # -> true or false
+
+: context.quitted?
+
+   子milterの処理が終了している場合にtrueを返します。
+
+   引数として渡ってくるcontextは処理中のため、
+   context.quitted?は常にfalseです。
+   context.children[]で取得した別の子milterの結果を利用する
+   ときに有用です。
+
+   例:
+     context.quitted? # -> false
+     context.children["milter-greylist"].quitted? # -> true or false
+
+: context.children[name]
+
+   別の子milterのcontextを取得します。
+
+   別の子milterを参照するときに利用する名前はdefine_milterで
+   使った名前（context.nameで取得できる名前）になります。
+
+   存在しない名前で参照しようとした場合はnilが返ります。
+
+   例:
+     context.children["milter-greylist"] # -> milter-greylistのcontext
+     context.children["nonexistent"]     # -> nil
+     context.children[context.name]      # -> 自分のcontext
+
+: context.postfix?
+
+   MTAがPostfixの場合に真を返します。Postfixかどうかは「v」
+   マクロの値に「Postfix」という文字列が含まれるかどうかで判
+   断します。
+
+   Postfixの場合はtrue、そうでない場合はfalseが返ります。
+
+   例:
+     context["v"]     # -> "Postfix 2.5.5"
+     context.postfix? # -> true
+
+     context["v"]     # -> "2.5.5"
+     context.postfix? # -> false
+
+     context["v"]     # -> nil
+     context.postfix? # -> false
+
+: context.authenticated?
+
+   送信元が認証されている場合に真を返します。認証されている
+   かどうかは「auto_type」マクロか「auth_authen」マクロの値
+   があるかで判断します。これらのマクロはMAIL FROM以降でのみ
+   使えるので、それ以前の場合は常に偽を返します。Postfixの場
+   合はmain.cfに以下を追加することを忘れないで下さい。
+
+     milter_mail_macros = {auth_author} {auth_type} {auth_authen}
+
+   認証されている場合はtrue、そうでない場合はfalseが返ります。
+
+   Example:
+     context["auth_type"]   # -> nil
+     context["auth_authen"] # -> nil
+     context.authenticated? # -> false
+
+     context["auth_type"]   # -> "CRAM-MD5"
+     context["auth_authen"] # -> nil
+     context.authenticated? # -> true
+
+     context["auth_type"]   # -> nil
+     context["auth_authen"] # -> "sender"
+     context.authenticated? # -> true
+
+=== [socket-address] socket_address
+
+ソケットのアドレスを表現しているオブジェクトです。IPv4ソケッ
+ト、IPv6ソケット、UNIXドメインソケットそれぞれで別々のオブジェ
+クトになります。
+
+==== Milter::SocketAddress::IPv4
+
+IPv4ソケットのアドレスを表現するオブジェクトです。以下のメソッ
+ドを持ちます。
+
+: address
+   ドット表記のIPv4アドレスを返します。
+
+   例:
+     socket_address.address # -> "192.168.1.1"
+
+: port
+   ポート番号を返します。
+
+   例:
+     socket_address.port # -> 12345
+
+: to_s
+   connection_specと同じ書式で表現したIPv4アドレスを返します。
+
+   例:
+     socket_address.to_s # -> "inet:12345@[192.168.1.1]"
+
+: local?
+   プライベートなネットワークのアドレスの場合はtrueを返しま
+   す。
+
+   例:
+     socket_address.to_s   # -> "inet:12345@[127.0.0.1]"
+     socket_address.local? # -> true
+
+     socket_address.to_s   # -> "inet:12345@[192.168.1.1]"
+     socket_address.local? # -> true
+
+     socket_address.to_s   # -> "inet:12345@[160.XXX.XXX.XXX]"
+     socket_address.local? # -> false
+
+: to_ip_address
+   対応するIPAddrオブジェクトを返します。
+
+   例:
+     socket_address.to_s          # -> "inet:12345@[127.0.0.1]"
+     socket_address.to_ip_address # -> #<IPAddr: IPv4:127.0.0.1/255.255.255.255>
+
+==== Milter::SocketAddress::IPv6
+
+IPv6ソケットのアドレスを表現するオブジェクトです。以下のメソッ
+ドを持ちます。
+
+: address
+   コロン表記のIPv6アドレスを返します。
+
+   例:
+     socket_address.address # -> "::1"
+
+: port
+   ポート番号を返します。
+
+   例:
+     socket_address.port # -> 12345
+
+: to_s
+   connection_specと同じ書式で表現したIPv6アドレスを返します。
+
+   例:
+     socket_address.to_s # -> "inet6:12345@[::1]"
+
+: local?
+   プライベートなネットワークのアドレスの場合はtrueを返しま
+   す。
+
+   例:
+     socket_address.to_s   # -> "inet6:12345@[::1]"
+     socket_address.local? # -> true
+
+     socket_address.to_s   # -> "inet6:12345@[fe80::XXXX]"
+     socket_address.local? # -> true
+
+     socket_address.to_s   # -> "inet6:12345@[2001::XXXX]"
+     socket_address.local? # -> false
+
+: to_ip_address
+   対応するIPAddrオブジェクトを返します。
+
+   例:
+     socket_address.to_s          # -> "inet6:12345@[::1]"
+     socket_address.to_ip_address # -> #<IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0001/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff>
+
+==== Milter::SocketAddress::Unix
+
+UNIXドメインソケットのアドレスを表現するオブジェクトです。以
+下のメソッドを持ちます。
+
+: path
+   ソケットのパスを返します。
+
+   例:
+     socket_address.path # -> "/tmp/local.sock"
+
+: to_s
+   connection_specと同じ書式で表現したUNIXドメインソケットア
+   ドレスを返します。
+
+   例:
+     socket_address.to_s # -> "unix:/tmp/local.sock"
+
+: local?
+   常にtrueを返します。
+
+   例:
+     socket_address.local? # -> true
+
+: to_ip_address
+   常にnilを返します。
+
+   例:
+     socket_address.to_s          # -> "unix:/tmp/local.sock"
+     socket_address.to_ip_address # -> nil
+
+== [database] データベース関連
+
+1.6.6から使用可能。
+
+データベース操作機能を利用する場合はRubyの知識が必要になりま
+す。データベース操作ライブラリとして
+((<ActiveRecord|URL:http://api.rubyonrails.org/files/activerecord/README_rdoc.html>))
+を採用しています。そのため、MySQLやSQLite3など多くのRDBを操
+作することができます。
+
+データベース接続機能を利用する場合はActiveRecordを別途インス
+トールする必要があります。ActiveRecordのインストールにはRuby
+用のパッケージ管理システム
+((<RubyGems|URL:https://rubygems.org/>))を用います。RubyGems
+とActiveRecordのインストール方法は((<インストール
+|install-to>))ページにあるインストールドキュメントのうち、
+「（任意）」の方のインストールドキュメントを参照してください。
+それぞれの環境でのRubyGemsとActiveRecordのインストール方法と
+を説明しています。
+
+ActiveRecordをインストールしたらデータベース操作機能を利用す
+ることができます。
+
+MySQLのusersテーブルの値を操作する場合の例を示します。
+
+MySQLの接続情報は以下の通りとします。
+
+: データベース名
+   mail-system
+
+: データベースサーバのIPアドレス
+   192.168.0.1
+
+: ユーザ名
+   milter-manager
+
+: パスワード
+   secret
+
+まず、この接続情報をmilter-manager.local.confで指定します。こ
+こでは、milter-manager.local.confは
+/etc/milter-manager/milter-manager.local.confにあるとします。
+
+/etc/milter-manager/milter-manager.local.conf:
+  database.type = "mysql2"
+  database.name = "mail-system"
+  database.user = "milter-manager"
+  database.password = "secret"
+
+次に、usersテーブルに接続するためのActiveRecrodオブジェクト
+を定義します。定義ファイルはmilter-manager.local.confが置い
+てあるディレクトリと同じパスにあるmodels/ディレクトリ以下に
+置きます。今回はusersテーブル用の定義ファイルなので
+models/user.rbを作成します。
+
+/etc/milter-manager/models/user.rb:
+  class User < ActiveRecord::Base
+  end
+
+これで準備は整ったので、再び、milter-manager.local.confへ戻
+ります。以下のように書いてデータベースへ接続し、データを操作
+します。
+
+/etc/milter-manager/milter-manager.local.conf:
+  database.setup
+  database.load_models("models/*.rb")
+  User.all.each do |user|
+    p user.name # => "alice", "bob", ...
+  end
+
+まとめると以下のようになります。
+
+/etc/milter-manager/milter-manager.local.conf:
+  # 接続情報設定
+  database.type = "mysql2"
+  database.name = "mail-system"
+  database.user = "milter-manager"
+  database.password = "secret"
+
+  # 接続
+  database.setup
+
+  # 定義を読み込み
+  database.load_models("models/*.rb")
+  # データを操作
+  User.all.each do |user|
+    p user.name # => "alice", "bob", ...
+  end
+
+/etc/milter-manager/models/user.rb:
+  class User < ActiveRecord::Base
+  end
+
+以下は設定項目です。
+
+: database.type
+   データベースの種類を指定します。
+
+   指定可能な種類は以下の通りです。
+     : "mysql2"
+        MySQLを利用します。以下のようにmysql2 gemをインストー
+        ルする必要があります。
+
+          % sudo gem install mysql2
+
+     : "sqlite3"
+        SQLite3を利用します。以下のようにsqlite3 gemをインストー
+        ルする必要があります。
+
+          % sudo gem install sqlite3
+
+     : "pg"
+        PostgreSQLを利用します。以下のようにpg gemをインストー
+        ルする必要があります。
+
+          % sudo gem install pg
+
+   例:
+     database.type = "mysql2" # MySQLを利用
+
+: database.name
+   接続するデータベース名を指定します。
+
+   SQLite3ではデータベースのパスまたは(({":memory:"}))を指定
+   します。
+
+   例:
+     database.name = "configurations" # configurationsデータベースへ接続
+
+: database.host
+   接続するデータベースサーバのホスト名を指定します。
+
+   MySQLなどでは規定値として"localhost"を利用します。
+
+   SQLite3では無視されます。
+
+   例:
+     database.host = "192.168.0.1" # 192.168.0.1で動いているサーバへ接続
+
+: database.port
+   接続するデータベースサーバのポート番号を指定します。
+
+   それぞれのRDBごとに規定値が設定されているため、多くの場合、
+   明示的に指定する必要はありません。
+
+   SQLite3では無視されます。
+
+   例:
+     database.port = 3306 # 3306番ポートで動いているサーバへ接続
+
+: database.path
+   接続するデータベースサーバのUNIXドメインソケットのパスを
+   指定します。
+
+   SQLite3の場合はデータベースのパスになります。ただし、
+   ((<.#database.name>))の設定の方が優先されるため、
+   ((<.#database.path>))ではなく、((<.#database.name>))を使
+   うことを推奨します。
+
+   例:
+     database.path = "/var/run/mysqld/mysqld.sock" # UNIXドメインソケットでMySQLへ接続
+
+: database.user
+   データベース接続ユーザを指定します。
+
+   SQLite3では無視されます。
+
+   例:
+     database.user = "milter-manager" # milter-managerユーザでサーバへ接続
+
+: database.password
+   データベース接続時に使うパスワードを指定します。
+
+   SQLite3では無視されます。
+
+   例:
+     database.password = "secret"
+
+: database.extra_options
+   1.6.9から使用可能。
+
+   追加のオプションを指定します。例えば、ActiveRecordの
+   MySQL2アダプタにある(({:reconnect}))オプションを指定する
+   場合は以下のようになります。
+
+     database.type = "mysql2"
+     database.extra_options[:reconnect] = true
+
+   指定できるオプションはデータベース毎に異なります。
+
+   例:
+     database.extra_options[:reconnect] = true
+
+: database.setup
+   データベースへ接続します。
+
+   この時点ではじめてデータベースへ接続します。この後からデー
+   タベースを操作できるようになります。
+
+   例:
+     database.setup
+
+: database.load_models(path)
+   ActiveRecord用のクラス定義が書かれたRubyスクリプトを読み
+   込みます。((|path|))にはglobが使えるため、"models/*.rb"と
+   して複数のファイルを一度に読み込むことができます。
+   ((|path|))が相対パスだった場合は、milter-manager.confがあ
+   るディレクトリからの相対パスになります。
+
+   例:
+     # /etc/milter-manager/models/user.rb
+     # /etc/milter-manager/models/group.rb
+     # などを読み込む。
+     # （/etc/milter-manager/milter-manager.confを使っている場合）
+     database.load_models("models/*.rb")

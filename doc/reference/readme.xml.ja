@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="readme">
+<refmeta>
+  <refentrytitle role='top_of_page' id='readme.top_of_page'>README</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>README</refname>
+  <refpurpose>milter manager: より効果的にmilterを使うためのmilter</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>名前</title>
+  <para>milter manager</para>
+</refsect1>
+
+<refsect1>
+  <title>サイト</title>
+  <para>
+  <ulink url='http://milter-manager.sourceforge.net/'>&lt;URL:http://milter-manager.sourceforge.net/&gt;</ulink>
+  
+</para>
+</refsect1>
+
+<refsect1>
+  <title>ライセンス</title>
+  <para>以下の規則に従います。</para>
+  <itemizedlist>
+  <listitem>
+  <para>ライセンスが明記してあるファイル: そのライセンス</para>
+</listitem>
+  <listitem>
+  <para>コマンド: GPL3(license/gpl.txt)</para>
+</listitem>
+  <listitem>
+  <para>ドキュメント: GFDL(license/fdl.txt)</para>
+</listitem>
+  <listitem>
+  <para>画像: Public Domain</para>
+</listitem>
+  <listitem>
+  <para>ライブラリ: LGPL3(license/lgpl.txt)</para>
+</listitem>
+</itemizedlist>
+  <para>具体的には以下の通りです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>ライセンスが明記してあるファイル:</para>
+  <itemizedlist>
+  <listitem>
+  <para>milter/core/milter-memory-profile.c: LGPL2+</para>
+</listitem>
+  <listitem>
+  <para>binding/ruby/lib/milter/compatible.rb: Ruby's</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>コマンド: GPL3</para>
+  <itemizedlist>
+  <listitem>
+  <para>src/以下</para>
+</listitem>
+  <listitem>
+  <para>tool/直下</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>ドキュメント: GFDL</para>
+  <itemizedlist>
+  <listitem>
+  <para>README, README.ja</para>
+</listitem>
+  <listitem>
+  <para>doc/以下</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>画像: Public Domain</para>
+  <itemizedlist>
+  <listitem>
+  <para>doc/*.svg, doc/*.png, html/*.svg, html/*.png</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>ライブラリ: LGPL3</para>
+  <itemizedlist>
+  <listitem>
+  <para>上記以外</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>milter manager</title>
+  <para>milter managerはmilter効果的に利用するためのmilterです。</para>
+  <para>milter managerを導入することにより、MTAが行っていたmilter管理 をmilter managerが行うことになるため、以下のような利点があり ます。</para>
+  <itemizedlist>
+  <listitem>
+  <para>milter管理コストを減らすことができる</para>
+</listitem>
+  <listitem>
+  <para>milterを柔軟に組み合わせることができる</para>
+</listitem>
+</itemizedlist>
+  <para>
+  詳細は
+  <link linkend='introduction'>はじめに</link>
+  に書いてありま す。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>依存ソフトウェア</title>
+  <itemizedlist>
+  <listitem>
+  <para>milterをサポートしたMTA</para>
+  <itemizedlist>
+  <listitem>
+  <para>Sendmail &gt;= 8.13.8</para>
+</listitem>
+  <listitem>
+  <para>Postfix &gt;= 2.3.3 （ただし、Postfixがサポートしているmilterの機能のみ利 用可能）</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>GLib &gt;= 2.12.3</para>
+</listitem>
+  <listitem>
+  <para>Ruby &gt;= 1.8.5</para>
+</listitem>
+  <listitem>
+  <para>Ruby/GLib2 (Ruby-GNOME2) &gt;= 0.16.0</para>
+</listitem>
+  <listitem>
+  <para>UNIX系OS</para>
+  <itemizedlist>
+  <listitem>
+  <para>Linux（Debian GNU/Linux, Ubuntu, CentOS）</para>
+</listitem>
+  <listitem>
+  <para>FreeBSD, NetBSD</para>
+</listitem>
+  <listitem>
+  <para>Solaris</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+  <refsect2>
+  <title>あるとよいソフトウェア</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='URL:http://cutter.sourceforge.net/index.html.ja'>Cutter: C言語用テスティングフレームワーク</ulink>
+  &gt;= 1.0.6
+</para>
+  <para>make checkおよびmake coverageを実行する場合は必要。</para>
+</listitem>
+  <listitem>
+  <para>LCOV: カバレッジ結果整形ツール</para>
+  <para>make coverageを実行する場合は必要。</para>
+  <para>
+  <ulink url='http://ltp.sourceforge.net/coverage/lcov.php'>&lt;URL:http://ltp.sourceforge.net/coverage/lcov.php&gt;</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>RRDtool（付属のRubyバインディングもあるとなおよい）</para>
+  <para>milter-manager-log-analyzerでmilter managerに登録された milterの動作のグラフを表示する場合は必要。</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>インストール</title>
+  <para>
+  <link linkend='install'>インストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>設定</title>
+  <para>
+  <link linkend='configuration'>設定</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>使い方</title>
+  <para>milter-managerコマンドはbin/以下ではなくsbin/以下にインストー ルされることに注意してください。非常に多くの場合、一般ユーザ はsbin/にパスが通っていないので、フルパスで起動します。</para>
+  <para>configure時に--prefixオプションを指定していない場合は /usr/local/sbin/以下にインストールされているので以下のように なります。</para>
+  <programlisting>% /usr/local/sbin/milter-manager --help</programlisting>
+  <para>
+  インストールが成功していれば、使用できるオプションが表示され ます。詳細は
+  <link linkend='milter-manager'>milter-manager</link>
+  を 見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>ツール</title>
+  <para>milter managerにはいくつか便利なツールが付属されていて、bin/ 以下にインストールされます。</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='milter-test-server'>milter-test-server</link>
+  : MTA側のmilterプロトコルの機能を提供する。MTA無しでmilter の動作をテストするために使用することができる。
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-test-client'>milter-test-client</link>
+  : MTA側から渡ってきた情報を表示するだけのmilter。MTA側から 渡っている情報を確認するために使用することができる。
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-performance-check'>milter-performance-check</link>
+  : MTAの性能を計測するSMTPクライアント。
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='milter-manager-log-analyzer'>milter-manager-log-analyzer</link>
+  : milter-managerのログを解析し、milter-managerに登録された milterの動作をグラフ化する。
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>メーリングリスト</title>
+  <para>
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-ja'>milter-manager-users-ja</ulink>
+  があり、質問・バグレポートを受け付けています。新バージョンの アナウンスもメーリングリストに告知されるので、milter manager を利用している場合はメーリングリストの購読を検討してください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>ソースコード</title>
+  <para>最新のソースコードはGitリポジトリから入手することがで きます。</para>
+  <programlisting>% git clone https://github.com/milter-manager/milter-manager.git</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>感謝</title>
+  <itemizedlist>
+  <listitem>
+  <para>おばたさん: バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>Павел Гришинさん: バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>となかさん:</para>
+  <itemizedlist>
+  <listitem>
+  <para>バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>アドバイスをしてくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>sgykさん: バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>土谷さん: バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>今間さん: バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>はやみずさん:</para>
+  <itemizedlist>
+  <listitem>
+  <para>テストをきれいにしてくれました。</para>
+</listitem>
+  <listitem>
+  <para>Rubyでのmilter作成に有用な機能を追加してくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>ゴリ丸さん: 使いやすくなるようにアドバイスをしてくれました。</para>
+</listitem>
+  <listitem>
+  <para>西山さん:</para>
+  <itemizedlist>
+  <listitem>
+  <para>typoを直してくれました。</para>
+</listitem>
+  <listitem>
+  <para>有用なアドバイスをしてくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Antuan Avdioukhineさん: 有用なアドバイスをしてくれました。</para>
+</listitem>
+  <listitem>
+  <para>さとうふみやすさん:</para>
+  <itemizedlist>
+  <listitem>
+  <para>バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>Solarisに対応してくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>ROSSOさん: バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>やまだあきらさん:</para>
+  <itemizedlist>
+  <listitem>
+  <para>バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>Debianパッケージの問題の修正方法を教えてくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Kenji Shionoさん:</para>
+  <itemizedlist>
+  <listitem>
+  <para>バグを報告してくれました。</para>
+</listitem>
+  <listitem>
+  <para>新しい機能を提案してくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>Jordaoさん</para>
+  <itemizedlist>
+  <listitem>
+  <para>バグを報告してくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>荻野さん</para>
+  <itemizedlist>
+  <listitem>
+  <para>バグを報告してくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>川崎さん</para>
+  <itemizedlist>
+  <listitem>
+  <para>FreeBSDでの/etc/rc.conf.local読み込み対応をしてくれました。</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

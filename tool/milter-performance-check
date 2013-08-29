@@ -1,0 +1,1092 @@
+#!/usr/bin/env ruby
+#
+# Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+require 'pathname'
+require 'time'
+require 'find'
+require 'optparse'
+require 'net/smtp'
+require 'digest/sha2'
+require 'thread'
+require 'drb'
+
+# for ruby 1.8.5 on CentOS.
+unless Digest.const_defined?(:SHA2)
+  Digest::SHA2 = Digest::SHA256
+end
+
+class MilterPerformanceChecker
+  class Statistics
+    attr_reader :n_processed_messages, :temporary_failure_messages
+    attr_reader :reject_messages, :error_messages
+    attr_reader :accumulated_response_time
+    def initialize
+      @mutex = Mutex.new
+      @elapsed_time = nil
+
+      @sources = []
+      @rejected_sources = []
+      @temporary_failure_sources = []
+      @accumulated_response_time = 0
+      @max_response_time = 0
+      @min_response_time = nil
+      @temporary_failure_messages = []
+      @reject_messages = []
+      @error_messages = []
+      @n_processed_messages = 0
+    end
+
+    def update(source_file, response_time,
+               temporary_failure_message,
+               reject_message, error_message)
+      @mutex.synchronize do
+        if source_file
+          @sources << [response_time, source_file]
+          @rejected_sources << source_file if reject_message
+          @temporary_failure_sources << source_file if temporary_failure_message
+        end
+        @accumulated_response_time += response_time
+        @n_processed_messages += 1
+        @max_response_time = [response_time, @max_response_time].max
+        @min_response_time = [response_time, @min_response_time].compact.min
+        if temporary_failure_message
+          @temporary_failure_messages << temporary_failure_message
+        end
+        @reject_messages << reject_message if reject_message
+        @error_messages << error_message if error_message
+      end
+    end
+
+    def measure
+      @start_time = Time.now
+      yield
+      @elapsed_time = Time.now - @start_time
+    end
+
+    def format
+      statistics = ""
+      statistics << format_sources
+      statistics << format_total
+      statistics << "\n"
+      statistics << format_per_mail
+      statistics << "\n"
+      statistics << format_status
+      statistics
+    end
+
+    def format_unsent_messages
+      statistics = ""
+      statistics << format_messages("Temporary failures:",
+                                    @temporary_failure_messages)
+      statistics << format_messages("Rejects:", @reject_messages)
+      statistics << format_messages("Errors:", @error_messages)
+      statistics
+    end
+
+    def throughput
+      elapsed_time = (@elapsed_time || (Time.now - @start_time))
+      if elapsed_time.zero?
+        @n_processed_messages
+      else
+        @n_processed_messages / elapsed_time.to_f
+      end
+    end
+
+    def max_response_time
+      @max_response_time
+    end
+
+    def min_response_time
+      @min_response_time || 0
+    end
+
+    def average_response_time
+      if @n_processed_messages.zero?
+        @accumulated_response_time.to_f
+      else
+        @accumulated_response_time.to_f / @n_processed_messages
+      end
+    end
+
+    def n_temporary_failure_messages
+      @temporary_failure_messages.size
+    end
+
+    def n_reject_messages
+      @reject_messages.size
+    end
+
+    def n_error_messages
+      @error_messages.size
+    end
+
+    private
+    def format_sources
+      statistics = ""
+      statistics << format_sent_sources
+      statistics << format_rejected_sources
+      statistics << format_temporary_failure_sources
+      statistics
+    end
+
+    def format_sent_sources
+      return "" if @sources.empty?
+
+      slow_order_sources = @sources.sort_by do |elapsed_time, source_file|
+        -elapsed_time
+      end
+      statistics = ""
+      slow_order_sources[0, 10].collect do |elapsed_time, source_file|
+        statistics << "%#5.2f (sec): %s\n" % [elapsed_time, source_file]
+      end
+      statistics << "\n"
+    end
+
+    def format_unsent_sources(label, sources)
+      return "" if sources.empty?
+      statistics = "#{label}\n"
+      sources.each  do |source_file|
+        statistics << "#{source_file}\n"
+      end
+      statistics << "\n"
+      statistics
+    end
+
+    def format_rejected_sources
+      format_unsent_sources("Rejected mails:", @rejected_sources)
+    end
+
+    def format_temporary_failure_sources
+      format_unsent_sources("Temporary failed mails:",
+                            @temporary_failure_sources)
+    end
+
+    def format_total
+      statistics = "Total:\n"
+      statistics << "      N mails: %#6d\n" % @n_processed_messages
+      statistics << " Elapsed time: %#6.2f (sec)\n" % @elapsed_time
+      statistics << "   Throughput: %#6.2f (mails/sec)\n" % throughput
+      statistics
+    end
+
+    def format_per_mail
+      statistics = "Per mail:\n"
+      statistics << "          Max: %#6.2f (sec)\n" % max_response_time
+      statistics << "          Min: %#6.2f (sec)\n" % min_response_time
+      statistics << "      Average: %#6.2f (sec)\n" % average_response_time
+      statistics
+    end
+
+    def format_status_item(label, n_mails)
+      " #{label}: %3d (%6.2f%%)\n" % [n_mails,
+                                      n_mails.to_f / @n_processed_messages * 100]
+    end
+
+    def format_status
+      statistics = "Status:\n"
+      statistics << format_status_item("Temporary failure",
+                                       n_temporary_failure_messages)
+      statistics << format_status_item("           Reject",
+                                       n_reject_messages)
+      statistics << format_status_item("            Error",
+                                       n_error_messages)
+      statistics
+    end
+
+    def format_messages(label, messages)
+      return "" if messages.empty?
+      statistics = "#{label}\n"
+      n_messages = messages.size
+      n_columns = Math.log10(n_messages).floor + 1
+      messages.each_with_index do |message, i|
+        statistics << "  %#{n_columns}d %s\n" % [i + 1, message.chomp]
+      end
+      statistics
+    end
+  end
+
+  class StatisticsDataReporter
+    attr_accessor :path
+    def initialize
+      @path = nil
+      @output = nil
+      @mutex = Mutex.new
+    end
+
+    def run
+      return yield if @path.nil?
+      File.open(@path, "w") do |file|
+        @output = file
+        @output.puts("wall clock time,response time,message size")
+        yield
+      end
+    end
+
+    def report(wall_clock_time, response_time, source_size)
+      return if @output.nil?
+      @mutex.synchronize do
+        @output.puts([wall_clock_time.iso8601(6),
+                      response_time,
+                      source_size].join(","))
+      end
+    end
+  end
+
+  class PeriodicalStatisticsReporter
+    attr_accessor :interval
+    attr_reader :statistics
+    def initialize(output=nil)
+      @interval = nil
+      @thread = nil
+      @stop = false
+      @statistics = nil
+      @output = output || $stdout
+    end
+
+    def run
+      @stop = false
+      if @interval
+        @thread = Thread.new do
+          report_header
+          until @stop
+            statistics = Statistics.new
+            statistics.measure do
+              @statistics = statistics
+              sleep(@interval)
+              @statistics = nil
+            end
+            report(statistics)
+          end
+        end
+      end
+      yield
+      stop
+    end
+
+    def stop
+      @stop = true
+    end
+
+    private
+    def report_items(items)
+      @output.puts("%8s %5s %7s %6s %6s %6s %5s %5s %5s" % items)
+      @output.flush
+    end
+
+    def report_header
+      headers = ["Time", "Sent", "mails/s", "Max(s)", "Min(s)", "Avg(s)",
+                 "4XX", "5XX", "Error"]
+      report_items(headers)
+    end
+
+    def report(statistics)
+      items = [Time.now.strftime("%H:%M:%S"),
+               "%#5d" % statistics.n_processed_messages.to_s,
+               "%#6.2f" % statistics.throughput,
+               "%#6.2f" % statistics.max_response_time,
+               "%#6.2f" % statistics.min_response_time,
+               "%#6.2f" % statistics.average_response_time,
+               "%#5d" % statistics.n_temporary_failure_messages,
+               "%#5d" % statistics.n_reject_messages,
+               "%#5d" % statistics.n_error_messages]
+      report_items(items)
+    end
+  end
+
+  def initialize
+    @smtp_server = "localhost"
+    @smtp_port = 25
+    @connect_host = nil
+    @connect_address = nil
+    @helo_fqdn = "localhost.localdomain"
+    @starttls = nil
+    @auth_user = nil
+    @auth_password = nil
+    @auth_mechanism = "auth"
+    @auth_map = {}
+    @from = "from@example.com"
+    @recipients = []
+    @force_from = nil
+    @force_recipients = nil
+    @default_recipients = ["to@example.com"]
+    @n_mails = 100
+    @n_additional_lines = 0
+    @n_concurrent_connections = 1
+    @n_workers = 1
+    @mails = []
+    @period = nil
+    @interval = nil
+    @flood = nil
+    @statistics_data_reporter = StatisticsDataReporter.new
+    @shuffle = false
+    @report_failure_responses = false
+    @periodical_statistics_reporter = PeriodicalStatisticsReporter.new
+    @reading_timeout = Net::SMTP.new("localhost").read_timeout
+    @mail_source_from_stdin = nil
+    @mail_source_files = {}
+    @parent = nil
+  end
+
+  def parse_options(argv)
+    opts = OptionParser.new do |opts|
+      opts.separator ""
+      opts.separator "Help options:"
+
+      opts.on("-h", "--help", "Show this message") do
+        puts opts
+        exit(0)
+      end
+
+      opts.separator("")
+      add_smtp_options(opts)
+
+      opts.separator("")
+      add_load_options(opts)
+
+      opts.separator("")
+      add_report_options(opts)
+    end
+    @mails = opts.parse!(argv)
+    @recipients = @default_recipients if @recipients.empty?
+  end
+
+  def parse_auth_map_file(path)
+    map = {}
+    File.open(path) do |file|
+      file.each_line do |line|
+        case line.strip
+        when /\A\#/
+          # comment
+        when /\A(.+):([a-z\d]+)\s+([^:]+):(.+)\z/
+          server = $1
+          port = $2
+          user = $3
+          password = $4
+          begin
+            port = Integer(port)
+          rescue ArgumentError
+            port = Socket.getservbyname(port)
+          end
+          map[[server, port]] = [user, password]
+        else
+          message = "invalid format: #{path}:#{file.lineno}: <#{line}>"
+          raise ArgumentError, message
+        end
+      end
+    end
+    map
+  end
+
+  def add_smtp_options(parser)
+    parser.separator("SMTP options:")
+
+    parser.on("--smtp-server=SERVER",
+              "Use SERVER as SMTP server",
+              "(#{@smtp_server})") do |smtp_server|
+      @smtp_server = smtp_server
+    end
+
+    parser.on("--smtp-port=PORT", Integer,
+              "Use PORT as SMTP port",
+              "(#{@smtp_port})") do |smtp_port|
+      @smtp_port = smtp_port
+    end
+
+    parser.on("--connect-host=HOST",
+              "Use HOST for XCLIENT NAME value.",
+              "See smtpd_authorized_xclient_hosts parameter for Postfix.",
+              "(none)") do |connect_host|
+      @connect_host = connect_host
+    end
+
+    parser.on("--connect-address=ADDRESS",
+              "Use ADDRESS for XCLIENT ADDR value.",
+              "See smtpd_authorized_xclient_hosts parameter for Postfix.",
+              "(none)") do |connect_address|
+      @connect_address = connect_address
+    end
+
+    parser.on("--helo-fqdn=FQDN",
+              "Use FQDN for SMTP HELO command as default value.",
+              "(#{@helo_fqdn})") do |helo_fqdn|
+      @helo_fqdn = helo_fqdn
+    end
+
+    if Net::SMTP.method_defined?(:capable_starttls?)
+      @starttls = "auto"
+      available_starttls_values = ["auto", "always", "disable"]
+      parser.on("--starttls=HOW",
+                "Use STARTTLS.",
+                "HOW == 'auto': STARTTLS is used if server supports it.",
+                "HOW == 'always': STARTTLS is always used.",
+                "HOW == 'disable': STARTTLS is never used.",
+                "[#{available_starttls_values.join(' ')}]",
+                "(#{@starttls})") do |starttls|
+        @starttls = starttls
+      end
+    end
+
+    parser.on("--auth-user=USER",
+              "Use USER for authentication.",
+              "(#{@auth_user})") do |user|
+      @auth_user = user
+    end
+
+    parser.on("--auth-password=PASSWORD",
+              "Use PASSWORD for authentication.",
+              "(#{@auth_password})") do |password|
+      @auth_password = password
+    end
+
+    available_mechanisms = ["auto", "plain", "login", "cram_md5", "cram-md5"]
+    parser.on("--auth-mechanism=MECHANISM",
+              "Use MECHANISM for authentication.",
+              "[#{available_mechanisms.join(' ')}]",
+              available_mechanisms,
+              "(#{@auth_mechanism})") do |mechanism|
+      @auth_mechanism = mechanism.gsub(/-/, '_')
+    end
+
+    parser.on("--auth-map=FILE",
+              "Read authentication map from FILE.",
+              "format is",
+              "  SERVER1:PORT USER1:PASSWORD1",
+              "  SERVER2:PORT USER2:PASSWORD2",
+              "  SERVER3:PORT USER3:PASSWORD3",
+              "  ...",
+              "(none)") do |file|
+      @auth_map.merge!(parse_auth_map_file(file))
+    end
+
+    parser.on("--from=FROM",
+              "Use FROM as envelope from address",
+              "on SMTP MAIL command as default value.",
+              "(#{@from})") do |from|
+      @from = from
+    end
+
+    parser.on("--recipient=RECIPIENT",
+              "Use RECIPIENT as envelope recipient address",
+              "on SMTP RCPT command as default value.",
+              "This option can be used n-times to set multi recipients.",
+              "(#{@default_recipients.inspect})") do |recipient|
+      @recipients << recipient
+    end
+
+    parser.on("--force-from=FROM",
+              "Ensure using FROM as envelope from address on SMTP MAIL command.",
+              "(#{@force_from})") do |from|
+      @force_from = from
+    end
+
+    parser.on("--recipient=RECIPIENT",
+              "Use RECIPIENT as envelope recipient address",
+              "on SMTP RCPT command as default value.",
+              "This option can be used n-times to set multi recipients.",
+              "(#{@default_recipients.inspect})") do |recipient|
+      @recipients << recipient
+    end
+
+    parser.on("--force-recipient=RECIPIENT",
+              "Ensure using RECIPIENT as envelope recipient address",
+              "on SMTP RCPT command as default value.",
+              "This option can be used n-times to set multi recipients.",
+              "(#{@force_recipients.inspect})") do |recipient|
+      @force_recipients ||= []
+      @force_recipients << recipient
+    end
+
+    parser.on("--reading-timeout=SECONDS", Integer,
+              "Timeout after SECONDS seconds on reading a command.",
+              "(#{@reading_timeout})") do |timeout|
+      @reading_timeout = timeout
+    end
+  end
+
+  def add_load_options(parser)
+    parser.separator("Load options:")
+
+    parser.on("--n-mails=N", Integer,
+              "Send a test mail N times",
+              "This option is ignored when mail files are specified",
+              "(#{@n_mails})") do |n_mails|
+      @n_mails = n_mails
+    end
+
+    parser.on("--n-additional-lines=N", Integer,
+              "Append N lines to test mails",
+              "This option is ignored when mail files are specified",
+              "(#{@n_additional_lines})") do |n_additional_lines|
+      @n_additional_lines = n_additional_lines
+    end
+
+    parser.on("--n-concurrent-connections=N", Integer,
+              "Send test mails with N concurrent connections",
+              "This option is ignored when mail files are specified",
+              "(#{@n_concurrent_connections})") do |n_concurrent_connections|
+      @n_concurrent_connections = n_concurrent_connections
+    end
+
+    parser.on("--n-workers=N", Integer,
+              "Send test mails with N worker processes",
+              "(#{@n_workers})") do |n_workers|
+      if n_workers < 0
+        raise OptionParser::InvalidOption, "must be positive number."
+      end
+      @n_workers = n_workers
+    end
+
+    parser.on("--period=PERIOD",
+              "Send mail files on average in PERIOD seconds/minutes/hours",
+              "e.g.: 5s, 5m, 1.5h and so on. Default is seconds",
+              "conflict option: --interval",
+              "(#{@period})") do |period|
+      if @interval
+        raise OptionParser::InvalidOption, "can't use with --interval"
+      end
+      @period = parse_period(period)
+    end
+
+    parser.on("--interval=INTERVAL",
+              "Send mail files at intervals of INTERVAL seconds/minutes/hours",
+              "e.g.: 5s, 5m, 1.5h and so on. Default is seconds",
+              "conflict option: --period",
+              "(#{@interval})") do |interval|
+      if @period
+        raise OptionParser::InvalidOption, "can't use with --period"
+      end
+      @interval = parse_period(interval)
+    end
+
+    parser.on('--flood[=PERIOD]',
+              "Flood of mails are sent for PERIOD seconds/minutes/hours.",
+              "Endless if PERIOD is not specified.",
+              "conflict option: --period, --interval") do |period|
+      if @period
+        raise OptionParser::InvalidOption, "can't use with --period"
+      end
+      if @interval
+        raise OptionParser::InvalidOption, "can't use with --interval"
+      end
+      if period.nil?
+        @flood = :endless
+      else
+        @flood = parse_period(period)
+      end
+    end
+
+    parser.on("--[no-]shuffle",
+              "Shuffle target mails",
+              "(#{@shuffle})") do |shuffle|
+      @shuffle = shuffle
+    end
+  end
+
+  def add_report_options(parser)
+    parser.separator("Report options:")
+
+    parser.on('--report-statistics-data=FILE',
+              "Write performance reports of each mail to FILE.",
+              "No report is written if not specified.") do |file|
+      @report_statistics_data.path = file
+    end
+
+    parser.on("--[no-]report-failure-responses",
+              "Report failure messages from SMTP server at the last",
+              "(#{@report_failure_responses})") do |boolean|
+      @report_failure_responses = boolean
+    end
+
+    parser.on('--report-periodically[=INTERVAL]',
+              "Report statistics at intervals of INTERVAL seconds/minutes/hours.",
+              "If INTERVAL isn't specified, report each 1 second.") do |interval|
+      interval ||= "1s"
+      @periodical_statistics_reporter.interval = parse_period(interval)
+    end
+  end
+
+  def run
+    Thread.abort_on_exception = true
+    mails = expand_mails(@mails)
+    mails = [mails[0]] * @n_mails if mails.size <= 1
+    mails = mails.sort_by {rand} if @shuffle
+
+    @statistics = Statistics.new
+    @statistics_data_reporter.run do
+      @periodical_statistics_reporter.run do
+        @stop_periodical_report = false
+        run_periodical_report_thread if @periodical_report_interval
+        if @n_workers > 1
+          run_multi_workers(mails)
+        else
+          @statistics.measure do
+            run_single_worker(mails)
+          end
+        end
+        @stop_periodical_report = true
+      end
+    end
+  end
+
+  def report
+    puts unless @periodical_statistics_reporter.interval.nil?
+    puts(@statistics.format)
+    if @report_failure_responses
+      formatted_unsent_messages = @statistics.format_unsent_messages
+      unless formatted_unsent_messages.empty?
+        puts
+        puts(formatted_unsent_messages)
+      end
+    end
+  end
+
+  def update_statistics(source_file,
+                        temporary_failure_message, reject_message, error_message,
+                        wall_clock_time, response_time, source_size)
+    if @parent
+      @parent.update_statistics(source_file,
+                                temporary_failure_message, reject_message,
+                                error_message,
+                                wall_clock_time, response_time, source_size)
+    else
+      @statistics.update(source_file, response_time, temporary_failure_message,
+                         reject_message, error_message)
+      periodical_statistics = @periodical_statistics_reporter.statistics
+      if periodical_statistics
+        periodical_statistics.update(source_file, response_time,
+                                     temporary_failure_message,
+                                     reject_message, error_message)
+      end
+      @statistics_data_reporter.report(wall_clock_time,
+                                       response_time,
+                                       source_size)
+    end
+  end
+
+  private
+  def run_multi_workers(mails)
+    start_sign_pipes = []
+    @n_workers.times do
+      parent_read, child_write = IO.pipe
+      child_read, parent_write = IO.pipe
+      start_sign_pipes << [parent_read, parent_write]
+      fork do
+        parent_write.close
+        parent_read.close
+        druby_uri = child_read.gets.chomp
+        @parent = DRbObject.new_with_uri(druby_uri)
+        run_single_worker(mails)
+        child_write.puts("finished")
+        child_write.close
+        exit!
+      end
+      child_read.close
+      child_write.close
+    end
+
+    DRb.start_service("druby://localhost:0", self)
+    @statistics.measure do
+      start_sign_pipes.each do |input, output|
+        output.puts(DRb.uri)
+      end
+
+      start_sign_pipes.each do |input, output|
+        input.gets
+      end
+    end
+  ensure
+    start_sign_pipes.each do |input, output|
+      input.close unless input.closed?
+      output.close unless output.closed?
+    end
+  end
+
+  def run_single_worker(mails)
+    begin
+      if @interval
+        threads = send_mails_in_interval(mails, @interval)
+      elsif @period
+        threads = send_mails_in_period(mails)
+      elsif @flood
+        threads = send_mails_in_flood(mails)
+      else
+        threads = send_mails_in_parallel(mails)
+      end
+      threads.each do |thread|
+        thread.join
+      end
+    rescue Interrupt
+    end
+  end
+
+  def stdin_file?(file)
+    file == "-" and not File.exist?(file)
+  end
+
+  def expand_mails(mails)
+    expanded_mails = []
+    mails.each do |mail|
+      if stdin_file?(mail)
+        expanded_mails << mail
+      else
+        Find.find(mail) do |file|
+          if File.file?(file)
+            expanded_mails << file
+            cache_mail_source_from_file(file)
+          end
+        end
+      end
+    end
+    expanded_mails.sort
+  end
+
+  def send_mails_in_interval(mails, interval)
+    i = 0
+    last = mails.size
+    mails.collect do |mail|
+      i += 1
+      thread = Thread.start do
+        send_mail(mail)
+      end
+      sleep(interval) if interval > 0 and i != last
+      thread
+    end
+  end
+
+  def send_mails_in_period(mails)
+    send_mails_in_interval(mails, @period / mails.size)
+  end
+
+  def send_mails_in_parallel(mails)
+    queue = Queue.new
+    mails.each do |mail|
+      queue.push(Proc.new {send_mail(mail)})
+    end
+    threads = []
+    n_concurrent_connections = [queue.size, @n_concurrent_connections].min
+    n_concurrent_connections.times do |i|
+      threads << Thread.new do
+        while (work = queue.pop)
+          sleep(rand(1))
+          work.call
+          break if queue.empty?
+        end
+      end
+    end
+    threads
+  end
+
+  def send_mails_in_flood(mails)
+    threads = []
+    n_mails = [0] * @n_concurrent_connections
+    if @flood == :endless
+      end_time = nil
+    else
+      start_time = Time.now
+      end_time = start_time + @flood
+    end
+    @n_concurrent_connections.times do |i|
+      threads << Thread.new do
+        if end_time
+          keep_running = true
+          while keep_running
+            mails.each do |mail|
+              if end_time < Time.now
+                keep_running = false
+                break
+              end
+              send_mail(mail)
+            end
+          end
+        else
+          loop do
+            mails.each do |mail|
+              send_mail(mail)
+            end
+          end
+        end
+      end
+    end
+
+    threads
+  end
+
+  def prepare_send_mail(mail_source_file)
+    if mail_source_file
+      if stdin_file?(mail_source_file)
+        mail_source = read_mail_source_from_stdin
+      else
+        mail_source = read_mail_source_from_file(mail_source_file)
+      end
+    else
+      mail_source = generate_mail_source
+    end
+    helo_fqdn, from, recipients = parse_mail_source(mail_source)
+    helo_fqdn ||= @helo_fqdn
+    from ||= @from
+    recipients ||= @recipients
+
+    from = @force_from || from
+    recipients = @force_recipients || recipients
+
+    [helo_fqdn, from, recipients, mail_source]
+  end
+
+  def authenticate(smtp)
+    if @auth_user
+      user = @auth_user
+      password = @auth_password
+      mechanism = @auth_mechanism
+    else
+      user, password = @auth_map[[smtp.address, smtp.port]]
+      mechanism = nil
+    end
+    if user
+      mechanism = nil if mechanism == "auto"
+      mechanism ||= default_auth_mechanism(smtp)
+      validate_auth_mechanism(smtp, mechanism)
+      smtp.__send__(:authenticate, user, password, mechanism)
+    end
+  end
+
+  def default_auth_mechanism(smtp)
+    if smtp.capable_cram_md5_auth?
+      "cram_md5"
+    elsif smtp.capable_plain_auth?
+      "plain"
+    elsif smtp.capable_login_auth?
+      "login"
+    elsif smtp.capable_auth_types.empty?
+      raise ArgumentError, "authentication isn't capable"
+    else
+      message = "all capable authentication mechanisms are not supported: "
+      message << smtp.capable_auth_types.inspect
+      raise ArgumentError, message
+    end
+  end
+
+  def validate_auth_mechanism(smtp, mechanism)
+    capability_check_method = nil
+    case mechanism
+    when "cram_md5"
+      capability_check_method = :capable_cram_md5_auth?
+    when "plain"
+      capability_check_method = :capable_plain_auth?
+    when "login"
+      capability_check_method = :capable_login_auth?
+    end
+    if capability_check_method
+      return unless respond_to?(capability_check_method)
+      return if smtp.send(capability_check_method)
+    end
+    message = "specified mechanism isn't supported: #{mechanism.inspect}"
+    message << ": #{smtp.capable_auth_types.inspect}"
+    raise ArgumentError, message
+  end
+
+  def setup_starttls(smtp)
+    case @starttls
+    when "always"
+      smtp.enable_starttls
+    when "auto"
+      smtp.enable_starttls_auto
+    when "disable"
+      smtp.disable_starttls
+    end
+  end
+
+  def send_mail(mail_source_file=nil)
+    helo_fqdn, from, recipients, source = prepare_send_mail(mail_source_file)
+
+    temporary_failure_message = nil
+    reject_message = nil
+    error_message = nil
+    start_time = Time.now
+    begin
+      smtp = Net::SMTP.new(@smtp_server, @smtp_port)
+      smtp.read_timeout = @reading_timeout
+      setup_starttls(smtp)
+      smtp.start(helo_fqdn) do |_smtp|
+        xclient_parameters = []
+        xclient_parameters << "NAME=#{@connect_host}" if @connect_host
+        xclient_parameters << "ADDR=#{@connect_address}" if @connect_address
+        unless xclient_parameters.empty?
+          unless _smtp.send(:capable?, "XCLIENT")
+            raise "XCLIENT isn't enabled. " +
+              "See smtpd_authorized_xclient_hosts parameter for Postfix."
+          end
+          _smtp.send(:getok, "XCLIENT #{xclient_parameters.join(' ')}")
+          _smtp.send(:do_helo, helo_fqdn)
+        end
+        authenticate(_smtp)
+        _smtp.send_mail(source, from, *recipients)
+      end
+    rescue Net::SMTPServerBusy
+      temporary_failure_message = $!.message
+    rescue Net::SMTPFatalError
+      reject_message = $!.message
+    rescue Net::ProtoFatalError
+      error_message = $!.message
+    rescue Timeout::Error, SystemCallError
+      error_message = "#{$!.class}: #{$!.message}"
+    end
+    wall_clock_time = Time.now
+    response_time = wall_clock_time - start_time
+    STDERR.puts(error_message) if error_message
+    update_statistics(mail_source_file,
+                      temporary_failure_message, reject_message, error_message,
+                      wall_clock_time, response_time, source.size)
+  end
+
+  def read_mail_source_from_stdin
+    if @mail_source_from_stdin
+      @mail_source_from_stdin.gsub(/^Message-Id:.*$/) do
+        "Message-Id: <#{random_tag}@mail.example.com>"
+      end
+    else
+      @mail_source_from_stdin = ARGF.read
+    end
+  end
+
+  def read_mail_source_from_file(file)
+    cache_mail_source_from_file(file)
+    @mail_source_files[file]
+  end
+
+  def cache_mail_source_from_file(file)
+    @mail_source_files[file] ||= File.open(file, "rb") {|mail| mail.read}
+  end
+
+  def parse_mail_source(source)
+    header_part, body_part = source.split(/(?:\r?\n){2}/, 2)
+    _, *names_and_values = header_part.split(/^([a-z][a-z\-]+):\s*/i)
+    headers = {}
+    received = []
+    until names_and_values.empty?
+      name = names_and_values.shift
+      value = names_and_values.shift
+      value = value.chomp.gsub(/(?:\r?\n)\s*/, ' ')
+      received << value if name == "Received"
+      headers[name] = value
+    end
+    helo_fqdn = extract_helo_fqdn_from_received(received[0])
+    from = extract_mail_address(headers["From"])
+    recipients = parse_recipient_header(headers["To"])
+    recipients += parse_recipient_header(headers["Cc"])
+    recipients.collect do |recipient|
+      extract_mail_address(recipient)
+    end
+    recipients = nil if recipients.empty?
+    [helo_fqdn, from, recipients]
+  end
+
+  def parse_recipient_header(header_value)
+    return [] if header_value.nil?
+    header_value.split(/\s*,\s*/)
+  end
+
+  def extract_helo_fqdn_from_received(received)
+    return nil if received.nil?
+    if /\Afrom ([a-z.]+)/i =~ received
+      $1
+    else
+      nil
+    end
+  end
+
+  def extract_mail_address(address)
+    return nil if address.nil?
+    if /<(.+?)>/ =~ address
+      $1
+    else
+      address.gsub(/\(.*?\)/, '').strip
+    end
+  end
+
+  def parse_period(period)
+    if /\A(\d+(?:.\d+)?)(s|sec|seconds?|m|min|minutes?|h|hours?)?\z/i =~ period
+      numeric = $1
+      unit = $2
+      numeric = Float(numeric)
+      unit ||= "seconds"
+      case unit.downcase[0]
+      when ?s
+        numeric
+      when ?m
+        numeric * 60
+      when ?h
+        numeric * 60 * 60
+      else
+        raise OptionParser::InvalidArgument, "invalid period unit"
+      end
+    else
+      raise OptionParser::InvalidArgument, "invalid period format"
+    end
+  end
+
+  def generate_mail_source
+    now = Time.now.rfc2822
+    mail = <<-EOM
+Return-Path: <#{@from}>
+Received: from #{@helo_fqdn} (#{@helo_fqdn} [192.168.1.1])
+	by mail.example.com with ESMTP id #{generate_id};
+	#{now}
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Mailer: milter-performance-check
+Message-Id: <#{random_tag}@mail.example.com>
+Subject: test mail
+From: #{@from}
+To: #{@recipients.join(', ')}
+Date: #{now}
+
+Hello,
+
+This is a test mail.
+EOM
+    mail << additinal_line * @n_additional_lines
+    mail
+  end
+
+  def additinal_line
+    "0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+  end
+
+  def generate_id
+    characters = ("0".."9").to_a + ("a".."z").to_a + ("A".."Z").to_a
+    length = 10
+    id = ""
+    length.times do
+      id << characters[rand(characters.size)]
+    end
+    id
+  end
+
+  def random_tag
+    Digest::SHA2.hexdigest("#{Time.now.to_i.to_s}.#{rand(Time.now.to_i)}")
+  end
+end
+
+if __FILE__ == $0
+  checker = MilterPerformanceChecker.new
+  checker.parse_options(ARGV)
+  checker.run
+  checker.report
+end
+
+# vi:ts=2:nowrap:ai:expandtab:sw=2

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Install to FreeBSD (optional)</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="install-to.html" title="Install milter manager to your platform">
+<link rel="prev" href="install-to-freebsd.html" title="Install to FreeBSD">
+<link rel="next" href="install-to-others.html" title="Install to other platforms">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="install-to-freebsd.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="install-to.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="install-to-others.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install-options-to-freebsd"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install-options-to-freebsd.top_of_page"></a>Install to FreeBSD (optional)</span></h2>
+<p>Install to FreeBSD (optional) — How to install milter manager related softwares to FreeBSD</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp7318800"></a><h2>About this document</h2>
+<p>
+  This document describes how to install milter manager related softwares to FreeBSD. See 
+  <a class="link" href="install-to-freebsd.html" title="Install to FreeBSD">Install to FreeBSD</a>
+   for milter manager install information and 
+  <a class="link" href="install.html" title="Install">Install</a>
+   for general install information.
+</p>
+</div>
+<div class="refsect1">
+<a name="install-options-to-freebsd.milter-manager-log-analyzer"></a><h2>Install milter-manager-log-analyzer</h2>
+<p>milter-manager-log-analyzer analyzer milter manager's log and generates graphs for statistics information.</p>
+<p>
+  There are two ways to view generated graphs; (1) view them via a Web server at the same host and (2) view them via
+  <a class="ulink" href="http://munin-monitoring.org/" target="_top">Munin</a>
+   (and a Web server) at other host. If we already have Munin or exclusive system monitoring server, Munin is a better way. Otherwise, a Web server at the same host is a better way. 
+  <a href="#ftn.idp8556144" class="footnote" name="idp8556144"><sup class="footnote">[6]</sup></a>
+  
+</p>
+<p>We install milter-manager-log-analyzer and then configure an environment to view generated graphs.</p>
+<div class="refsect2">
+<a name="idp9095376"></a><h3>Install packages</h3>
+<p>We use RRDtool for generating graphs. We also install Ruby bindings to RRDtool.</p>
+<p>
+  <span class="emphasis"><em>NOTE: The Ruby bindings in RRDtool 1.3.8 has a bug. Don't specify "-M'WITH_RUBY_MODULE=yes'" when you use 1.3.8.</em></span>
+  
+</p>
+<pre class="programlisting">% sudo /usr/local/sbin/portupgrade -NRr -m 'WITH_RUBY_MODULE=true' databases/rrdtool</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp7809392"></a><h3>Configure milter-manager-log-analyzer</h3>
+<p>milter-manager-log-analyzer analyzes log and generates graphs periodically by cron. There is a cron configuration file at /usr/local/etc/milter-manager/cron.d/freebsd/milter-manager-log. milter-manager-log-analyzer analyzes log each 5 minutes and generates graphs into ~milter-manager/public_html/log/ by using the file.</p>
+<pre class="programlisting">% sudo -u milter-manager -H crontab /usr/local/etc/milter-manager/cron.d/freebsd/milter-manager-log</pre>
+<p>We can confirm that milter-manager-log-analyzer is ran each 5 minutes at /var/log/cron.</p>
+<p>We complete milter-manager-log-analyzer installation. We will setup an environment to view generated graphs.  First, a way that a Web server in the same host will be explained, then a way that using Munin will be explained.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5758848"></a><h3>Way 1: View via a Web server at the same host</h3>
+<div class="refsect3">
+<a name="idp5759552"></a><h4>Install packages</h4>
+<p>We use Apache as Web server. We will install Apache 2.2 series. (www/apache22)</p>
+<pre class="programlisting">% sudo /usr/local/sbin/portupgrade -NRr www/apache22</pre>
+</div>
+<div class="refsect3">
+<a name="idp9120608"></a><h4>Configure Apache</h4>
+<p>Apache publishes users' files. We edit /usr/local/etc/apache22/httpd.conf like the following:</p>
+<p>Before:</p>
+<pre class="programlisting"># User home directories
+#Include etc/apache22/extra/httpd-userdir.conf</pre>
+<p>After:</p>
+<pre class="programlisting"># User home directories
+Include etc/apache22/extra/httpd-userdir.conf</pre>
+<p>Then we reload configuration file:</p>
+<pre class="programlisting">% sudo /usr/local/etc/rc.d/apache22 reload</pre>
+<p>Now, we can see graphs at http://localhost/milter-manager-log/.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="install-options-to-freebsd.munin"></a><h3>Way 2: View via Munin at other host</h3>
+<p>Next way is using Munin at other host.</p>
+</div>
+<div class="refsect3">
+<a name="idp2927472"></a><h4>Install packages</h4>
+<p>We install milter-manager-munin-plugins package that provides statistics data collected by milter-manager-log-analyzer to Munin:</p>
+<pre class="programlisting">% sudo /usr/local/sbin/portupgrade -NRr munin-node</pre>
+</div>
+<div class="refsect3">
+<a name="idp2929616"></a><h4>Configure munin-node</h4>
+<p>We will install Munin plugins to provide statistics information collected by milter-manager-log-analyzer to Munin. Those plugins are installed into /usr/local/share/munin/plugins/. First, we install them to munin-node's plugins directory:</p>
+<pre class="programlisting">% sudo ln -s /usr/local/share/milter-manager/munin/plugins/* /usr/local/share/munin/plugins</pre>
+<p>Next, we put a configuration for those plugins to /usr/local/etc/munin/plugin-conf.d/milter-manager.conf:</p>
+<p>/usr/local/etc/munin/plugin-conf.d/milter-manager.conf:</p>
+<pre class="programlisting">[milter_manager_*]
+  user milter-manager
+  env.PATH /bin:/usr/local/bin:/usr/bin
+  env.logdir /home/milter-manager/public_html/log
+  env.pidfile /var/run/milter-manager/milter-manager.pid</pre>
+<p>At the last, we enables only plugins what we need:</p>
+<pre class="programlisting">% sudo /usr/local/sbin/munin-node-configure --shell | grep -e '\(milter_manager_\|postfix_processes\|sendmail_processes\)' | sudo sh</pre>
+<p>Plugins installation is completed.</p>
+<p>
+  <span class="emphasis"><em>NOTE: We need to use databases created by milter-manager-log-analyzer bundled with milter manager 1.5.0 or later to provide statistics data to Munin. If we have databases that are created by older milter-manager-log-analyzer, we need to remove ~milter-manager/public_html/log/. If we remove the directory, milter-manager-log-analyzer re-creates statistics databases 5 minutes later.</em></span>
+  
+</p>
+<p>Munin-node should accept accesses from Munin server. If Munin server is 192.168.1.254, we need to append the following lines to /etc/munin/munin-node.conf:</p>
+<p>/etc/munin/munin-node.conf:</p>
+<pre class="programlisting">allow ^192\.168\.1\.254$</pre>
+<p>We need to restart munin-node to apply our configuration:</p>
+<pre class="programlisting">% sudo /usr/sbin/service munin-node restart</pre>
+</div>
+<div class="refsect3">
+<a name="idp7337968"></a><h4>Configure Munin server</h4>
+<p>Works in this section at system monitor server. We assume that system monitor server works on FreeBSD.</p>
+<p>First, we install munin and Apache:</p>
+<pre class="programlisting">monitoring-server% sudo /usr/local/sbin/portupgrade -NRr munin-main www/apache22</pre>
+<p>We add our mail server that works munin-node to munin's monitor target. We assume that mail server has the following configuration:</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="install-options-to-freebsd.Host"></a>Host name</span></p></td>
+<td><p>mail.example.com</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-options-to-freebsd.IP"></a>IP address</span></p></td>
+<td><p>192.168.1.2</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>We need to add the following lines to /usr/local/etc/munin/munin.conf to add the mail server:</p>
+<p>/usr/local/etc/munin/munin.conf:</p>
+<pre class="programlisting">[mail.example.com]
+    address 192.168.1.2
+    use_node_name yes</pre>
+<p>We export graphs generated by munin:</p>
+<pre class="programlisting">% sudo ln -s /usr/local/www/munin/ /usr/local/www/apache22/data/</pre>
+<p>We will be able to view graphs at http://monitoring-server/munin/ 5 minutes later.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp10936016"></a><h2>Conclusion</h2>
+<p>
+  We can confirm milter's effect visually by milter-manager-log-analyzer. If we use Postfix as MTA, we can compare with
+  <a class="ulink" href="http://mailgraph.schweikert.ch/" target="_top">Mailgraph</a>
+  's graphs to confirm milter's effect. We can use graphs generated by milter-manager-log-analyzer effectively when we are trying out a milter.
+</p>
+</div>
+<div class="footnotes">
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.idp8556144" class="footnote"><p><a href="#idp8556144" class="para"><sup class="para">[6] </sup></a>If we want to run Munin at the same host, we need a Web server.</p></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

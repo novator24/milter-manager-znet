@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter-performance-check</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="commands.html" title="Commands">
+<link rel="prev" href="milter-test-client.html" title="milter-test-client">
+<link rel="next" href="milter-report-statistics.html" title="milter-statistics-report">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="milter-test-client.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="commands.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="milter-report-statistics.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="milter-performance-check"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="milter-performance-check.top_of_page"></a>milter-performance-check</span></h2>
+<p>milter-performance-check — MTA performance check program</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp8074608"></a><h2>NAME</h2>
+<p>milter-performance-check - MTA performance check program</p>
+</div>
+<div class="refsect1">
+<a name="idp10043792"></a><h2>SYNOPSIS</h2>
+<p>
+  <code class="code">milter-performance-check</code>
+   [
+  <span class="emphasis"><em>option ...</em></span>
+  ]
+</p>
+</div>
+<div class="refsect1">
+<a name="idp9411920"></a><h2>DESCRIPTION</h2>
+<p>milter-performance-check is a SMTP client that measures MTA performance. milter-test-server measures milter's performance and miter-performance-check measures MTA + milter's performance.</p>
+<p>smtp-source bundled with Postfix is a similar tool. smtp-source has more features.</p>
+<p>milter-performance-check is useful because it measures elapsed time of only SMTP sessions. smtp-source doesn't provide the feature. You need to also use 'time' command and measure smtp-source command runtime not elapsed time of SMTP sessions.</p>
+<p>Normally, there isn't big difference between elapsed time of SMTP sessions and tool runtime.</p>
+<p>If you satisfy milter-performance-check's features, it's better that you use milter-performance-check. If you don't, smtp-source is more better tool for you.</p>
+</div>
+<div class="refsect1">
+<a name="idp10187488"></a><h2>Options</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--help"></a>--help</span></p></td>
+<td><p>Shows available options and exits.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--smtp-server"></a>--smtp-server=SERVER</span></p></td>
+<td>
+<p>Uses SEVER as target SMTP server.</p>
+<p>The default is localhost.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--smtp-port"></a>--smtp-port=PORT</span></p></td>
+<td>
+<p>Uses PORT as SMTP port.</p>
+<p>The default is 25.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--connect-host"></a>--connect-host=HOST</span></p></td>
+<td>
+<p>Specifies connected SMTP client host.</p>
+<p>
+  This uses NAME of 
+  <a class="ulink" href="http://www.postfix.com/XCLIENT_README.html" target="_top">Postfix's XCLIENT SMTP extension</a>
+  .
+  <a class="ulink" href="http://www.postfix.org/postconf.5.html#smtpd_authorized_xclient_hosts" target="_top">smtpd_authorized_xclient_hosts</a>
+  should be configured appropriately.
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--connect-address"></a>--connect-address=ADDRESS</span></p></td>
+<td>
+<p>Specifies connected SMTP client address.</p>
+<p>
+  This uses ADDR of 
+  <a class="ulink" href="http://www.postfix.com/XCLIENT_README.html" target="_top">Postfix's XCLIENT SMTP extension</a>
+  .
+  <a class="ulink" href="http://www.postfix.org/postconf.5.html#smtpd_authorized_xclient_hosts" target="_top">smtpd_authorized_xclient_hosts</a>
+  should be configured appropriately.
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--helo-fqdn"></a>--helo-fqdn=FQDN</span></p></td>
+<td>
+<p>Uses FQDN as HELO SMTP command.</p>
+<p>The default localhost.localdomain.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--starttls"></a>--starttls=HOW</span></p></td>
+<td>
+<p>Since 1.6.9.</p>
+<p>
+  Specifies whether STARTTLS is used or not. Here are available 
+  <code class="varname">HOW</code>
+   values:
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;auto&lt;/command&gt;"></a>
+  <span class="command"><strong>auto</strong></span>
+</span></p></td>
+<td><p>It uses STARTTLS when MTA supports STARTTLS. (default)</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;always&lt;/command&gt;"></a>
+  <span class="command"><strong>always</strong></span>
+</span></p></td>
+<td><p>It always uses STARTTLS.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;disable&lt;/command&gt;"></a>
+  <span class="command"><strong>disable</strong></span>
+</span></p></td>
+<td><p>It never use STARTTLS.</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  The default is 
+  <span class="command"><strong>auto</strong></span>
+  .
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-user"></a>--auth-user=USER</span></p></td>
+<td>
+<p>Since 1.6.9.</p>
+<p>
+  Uses 
+  <code class="varname">USER</code>
+   as SMTP Authentication user.
+</p>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-password"></a>--auth-password=PASSWORD</span></p></td>
+<td>
+<p>Since 1.6.9.</p>
+<p>
+  Uses 
+  <code class="varname">PASSWORD</code>
+   as SMTP Authentication password.
+</p>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-mechanism"></a>--auth-mechanism=MECHANISM</span></p></td>
+<td>
+<p>Since 1.6.9.</p>
+<p>
+  Uses 
+  <code class="varname">MECHANISM</code>
+   as SMTP Authentication mechanism. Here are available 
+  <code class="varname">MECHANISM</code>
+   values:
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">
+  <span class="command"><strong>auto</strong></span>
+</span></p></td>
+<td><p>It uses a detected available mechanism by MTA. (default)</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;plain&lt;/command&gt;"></a>
+  <span class="command"><strong>plain</strong></span>
+</span></p></td>
+<td><p>It always uses PLAIN.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;login&lt;/command&gt;"></a>
+  <span class="command"><strong>login</strong></span>
+</span></p></td>
+<td><p>It always uses LOGIN.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;cram-md5&lt;/command&gt;"></a>
+  <span class="command"><strong>cram_md5</strong></span> or <span class="command"><strong>cram-md5</strong></span>
+</span></p></td>
+<td><p>It always uses CRAM-MD5.</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  The default is 
+  <span class="command"><strong>auto</strong></span>
+  .
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-map"></a>--auth-map=FILE</span></p></td>
+<td>
+<p>Since 1.6.9.</p>
+<p>
+  Loads SMTP Authentication configurations for MTA address and port number pairs from 
+  <code class="varname">FILE</code>
+  . Here is 
+  <code class="varname">FILE</code>
+  format that is also used by 
+  <a class="ulink" href="http://www.postfix.org/postconf.5.html#smtp_sasl_password_maps" target="_top">Postfix's  smtp_sasl_password_maps</a>
+  :
+</p>
+<pre class="programlisting">SERVER1:PORT USER1:PASSWORD1
+SERVER2:PORT USER2:PASSWORD2
+...</pre>
+<p>Here is an example configuration that "send-user" user and "secret" password account is used for "smtp.example.com" address and "submission port" (587 port) MTA:</p>
+<pre class="programlisting">smtp.example.com:587 send-user:secret</pre>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--from"></a>--from=FROM</span></p></td>
+<td>
+<p>Uses FROM as MAIL SMTP command.</p>
+<p>The default from@example.com.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--force-from"></a>--force-from=FROM</span></p></td>
+<td>
+<p>Uses FROM as MAIL SMTP command even if mail file includes "From:" header.</p>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--recipient"></a>--recipient=RECIPIENT</span></p></td>
+<td>
+<p>Uses RECIPIENT as RCPT SMTP command. If you want to use multiple recipients, use --recipient n-times.</p>
+<p>The default is [to@example.com].</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--force-recipient"></a>--force-recipient=RECIPIENT</span></p></td>
+<td>
+<p>Uses RECIPIENT as RCPT SMTP command even if mail file includes 'To:' header. If you want to use multiple recipients, use --recipient n-times.</p>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--n-mails"></a>--n-mails=N</span></p></td>
+<td>
+<p>
+  Sends N mails. Some mails are sent concurrently. Maximum concurrency can be specified by
+  <a class="link" href="milter-performance-check.html#milter-performance-check.--n-concurrent-connections">--n-concurrent-connections</a>
+  .
+</p>
+<p>The default is 100.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--n-additional-lines"></a>--n-additional-lines=N</span></p></td>
+<td>
+<p>Adds N lines into mail body.</p>
+<p>The default is none. (Doesn't add.)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--n-concurrent-connections"></a>--n-concurrent-connections=N</span></p></td>
+<td>
+<p>Sends mails with N connections concurrently.</p>
+<p>The default is 10.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--period"></a>--period=PERIOD</span></p></td>
+<td>
+<p>Sends mails in PERIOD seconds/minutes/hours. Each mail is sent averagely. PERIOD is treated as seconds when its unit is omitted.</p>
+<p>Example (100 mails are sent):</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>--period=5    # sends mails at intervals of 0.05 seconds (5 / 100)</p></li>
+<li class="listitem"><p>--period=50s  # sends mails at intervals of 0.5 seconds (50 / 100)</p></li>
+<li class="listitem"><p>--period=10m  # sends mails at intervals of 6 seconds (60 * 10 / 100)</p></li>
+<li class="listitem"><p>--period=0.5h # sends mails at intervals of 18 seconds (60 * 60 * 0.5 / 100)</p></li>
+</ul></div>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--interval"></a>--interval=INTERVAL</span></p></td>
+<td>
+<p>Sends mails at intervals of INTERVAL seconds/minutes/hours. INTERVAL is treated as seconds when its unit is omitted.</p>
+<p>Example:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>--interval=5    # sends mails at intervals of 5 seconds</p></li>
+<li class="listitem"><p>--interval=0.5s # sends mails at intervals of 0.5 seconds</p></li>
+<li class="listitem"><p>--interval=10m  # sends mails at intervals of 10 minutes</p></li>
+<li class="listitem"><p>--interval=0.5h # sends mails at intervals of 0.5 hours</p></li>
+</ul></div>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--flood"></a>--flood[=PERIOD]</span></p></td>
+<td>
+<p>Sends flood of mails in PERIOD seconds/minutes/hours. If PERIOD is omitted, floods mails endlessly. PERIOD is treated as seconds when its unit is omitted.</p>
+<p>The default is none.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--shuffle"></a>--shuffle, --no-shuffle</span></p></td>
+<td>
+<p>Shuffles target mails before sending.</p>
+<p>The default is false. (don't shuffle.)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--report-failure-responses"></a>--report-failure-responses, --no-report-failure-responses</span></p></td>
+<td>
+<p>Reports failure messages from SMTP server at the last.</p>
+<p>The default is false. (don't report.)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--report-periodically"></a>--report-periodically[=INTERVAL]</span></p></td>
+<td>
+<p>Reports statistics at intervals of INTERVAL seconds/minutes/hours. If INTERVAL is omitted, 1s (1 second) is used. INTERVAL is treated as seconds when its unit is omitted.</p>
+<p>The default is one. (Don't report statistics periodically.)</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--reading-timeout"></a>--reading-timeout=SECONDS</span></p></td>
+<td>
+<p>
+  Specifies timeout on reading a response from a SMTP server. An error is occurred when the SMTP server doesn't respond to a request in 
+  <code class="varname">SECONDS</code>
+   seconds.
+</p>
+<p>The default is 60 seconds.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp5150128"></a><h2>EXIT STATUS</h2>
+<p>Always 0.</p>
+</div>
+<div class="refsect1">
+<a name="idp5151472"></a><h2>EXAMPLE</h2>
+<p>In the following example, milter-performance-check connects a SMTP server running on localhost at 25 port and sends 100 mails. Each mail's sender is from@example.com and recipients are webmaster@localhost and info@localhost.</p>
+<pre class="programlisting">% milter-performance-check --recipient=webmaster@localhost --recipient=info@localhost</pre>
+<p>In the following example, milter-performance-check connects a SMTP server running on 192.168.1.102 at 25 port and sends files under /tmp/test-mails/ directory. The files should be RFC 2822 format. The mails are sent to user@localhost at intervals of 3 seconds (60 * 10 / 100). Each mail is sent only 1 time because of --n-mails=1 option.</p>
+<pre class="programlisting">% milter-performance-check --n-mails=1 --smtp-server=192.168.1.102 --force-recipient=user@localhost --period=5m /tmp/test-mails/</pre>
+</div>
+<div class="refsect1">
+<a name="idp5155312"></a><h2>SEE ALSO</h2>
+<p>
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check.rd.ja</a>
+  (1)
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="users">
+<refmeta>
+  <refentrytitle role='top_of_page' id='users.top_of_page'>ユーザ</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>ユーザ</refname>
+  <refpurpose>milter managerの利用者</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>milter managerのユーザを紹介します。</para>
+</refsect1>
+
+<refsect1>
+  <title>企業</title>
+  <para>milter managerを導入している企業です。</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.clear-code.com/'>株式会社クリアコード</ulink>
+  
+</para>
+  <itemizedlist>
+  <listitem>
+  <para>使用milter: milter-greylist, spamass-milter, clamav-milter, ENMA</para>
+</listitem>
+  <listitem>
+  <para>プラットフォーム: Debian GNU/Linux, CentOS</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>コンピュータ関連用品販売会社様</para>
+  <itemizedlist>
+  <listitem>
+  <para>従業員数: 約35名</para>
+</listitem>
+  <listitem>
+  <para>使用milter: milter-greylist, spamass-milter, clamav-milter, 商用アンチウィルスmilter</para>
+</listitem>
+  <listitem>
+  <para>プラットフォーム: FreeBSD</para>
+</listitem>
+</itemizedlist>
+</listitem>
+  <listitem>
+  <para>
+  ...（リストに載せてもよい企業の方は
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-ja'>メーリングリスト</ulink>
+  またはkou@clear-code.comへのメールでお知らせください。）
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>その他</title>
+  <para>Webで見かけた導入事例・導入メモなどです。実際に継続して利用さ れているかはわかりませんが、導入作業はされているようです。</para>
+  <para>
+  milter managerはフリーソフトウェア・オープンソースソフトウェ アとして無償で公開されています。
+  <ulink url='http://www.clear-code.com/services/milter-manager.html'>クリアコードのサポート</ulink>
+  ある・なしにかかわらず自由に導入することができます。
+</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://d.hatena.ne.jp/hayamiz/20091005/1254766698'>milter-manager - 日記を書く [・w・] はやみずさん</ulink>
+  : 2009/10/05
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://belief.freespace.jp/firebird-ws/wordpress/?p=50'>firebird » メールサーバーの構築　その２</ulink>
+  : 2009/08/19
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.ftnk.jp/~fumi/cl/2009-06-24-1.html'>milter manager を CentOS にインストール - ~fumi/ChangeLog</ulink>
+  : 2009/06/24
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://tatsuya.info/pukiwiki/?Documents%2FServer%2Fmilter-manager'>TATSUYA.info - Documents/Server/milter-manager</ulink>
+  : 2009/06/04
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://hdknr.posterous.com/milter-postfix-on-ubuntu'>milter: Postfix on Ubuntu</ulink>
+  : 2009/05/31
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.ikezoe.net/2009/03/post-894.html'>危うくサーバーを壊すところだった - www.ikezoe.net</ulink>
+  : 2009/03/23
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.cozmixng.org/'>COZMIXNG</ulink>
+  : 2009/01くらい
+</para>
+</listitem>
+  <listitem>
+  <para>
+  ...（リストにない記述を見かけた方は
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-ja'>メーリングリスト</ulink>
+  またはkou@clear-code.comへのメールでお知らせください。）
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

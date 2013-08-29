@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install-to-others">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install-to-others.top_of_page'>Install to other platforms</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Install to other platforms</refname>
+  <refpurpose>How to install milter manager to other platforms</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes some hints to install milter manager to platforms except 
+  <link linkend='install-to-ubuntu'>Ubuntu Linux</link>
+  ,
+  <link linkend='install-to-centos'>CentOS</link>
+   and
+  <link linkend='install-to-freebsd'>FreeBSD</link>
+  . See
+  <link linkend='install'>Install</link>
+   for platform independent install information.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Package platform detection</title>
+  <para>milter-manager detects milters installed in your system automatically. It's decided how to detect installed milters on 'configure'. 'configure' outputs detected &quot;Package Platform&quot; information at the last:</para>
+  <programlisting>% ./configure
+...
+Configure Result:
+
+  Package Platform : debian
+  Package Options  :
+...</programlisting>
+  <para>In the above example, milter-manager uses auto-detect method for &quot;debian&quot; platform.</para>
+  <para>&quot;Package Platform&quot; is &quot;unknown&quot; when &quot;configure&quot; fails to detect your platform or milter-manager doesn't support your platform.</para>
+  <para>If &quot;configure&quot; fails to detect your platform, you can specify platform by &quot;--with-package-platform&quot; option explicitly.</para>
+  <programlisting>% ./configure --with-package-platform=freebsd
+...
+Configure Result:
+
+  Package Platform : freebsd
+  Package Options  :
+...</programlisting>
+  <para>To specify additional information, you can use &quot;--with-package-options&quot; option. Additional information is formated as &quot;NAME1=VALUE1,NAME2=VALUE2,...&quot;. Here is an example for using /etc/rc.d/ instead of /usr/pkg/etc/rc.d/ for run-script on &quot;pkgsrc&quot; platform:</para>
+  <programlisting>% ./configure --with-package-platform=pkgsrc --with-package-options=prefix=/etc
+...
+Configure Result:
+
+  Package Platform : pkgsrc
+  Package Options  : prefix=/etc
+...</programlisting>
+  <para>For pkgsrc, --with-rcddir option is provided. You can use the following options to use the same configuration as the above:</para>
+  <programlisting>% ./configure --with-package-platform=pkgsrc --with-rcddir=/etc/rc.d
+...
+Configure Result:
+
+  Package Platform : pkgsrc
+  Package Options  : rcddir=/etc/rc.d
+...</programlisting>
+  <para>Currently, &quot;debian&quot;, &quot;redhat&quot;, &quot;freebsd&quot; (and &quot;pkgsrc&quot;) are supported as platform. You can specify other platform.</para>
+  <para>For example, you want to support &quot;suse&quot; platform:</para>
+  <programlisting>% ./configure --with-package-platform=suse
+...
+Configure Result:
+
+  Package Platform : suse
+  Package Options  :
+...</programlisting>
+  <para>Now, we use &quot;suse&quot; platform. We need to write milter detect script for &quot;suse&quot; platform by Ruby. The script name is &quot;#{PLATFORM_NAME}.conf&quot; and it is placed in $prefix/etc/milter-manager/defaults/. In this case, &quot;#{PLATFORM_NAME}.conf&quot; is &quot;suse.conf&quot;</para>
+  <para>
+  $prefix/etc/milter-manager/defaults/suse.conf script detects milters and registers them by define_milter. 
+  <link linkend='configuration'>Configuration</link>
+  describes about how to register a milter.
+</para>
+  <para>You can also confirm the current package platform after installing:</para>
+  <programlisting>% /usr/local/sbin/milter-manager --show-config
+...
+package.platform = &quot;debian&quot;
+package.options = nil
+...</programlisting>
+  <para>In this case, platform is &quot;debian&quot; and additional information is none.</para>
+</refsect1>
+</refentry>

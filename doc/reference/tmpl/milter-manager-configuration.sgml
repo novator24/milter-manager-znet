@@ -1,0 +1,628 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerConfiguration
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONFIGURATION_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONFIGURATION ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerConfigurationError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_CONFIGURATION_ERROR_NOT_IMPLEMENTED: 
+@MILTER_MANAGER_CONFIGURATION_ERROR_NOT_EXIST: 
+@MILTER_MANAGER_CONFIGURATION_ERROR_UNKNOWN: 
+@MILTER_MANAGER_CONFIGURATION_ERROR_SAVE: 
+
+<!-- ##### STRUCT MilterManagerConfiguration ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_configuration_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_new ##### -->
+<para>
+
+</para>
+
+@first_property: 
+@...: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_append_load_path ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@path: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_prepend_load_path ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@path: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_clear_load_paths ##### -->
+<para>
+
+</para>
+
+@configuration: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_load_paths ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_load ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@file_name: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_load_if_exist ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@file_name: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_load_custom ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@file_name: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_load_custom_if_exist ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@file_name: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_reload ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_save_custom ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@content: 
+@size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_is_privilege_mode ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_privilege_mode ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@mode: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_controller_connection_spec ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_controller_connection_spec ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@spec: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_manager_connection_spec ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_manager_connection_spec ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@spec: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_effective_user ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_effective_user ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@user_name: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_effective_group ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_effective_group ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@group_name: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_manager_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_manager_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@mode: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_controller_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_controller_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@mode: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_manager_unix_socket_group ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_manager_unix_socket_group ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@group: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_is_remove_manager_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_remove_manager_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@remove: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_is_remove_controller_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_remove_controller_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@remove: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_is_remove_manager_unix_socket_on_create ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_remove_manager_unix_socket_on_create ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@remove: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_is_remove_controller_unix_socket_on_create ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_remove_controller_unix_socket_on_create ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@remove: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_is_daemon ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_daemon ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@daemon: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_pid_file ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_pid_file ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@pid_file: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_fallback_status ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_fallback_status ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@status: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_package_platform ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_package_platform ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@platform: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_package_options ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_set_package_options ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@options: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_add_egg ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@egg: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_find_egg ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_eggs ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_remove_egg ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@egg: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_remove_egg_by_name ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@name: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_clear_eggs ##### -->
+<para>
+
+</para>
+
+@configuration: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_add_applicable_condition ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@condition: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_find_applicable_condition ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_get_applicable_conditions ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_remove_applicable_condition ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@condition: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_remove_applicable_condition_by_name ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@name: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_clear_applicable_conditions ##### -->
+<para>
+
+</para>
+
+@configuration: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_clear ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_to_xml ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_to_xml_string ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@string: 
+@indent: 
+
+
+<!-- ##### FUNCTION milter_manager_configuration_dump ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+

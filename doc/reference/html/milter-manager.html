@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter-manager</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="commands.html" title="Commands">
+<link rel="prev" href="commands.html" title="Commands">
+<link rel="next" href="milter-test-server.html" title="milter-test-server">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="commands.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="commands.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="milter-test-server.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="milter-manager"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="milter-manager.top_of_page"></a>milter-manager</span></h2>
+<p>milter-manager — an effective anti-spam and anti-virus solution with milters</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6068672"></a><h2>NAME</h2>
+<p>milter-manager - an effective anti-spam and anti-virus solution with milters</p>
+</div>
+<div class="refsect1">
+<a name="idp6148912"></a><h2>SYNOPSIS</h2>
+<p>
+  <code class="code">milter-manager</code>
+   [
+  <span class="emphasis"><em>option ...</em></span>
+  ]
+</p>
+</div>
+<div class="refsect1">
+<a name="idp9254288"></a><h2>DESCRIPTION</h2>
+<p>milter-manager is a milter that provides an effective anti-spam and anti-virus solution with milters.</p>
+<p>milter-manager provides a platform to use milters effectively and flexibly. milter-manager has embedded Ruby interpreter that is used for dynamic milter applicable condition. milter-manager can provide the platform by embedded Ruby interpreter.</p>
+<p>milter-manager reads its configuration file. The current configuration can be confirmed by --show-config option:</p>
+<pre class="programlisting">% milter-manager --show-config</pre>
+<p>milter-manager also provides other options that overrides configurations specified in configuration file.</p>
+</div>
+<div class="refsect1">
+<a name="idp4257872"></a><h2>Options</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--help"></a>--help</span></p></td>
+<td><p>Shows available options and exits.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--connection-spec"></a>--connection-spec=SPEC</span></p></td>
+<td>
+<p>Specifies a socket that accepts connections from MTA. SPEC should be formatted as one of the followings:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:PATH</p></li>
+<li class="listitem"><p>inet:PORT</p></li>
+<li class="listitem"><p>inet:PORT@HOST</p></li>
+<li class="listitem"><p>inet:PORT@[ADDRESS]</p></li>
+<li class="listitem"><p>inet6:POST</p></li>
+<li class="listitem"><p>inet6:PORT@HOST</p></li>
+<li class="listitem"><p>inet6:PORT@[ADDRESS]</p></li>
+</ul></div>
+<p>Examples:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:/var/run/milter/milter-manager.sock</p></li>
+<li class="listitem"><p>inet:10025</p></li>
+<li class="listitem"><p>inet:10025@localhost</p></li>
+<li class="listitem"><p>inet:10025@[127.0.0.1]</p></li>
+<li class="listitem"><p>inet6:10025</p></li>
+<li class="listitem"><p>inet6:10025@localhost</p></li>
+<li class="listitem"><p>inet6:10025@[::1]</p></li>
+</ul></div>
+<p>This option overrides "manager.connection_spec" in configuration file.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--config-dir"></a>--config-dir=DIRECTORY</span></p></td>
+<td><p>Specifies a directory that includes milter-manager's configuration file. milter-manager tries to load DIRECTORY/milter-manager.conf. If it isn't find, milter-manager loads milter-manager.conf in default directory.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--pid-file"></a>--pid-file=FILE</span></p></td>
+<td>
+<p>Saves process ID of milter-manager to FILE.</p>
+<p>This option overrides "manager.pid_file" in configuration file.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--user-name"></a>--user-name=NAME</span></p></td>
+<td>
+<p>Runs milter-manager as NAME user. milter-manager should be started by root.</p>
+<p>This option overrides "security.effective_user" in configuration file.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--group-name"></a>--group-name=NAME</span></p></td>
+<td>
+<p>Runs milter-manager as NAME group. milter-manager should be started by root.</p>
+<p>This option overrides "security.effective_group" in configuration file.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--socket-group-name"></a>--socket-group-name=NAME</span></p></td>
+<td>
+<p>Changes group of UNIX domain socket for accepting connection by milter-manager to NAME group. Specified group should be one of the effective user's supplementary groups.</p>
+<p>This option overrides "manager.unix_socket_group" in configuration file.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--daemon"></a>--daemon</span></p></td>
+<td>
+<p>Runs milter-manager as daemon process.</p>
+<p>This option overrides "manager.daemon" in configuration file.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--no-daemon"></a>--no-daemon</span></p></td>
+<td><p>This option cancels the prior --daemon option.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--show-config"></a>--show-config</span></p></td>
+<td><p>Shows the current configuration and exits. The output format can be used in configuration file. This option is useful for confirming registered milters and reporting your milter-manager's configuration when you report milter-manager's problems.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--verbose"></a>--verbose</span></p></td>
+<td>
+<p>Logs verbosely. Logs by syslog with "mail". If milter-manager isn't daemon process, standard output is also used.</p>
+<p>"MILTER_LOG_LEVEL=all" environment variable configuration has the same effect.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-manager.--version"></a>--version</span></p></td>
+<td><p>Shows version and exits.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp8142640"></a><h2>EXIT STATUS</h2>
+<p>The exit status is 0 if milter starts to listen and non 0 otherwise. milter-manager can't start to listen when connection spec is invalid format or other connection specific problems. e.g. the port number is already used, permission isn't granted for create UNIX domain socket and so on.</p>
+</div>
+<div class="refsect1">
+<a name="idp8144256"></a><h2>FILES</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><a name="milter-manager./usr/local/etc/milter-manager/milter-manager-conf"></a>/usr/local/etc/milter-manager/milter-manager.conf</span></p></td>
+<td><p>The default configuration file.</p></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp8147616"></a><h2>EXAMPLE</h2>
+<p>The following example is good for debugging milter-manager behavior. In the case, milter-manager works in the foreground and logs are outputted to the standard output.</p>
+<pre class="programlisting">% milter-manager --no-daemon --verbose</pre>
+</div>
+<div class="refsect1">
+<a name="idp9489792"></a><h2>SEE ALSO</h2>
+<p>
+  <a class="link" href="milter-test-server.html" title="milter-test-server">milter-test-server.rd</a>
+  (1),
+  <a class="link" href="milter-test-client.html" title="milter-test-client">milter-test-client.rd</a>
+  (1),
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check.rd</a>
+  (1),
+  <a class="link" href="milter-manager-log-analyzer.html" title="milter-manager-log-analyzer">milter-manager-log-analyzer.rd</a>
+  (1)
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-MilterManagerControlReplyEncoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-MilterManagerControlReplyEncoder.top_of_page">MilterManagerControlReplyEncoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerControlReplyEncoder</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-MilterManagerControlReplyEncoder.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>struct              <link linkend="MilterManagerControlReplyEncoder">MilterManagerControlReplyEncoder</link>;
+<link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     <link linkend="milter-manager-control-reply-encoder-new">milter_manager_control_reply_encoder_new</link>
+                                                        (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-control-reply-encoder-encode-success">milter_manager_control_reply_encoder_encode_success</link>
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-control-reply-encoder-encode-failure">milter_manager_control_reply_encoder_encode_failure</link>
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-control-reply-encoder-encode-error">milter_manager_control_reply_encoder_encode_error</link>
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-control-reply-encoder-encode-configuration">milter_manager_control_reply_encoder_encode_configuration</link>
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> configuration_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-control-reply-encoder-encode-status">milter_manager_control_reply_encoder_encode_status</link>
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *status</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> status_size</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-MilterManagerControlReplyEncoder.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-MilterManagerControlReplyEncoder.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterManagerControlReplyEncoder" role="struct">
+<title>struct MilterManagerControlReplyEncoder</title>
+<indexterm zone="MilterManagerControlReplyEncoder"><primary>MilterManagerControlReplyEncoder</primary></indexterm>
+<programlisting>struct MilterManagerControlReplyEncoder {
+    MilterReplyEncoder object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-reply-encoder-new" role="function">
+<title>milter_manager_control_reply_encoder_new ()</title>
+<indexterm zone="milter-manager-control-reply-encoder-new"><primary>milter_manager_control_reply_encoder_new</primary></indexterm>
+<programlisting><link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     milter_manager_control_reply_encoder_new
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-reply-encoder-encode-success" role="function">
+<title>milter_manager_control_reply_encoder_encode_success ()</title>
+<indexterm zone="milter-manager-control-reply-encoder-encode-success"><primary>milter_manager_control_reply_encoder_encode_success</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_control_reply_encoder_encode_success
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-reply-encoder-encode-failure" role="function">
+<title>milter_manager_control_reply_encoder_encode_failure ()</title>
+<indexterm zone="milter-manager-control-reply-encoder-encode-failure"><primary>milter_manager_control_reply_encoder_encode_failure</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_control_reply_encoder_encode_failure
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-reply-encoder-encode-error" role="function">
+<title>milter_manager_control_reply_encoder_encode_error ()</title>
+<indexterm zone="milter-manager-control-reply-encoder-encode-error"><primary>milter_manager_control_reply_encoder_encode_error</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_control_reply_encoder_encode_error
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-reply-encoder-encode-configuration" role="function">
+<title>milter_manager_control_reply_encoder_encode_configuration ()</title>
+<indexterm zone="milter-manager-control-reply-encoder-encode-configuration"><primary>milter_manager_control_reply_encoder_encode_configuration</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_control_reply_encoder_encode_configuration
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> configuration_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-reply-encoder-encode-status" role="function">
+<title>milter_manager_control_reply_encoder_encode_status ()</title>
+<indexterm zone="milter-manager-control-reply-encoder-encode-status"><primary>milter_manager_control_reply_encoder_encode_status</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_control_reply_encoder_encode_status
+                                                        (<parameter><link linkend="MilterManagerControlReplyEncoder"><type>MilterManagerControlReplyEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *status</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> status_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

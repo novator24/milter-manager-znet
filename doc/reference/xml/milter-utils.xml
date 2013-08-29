@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-utils">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-utils.top_of_page">milter-utils</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-utils</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-utils.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-IMPLEMENT-ERROR-EMITTABLE:CAPS">MILTER_IMPLEMENT_ERROR_EMITTABLE</link>    (init)
+#define             <link linkend="MILTER-DEFINE-ERROR-EMITTABLE-TYPE:CAPS">MILTER_DEFINE_ERROR_EMITTABLE_TYPE</link>  (TypeName,
+                                                         type_name,
+                                                         TYPE_PARENT)
+#define             <link linkend="MILTER-IMPLEMENT-FINISHED-EMITTABLE-WITH-CODE:CAPS">MILTER_IMPLEMENT_FINISHED_EMITTABLE_WITH_CODE</link>(init,
+                                                         code)
+#define             <link linkend="MILTER-IMPLEMENT-FINISHED-EMITTABLE:CAPS">MILTER_IMPLEMENT_FINISHED_EMITTABLE</link> (init)
+#define             <link linkend="MILTER-DEFINE-FINISHED-EMITTABLE-TYPE:CAPS">MILTER_DEFINE_FINISHED_EMITTABLE_TYPE</link>(TypeName,
+                                                         type_name,
+                                                         TYPE_PARENT)
+#define             <link linkend="MILTER-IMPLEMENT-REPLY-SIGNALS:CAPS">MILTER_IMPLEMENT_REPLY_SIGNALS</link>      (init)
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-inspect-io-condition-error">milter_utils_inspect_io_condition_error</link>
+                                                        (<parameter><link linkend="GIOCondition"><type>GIOCondition</type></link> condition</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-inspect-enum">milter_utils_inspect_enum</link>           (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> enum_value</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-get-enum-name">milter_utils_get_enum_name</link>          (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> enum_value</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-get-enum-nick-name">milter_utils_get_enum_nick_name</link>     (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> enum_value</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-inspect-flags">milter_utils_inspect_flags</link>          (<parameter><link linkend="GType"><type>GType</type></link> flags_type</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> flags</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-get-flags-names">milter_utils_get_flags_names</link>        (<parameter><link linkend="GType"><type>GType</type></link> flags_type</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> flags</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-inspect-object">milter_utils_inspect_object</link>         (<parameter><link linkend="GObject"><type>GObject</type></link> *object</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-format-reply-code">milter_utils_format_reply_code</link>      (<parameter><link linkend="guint"><type>guint</type></link> reply_code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *extended_code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-inspect-hash-string-string">milter_utils_inspect_hash_string_string</link>
+                                                        (<parameter><link linkend="GHashTable"><type>GHashTable</type></link> *hash</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-utils-merge-hash-string-string">milter_utils_merge_hash_string_string</link>
+                                                        (<parameter><link linkend="GHashTable"><type>GHashTable</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *src</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-utils-inspect-list-pointer">milter_utils_inspect_list_pointer</link>   (<parameter>const <link linkend="GList"><type>GList</type></link> *list</parameter>);
+<link linkend="MilterMacroStage"><returnvalue>MilterMacroStage</returnvalue></link>    <link linkend="milter-utils-command-to-macro-stage">milter_utils_command_to_macro_stage</link> (<parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>);
+<link linkend="MilterCommand"><returnvalue>MilterCommand</returnvalue></link>       <link linkend="milter-utils-macro-stage-to-command">milter_utils_macro_stage_to_command</link> (<parameter><link linkend="MilterMacroStage"><type>MilterMacroStage</type></link> stage</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-utils-set-error-with-sub-error">milter_utils_set_error_with_sub_error</link>
+                                                        (<parameter><link linkend="GError"><type>GError</type></link> **error</parameter>,
+                                                         <parameter><link linkend="GQuark"><type>GQuark</type></link> domain</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> error_code</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> *sub_error</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *format</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-utils-flags-from-string">milter_utils_flags_from_string</link>      (<parameter><link linkend="GType"><type>GType</type></link> flags_type</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *flags_string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> base_flags</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="milter-utils-enum-from-string">milter_utils_enum_from_string</link>       (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *enum_string</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-utils-append-indent">milter_utils_append_indent</link>          (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-utils-xml-append-text-element">milter_utils_xml_append_text_element</link>
+                                                        (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *content</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-utils-xml-append-boolean-element">milter_utils_xml_append_boolean_element</link>
+                                                        (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> boolean</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="milter-utils-strcmp0">milter_utils_strcmp0</link>                (<parameter>const <link linkend="gchar"><type>gchar</type></link> *str1</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *str2</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-utils.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-utils.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-IMPLEMENT-ERROR-EMITTABLE:CAPS" role="macro">
+<title>MILTER_IMPLEMENT_ERROR_EMITTABLE()</title>
+<indexterm zone="MILTER-IMPLEMENT-ERROR-EMITTABLE:CAPS"><primary>MILTER_IMPLEMENT_ERROR_EMITTABLE</primary></indexterm>
+<programlisting>#define             MILTER_IMPLEMENT_ERROR_EMITTABLE(init)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-DEFINE-ERROR-EMITTABLE-TYPE:CAPS" role="macro">
+<title>MILTER_DEFINE_ERROR_EMITTABLE_TYPE()</title>
+<indexterm zone="MILTER-DEFINE-ERROR-EMITTABLE-TYPE:CAPS"><primary>MILTER_DEFINE_ERROR_EMITTABLE_TYPE</primary></indexterm>
+<programlisting>#define             MILTER_DEFINE_ERROR_EMITTABLE_TYPE(TypeName, type_name, TYPE_PARENT)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-IMPLEMENT-FINISHED-EMITTABLE-WITH-CODE:CAPS" role="macro">
+<title>MILTER_IMPLEMENT_FINISHED_EMITTABLE_WITH_CODE()</title>
+<indexterm zone="MILTER-IMPLEMENT-FINISHED-EMITTABLE-WITH-CODE:CAPS"><primary>MILTER_IMPLEMENT_FINISHED_EMITTABLE_WITH_CODE</primary></indexterm>
+<programlisting>#define             MILTER_IMPLEMENT_FINISHED_EMITTABLE_WITH_CODE(init, code)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-IMPLEMENT-FINISHED-EMITTABLE:CAPS" role="macro">
+<title>MILTER_IMPLEMENT_FINISHED_EMITTABLE()</title>
+<indexterm zone="MILTER-IMPLEMENT-FINISHED-EMITTABLE:CAPS"><primary>MILTER_IMPLEMENT_FINISHED_EMITTABLE</primary></indexterm>
+<programlisting>#define             MILTER_IMPLEMENT_FINISHED_EMITTABLE(init)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-DEFINE-FINISHED-EMITTABLE-TYPE:CAPS" role="macro">
+<title>MILTER_DEFINE_FINISHED_EMITTABLE_TYPE()</title>
+<indexterm zone="MILTER-DEFINE-FINISHED-EMITTABLE-TYPE:CAPS"><primary>MILTER_DEFINE_FINISHED_EMITTABLE_TYPE</primary></indexterm>
+<programlisting>#define             MILTER_DEFINE_FINISHED_EMITTABLE_TYPE(TypeName,                     \
+                                                          type_name,                    \
+                                                          TYPE_PARENT)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-IMPLEMENT-REPLY-SIGNALS:CAPS" role="macro">
+<title>MILTER_IMPLEMENT_REPLY_SIGNALS()</title>
+<indexterm zone="MILTER-IMPLEMENT-REPLY-SIGNALS:CAPS"><primary>MILTER_IMPLEMENT_REPLY_SIGNALS</primary></indexterm>
+<programlisting>#define             MILTER_IMPLEMENT_REPLY_SIGNALS(init)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-inspect-io-condition-error" role="function">
+<title>milter_utils_inspect_io_condition_error ()</title>
+<indexterm zone="milter-utils-inspect-io-condition-error"><primary>milter_utils_inspect_io_condition_error</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_inspect_io_condition_error
+                                                        (<parameter><link linkend="GIOCondition"><type>GIOCondition</type></link> condition</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-inspect-enum" role="function">
+<title>milter_utils_inspect_enum ()</title>
+<indexterm zone="milter-utils-inspect-enum"><primary>milter_utils_inspect_enum</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_inspect_enum           (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> enum_value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-get-enum-name" role="function">
+<title>milter_utils_get_enum_name ()</title>
+<indexterm zone="milter-utils-get-enum-name"><primary>milter_utils_get_enum_name</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_get_enum_name          (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> enum_value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-get-enum-nick-name" role="function">
+<title>milter_utils_get_enum_nick_name ()</title>
+<indexterm zone="milter-utils-get-enum-nick-name"><primary>milter_utils_get_enum_nick_name</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_get_enum_nick_name     (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> enum_value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-inspect-flags" role="function">
+<title>milter_utils_inspect_flags ()</title>
+<indexterm zone="milter-utils-inspect-flags"><primary>milter_utils_inspect_flags</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_inspect_flags          (<parameter><link linkend="GType"><type>GType</type></link> flags_type</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> flags</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-get-flags-names" role="function">
+<title>milter_utils_get_flags_names ()</title>
+<indexterm zone="milter-utils-get-flags-names"><primary>milter_utils_get_flags_names</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_get_flags_names        (<parameter><link linkend="GType"><type>GType</type></link> flags_type</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> flags</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-inspect-object" role="function">
+<title>milter_utils_inspect_object ()</title>
+<indexterm zone="milter-utils-inspect-object"><primary>milter_utils_inspect_object</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_inspect_object         (<parameter><link linkend="GObject"><type>GObject</type></link> *object</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-format-reply-code" role="function">
+<title>milter_utils_format_reply_code ()</title>
+<indexterm zone="milter-utils-format-reply-code"><primary>milter_utils_format_reply_code</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_format_reply_code      (<parameter><link linkend="guint"><type>guint</type></link> reply_code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *extended_code</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-inspect-hash-string-string" role="function">
+<title>milter_utils_inspect_hash_string_string ()</title>
+<indexterm zone="milter-utils-inspect-hash-string-string"><primary>milter_utils_inspect_hash_string_string</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_inspect_hash_string_string
+                                                        (<parameter><link linkend="GHashTable"><type>GHashTable</type></link> *hash</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-merge-hash-string-string" role="function">
+<title>milter_utils_merge_hash_string_string ()</title>
+<indexterm zone="milter-utils-merge-hash-string-string"><primary>milter_utils_merge_hash_string_string</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_utils_merge_hash_string_string
+                                                        (<parameter><link linkend="GHashTable"><type>GHashTable</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *src</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-inspect-list-pointer" role="function">
+<title>milter_utils_inspect_list_pointer ()</title>
+<indexterm zone="milter-utils-inspect-list-pointer"><primary>milter_utils_inspect_list_pointer</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_utils_inspect_list_pointer   (<parameter>const <link linkend="GList"><type>GList</type></link> *list</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-command-to-macro-stage" role="function">
+<title>milter_utils_command_to_macro_stage ()</title>
+<indexterm zone="milter-utils-command-to-macro-stage"><primary>milter_utils_command_to_macro_stage</primary></indexterm>
+<programlisting><link linkend="MilterMacroStage"><returnvalue>MilterMacroStage</returnvalue></link>    milter_utils_command_to_macro_stage (<parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-macro-stage-to-command" role="function">
+<title>milter_utils_macro_stage_to_command ()</title>
+<indexterm zone="milter-utils-macro-stage-to-command"><primary>milter_utils_macro_stage_to_command</primary></indexterm>
+<programlisting><link linkend="MilterCommand"><returnvalue>MilterCommand</returnvalue></link>       milter_utils_macro_stage_to_command (<parameter><link linkend="MilterMacroStage"><type>MilterMacroStage</type></link> stage</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-set-error-with-sub-error" role="function">
+<title>milter_utils_set_error_with_sub_error ()</title>
+<indexterm zone="milter-utils-set-error-with-sub-error"><primary>milter_utils_set_error_with_sub_error</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_utils_set_error_with_sub_error
+                                                        (<parameter><link linkend="GError"><type>GError</type></link> **error</parameter>,
+                                                         <parameter><link linkend="GQuark"><type>GQuark</type></link> domain</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> error_code</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> *sub_error</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *format</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-flags-from-string" role="function">
+<title>milter_utils_flags_from_string ()</title>
+<indexterm zone="milter-utils-flags-from-string"><primary>milter_utils_flags_from_string</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_utils_flags_from_string      (<parameter><link linkend="GType"><type>GType</type></link> flags_type</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *flags_string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> base_flags</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-enum-from-string" role="function">
+<title>milter_utils_enum_from_string ()</title>
+<indexterm zone="milter-utils-enum-from-string"><primary>milter_utils_enum_from_string</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                milter_utils_enum_from_string       (<parameter><link linkend="GType"><type>GType</type></link> enum_type</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *enum_string</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-append-indent" role="function">
+<title>milter_utils_append_indent ()</title>
+<indexterm zone="milter-utils-append-indent"><primary>milter_utils_append_indent</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_utils_append_indent          (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-xml-append-text-element" role="function">
+<title>milter_utils_xml_append_text_element ()</title>
+<indexterm zone="milter-utils-xml-append-text-element"><primary>milter_utils_xml_append_text_element</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_utils_xml_append_text_element
+                                                        (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *content</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-xml-append-boolean-element" role="function">
+<title>milter_utils_xml_append_boolean_element ()</title>
+<indexterm zone="milter-utils-xml-append-boolean-element"><primary>milter_utils_xml_append_boolean_element</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_utils_xml_append_boolean_element
+                                                        (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> boolean</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-utils-strcmp0" role="function">
+<title>milter_utils_strcmp0 ()</title>
+<indexterm zone="milter-utils-strcmp0"><primary>milter_utils_strcmp0</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                milter_utils_strcmp0                (<parameter>const <link linkend="gchar"><type>gchar</type></link> *str1</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *str2</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

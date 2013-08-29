@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-on-centos">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-on-centos.top_of_page'>Upgrade on CentOS</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Upgrade on CentOS</refname>
+  <refpurpose>How to upgrade milter manager on CentOS</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes how to upgrade milter manager on CentOS. See 
+  <link linkend='install-to-centos'>Install to CentOS</link>
+   for newly install information.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Upgrade</title>
+  <para>If we are using 1.8.1 or earlier, we need to install milter-manager-release at first. If we are using 1.8.2 or later, we doesn't need to this operation.</para>
+  <para>We need to disable GPG key check because the new repository uses a new GPG key and a new GPG key is included in the package.</para>
+  <programlisting>% sudo yum install --nogpgcheck -y milter-manager-release</programlisting>
+  <para>We just upgrade milter manager package.</para>
+  <programlisting>% sudo yum update -y milter-manager</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>Conclusion</title>
+  <para>milter manager can be upgraded easily. It means that milter manager is a low maintenance cost software.</para>
+  <para>If we want to use improvements in a new version, please upgrade your milter manager.</para>
+  <para>
+  If we've also installed optional packages, we will go to
+  <link linkend='upgrade-options-on-centos'>Upgrade on CentOS (optional)</link>
+  .
+</para>
+</refsect1>
+</refentry>

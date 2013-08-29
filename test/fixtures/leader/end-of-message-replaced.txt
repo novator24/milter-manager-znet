@@ -1,0 +1,35 @@
+[scenario]
+clients=client10026;client10027
+import=end-of-header.txt
+actions=body;end-of-message
+
+[client10026]
+port=10026
+arguments=--replace-body;This is the replaced message by client1.
+
+[client10027]
+port=10027
+
+[body]
+command=body
+
+chunk=Hi,
+
+response=body
+n_received=1
+status=continue
+
+chunks=Hi,;;
+
+[end-of-message]
+command=end-of-message
+
+response=end-of-message
+n_received=2
+status=continue
+
+chunks=;This is the replaced message by client1.
+end_of_message_chunks=;;
+
+replace_bodies=This is the replaced message by client1.
+headers=From:kou+sender@example.com

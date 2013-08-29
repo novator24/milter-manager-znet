@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>インストール</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="start.html" title="Part I. はじめよう">
+<link rel="prev" href="introduction.html" title="はじめに">
+<link rel="next" href="install-to.html" title="プラットフォーム毎のmilter managerのインストール方法">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="introduction.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="install-to.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install.top_of_page"></a>インストール</span></h2>
+<p>インストール — milter managerのインストール方法</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6067248"></a><h2>このドキュメントについて</h2>
+<p>milter managerのインストール方法について説明します。</p>
+</div>
+<div class="refsect1">
+<a name="idp5170400"></a><h2>依存ソフトウェア</h2>
+<p>milter managerが依存しているソフトウェアについて説明します。</p>
+<div class="refsect2">
+<a name="idp8619744"></a><h3>必須</h3>
+<p>milter managerは以下のソフトウェアに依存しているため、milter manager のビルドには以下のソフトウェアが事前にインストールさ れている必要があります。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>GLib &gt;= 2.12.3</p></li>
+<li class="listitem"><p>Ruby &gt;= 1.8.5 (milter manager 1.8.4 から Ruby1.9 にも対応しました)</p></li>
+<li class="listitem"><p>Ruby/GLib2 (Ruby-GNOME2) &gt;= 0.16.0</p></li>
+</ul></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp8254144"></a><h3>任意: テスト実行</h3>
+<p>milter managerの単体テストを実行するためには以下のソフトウェ アが必要ですが、milter managerの実行には必須ではありません。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Cutter &gt;= 1.0.6</p></li>
+<li class="listitem"><p>LCOV</p></li>
+</ul></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9155392"></a><h3>任意: グラフ生成</h3>
+<p>milter managerはログからmilterの適用状況などをグラフ化する機 能も提供しています。グラフを生成する場合は以下のソフトウェア が必要ですが、milter managerの実行には必須ではありません。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>RRDtool</p></li>
+<li class="listitem"><p>RRDtoolのRubyバインディング</p></li>
+</ul></div>
+<p>
+  <a class="ulink" href="http://munin-monitoring.org/" target="_top">Munin</a>
+  と連携する場合は 以下のソフトウェアも必要です。
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>munin-node</p></li></ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp5244880"></a><h2>milter-manager</h2>
+<p>milter-managerはmilter managerパッケージの中核となるプログラ ムです。milter-managerがmilterとして動作し、MTA・子milterと 接続します。</p>
+<p>milter-managerのインストール方法はプラットフォーム毎に解説し ています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="install-to-debian.html" title="Debianへインストール">Debian</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-ubuntu.html" title="Ubuntuへインストール">Ubuntu</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-centos.html" title="CentOS 6へインストール">CentOS</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-freebsd.html" title="FreeBSDへインストール">FreeBSD</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-others.html" title="その他のプラットフォームへインストール">その他</a>
+  
+</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp9316080"></a><h2>milter-manager-log-analyzer</h2>
+<p>
+  <span class="inlinemediaobject"><img src="milter-manager-log-analyzer-graphs.png" alt="\n milter-manager-log-analyzerが生成するグラフ\n"></span>
+  
+</p>
+<p>milter-manager-log-analyzerはmilter-managerのログからグラフを 出力するプログラムです。milter-manager-log-analyzerの設定は必 須ではありません。</p>
+<p>milter-manager-log-analyzerを用いると、milterの状況を時系列で 確認することができます。新しく追加したmilterの効果や、milter の適用結果の傾向などを視覚的に確認したい場合に有用です。</p>
+<p>
+  milter-manager-log-analyzerはsyslogに出力された milter-managerのログを解析し、
+  <a class="ulink" href="http://oss.oetiker.ch/rrdtool/" target="_top">RRDtool</a>
+  でグラフ化し ます。cronを設定し、定期的にログを確認します。
+</p>
+<p>milter-manager-log-analyzerのインストール方法はプラットフォー ム毎に解説しています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-debian.html" title="Debianへインストール（任意）">Debian</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-ubuntu.html" title="Ubuntuへインストール（任意）">Ubuntu</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-centos.html" title="CentOSへインストール（任意）">CentOS</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-freebsd.html" title="FreeBSDへインストール（任意）">FreeBSD</a>
+  
+</p></li>
+</ul></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-libmilter-compatible">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-libmilter-compatible.top_of_page">SmfiContext</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>SmfiContext</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-libmilter-compatible.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="SMFI-CONTEXT-ERROR:CAPS">SMFI_CONTEXT_ERROR</link>
+enum                <link linkend="SmfiContextError">SmfiContextError</link>;
+struct              <link linkend="SmfiContext">SmfiContext</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="smfi-context-error-quark">smfi_context_error_quark</link>            (<parameter><type>void</type></parameter>);
+<link linkend="SmfiContext"><returnvalue>SmfiContext</returnvalue></link> *       <link linkend="smfi-context-new">smfi_context_new</link>                    (<parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *client_context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="libmilter-compatible-reset">libmilter_compatible_reset</link>          (<parameter><type>void</type></parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="libmilter-compatible-convert-status-to">libmilter_compatible_convert_status_to</link>
+                                                        (<parameter><link linkend="sfsistat"><type>sfsistat</type></link> status</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            <link linkend="libmilter-compatible-convert-status-from">libmilter_compatible_convert_status_from</link>
+                                                        (<parameter><link linkend="MilterStatus"><type>MilterStatus</type></link> status</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-libmilter-compatible.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-libmilter-compatible.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="SMFI-CONTEXT-ERROR:CAPS" role="macro">
+<title>SMFI_CONTEXT_ERROR</title>
+<indexterm zone="SMFI-CONTEXT-ERROR:CAPS"><primary>SMFI_CONTEXT_ERROR</primary></indexterm>
+<programlisting>#define SMFI_CONTEXT_ERROR           (smfi_context_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SmfiContextError" role="enum">
+<title>enum SmfiContextError</title>
+<indexterm zone="SmfiContextError"><primary>SmfiContextError</primary></indexterm>
+<programlisting>typedef enum {
+    SMFI_CONTEXT_ERROR_INVALID_CODE
+} SmfiContextError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SmfiContext" role="struct">
+<title>struct SmfiContext</title>
+<indexterm zone="SmfiContext"><primary>SmfiContext</primary></indexterm>
+<programlisting>struct SmfiContext {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="smfi-context-error-quark" role="function">
+<title>smfi_context_error_quark ()</title>
+<indexterm zone="smfi-context-error-quark"><primary>smfi_context_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              smfi_context_error_quark            (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="smfi-context-new" role="function">
+<title>smfi_context_new ()</title>
+<indexterm zone="smfi-context-new"><primary>smfi_context_new</primary></indexterm>
+<programlisting><link linkend="MilterClientContext"><type>MilterClientContext</type></link>のエラー用の<link linkend="GError"><type>GError</type></link>クォークを取得するために使われます。</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="libmilter-compatible-reset" role="function">
+<title>libmilter_compatible_reset ()</title>
+<indexterm zone="libmilter-compatible-reset"><primary>libmilter_compatible_reset</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                libmilter_compatible_reset          (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="libmilter-compatible-convert-status-to" role="function">
+<title>libmilter_compatible_convert_status_to ()</title>
+<indexterm zone="libmilter-compatible-convert-status-to"><primary>libmilter_compatible_convert_status_to</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        libmilter_compatible_convert_status_to
+                                                        (<parameter><link linkend="sfsistat"><type>sfsistat</type></link> status</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="libmilter-compatible-convert-status-from" role="function">
+<title>libmilter_compatible_convert_status_from ()</title>
+<indexterm zone="libmilter-compatible-convert-status-from"><primary>libmilter_compatible_convert_status_from</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            libmilter_compatible_convert_status_from
+                                                        (<parameter><link linkend="MilterStatus"><type>MilterStatus</type></link> status</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

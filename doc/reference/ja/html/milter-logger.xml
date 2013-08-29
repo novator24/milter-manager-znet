@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-logger">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-logger.top_of_page">MilterLogger</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterLogger</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-logger.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="milter-log">milter_log</link>                          (level,
+                                                         format,
+                                                         ...)
+#define             <link linkend="milter-error">milter_error</link>                        (format,
+                                                         ...)
+#define             <link linkend="milter-critical">milter_critical</link>                     (format,
+                                                         ...)
+#define             <link linkend="milter-message">milter_message</link>                      (format,
+                                                         ...)
+#define             <link linkend="milter-warning">milter_warning</link>                      (format,
+                                                         ...)
+#define             <link linkend="milter-debug">milter_debug</link>                        (format,
+                                                         ...)
+#define             <link linkend="milter-info">milter_info</link>                         (format,
+                                                         ...)
+#define             <link linkend="milter-statistics">milter_statistics</link>                   (format,
+                                                         ...)
+enum                <link linkend="MilterLogLevelFlags">MilterLogLevelFlags</link>;
+#define             <link linkend="MILTER-LOG-LEVEL-ALL:CAPS">MILTER_LOG_LEVEL_ALL</link>
+enum                <link linkend="MilterLogItemFlags">MilterLogItemFlags</link>;
+#define             <link linkend="MILTER-LOG-ITEM-ALL:CAPS">MILTER_LOG_ITEM_ALL</link>
+enum                <link linkend="MilterLogColorize">MilterLogColorize</link>;
+struct              <link linkend="MilterLogger">MilterLogger</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-logger-error-quark">milter_logger_error_quark</link>           (<parameter><type>void</type></parameter>);
+<link linkend="MilterLogLevelFlags"><returnvalue>MilterLogLevelFlags</returnvalue></link> <link linkend="milter-log-level-flags-from-string">milter_log_level_flags_from_string</link>  (<parameter>const <link linkend="gchar"><type>gchar</type></link> *level_name</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> base_flags</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="MilterLogger"><returnvalue>MilterLogger</returnvalue></link> *      <link linkend="milter-logger">milter_logger</link>                       (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-logger-default-log-handler">milter_logger_default_log_handler</link>   (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *domain</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *function</parameter>,
+                                                         <parameter><link linkend="GTimeVal"><type>GTimeVal</type></link> *time_value</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="MilterLogger"><returnvalue>MilterLogger</returnvalue></link> *      <link linkend="milter-logger-new">milter_logger_new</link>                   (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-logger-log">milter_logger_log</link>                   (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *domain</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *function</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *format</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-logger-log-va-list">milter_logger_log_va_list</link>           (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *domain</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *function</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *format</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> args</parameter>);
+<link linkend="MilterLogLevelFlags"><returnvalue>MilterLogLevelFlags</returnvalue></link> <link linkend="milter-logger-get-target-level">milter_logger_get_target_level</link>      (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-logger-set-target-level">milter_logger_set_target_level</link>      (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-logger.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-logger.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="milter-log" role="macro">
+<title>milter_log()</title>
+<indexterm zone="milter-log"><primary>milter_log</primary></indexterm>
+<programlisting>#define             milter_log(level, format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-error" role="macro">
+<title>milter_error()</title>
+<indexterm zone="milter-error"><primary>milter_error</primary></indexterm>
+<programlisting>#define             milter_error(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-critical" role="macro">
+<title>milter_critical()</title>
+<indexterm zone="milter-critical"><primary>milter_critical</primary></indexterm>
+<programlisting>#define             milter_critical(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-message" role="macro">
+<title>milter_message()</title>
+<indexterm zone="milter-message"><primary>milter_message</primary></indexterm>
+<programlisting>#define             milter_message(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-warning" role="macro">
+<title>milter_warning()</title>
+<indexterm zone="milter-warning"><primary>milter_warning</primary></indexterm>
+<programlisting>#define             milter_warning(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-debug" role="macro">
+<title>milter_debug()</title>
+<indexterm zone="milter-debug"><primary>milter_debug</primary></indexterm>
+<programlisting>#define             milter_debug(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-info" role="macro">
+<title>milter_info()</title>
+<indexterm zone="milter-info"><primary>milter_info</primary></indexterm>
+<programlisting>#define             milter_info(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-statistics" role="macro">
+<title>milter_statistics()</title>
+<indexterm zone="milter-statistics"><primary>milter_statistics</primary></indexterm>
+<programlisting>#define             milter_statistics(format, ...)</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterLogLevelFlags" role="enum">
+<title>enum MilterLogLevelFlags</title>
+<indexterm zone="MilterLogLevelFlags"><primary>MilterLogLevelFlags</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_LOG_LEVEL_DEFAULT    = 0,
+    MILTER_LOG_LEVEL_NONE       = 1 &lt;&lt; 0,
+    MILTER_LOG_LEVEL_CRITICAL   = 1 &lt;&lt; 1,
+    MILTER_LOG_LEVEL_ERROR      = 1 &lt;&lt; 2,
+    MILTER_LOG_LEVEL_WARNING    = 1 &lt;&lt; 3,
+    MILTER_LOG_LEVEL_MESSAGE    = 1 &lt;&lt; 4,
+    MILTER_LOG_LEVEL_INFO       = 1 &lt;&lt; 5,
+    MILTER_LOG_LEVEL_DEBUG      = 1 &lt;&lt; 6,
+    MILTER_LOG_LEVEL_TRACE      = 1 &lt;&lt; 7,
+    MILTER_LOG_LEVEL_STATISTICS = 1 &lt;&lt; 8,
+    MILTER_LOG_LEVEL_PROFILE    = 1 &lt;&lt; 9
+} MilterLogLevelFlags;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-LOG-LEVEL-ALL:CAPS" role="macro">
+<title>MILTER_LOG_LEVEL_ALL</title>
+<indexterm zone="MILTER-LOG-LEVEL-ALL:CAPS"><primary>MILTER_LOG_LEVEL_ALL</primary></indexterm>
+<programlisting>#define             MILTER_LOG_LEVEL_ALL</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterLogItemFlags" role="enum">
+<title>enum MilterLogItemFlags</title>
+<indexterm zone="MilterLogItemFlags"><primary>MilterLogItemFlags</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_LOG_ITEM_DEFAULT     = 0,
+    MILTER_LOG_ITEM_NONE        = 1 &lt;&lt; 0,
+    MILTER_LOG_ITEM_DOMAIN      = 1 &lt;&lt; 1,
+    MILTER_LOG_ITEM_LEVEL       = 1 &lt;&lt; 2,
+    MILTER_LOG_ITEM_LOCATION    = 1 &lt;&lt; 3,
+    MILTER_LOG_ITEM_TIME        = 1 &lt;&lt; 4,
+    MILTER_LOG_ITEM_NAME        = 1 &lt;&lt; 5,
+    MILTER_LOG_ITEM_PID         = 1 &lt;&lt; 6
+} MilterLogItemFlags;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-LOG-ITEM-ALL:CAPS" role="macro">
+<title>MILTER_LOG_ITEM_ALL</title>
+<indexterm zone="MILTER-LOG-ITEM-ALL:CAPS"><primary>MILTER_LOG_ITEM_ALL</primary></indexterm>
+<programlisting>#define             MILTER_LOG_ITEM_ALL</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterLogColorize" role="enum">
+<title>enum MilterLogColorize</title>
+<indexterm zone="MilterLogColorize"><primary>MilterLogColorize</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_LOG_COLORIZE_DEFAULT,
+    MILTER_LOG_COLORIZE_NONE,
+    MILTER_LOG_COLORIZE_CONSOLE
+} MilterLogColorize;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterLogger" role="struct">
+<title>struct MilterLogger</title>
+<indexterm zone="MilterLogger"><primary>MilterLogger</primary></indexterm>
+<programlisting>struct MilterLogger {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-error-quark" role="function">
+<title>milter_logger_error_quark ()</title>
+<indexterm zone="milter-logger-error-quark"><primary>milter_logger_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_logger_error_quark           (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-log-level-flags-from-string" role="function">
+<title>milter_log_level_flags_from_string ()</title>
+<indexterm zone="milter-log-level-flags-from-string"><primary>milter_log_level_flags_from_string</primary></indexterm>
+<programlisting><link linkend="MilterLogLevelFlags"><returnvalue>MilterLogLevelFlags</returnvalue></link> milter_log_level_flags_from_string  (<parameter>const <link linkend="gchar"><type>gchar</type></link> *level_name</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> base_flags</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger" role="function">
+<title>milter_logger ()</title>
+<indexterm zone="milter-logger"><primary>milter_logger</primary></indexterm>
+<programlisting><link linkend="MilterLogger"><returnvalue>MilterLogger</returnvalue></link> *      milter_logger                       (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-default-log-handler" role="function">
+<title>milter_logger_default_log_handler ()</title>
+<indexterm zone="milter-logger-default-log-handler"><primary>milter_logger_default_log_handler</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_logger_default_log_handler   (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *domain</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *function</parameter>,
+                                                         <parameter><link linkend="GTimeVal"><type>GTimeVal</type></link> *time_value</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *message</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-new" role="function">
+<title>milter_logger_new ()</title>
+<indexterm zone="milter-logger-new"><primary>milter_logger_new</primary></indexterm>
+<programlisting><link linkend="MilterLogger"><returnvalue>MilterLogger</returnvalue></link> *      milter_logger_new                   (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-log" role="function">
+<title>milter_logger_log ()</title>
+<indexterm zone="milter-logger-log"><primary>milter_logger_log</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_logger_log                   (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *domain</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *function</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *format</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-log-va-list" role="function">
+<title>milter_logger_log_va_list ()</title>
+<indexterm zone="milter-logger-log-va-list"><primary>milter_logger_log_va_list</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_logger_log_va_list           (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *domain</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *function</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *format</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> args</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-get-target-level" role="function">
+<title>milter_logger_get_target_level ()</title>
+<indexterm zone="milter-logger-get-target-level"><primary>milter_logger_get_target_level</primary></indexterm>
+<programlisting><link linkend="MilterLogLevelFlags"><returnvalue>MilterLogLevelFlags</returnvalue></link> milter_logger_get_target_level      (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-logger-set-target-level" role="function">
+<title>milter_logger_set_target_level ()</title>
+<indexterm zone="milter-logger-set-target-level"><primary>milter_logger_set_target_level</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_logger_set_target_level      (<parameter><link linkend="MilterLogger"><type>MilterLogger</type></link> *logger</parameter>,
+                                                         <parameter><link linkend="MilterLogLevelFlags"><type>MilterLogLevelFlags</type></link> level</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterProtocolAgent">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterProtocolAgent.top_of_page">MilterProtocolAgent</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterProtocolAgent</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="MilterProtocolAgent.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>struct              <link linkend="MilterProtocolAgent-struct">MilterProtocolAgent</link>;
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-protocol-agent-set-macro-context">milter_protocol_agent_set_macro_context</link>
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-protocol-agent-set-macros">milter_protocol_agent_set_macros</link>    (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *macro_name</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-protocol-agent-set-macros-hash-table">milter_protocol_agent_set_macros_hash_table</link>
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *macros</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-protocol-agent-set-macro">milter_protocol_agent_set_macro</link>     (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *macro_name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *macro_value</parameter>);
+<link linkend="GHashTable"><returnvalue>GHashTable</returnvalue></link> *        <link linkend="milter-protocol-agent-get-macros">milter_protocol_agent_get_macros</link>    (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>);
+<link linkend="GHashTable"><returnvalue>GHashTable</returnvalue></link> *        <link linkend="milter-protocol-agent-get-available-macros">milter_protocol_agent_get_available_macros</link>
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-protocol-agent-get-macro">milter_protocol_agent_get_macro</link>     (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-protocol-agent-clear-macros">milter_protocol_agent_clear_macros</link>  (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-protocol-agent-set-macros-requests">milter_protocol_agent_set_macros_requests</link>
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>);
+<link linkend="MilterMacrosRequests"><returnvalue>MilterMacrosRequests</returnvalue></link> * <link linkend="milter-protocol-agent-get-macros-requests">milter_protocol_agent_get_macros_requests</link>
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterProtocolAgent.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="MilterAgent">MilterAgent</link>
+         +----MilterProtocolAgent
+               +----<link linkend="MilterClientContext">MilterClientContext</link>
+               +----<link linkend="MilterServerContext">MilterServerContext</link>
+</synopsis>
+</refsect1>
+<refsect1 id="MilterProtocolAgent.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">実装されたインターフェイス</title>
+<para>MilterProtocolAgentは<link linkend="MilterErrorEmittable">MilterErrorEmittable</link>と<link linkend="MilterFinishedEmittable">MilterFinishedEmittable</link>を実装しています。</para>
+</refsect1>
+
+<refsect1 id="MilterProtocolAgent.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="MilterProtocolAgent.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterProtocolAgent-struct" role="struct">
+<title>struct MilterProtocolAgent</title>
+<indexterm zone="MilterProtocolAgent-struct"><primary>MilterProtocolAgent</primary></indexterm>
+<programlisting>struct MilterProtocolAgent;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-set-macro-context" role="function">
+<title>milter_protocol_agent_set_macro_context ()</title>
+<indexterm zone="milter-protocol-agent-set-macro-context"><primary>milter_protocol_agent_set_macro_context</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_protocol_agent_set_macro_context
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-set-macros" role="function">
+<title>milter_protocol_agent_set_macros ()</title>
+<indexterm zone="milter-protocol-agent-set-macros"><primary>milter_protocol_agent_set_macros</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_protocol_agent_set_macros    (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *macro_name</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-set-macros-hash-table" role="function">
+<title>milter_protocol_agent_set_macros_hash_table ()</title>
+<indexterm zone="milter-protocol-agent-set-macros-hash-table"><primary>milter_protocol_agent_set_macros_hash_table</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_protocol_agent_set_macros_hash_table
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *macros</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-set-macro" role="function">
+<title>milter_protocol_agent_set_macro ()</title>
+<indexterm zone="milter-protocol-agent-set-macro"><primary>milter_protocol_agent_set_macro</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_protocol_agent_set_macro     (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *macro_name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *macro_value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-get-macros" role="function">
+<title>milter_protocol_agent_get_macros ()</title>
+<indexterm zone="milter-protocol-agent-get-macros"><primary>milter_protocol_agent_get_macros</primary></indexterm>
+<programlisting><link linkend="GHashTable"><returnvalue>GHashTable</returnvalue></link> *        milter_protocol_agent_get_macros    (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-get-available-macros" role="function">
+<title>milter_protocol_agent_get_available_macros ()</title>
+<indexterm zone="milter-protocol-agent-get-available-macros"><primary>milter_protocol_agent_get_available_macros</primary></indexterm>
+<programlisting><link linkend="GHashTable"><returnvalue>GHashTable</returnvalue></link> *        milter_protocol_agent_get_available_macros
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-get-macro" role="function">
+<title>milter_protocol_agent_get_macro ()</title>
+<indexterm zone="milter-protocol-agent-get-macro"><primary>milter_protocol_agent_get_macro</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_protocol_agent_get_macro     (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-clear-macros" role="function">
+<title>milter_protocol_agent_clear_macros ()</title>
+<indexterm zone="milter-protocol-agent-clear-macros"><primary>milter_protocol_agent_clear_macros</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_protocol_agent_clear_macros  (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> macro_context</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-set-macros-requests" role="function">
+<title>milter_protocol_agent_set_macros_requests ()</title>
+<indexterm zone="milter-protocol-agent-set-macros-requests"><primary>milter_protocol_agent_set_macros_requests</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_protocol_agent_set_macros_requests
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>,
+                                                         <parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-protocol-agent-get-macros-requests" role="function">
+<title>milter_protocol_agent_get_macros_requests ()</title>
+<indexterm zone="milter-protocol-agent-get-macros-requests"><primary>milter_protocol_agent_get_macros_requests</primary></indexterm>
+<programlisting><link linkend="MilterMacrosRequests"><returnvalue>MilterMacrosRequests</returnvalue></link> * milter_protocol_agent_get_macros_requests
+                                                        (<parameter><link linkend="MilterProtocolAgent"><type>MilterProtocolAgent</type></link> *agent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

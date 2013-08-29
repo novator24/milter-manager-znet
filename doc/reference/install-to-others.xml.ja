@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install-to-others">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install-to-others.top_of_page'>その他のプラットフォームへインストール</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>その他のプラットフォームへインストール</refname>
+  <refpurpose>その他のプラットフォームへのmilter managerのインストール方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  <link linkend='install-to-ubuntu'>Ubuntu Linux</link>
+  、
+  <link linkend='install-to-centos'>CentOS</link>
+  、
+  <link linkend='install-to-freebsd'>FreeBSD</link>
+  以外のプラットフォーム にmilter managerをインストールときのヒントを示します。プラッ トフォームに依存しない一般的なインストール情報は
+  <link linkend='install'>インストー ル</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>パッケージプラットフォームの検出</title>
+  <para>milter-managerはシステムにインストールされているmilterを自動 検出します。どのように検出するかはconfigure時に判断します。 configureの最後に出力される&quot;Package Platform&quot;が判断した検出 方法です。</para>
+  <programlisting>% ./configure
+...
+Configure Result:
+
+  Package Platform : debian
+  Package Options  :
+...</programlisting>
+  <para>この例だと&quot;debian&quot;系のプラットフォーム用の検出方法を用います。</para>
+  <para>&quot;unknown&quot;となっている場合は、configureが判断に失敗したか、 milter-managerがサポートしていないプラットフォームかのどちら かです。</para>
+  <para>もし、configureが判断に失敗しているのであれば、明示的に &quot;--with-package-platform&quot;を指定することができます。</para>
+  <programlisting>% ./configure --with-package-platform=freebsd
+...
+Configure Result:
+
+  Package Platform : freebsd
+  Package Options  :
+...</programlisting>
+  <para>また、--with-package-optionsを指定することで、付加情報を指定 することができます。付加情報は「名前1=値1,名前2=値2,...」と いうように指定します。例えば、pkgsrcプラットフォームで起動ス クリプトを/usr/pkg/etc/rc.d/以下ではなく、/etc/rc.d/以下にイ ンストールしている場合は以下のようになります。</para>
+  <programlisting>% ./configure --with-package-platform=pkgsrc --with-package-options=prefix=/etc
+...
+Configure Result:
+
+  Package Platform : pkgsrc
+  Package Options  : prefix=/etc
+...</programlisting>
+  <para>pkgsrcのために、特別に--with-rcddirオプションが用意してありま す。このオプションを使うと、上述の設定は以下のようなオプショ ンになります。</para>
+  <programlisting>% ./configure --with-package-platform=pkgsrc --with-rcddir=/etc/rc.d
+...
+Configure Result:
+
+  Package Platform : pkgsrc
+  Package Options  : rcddir=/etc/rc.d
+...</programlisting>
+  <para>現在サポートしているプラットフォームはdebian, redhat, freebsd(, pkgsrc)ですが、独自のプラットフォームを指定するこ ともできます。</para>
+  <para>例えば、新しくsuseプラットフォームに対応するとします。</para>
+  <programlisting>% ./configure --with-package-platform=suse
+...
+Configure Result:
+
+  Package Platform : suse
+  Package Options  :
+...</programlisting>
+  <para>これでsuseプラットフォームを使用することになりました。後は、 suseプラットフォーム用のmilter自動検出スクリプトをRubyで書く だけです。スクリプトは $prefix/etc/milter-manager/defaults/以下に&quot;#{プラットフォー ム名}.conf&quot;という名前で作成します。今の例でいうと&quot;suse.conf&quot; になります。</para>
+  <para>
+  $prefix/etc/milter-manager/defaults/suse.confの中では、 milterを検出し、define_milterで検出したmilterを登録します。 milterの登録方法の詳細は
+  <link linkend='configuration'>設定</link>
+  を見て ください。
+</para>
+  <para>また、インストール後に現在のプラットフォームを確認する場合は、 以下のようにします。</para>
+  <programlisting>% /usr/local/sbin/milter-manager --show-config
+...
+package.platform = &quot;debian&quot;
+package.options = nil
+...</programlisting>
+  <para>この場合は、プラットフォームはdebianで、付加情報は指定されて いないということになります。</para>
+</refsect1>
+</refentry>

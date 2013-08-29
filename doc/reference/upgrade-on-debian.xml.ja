@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-on-debian">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-on-debian.top_of_page'>Debianで更新</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Debianで更新</refname>
+  <refpurpose>Debian GNU/Linuxでのmilter managerの更新方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  Debian GNU/Linuxに特化したmilter managerの更新方法について説 明します。新規にインストールする方法は
+  <link linkend='install-to-debian'>Debianへインストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>更新</title>
+  <para>パッケージを更新するだけで、追加の作業は必要ありません。</para>
+  <programlisting>% sudo aptitude -V -D -y safe-upgrade</programlisting>
+  <refsect2>
+  <title>1.8.0 以前から 1.8.1 への更新</title>
+  <para>2011-11-15 にパッケージの署名に使用している鍵を変更したので、新しい鍵を 登録してください。古い鍵はもう使えません。</para>
+  <programlisting>% sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1</programlisting>
+  <para>sources.list に指定する URI を変更しました。しばらくは以前のものも使用で きますが、1.9 系列をリリースするときには削除する予定です。</para>
+  <para>1.8.0 以前からのユーザは早めに source.list を変更してください。</para>
+</refsect2>
+
+  <refsect2>
+  <title>squeezeの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>wheezyの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>jessieの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>sidの場合</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main</programlisting>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>milter managerは簡単に更新することができる、メンテナンスコス トが低いソフトウェアです。</para>
+  <para>新しいバージョンで行われている様々な改善を利用したい場合は更 新を検討してください。</para>
+  <para>
+  追加パッケージもインストールしている場合は
+  <link linkend='upgrade-options-on-debian'>Debianで更新 （任意）</link>
+  も参照してくださ い。
+</para>
+</refsect1>
+</refentry>

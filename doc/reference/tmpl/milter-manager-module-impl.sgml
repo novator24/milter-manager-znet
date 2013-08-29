@@ -1,0 +1,72 @@
+<!-- ##### SECTION Title ##### -->
+milter-manager-module-impl
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### USER_FUNCTION MilterManagerModuleInitFunc ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION MilterManagerModuleExitFunc ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### USER_FUNCTION MilterManagerModuleInstantiateFunc ##### -->
+<para>
+
+</para>
+
+@first_property: 
+@var_args: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_MANAGER_MODULE_IMPL_INIT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_MODULE_IMPL_EXIT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_MODULE_IMPL_INSTANTIATE ##### -->
+<para>
+
+</para>
+
+
+

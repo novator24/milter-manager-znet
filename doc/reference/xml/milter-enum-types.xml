@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-enum-types">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-enum-types.top_of_page">milter-enum-types</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-enum-types</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-enum-types.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis><link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-command-get-type">milter_command_get_type</link>             (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-COMMAND:CAPS">MILTER_TYPE_COMMAND</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-socket-family-get-type">milter_socket_family_get_type</link>       (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-SOCKET-FAMILY:CAPS">MILTER_TYPE_SOCKET_FAMILY</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-reply-get-type">milter_reply_get_type</link>               (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-REPLY:CAPS">MILTER_TYPE_REPLY</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-status-get-type">milter_status_get_type</link>              (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-STATUS:CAPS">MILTER_TYPE_STATUS</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-macro-stage-get-type">milter_macro_stage_get_type</link>         (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-MACRO-STAGE:CAPS">MILTER_TYPE_MACRO_STAGE</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-decoder-error-get-type">milter_decoder_error_get_type</link>       (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-DECODER-ERROR:CAPS">MILTER_TYPE_DECODER_ERROR</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-decoder-compare-type-get-type">milter_decoder_compare_type_get_type</link>
+                                                        (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-DECODER-COMPARE-TYPE:CAPS">MILTER_TYPE_DECODER_COMPARE_TYPE</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-command-decoder-error-get-type">milter_command_decoder_error_get_type</link>
+                                                        (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-COMMAND-DECODER-ERROR:CAPS">MILTER_TYPE_COMMAND_DECODER_ERROR</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-reply-decoder-error-get-type">milter_reply_decoder_error_get_type</link> (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-REPLY-DECODER-ERROR:CAPS">MILTER_TYPE_REPLY_DECODER_ERROR</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-agent-error-get-type">milter_agent_error_get_type</link>         (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-AGENT-ERROR:CAPS">MILTER_TYPE_AGENT_ERROR</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-action-flags-get-type">milter_action_flags_get_type</link>        (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-ACTION-FLAGS:CAPS">MILTER_TYPE_ACTION_FLAGS</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-step-flags-get-type">milter_step_flags_get_type</link>          (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-STEP-FLAGS:CAPS">MILTER_TYPE_STEP_FLAGS</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-reader-error-get-type">milter_reader_error_get_type</link>        (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-READER-ERROR:CAPS">MILTER_TYPE_READER_ERROR</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-writer-error-get-type">milter_writer_error_get_type</link>        (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-WRITER-ERROR:CAPS">MILTER_TYPE_WRITER_ERROR</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-log-level-flags-get-type">milter_log_level_flags_get_type</link>     (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-LOG-LEVEL-FLAGS:CAPS">MILTER_TYPE_LOG_LEVEL_FLAGS</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-log-item-flags-get-type">milter_log_item_flags_get_type</link>      (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-LOG-ITEM-FLAGS:CAPS">MILTER_TYPE_LOG_ITEM_FLAGS</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-log-colorize-get-type">milter_log_colorize_get_type</link>        (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-LOG-COLORIZE:CAPS">MILTER_TYPE_LOG_COLORIZE</link>
+<link linkend="GType"><returnvalue>GType</returnvalue></link>               <link linkend="milter-connection-error-get-type">milter_connection_error_get_type</link>    (<parameter><type>void</type></parameter>);
+#define             <link linkend="MILTER-TYPE-CONNECTION-ERROR:CAPS">MILTER_TYPE_CONNECTION_ERROR</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-enum-types.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-enum-types.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="milter-command-get-type" role="function">
+<title>milter_command_get_type ()</title>
+<indexterm zone="milter-command-get-type"><primary>milter_command_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_command_get_type             (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-COMMAND:CAPS" role="macro">
+<title>MILTER_TYPE_COMMAND</title>
+<indexterm zone="MILTER-TYPE-COMMAND:CAPS"><primary>MILTER_TYPE_COMMAND</primary></indexterm>
+<programlisting>#define MILTER_TYPE_COMMAND (milter_command_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-socket-family-get-type" role="function">
+<title>milter_socket_family_get_type ()</title>
+<indexterm zone="milter-socket-family-get-type"><primary>milter_socket_family_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_socket_family_get_type       (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-SOCKET-FAMILY:CAPS" role="macro">
+<title>MILTER_TYPE_SOCKET_FAMILY</title>
+<indexterm zone="MILTER-TYPE-SOCKET-FAMILY:CAPS"><primary>MILTER_TYPE_SOCKET_FAMILY</primary></indexterm>
+<programlisting>#define MILTER_TYPE_SOCKET_FAMILY (milter_socket_family_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reply-get-type" role="function">
+<title>milter_reply_get_type ()</title>
+<indexterm zone="milter-reply-get-type"><primary>milter_reply_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_reply_get_type               (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-REPLY:CAPS" role="macro">
+<title>MILTER_TYPE_REPLY</title>
+<indexterm zone="MILTER-TYPE-REPLY:CAPS"><primary>MILTER_TYPE_REPLY</primary></indexterm>
+<programlisting>#define MILTER_TYPE_REPLY (milter_reply_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-status-get-type" role="function">
+<title>milter_status_get_type ()</title>
+<indexterm zone="milter-status-get-type"><primary>milter_status_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_status_get_type              (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-STATUS:CAPS" role="macro">
+<title>MILTER_TYPE_STATUS</title>
+<indexterm zone="MILTER-TYPE-STATUS:CAPS"><primary>MILTER_TYPE_STATUS</primary></indexterm>
+<programlisting>#define MILTER_TYPE_STATUS (milter_status_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macro-stage-get-type" role="function">
+<title>milter_macro_stage_get_type ()</title>
+<indexterm zone="milter-macro-stage-get-type"><primary>milter_macro_stage_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_macro_stage_get_type         (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-MACRO-STAGE:CAPS" role="macro">
+<title>MILTER_TYPE_MACRO_STAGE</title>
+<indexterm zone="MILTER-TYPE-MACRO-STAGE:CAPS"><primary>MILTER_TYPE_MACRO_STAGE</primary></indexterm>
+<programlisting>#define MILTER_TYPE_MACRO_STAGE (milter_macro_stage_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-error-get-type" role="function">
+<title>milter_decoder_error_get_type ()</title>
+<indexterm zone="milter-decoder-error-get-type"><primary>milter_decoder_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_decoder_error_get_type       (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-DECODER-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_DECODER_ERROR</title>
+<indexterm zone="MILTER-TYPE-DECODER-ERROR:CAPS"><primary>MILTER_TYPE_DECODER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_DECODER_ERROR (milter_decoder_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-decoder-compare-type-get-type" role="function">
+<title>milter_decoder_compare_type_get_type ()</title>
+<indexterm zone="milter-decoder-compare-type-get-type"><primary>milter_decoder_compare_type_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_decoder_compare_type_get_type
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-DECODER-COMPARE-TYPE:CAPS" role="macro">
+<title>MILTER_TYPE_DECODER_COMPARE_TYPE</title>
+<indexterm zone="MILTER-TYPE-DECODER-COMPARE-TYPE:CAPS"><primary>MILTER_TYPE_DECODER_COMPARE_TYPE</primary></indexterm>
+<programlisting>#define MILTER_TYPE_DECODER_COMPARE_TYPE (milter_decoder_compare_type_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-decoder-error-get-type" role="function">
+<title>milter_command_decoder_error_get_type ()</title>
+<indexterm zone="milter-command-decoder-error-get-type"><primary>milter_command_decoder_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_command_decoder_error_get_type
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-COMMAND-DECODER-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_COMMAND_DECODER_ERROR</title>
+<indexterm zone="MILTER-TYPE-COMMAND-DECODER-ERROR:CAPS"><primary>MILTER_TYPE_COMMAND_DECODER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_COMMAND_DECODER_ERROR (milter_command_decoder_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reply-decoder-error-get-type" role="function">
+<title>milter_reply_decoder_error_get_type ()</title>
+<indexterm zone="milter-reply-decoder-error-get-type"><primary>milter_reply_decoder_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_reply_decoder_error_get_type (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-REPLY-DECODER-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_REPLY_DECODER_ERROR</title>
+<indexterm zone="MILTER-TYPE-REPLY-DECODER-ERROR:CAPS"><primary>MILTER_TYPE_REPLY_DECODER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_REPLY_DECODER_ERROR (milter_reply_decoder_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-agent-error-get-type" role="function">
+<title>milter_agent_error_get_type ()</title>
+<indexterm zone="milter-agent-error-get-type"><primary>milter_agent_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_agent_error_get_type         (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-AGENT-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_AGENT_ERROR</title>
+<indexterm zone="MILTER-TYPE-AGENT-ERROR:CAPS"><primary>MILTER_TYPE_AGENT_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_AGENT_ERROR (milter_agent_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-action-flags-get-type" role="function">
+<title>milter_action_flags_get_type ()</title>
+<indexterm zone="milter-action-flags-get-type"><primary>milter_action_flags_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_action_flags_get_type        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-ACTION-FLAGS:CAPS" role="macro">
+<title>MILTER_TYPE_ACTION_FLAGS</title>
+<indexterm zone="MILTER-TYPE-ACTION-FLAGS:CAPS"><primary>MILTER_TYPE_ACTION_FLAGS</primary></indexterm>
+<programlisting>#define MILTER_TYPE_ACTION_FLAGS (milter_action_flags_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-step-flags-get-type" role="function">
+<title>milter_step_flags_get_type ()</title>
+<indexterm zone="milter-step-flags-get-type"><primary>milter_step_flags_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_step_flags_get_type          (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-STEP-FLAGS:CAPS" role="macro">
+<title>MILTER_TYPE_STEP_FLAGS</title>
+<indexterm zone="MILTER-TYPE-STEP-FLAGS:CAPS"><primary>MILTER_TYPE_STEP_FLAGS</primary></indexterm>
+<programlisting>#define MILTER_TYPE_STEP_FLAGS (milter_step_flags_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reader-error-get-type" role="function">
+<title>milter_reader_error_get_type ()</title>
+<indexterm zone="milter-reader-error-get-type"><primary>milter_reader_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_reader_error_get_type        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-READER-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_READER_ERROR</title>
+<indexterm zone="MILTER-TYPE-READER-ERROR:CAPS"><primary>MILTER_TYPE_READER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_READER_ERROR (milter_reader_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-error-get-type" role="function">
+<title>milter_writer_error_get_type ()</title>
+<indexterm zone="milter-writer-error-get-type"><primary>milter_writer_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_writer_error_get_type        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-WRITER-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_WRITER_ERROR</title>
+<indexterm zone="MILTER-TYPE-WRITER-ERROR:CAPS"><primary>MILTER_TYPE_WRITER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_WRITER_ERROR (milter_writer_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-log-level-flags-get-type" role="function">
+<title>milter_log_level_flags_get_type ()</title>
+<indexterm zone="milter-log-level-flags-get-type"><primary>milter_log_level_flags_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_log_level_flags_get_type     (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-LOG-LEVEL-FLAGS:CAPS" role="macro">
+<title>MILTER_TYPE_LOG_LEVEL_FLAGS</title>
+<indexterm zone="MILTER-TYPE-LOG-LEVEL-FLAGS:CAPS"><primary>MILTER_TYPE_LOG_LEVEL_FLAGS</primary></indexterm>
+<programlisting>#define MILTER_TYPE_LOG_LEVEL_FLAGS (milter_log_level_flags_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-log-item-flags-get-type" role="function">
+<title>milter_log_item_flags_get_type ()</title>
+<indexterm zone="milter-log-item-flags-get-type"><primary>milter_log_item_flags_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_log_item_flags_get_type      (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-LOG-ITEM-FLAGS:CAPS" role="macro">
+<title>MILTER_TYPE_LOG_ITEM_FLAGS</title>
+<indexterm zone="MILTER-TYPE-LOG-ITEM-FLAGS:CAPS"><primary>MILTER_TYPE_LOG_ITEM_FLAGS</primary></indexterm>
+<programlisting>#define MILTER_TYPE_LOG_ITEM_FLAGS (milter_log_item_flags_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-log-colorize-get-type" role="function">
+<title>milter_log_colorize_get_type ()</title>
+<indexterm zone="milter-log-colorize-get-type"><primary>milter_log_colorize_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_log_colorize_get_type        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-LOG-COLORIZE:CAPS" role="macro">
+<title>MILTER_TYPE_LOG_COLORIZE</title>
+<indexterm zone="MILTER-TYPE-LOG-COLORIZE:CAPS"><primary>MILTER_TYPE_LOG_COLORIZE</primary></indexterm>
+<programlisting>#define MILTER_TYPE_LOG_COLORIZE (milter_log_colorize_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-connection-error-get-type" role="function">
+<title>milter_connection_error_get_type ()</title>
+<indexterm zone="milter-connection-error-get-type"><primary>milter_connection_error_get_type</primary></indexterm>
+<programlisting><link linkend="GType"><returnvalue>GType</returnvalue></link>               milter_connection_error_get_type    (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-TYPE-CONNECTION-ERROR:CAPS" role="macro">
+<title>MILTER_TYPE_CONNECTION_ERROR</title>
+<indexterm zone="MILTER-TYPE-CONNECTION-ERROR:CAPS"><primary>MILTER_TYPE_CONNECTION_ERROR</primary></indexterm>
+<programlisting>#define MILTER_TYPE_CONNECTION_ERROR (milter_connection_error_get_type())
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

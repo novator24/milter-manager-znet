@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-controller">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-controller.top_of_page">MilterManagerController</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerController</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-controller.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-CONTROLLER:CAPS">MILTER_MANAGER_CONTROLLER</link>           (obj)
+struct              <link linkend="MilterManagerController">MilterManagerController</link>;
+<link linkend="MilterManagerController"><returnvalue>MilterManagerController</returnvalue></link> * <link linkend="milter-manager-controller-new">milter_manager_controller_new</link> (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>,
+                                                         <parameter><link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *event_loop</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-controller.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-controller.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-MANAGER-CONTROLLER:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROLLER()</title>
+<indexterm zone="MILTER-MANAGER-CONTROLLER:CAPS"><primary>MILTER_MANAGER_CONTROLLER</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROLLER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_CONTROLLER, MilterManagerController))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerController" role="struct">
+<title>struct MilterManagerController</title>
+<indexterm zone="MilterManagerController"><primary>MilterManagerController</primary></indexterm>
+<programlisting>struct MilterManagerController {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-controller-new" role="function">
+<title>milter_manager_controller_new ()</title>
+<indexterm zone="milter-manager-controller-new"><primary>milter_manager_controller_new</primary></indexterm>
+<programlisting><link linkend="MilterManagerController"><returnvalue>MilterManagerController</returnvalue></link> * milter_manager_controller_new (<parameter><link linkend="MilterManager"><type>MilterManager</type></link> *manager</parameter>,
+                                                         <parameter><link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *event_loop</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

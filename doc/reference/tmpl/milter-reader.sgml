@@ -1,0 +1,89 @@
+<!-- ##### SECTION Title ##### -->
+MilterReader
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_READER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterReaderError ##### -->
+<para>
+
+</para>
+
+@MILTER_READER_ERROR_NO_CHANNEL: 
+@MILTER_READER_ERROR_IO_ERROR: 
+
+<!-- ##### STRUCT MilterReader ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION milter_reader_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_reader_io_channel_new ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_reader_start ##### -->
+<para>
+
+</para>
+
+@reader: 
+@loop: 
+
+
+<!-- ##### FUNCTION milter_reader_is_watching ##### -->
+<para>
+
+</para>
+
+@reader: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_reader_shutdown ##### -->
+<para>
+
+</para>
+
+@reader: 
+
+

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-control-protocol">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-control-protocol.top_of_page">milter-manager-control-protocol</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-manager-control-protocol</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-control-protocol.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-SET-CONFIGURATION:CAPS">MILTER_MANAGER_CONTROL_COMMAND_SET_CONFIGURATION</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-GET-CONFIGURATION:CAPS">MILTER_MANAGER_CONTROL_COMMAND_GET_CONFIGURATION</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-RELOAD:CAPS">MILTER_MANAGER_CONTROL_COMMAND_RELOAD</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-STOP-CHILD:CAPS">MILTER_MANAGER_CONTROL_COMMAND_STOP_CHILD</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-GET-STATUS:CAPS">MILTER_MANAGER_CONTROL_COMMAND_GET_STATUS</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-REPLY-SUCCESS:CAPS">MILTER_MANAGER_CONTROL_REPLY_SUCCESS</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-REPLY-FAILURE:CAPS">MILTER_MANAGER_CONTROL_REPLY_FAILURE</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-REPLY-ERROR:CAPS">MILTER_MANAGER_CONTROL_REPLY_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-REPLY-CONFIGURATION:CAPS">MILTER_MANAGER_CONTROL_REPLY_CONFIGURATION</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-REPLY-STATUS:CAPS">MILTER_MANAGER_CONTROL_REPLY_STATUS</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-control-protocol.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-control-protocol.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-SET-CONFIGURATION:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_SET_CONFIGURATION</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-SET-CONFIGURATION:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_SET_CONFIGURATION</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_SET_CONFIGURATION "set-configuration"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-GET-CONFIGURATION:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_GET_CONFIGURATION</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-GET-CONFIGURATION:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_GET_CONFIGURATION</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_GET_CONFIGURATION "get-configuration"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-RELOAD:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_RELOAD</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-RELOAD:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_RELOAD</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_RELOAD "reload"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-STOP-CHILD:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_STOP_CHILD</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-STOP-CHILD:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_STOP_CHILD</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_STOP_CHILD "stop-child"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-GET-STATUS:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_GET_STATUS</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-GET-STATUS:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_GET_STATUS</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_GET_STATUS "get-status"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-REPLY-SUCCESS:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_REPLY_SUCCESS</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-REPLY-SUCCESS:CAPS"><primary>MILTER_MANAGER_CONTROL_REPLY_SUCCESS</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_REPLY_SUCCESS "success"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-REPLY-FAILURE:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_REPLY_FAILURE</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-REPLY-FAILURE:CAPS"><primary>MILTER_MANAGER_CONTROL_REPLY_FAILURE</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_REPLY_FAILURE "failure"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-REPLY-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_REPLY_ERROR</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-REPLY-ERROR:CAPS"><primary>MILTER_MANAGER_CONTROL_REPLY_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_REPLY_ERROR "error"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-REPLY-CONFIGURATION:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_REPLY_CONFIGURATION</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-REPLY-CONFIGURATION:CAPS"><primary>MILTER_MANAGER_CONTROL_REPLY_CONFIGURATION</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_REPLY_CONFIGURATION "configuration"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-REPLY-STATUS:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_REPLY_STATUS</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-REPLY-STATUS:CAPS"><primary>MILTER_MANAGER_CONTROL_REPLY_STATUS</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_REPLY_STATUS "status"
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

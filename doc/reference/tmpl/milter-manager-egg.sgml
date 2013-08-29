@@ -1,0 +1,347 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerEgg
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_EGG_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_EGG ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerEggError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_EGG_ERROR_INVALID: 
+
+<!-- ##### STRUCT MilterManagerEgg ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_egg_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_hatch ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_name ##### -->
+<para>
+
+</para>
+
+@egg: 
+@name: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_name ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_description ##### -->
+<para>
+
+</para>
+
+@egg: 
+@description: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_description ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_enabled ##### -->
+<para>
+
+</para>
+
+@egg: 
+@enabled: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_is_enabled ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_connection_spec ##### -->
+<para>
+
+</para>
+
+@egg: 
+@connection_spec: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_connection_spec ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_connection_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@connection_timeout: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_connection_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_writing_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@writing_timeout: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_writing_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_reading_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@reading_timeout: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_reading_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_end_of_message_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@end_of_message_timeout: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_end_of_message_timeout ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_user_name ##### -->
+<para>
+
+</para>
+
+@egg: 
+@user_name: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_user_name ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_command ##### -->
+<para>
+
+</para>
+
+@egg: 
+@command: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_command ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_set_command_options ##### -->
+<para>
+
+</para>
+
+@egg: 
+@command_options: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_command_options ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_add_applicable_condition ##### -->
+<para>
+
+</para>
+
+@egg: 
+@condition: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_get_applicable_conditions ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_clear_applicable_conditions ##### -->
+<para>
+
+</para>
+
+@egg: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_attach_applicable_conditions ##### -->
+<para>
+
+</para>
+
+@egg: 
+@child: 
+@children: 
+@context: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_merge ##### -->
+<para>
+
+</para>
+
+@egg: 
+@other_egg: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_to_xml ##### -->
+<para>
+
+</para>
+
+@egg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_egg_to_xml_string ##### -->
+<para>
+
+</para>
+
+@egg: 
+@string: 
+@indent: 
+
+

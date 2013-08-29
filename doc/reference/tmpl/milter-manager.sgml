@@ -1,0 +1,100 @@
+<!-- ##### SECTION Title ##### -->
+MilterManager
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_TYPE_MANAGER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### MACRO MILTER_MANAGER_IS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### MACRO MILTER_MANAGER_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### STRUCT MilterManager ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_new ##### -->
+<para>
+
+</para>
+
+@configuration: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_get_configuration ##### -->
+<para>
+
+</para>
+
+@manager: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_reload ##### -->
+<para>
+
+</para>
+
+@manager: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_set_launcher_channel ##### -->
+<para>
+
+</para>
+
+@manager: 
+@read_channel: 
+@write_channel: 
+
+

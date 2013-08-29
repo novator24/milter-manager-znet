@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-manager">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-manager.top_of_page'>milter-manager</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-manager</refname>
+  <refpurpose>milterを使った効果的なスパム対策・ウィルス対策</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>名前</title>
+  <para>milter-manager - milterを使った効果的なスパム対策・ウィルス対策</para>
+</refsect1>
+
+<refsect1>
+  <title>書式</title>
+  <para>
+  <code>milter-manager</code>
+   [
+  <emphasis>オプション ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>説明</title>
+  <para>milter-managerはmilterを使った効果的なスパム対策・ウィルス対 策（迷惑メール対策）を実現するmilterです。</para>
+  <para>milter-managerはmilterを効果的でかつ柔軟にmilterを使うための プラットフォームを提供します。milter-managerはRubyインタプリ タを組み込んでいて、動的にmilterを適用する条件を決定すること ができます。この組み込まれたRubyインタプリタを使うことで、効 果的でかつ柔軟にmilterを使うプラットフォームを提供することが できます。</para>
+  <para>milter-managerには設定ファイルがあります。現在の設定 は--show-configオプションで確認できます。</para>
+  <programlisting>% milter-manager --show-config</programlisting>
+  <para>milter-manager設定ファイルで指定された設定を上書きするオプショ ンも提供しています。</para>
+</refsect1>
+
+<refsect1>
+  <title>オプション</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-manager.--help'>--help</term>
+  <listitem>
+  <para>利用できるオプションを表示して終了します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--connection-spec'>--connection-spec=SPEC</term>
+  <listitem>
+  <para>接続を待ち受けるソケットを指定します。SPECの書式は次のう ちのどれかです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:パス</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号@ホスト名</para>
+</listitem>
+  <listitem>
+  <para>inet:ポート番号@[アドレス]</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号@ホスト名</para>
+</listitem>
+  <listitem>
+  <para>inet6:ポート番号@[アドレス]</para>
+</listitem>
+</itemizedlist>
+  <para>例:</para>
+  <itemizedlist>
+  <listitem>
+  <para>unix:/var/run/milter/milter-manager.sock</para>
+</listitem>
+  <listitem>
+  <para>inet:10025</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet:10025@[127.0.0.1]</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@localhost</para>
+</listitem>
+  <listitem>
+  <para>inet6:10025@[::1]</para>
+</listitem>
+</itemizedlist>
+  <para>設定ファイル中の「manager.connection_spec」の値を上書きし ます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--config-dir'>--config-dir=DIRECTORY</term>
+  <listitem>
+  <para>設定ファイルのあるディレクトリを指定します。 milter-managerは、まず、DIRECTORY/milter-manager.confの 読み込みを試みます。もし、見つからなかった場合はシステム 標準の場所にあるmilter-manager.confを読み込みます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--pid-file'>--pid-file=FILE</term>
+  <listitem>
+  <para>milter-managerのプロセスidをFILEに保存します。</para>
+  <para>設定ファイル中の「manager.pid_file」の値を上書きします。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--user-name'>--user-name=NAME</term>
+  <listitem>
+  <para>milter-managerをNAMEユーザの権限で実行します。 milter-managerはroot権限で起動しなければいけません。</para>
+  <para>設定ファイル中の「security.effective_user」の値を上書きします。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--group-name'>--group-name=NAME</term>
+  <listitem>
+  <para>milter-managerをNAMEグループの権限で実行します。 milter-managerはroot権限で起動しなければいけません。</para>
+  <para>設定ファイル中の「security.effective_group」の値を上書きします。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--socket-group-name'>--socket-group-name=NAME</term>
+  <listitem>
+  <para>milter-managerが接続を受け付けるUNIXドメインソケットのグ ループをNAMEグループに変更します。グループは実効ユーザの 補助グループでなければいけません。</para>
+  <para>設定ファイル中の「manager.unix_socket_group」の値を上書き します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--daemon'>--daemon</term>
+  <listitem>
+  <para>端末を切り離し、バックグラウンドでデーモンプロセスとして動 作します。運用時はデーモンプロセスで動作させることをお勧 めします。</para>
+  <para>設定ファイル中の「manager.daemon」の値を上書きします。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--no-daemon'>--no-daemon</term>
+  <listitem>
+  <para>このオプションより前に指定した--daemonオプションを無効にし ます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--show-config'>--show-config</term>
+  <listitem>
+  <para>設定内容を表示して終了します。設定内容はそのまま設定ファ イルに使える書式で表示されます。登録されているmilterを確 認する場合や、milter-managerの問題を報告する場合などで有 用です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--verbose'>--verbose</term>
+  <listitem>
+  <para>実行時のログをより詳細に出力します。ログはsyslogのmailファ シリティで出力します。デーモンプロセスになっていない場合 は標準出力にもログが出力されます。</para>
+  <para>「MILTER_LOG_LEVEL=all」というように環境変数を設定している 場合と同じ効果があります。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager.--version'>--version</term>
+  <listitem>
+  <para>バージョンを表示して終了します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>終了ステータス</title>
+  <para>MTAからの接続を受け付ける状態になった場合は0になり、そうでな い場合は0以外になります。milter-managerはソケットの書式が間違っ ている場合か、ソケットまわりの問題が起こると接続を受け付ける 状態になれません。ソケットまわりの問題とは、例えば、ポートが すでに使用されているとか、UNIXドメインソケットを作成するパー ミッションがない、などです。</para>
+</refsect1>
+
+<refsect1>
+  <title>ファイル</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-manager./usr/local/etc/milter-manager/milter-manager-conf'>/usr/local/etc/milter-manager/milter-manager.conf</term>
+  <listitem>
+  <para>デフォルトの設定ファイルです。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>例</title>
+  <para>以下はmilter-managerの挙動をデバッグするときの例です。 この場合、milter-managerはフォアグラウンドで動作し、標準出力 にログを吐きます。</para>
+  <programlisting>% milter-manager --no-daemon --verbose</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>関連項目</title>
+  <para>
+  <link linkend='milter-test-server'>milter-test-server.rd</link>
+  (1),
+  <link linkend='milter-test-client'>milter-test-client.rd</link>
+  (1),
+  <link linkend='milter-performance-check'>milter-performance-check.rd</link>
+  (1),
+  <link linkend='milter-manager-log-analyzer'>milter-manager-log-analyzer.rd</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

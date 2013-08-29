@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter-performance-check</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="commands.html" title="コマンド">
+<link rel="prev" href="milter-test-client.html" title="milter-test-client">
+<link rel="next" href="milter-report-statistics.html" title="milter-statistics-report">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="milter-test-client.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="commands.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="milter-report-statistics.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="milter-performance-check"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="milter-performance-check.top_of_page"></a>milter-performance-check</span></h2>
+<p>milter-performance-check — MTAのパフォーマンスを計るプログラム</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6035488"></a><h2>名前</h2>
+<p>milter-performance-check - MTAのパフォーマンスを計るプログラム</p>
+</div>
+<div class="refsect1">
+<a name="idp9289104"></a><h2>書式</h2>
+<p>
+  <code class="code">milter-performance-check</code>
+   [
+  <span class="emphasis"><em>オプション ...</em></span>
+  ]
+</p>
+</div>
+<div class="refsect1">
+<a name="idp8932544"></a><h2>説明</h2>
+<p>milter-performance-checkはMTAの性能を計測するSMTPクライアント です。milter-test-serverでmilterのみの性能を計測し、 milter-performance-checkでMTAとmilterを合わせた性能を計測する という住み分けです。</p>
+<p>同様のツールにはPostfix付属のsmtp-sourceがあります。どちらも、 同時に複数のSMTPセッションを張って一斉にメールを送信すること ができます。機能的にはsmtp-sourceの方が高機能です。</p>
+<p>milter-performance-checkが便利なのはSMTPセッションの時間のみ を計測してくれることです。smtp-sourceではtimeコマンドと組み合 わせるなどして、smtp-source全体の実行時間を計測します。</p>
+<p>実際は、SMTPセッションの時間のみでも、ツール全体の実行時間で もそれほど違いはでないと思います。また、テスト用のメール総数 を多くすればするほど、SMTPセッションにかかる時間が大きくなり、 ツール自体の実行時間による影響は小さくなります。</p>
+<p>milter-performance-checkが提供している機能で十分な時は、 milter-performance-checkを利用し、それでは不十分な時は smtp-sourceを利用するとよいでしょう。</p>
+</div>
+<div class="refsect1">
+<a name="idp5399632"></a><h2>オプション</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--help"></a>--help</span></p></td>
+<td><p>利用できるオプションを表示して終了します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--smtp-server"></a>--smtp-server=SERVER</span></p></td>
+<td>
+<p>接続先のSMTPサーバを指定します。</p>
+<p>既定値はlocalhostです。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--smtp-port"></a>--smtp-port=PORT</span></p></td>
+<td>
+<p>接続先のSMTPサーバのポート番号指定します。</p>
+<p>既定値は25です。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--connect-host"></a>--connect-host=HOST</span></p></td>
+<td>
+<p>接続元のホスト名を指定します。</p>
+<p>
+  <a class="ulink" href="http://www.postfix-jp.info/trans-2.3/jhtml/XCLIENT_README.html" target="_top">PostfixのXCLIENT SMTP拡張</a>
+  のNAMEを利用するので
+  <a class="ulink" href="http://www.postfix-jp.info/trans-2.3/jhtml/postconf.5.html#smtpd_authorized_xclient_hosts" target="_top">smtpd_authorized_xclient_hosts</a>
+  を適切に設定する必要があります。
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--connect-address"></a>--connect-address=ADDRESS</span></p></td>
+<td>
+<p>接続元のアドレスを指定します。</p>
+<p>
+  <a class="ulink" href="http://www.postfix-jp.info/trans-2.3/jhtml/XCLIENT_README.html" target="_top">PostfixのXCLIENT SMTP拡張</a>
+  のADDRを利用するので
+  <a class="ulink" href="http://www.postfix-jp.info/trans-2.3/jhtml/postconf.5.html#smtpd_authorized_xclient_hosts" target="_top">smtpd_authorized_xclient_hosts</a>
+  を適切に設定する必要があります。
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--helo-fqdn"></a>--helo-fqdn=FQDN</span></p></td>
+<td>
+<p>HELOコマンドでFQDNを使います。</p>
+<p>既定値はlocalhost.localdomainです。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--starttls"></a>--starttls=HOW</span></p></td>
+<td>
+<p>1.6.9から使用可能。</p>
+<p>
+  STARTTLSを使うかどうかを指定します。指定可能な
+  <code class="varname">HOW</code>
+  は 以下の通りです。
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;auto&lt;/command&gt;"></a>
+  <span class="command"><strong>auto</strong></span>
+</span></p></td>
+<td><p>MTAがSTARTTLSをサポートしている場合はSTARTTLSを使い ます。（既定値）</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;always&lt;/command&gt;"></a>
+  <span class="command"><strong>always</strong></span>
+</span></p></td>
+<td><p>常にSTARTTLSを使います。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;disable&lt;/command&gt;"></a>
+  <span class="command"><strong>disable</strong></span>
+</span></p></td>
+<td><p>STARTTLSを使いません。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  既定値は
+  <span class="command"><strong>auto</strong></span>
+  です。
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-user"></a>--auth-user=USER</span></p></td>
+<td>
+<p>1.6.9から使用可能。</p>
+<p>
+  SMTP認証のユーザ名として
+  <code class="varname">USER</code>
+  を使います。
+</p>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-password"></a>--auth-password=PASSWORD</span></p></td>
+<td>
+<p>1.6.9から使用可能。</p>
+<p>
+  SMTP認証のパスワードとして
+  <code class="varname">PASSWORD</code>
+  を使います。
+</p>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-mechanism"></a>--auth-mechanism=MECHANISM</span></p></td>
+<td>
+<p>1.6.9から使用可能。</p>
+<p>
+  SMTP認証の方法として
+  <code class="varname">MECHANISM</code>
+  を使います。指定可能な
+  <code class="varname">MECHANISM</code>
+  は以下の通りです。
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">
+  <span class="command"><strong>auto</strong></span>
+</span></p></td>
+<td><p>MTAがサポートしている認証方式を検出してそれを使い ます。（既定値）</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;plain&lt;/command&gt;"></a>
+  <span class="command"><strong>plain</strong></span>
+</span></p></td>
+<td><p>常にPLAINを使用します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;login&lt;/command&gt;"></a>
+  <span class="command"><strong>login</strong></span>
+</span></p></td>
+<td><p>常にLOGINを使用します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.&lt;command&gt;cram-md5&lt;/command&gt;%E3%81%BE%E3%81%9F%E3%81%AF&lt;command&gt;cram-md5&lt;/command&gt;"></a>
+  <span class="command"><strong>cram_md5</strong></span>または<span class="command"><strong>cram-md5</strong></span>
+</span></p></td>
+<td><p>常にCRAM-MD5を使用します。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  既定値は
+  <span class="command"><strong>auto</strong></span>
+  です。
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--auth-map"></a>--auth-map=FILE</span></p></td>
+<td>
+<p>1.6.9から使用可能。</p>
+<p>
+  接続するMTAのアドレス・ポート番号ごとにSMTP認証の設定を
+  <code class="varname">FILE</code>
+  から読み込みます。
+  <code class="varname">FILE</code>
+  の書式は以下のよう になっており、
+  <a class="ulink" href="http://www.postfix.org/postconf.5.html#smtp_sasl_password_maps" target="_top">Postfixの smtp_sasl_password_maps</a>
+  でも使えます。
+</p>
+<pre class="programlisting">SERVER1:PORT USER1:PASSWORD1
+SERVER2:PORT USER2:PASSWORD2
+...</pre>
+<p>「smtp.example.com」の「submissionポート」（587番ポート） 宛てのメールは「send-user」ユーザ・「secret」パスワード を使うという設定は以下の通りです。</p>
+<pre class="programlisting">smtp.example.com:587 send-user:secret</pre>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--from"></a>--from=FROM</span></p></td>
+<td>
+<p>MAILコマンドのアドレスにFROMを使います。</p>
+<p>既定値はfrom@example.comです。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--force-from"></a>--force-from=FROM</span></p></td>
+<td>
+<p>送信するメールファイルを指定した場合でも、ファイル中にあ るFrom:の値ではなく、FROMをMAILコマンドのアドレスに使いま す。</p>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--recipient"></a>--recipient=RECIPIENT</span></p></td>
+<td>
+<p>RCPTコマンドのアドレスにRECIPIENTを使います。複数の宛先を 指定する場合は複数回このオプションを指定してください。</p>
+<p>既定値は[to@example.com]です。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--force-recipient"></a>--force-recipient=RECIPIENT</span></p></td>
+<td>
+<p>送信するメールファイルを指定した場合でも、ファイル中にあ るTo:の値ではなく、RECIPIENTをRCPTコマンドのアドレスに使 います。複数の宛先を指定する場合は複数回このオプションを 指定してください。</p>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--n-mails"></a>--n-mails=N</span></p></td>
+<td>
+<p>
+  合計でN個のメールを送信します。複数のメールが同時に送信さ れます。同時に最大で何通送るかは
+  <a class="link" href="milter-performance-check.html#milter-performance-check.--n-concurrent-connections">--n-concurrent-connections</a>
+  で指定します。
+</p>
+<p>既定値は100です。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--n-additional-lines"></a>--n-additional-lines=N</span></p></td>
+<td>
+<p>メールの本文にN行追加します。</p>
+<p>既定値はありません。（追加しません。）</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--n-concurrent-connections"></a>--n-concurrent-connections=N</span></p></td>
+<td>
+<p>同時に最大N接続でメールを送信します。</p>
+<p>既定値は10です。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--period"></a>--period=PERIOD</span></p></td>
+<td>
+<p>PERIOD（単位は秒、分、時間のどれか）の間に指定されたメー ルを送信します。各メールは間隔内で平均的に送信します。単 位を省略した場合は秒として扱われます</p>
+<p>例（送信メール数を100とする）:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>--period=5    # 0.05秒間隔で送信（5 / 100）</p></li>
+<li class="listitem"><p>--period=50s  # 0.5秒間隔で送信（50 / 100）</p></li>
+<li class="listitem"><p>--period=10m  # 6秒間隔で送信（60 * 10 / 100）</p></li>
+<li class="listitem"><p>--period=0.5h # 18秒間隔で送信（60 * 60 * 0.5 / 100）</p></li>
+</ul></div>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--interval"></a>--interval=INTERVAL</span></p></td>
+<td>
+<p>INTERVAL（単位は秒、分、時間のどれか）間隔で指定されたメー ルを送信します。単位を省略した場合は秒として扱われます。</p>
+<p>例:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>--interval=5    # 5秒間隔で送信</p></li>
+<li class="listitem"><p>--interval=0.5s # 0.5秒間隔で送信</p></li>
+<li class="listitem"><p>--interval=10m  # 10分間隔で送信</p></li>
+<li class="listitem"><p>--interval=0.5h # 30分間隔で送信</p></li>
+</ul></div>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--flood"></a>--flood, --flood[=PERIOD]</span></p></td>
+<td>
+<p>PERIOD（単位は秒、分、時間のどれか）の間、ずっと指定され たメールを送信します。PERIODを省略した場合はC-cで終了する までずっと指定したメールを送信します。単位を省略した場合 は秒として扱われます。</p>
+<p>既定値はありません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--shuffle"></a>--shuffle, --no-shuffle</span></p></td>
+<td>
+<p>送信予定のメールを無作為に並び替えてから送信します。</p>
+<p>既定値はfalseです。（並び替えません。）</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--report-failure-responses"></a>--report-failure-responses, --no-report-failure-responses</span></p></td>
+<td>
+<p>SMTPサーバが返した失敗時のメッセージを一番最後に表示しま す。</p>
+<p>既定値はfalseです。（表示しません。）</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--report-periodically"></a>--report-periodically, --report-periodically=INTERVAL</span></p></td>
+<td>
+<p>INTERVAL（単位は秒、分、時間のどれか）間隔で統計情報を表 示します。INTERVALを省略した場合は1s（1秒）を指定したと扱 われます。単位を省略した場合は秒として扱われます。</p>
+<p>既定値はありません。（定期的に統計情報を表示しません。）</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-performance-check.--reading-timeout"></a>--reading-timeout=SECONDS</span></p></td>
+<td>
+<p>
+  SMTPサーバからのレスポンスを待つ時間を指定します。
+  <code class="varname">SECONDS</code>
+  秒経ってもレスポンスが返ってこない場合はエラー になります。
+</p>
+<p>既定値は60秒です。</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp9767440"></a><h2>終了ステータス</h2>
+<p>常に0。</p>
+</div>
+<div class="refsect1">
+<a name="idp9768784"></a><h2>例</h2>
+<p>以下の例では、milter-performance-checkはlocalhostの25番ポート で動いているSMTPサーバに接続し、100通のメールを送ります。それ ぞれのメールの差出人はfrom@example.comで、宛先は webmaster@localhostとinfo@localhostです。</p>
+<pre class="programlisting">% milter-performance-check --recipient=webmaster@localhost --recipient=info@localhost</pre>
+<p>以下の例では、milter-performance-checkは192.168.1.29の25番ポー トで動いているSMTPサーバに接続し、/tmp/test-mails/以下にある ファイルをメールとして送信します。ファイルはRFC 2822のメール フォーマットでなければいけません。各メールは3秒毎（60 * 10 / 100）にuser@localhost宛に送られます。--n-mails=1オプションが 指定されているので、それぞれのメールは1通のみ送られます。</p>
+<pre class="programlisting">% milter-performance-check --n-mails=1 --smtp-server=192.168.1.102 --force-recipient=user@localhost --period=5m /tmp/test-mails/</pre>
+</div>
+<div class="refsect1">
+<a name="idp9772832"></a><h2>関連項目</h2>
+<p>
+  <a class="link" href="milter-report-statistics.html" title="milter-statistics-report">milter-report-statistics.rd.ja</a>
+  (1)
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

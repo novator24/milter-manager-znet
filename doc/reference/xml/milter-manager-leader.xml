@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-leader">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-leader.top_of_page">MilterManagerLeader</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerLeader</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-leader.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-LEADER-ERROR:CAPS">MILTER_MANAGER_LEADER_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-LEADER:CAPS">MILTER_MANAGER_LEADER</link>               (obj)
+enum                <link linkend="MilterManagerLeaderError">MilterManagerLeaderError</link>;
+                    <link linkend="MilterManagerLeader">MilterManagerLeader</link>;
+enum                <link linkend="MilterManagerLeaderState">MilterManagerLeaderState</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-manager-leader-error-quark">milter_manager_leader_error_quark</link>   (<parameter><type>void</type></parameter>);
+<link linkend="MilterManagerLeader"><returnvalue>MilterManagerLeader</returnvalue></link> * <link linkend="milter-manager-leader-new">milter_manager_leader_new</link>         (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *client_context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-leader-set-launcher-channel">milter_manager_leader_set_launcher_channel</link>
+                                                        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *read_channel</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *write_channel</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-negotiate">milter_manager_leader_negotiate</link>     (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *macros_requests</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-connect">milter_manager_leader_connect</link>       (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter><type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_length</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-helo">milter_manager_leader_helo</link>          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-envelope-from">milter_manager_leader_envelope_from</link> (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-envelope-recipient">milter_manager_leader_envelope_recipient</link>
+                                                        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-data">milter_manager_leader_data</link>          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-unknown">milter_manager_leader_unknown</link>       (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-header">milter_manager_leader_header</link>        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-end-of-header">milter_manager_leader_end_of_header</link> (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-body">milter_manager_leader_body</link>          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-end-of-message">milter_manager_leader_end_of_message</link>
+                                                        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-quit">milter_manager_leader_quit</link>          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-leader-abort">milter_manager_leader_abort</link>         (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-leader-timeout">milter_manager_leader_timeout</link>       (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-leader-define-macro">milter_manager_leader_define_macro</link>  (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *macros</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-leader.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-leader.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-LEADER-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_LEADER_ERROR</title>
+<indexterm zone="MILTER-MANAGER-LEADER-ERROR:CAPS"><primary>MILTER_MANAGER_LEADER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_LEADER_ERROR           (milter_manager_leader_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-LEADER:CAPS" role="macro">
+<title>MILTER_MANAGER_LEADER()</title>
+<indexterm zone="MILTER-MANAGER-LEADER:CAPS"><primary>MILTER_MANAGER_LEADER</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_LEADER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_LEADER, MilterManagerLeader))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerLeaderError" role="enum">
+<title>enum MilterManagerLeaderError</title>
+<indexterm zone="MilterManagerLeaderError"><primary>MilterManagerLeaderError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_LEADER_ERROR_INVALID_STATE
+} MilterManagerLeaderError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerLeader" role="struct">
+<title>MilterManagerLeader</title>
+<indexterm zone="MilterManagerLeader"><primary>MilterManagerLeader</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerLeader;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerLeaderState" role="enum">
+<title>enum MilterManagerLeaderState</title>
+<indexterm zone="MilterManagerLeaderState"><primary>MilterManagerLeaderState</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_LEADER_STATE_INVALID,
+    MILTER_MANAGER_LEADER_STATE_START,
+    MILTER_MANAGER_LEADER_STATE_NEGOTIATE,
+    MILTER_MANAGER_LEADER_STATE_NEGOTIATE_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_CONNECT,
+    MILTER_MANAGER_LEADER_STATE_CONNECT_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_HELO,
+    MILTER_MANAGER_LEADER_STATE_HELO_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_ENVELOPE_FROM,
+    MILTER_MANAGER_LEADER_STATE_ENVELOPE_FROM_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_ENVELOPE_RECIPIENT,
+    MILTER_MANAGER_LEADER_STATE_ENVELOPE_RECIPIENT_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_DATA,
+    MILTER_MANAGER_LEADER_STATE_DATA_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_UNKNOWN,
+    MILTER_MANAGER_LEADER_STATE_UNKNOWN_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_HEADER,
+    MILTER_MANAGER_LEADER_STATE_HEADER_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_END_OF_HEADER,
+    MILTER_MANAGER_LEADER_STATE_END_OF_HEADER_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_BODY,
+    MILTER_MANAGER_LEADER_STATE_BODY_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_END_OF_MESSAGE,
+    MILTER_MANAGER_LEADER_STATE_END_OF_MESSAGE_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_QUIT,
+    MILTER_MANAGER_LEADER_STATE_QUIT_REPLIED,
+    MILTER_MANAGER_LEADER_STATE_ABORT,
+    MILTER_MANAGER_LEADER_STATE_ABORT_REPLIED
+} MilterManagerLeaderState;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-error-quark" role="function">
+<title>milter_manager_leader_error_quark ()</title>
+<indexterm zone="milter-manager-leader-error-quark"><primary>milter_manager_leader_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_manager_leader_error_quark   (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-new" role="function">
+<title>milter_manager_leader_new ()</title>
+<indexterm zone="milter-manager-leader-new"><primary>milter_manager_leader_new</primary></indexterm>
+<programlisting><link linkend="MilterManagerLeader"><returnvalue>MilterManagerLeader</returnvalue></link> * milter_manager_leader_new         (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *client_context</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-set-launcher-channel" role="function">
+<title>milter_manager_leader_set_launcher_channel ()</title>
+<indexterm zone="milter-manager-leader-set-launcher-channel"><primary>milter_manager_leader_set_launcher_channel</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_leader_set_launcher_channel
+                                                        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *read_channel</parameter>,
+                                                         <parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *write_channel</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-negotiate" role="function">
+<title>milter_manager_leader_negotiate ()</title>
+<indexterm zone="milter-manager-leader-negotiate"><primary>milter_manager_leader_negotiate</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_negotiate     (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>,
+                                                         <parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *macros_requests</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-connect" role="function">
+<title>milter_manager_leader_connect ()</title>
+<indexterm zone="milter-manager-leader-connect"><primary>milter_manager_leader_connect</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_connect       (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter><type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_length</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-helo" role="function">
+<title>milter_manager_leader_helo ()</title>
+<indexterm zone="milter-manager-leader-helo"><primary>milter_manager_leader_helo</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_helo          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-envelope-from" role="function">
+<title>milter_manager_leader_envelope_from ()</title>
+<indexterm zone="milter-manager-leader-envelope-from"><primary>milter_manager_leader_envelope_from</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_envelope_from (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-envelope-recipient" role="function">
+<title>milter_manager_leader_envelope_recipient ()</title>
+<indexterm zone="milter-manager-leader-envelope-recipient"><primary>milter_manager_leader_envelope_recipient</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_envelope_recipient
+                                                        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-data" role="function">
+<title>milter_manager_leader_data ()</title>
+<indexterm zone="milter-manager-leader-data"><primary>milter_manager_leader_data</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_data          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-unknown" role="function">
+<title>milter_manager_leader_unknown ()</title>
+<indexterm zone="milter-manager-leader-unknown"><primary>milter_manager_leader_unknown</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_unknown       (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-header" role="function">
+<title>milter_manager_leader_header ()</title>
+<indexterm zone="milter-manager-leader-header"><primary>milter_manager_leader_header</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_header        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-end-of-header" role="function">
+<title>milter_manager_leader_end_of_header ()</title>
+<indexterm zone="milter-manager-leader-end-of-header"><primary>milter_manager_leader_end_of_header</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_end_of_header (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-body" role="function">
+<title>milter_manager_leader_body ()</title>
+<indexterm zone="milter-manager-leader-body"><primary>milter_manager_leader_body</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_body          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-end-of-message" role="function">
+<title>milter_manager_leader_end_of_message ()</title>
+<indexterm zone="milter-manager-leader-end-of-message"><primary>milter_manager_leader_end_of_message</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_end_of_message
+                                                        (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-quit" role="function">
+<title>milter_manager_leader_quit ()</title>
+<indexterm zone="milter-manager-leader-quit"><primary>milter_manager_leader_quit</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_quit          (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-abort" role="function">
+<title>milter_manager_leader_abort ()</title>
+<indexterm zone="milter-manager-leader-abort"><primary>milter_manager_leader_abort</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_leader_abort         (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-timeout" role="function">
+<title>milter_manager_leader_timeout ()</title>
+<indexterm zone="milter-manager-leader-timeout"><primary>milter_manager_leader_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_leader_timeout       (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-leader-define-macro" role="function">
+<title>milter_manager_leader_define_macro ()</title>
+<indexterm zone="milter-manager-leader-define-macro"><primary>milter_manager_leader_define_macro</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_leader_define_macro  (<parameter><link linkend="MilterManagerLeader"><type>MilterManagerLeader</type></link> *leader</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *macros</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

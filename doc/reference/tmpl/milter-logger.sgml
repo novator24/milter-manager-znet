@@ -1,0 +1,260 @@
+<!-- ##### SECTION Title ##### -->
+MilterLogger
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO milter_log ##### -->
+<para>
+
+</para>
+
+@level: 
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_error ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_critical ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_message ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_warning ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_debug ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_info ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### MACRO milter_statistics ##### -->
+<para>
+
+</para>
+
+@format: 
+@...: 
+
+
+<!-- ##### ENUM MilterLogLevelFlags ##### -->
+<para>
+
+</para>
+
+@MILTER_LOG_LEVEL_DEFAULT: 
+@MILTER_LOG_LEVEL_NONE: 
+@MILTER_LOG_LEVEL_CRITICAL: 
+@MILTER_LOG_LEVEL_ERROR: 
+@MILTER_LOG_LEVEL_WARNING: 
+@MILTER_LOG_LEVEL_MESSAGE: 
+@MILTER_LOG_LEVEL_INFO: 
+@MILTER_LOG_LEVEL_DEBUG: 
+@MILTER_LOG_LEVEL_TRACE: 
+@MILTER_LOG_LEVEL_STATISTICS: 
+@MILTER_LOG_LEVEL_PROFILE: 
+
+<!-- ##### MACRO MILTER_LOG_LEVEL_ALL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterLogItemFlags ##### -->
+<para>
+
+</para>
+
+@MILTER_LOG_ITEM_DEFAULT: 
+@MILTER_LOG_ITEM_NONE: 
+@MILTER_LOG_ITEM_DOMAIN: 
+@MILTER_LOG_ITEM_LEVEL: 
+@MILTER_LOG_ITEM_LOCATION: 
+@MILTER_LOG_ITEM_TIME: 
+@MILTER_LOG_ITEM_NAME: 
+@MILTER_LOG_ITEM_PID: 
+
+<!-- ##### MACRO MILTER_LOG_ITEM_ALL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterLogColorize ##### -->
+<para>
+
+</para>
+
+@MILTER_LOG_COLORIZE_DEFAULT: 
+@MILTER_LOG_COLORIZE_NONE: 
+@MILTER_LOG_COLORIZE_CONSOLE: 
+
+<!-- ##### STRUCT MilterLogger ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_logger_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_log_level_flags_from_string ##### -->
+<para>
+
+</para>
+
+@level_name: 
+@base_flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_logger ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_logger_default_log_handler ##### -->
+<para>
+
+</para>
+
+@logger: 
+@domain: 
+@level: 
+@file: 
+@line: 
+@function: 
+@time_value: 
+@message: 
+@user_data: 
+
+
+<!-- ##### FUNCTION milter_logger_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_logger_log ##### -->
+<para>
+
+</para>
+
+@logger: 
+@domain: 
+@level: 
+@file: 
+@line: 
+@function: 
+@format: 
+@...: 
+
+
+<!-- ##### FUNCTION milter_logger_log_va_list ##### -->
+<para>
+
+</para>
+
+@logger: 
+@domain: 
+@level: 
+@file: 
+@line: 
+@function: 
+@format: 
+@args: 
+
+
+<!-- ##### FUNCTION milter_logger_get_target_level ##### -->
+<para>
+
+</para>
+
+@logger: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_logger_set_target_level ##### -->
+<para>
+
+</para>
+
+@logger: 
+@level: 
+
+

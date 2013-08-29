@@ -1,0 +1,1210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ログ一覧</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="start.html" title="Part I. はじめよう">
+<link rel="prev" href="configuration.html" title="設定">
+<link rel="next" href="reverse-dictionary.html" title="逆引きリファレンス">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="configuration.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="reverse-dictionary.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="log-list"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="log-list.top_of_page"></a>ログ一覧</span></h2>
+<p>ログ一覧 — milter managerが出力するログの一覧</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp7213776"></a><h2>このドキュメントについて</h2>
+<p>milter managerが出力するログについて説明します。</p>
+</div>
+<div class="refsect1">
+<a name="idp8609904"></a><h2>モジュール</h2>
+<p>milter managerは以下の4つのモジュールに分かれています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>core</p></li>
+<li class="listitem"><p>client</p></li>
+<li class="listitem"><p>server</p></li>
+<li class="listitem"><p>manager</p></li>
+</ul></div>
+<p>それぞれ以下のような役割になっています。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="log-list.core"></a>core</span></p></td>
+<td><p>client, server, namagerのモジュールで共通に利用す る機能を提供するモジュールです。入出力や通信データのエン コード・デコード処理などを含んでいます。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.client"></a>client</span></p></td>
+<td><p>milterを実装するために必要な機能を提供するモジュールです。 coreを利用しています。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.server"></a>server</span></p></td>
+<td><p>MTA側のmilter通信部分を実装するために必要な機能を提供するモ ジュールです。coreを利用しています。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.manager"></a>manager</span></p></td>
+<td><p>milter managerを実装するために必要な機能を提供するモジュー ルです。core, client, serverを利用しています。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>libmilter-clientを利用して実装したmilterはclientモジュールを 利用しているため、coreとclientのログが出力されます。milter managerはmanagerモジュールを利用しているため、core, client, server, managerすべてのモジュールのログが出力されます。</p>
+</div>
+<div class="refsect1">
+<a name="idp9783584"></a><h2>出力レベル</h2>
+<p>以下の出力レベルがあり、必要な情報のみログ出力することができ ます。複数の情報を出力したい場合は複数の出力レベルを指定しま す。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>default: critical, error, warningを出力</p></li>
+<li class="listitem"><p>none: 出力しない</p></li>
+<li class="listitem"><p>critical: 致命的な問題のみ出力</p></li>
+<li class="listitem"><p>error: エラーのみ出力</p></li>
+<li class="listitem"><p>warning: 警告のみ出力</p></li>
+<li class="listitem"><p>info: 付加情報のみ出力</p></li>
+<li class="listitem"><p>debug: デバッグ情報のみ出力</p></li>
+<li class="listitem"><p>statistics: 統計情報のみ出力</p></li>
+<li class="listitem"><p>all: すべての情報を出力</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp7681568"></a><h2>フォーマット</h2>
+<p>ログは以下のようなフォーマットになっています。</p>
+<pre class="programlisting">[#{セッションID}] [#{タグ名1}][#{タグ名2}][...] #{メッセージ}</pre>
+<p>このうち、「セッションID」と「メッセージ」は省略されている場 合があります。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="log-list.%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3ID"></a>セッションID</span></p></td>
+<td><p>セッションIDは数値です。セッション毎に重複しない値が使わ れ、モジュールが異なっていてもセッションが同じであれば同 じセッションIDを用います。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.%E3%82%BF%E3%82%B0%E5%90%8D"></a>タグ名</span></p></td>
+<td><p>タグ名にはアルファベット・数字・ハイフン（-）・アンダーバー （_）のみ利用します。利用しているタグ名には特に規則はあり ません。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8"></a>メッセージ</span></p></td>
+<td><p>メッセージは任意の文字が入ります。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下は「セッションID」が省略されている例です。</p>
+<pre class="programlisting">[agent][error][decode] Decode error</pre>
+<p>このログには下のタグがついています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>agent</p></li>
+<li class="listitem"><p>error</p></li>
+<li class="listitem"><p>decode</p></li>
+</ul></div>
+<p>また、このログのメッセージは以下の通りです。</p>
+<pre class="programlisting">Decode error</pre>
+<p>「セッションID」がつくと以下のようになります。</p>
+<pre class="programlisting">[29] [agent][error][decode] Decode error</pre>
+</div>
+<div class="refsect1">
+<a name="idp11408960"></a><h2>ログ一覧</h2>
+<p>モジュール毎にログの「タグ名」とログが出力される条件を説明します。</p>
+<p>以下のフォーマットで記述します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><a name="log-list.#%7B%E5%87%BA%E5%8A%9B%E3%83%AC%E3%83%99%E3%83%AB%7D:"></a>#{出力レベル}: [#{タグ名1}][#{タグ名2}][...]</span></p></td>
+<td><p>#{ログが出力される条件}</p></td>
+</tr></tbody>
+</table></div>
+<p>例えば、以下のようになります。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><a name="log-list.error:"></a>error: [reader][error][read]</span></p></td>
+<td><p>読み込み時にエラーが発生。</p></td>
+</tr></tbody>
+</table></div>
+<p>これは、「読み込み時にエラーが発生」したときに 「[reader][error][read]」というタグの付いたログが「出力レベル error」で出力されるということを表します。</p>
+<div class="refsect2">
+<a name="idp11416832"></a><h3>core</h3>
+<p>coreモジュールのログの一覧です。</p>
+<p>coreモジュールには以下のオブジェクト（ひとまとまりの処理を実 行する単位）があります。タグにオブジェクト名が含まれます。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>reader: データ読み込みオブジェクト。</p></li>
+<li class="listitem"><p>writer: データ書き込みオブジェクト。</p></li>
+<li class="listitem"><p>agent: データのやりとりをするオブジェクト。データの読み 書きにreaderとwriterを使う。</p></li>
+</ul></div>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [reader][error][read]</span></p></td>
+<td><p>読み込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [reader][callback][error]</span></p></td>
+<td><p>入力エラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [reader][watch][read][fail]</span></p></td>
+<td><p>読み込み可能検出監視の登録に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [reader][watch][error][fail]</span></p></td>
+<td><p>入力エラー検出監視の登録に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [reader][error][shutdown]</span></p></td>
+<td><p>入力の終了処理に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][flush-callback][error]</span></p></td>
+<td><p>出力データのフラッシュ時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][write-callback][error]</span></p></td>
+<td><p>書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][write][error]</span></p></td>
+<td><p>書き込みリクエスト時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][flush][error]</span></p></td>
+<td><p>出力データのフラッシュリクエスト時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][error-callback][error]</span></p></td>
+<td><p>出力エラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][watch][fail]</span></p></td>
+<td><p>出力エラー検出監視の登録に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][shutdown][flush-buffer][write][error]</span></p></td>
+<td><p>出力終了処理直前の未送信データ出力時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][shutdown][flush-buffer][flush][error]</span></p></td>
+<td><p>出力終了処理直前の未送信データのフラッシュ時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [writer][error][shutdown]</span></p></td>
+<td><p>出力の終了処理に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [agent][error][decode]</span></p></td>
+<td><p>入力データの解析時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [agent][error][reader]</span></p></td>
+<td><p>入力データの読み込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [agent][error][writer]</span></p></td>
+<td><p>出力データの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [agent][error][set-writer][auto-flush]</span></p></td>
+<td><p>出力先切替時の自動フラッシュ時にエラーが発生。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp12265664"></a><h3>client</h3>
+<p>clientモジュールのログの一覧です。</p>
+<p>セッションに関係ない部分では「セッションID」は付きません。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [client][connection-spec][default][error]</span></p></td>
+<td><p>デフォルトの接続情報の設定に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][error][write]</span></p></td>
+<td><p>出力データの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][error][buffered-packets][write]</span></p></td>
+<td><p>溜めていた出力データの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][error][reply-on-end-of-message][flush]</span></p></td>
+<td><p>end-of-messageイベント応答時の自動フラッシュでエラーが発 生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][error][unix]</span></p></td>
+<td><p>UNIXドメインソケットの初期化中にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][unix][error]</span></p></td>
+<td><p>UNIXドメインソケットの終了処理中にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][single-thread][start][error]</span></p></td>
+<td><p>シングルスレッドモードでのメインループ開始時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][multi-thread][start][error]</span></p></td>
+<td><p>マルチスレッドモードでのメインループ開始時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][main][error]</span></p></td>
+<td><p>処理開始時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.warning:"></a>warning: [client][accept][suspend]</span></p></td>
+<td><p>同時接続数が多すぎて（RLIMIT_NOFILEが足りない）新しく接続 を受け付けられず、一時的に接続受付を中断している。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">warning: [client][accept][resume]</span></p></td>
+<td><p>一時中断していた接続受付を再開。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">warning: [client][error][accept]</span></p></td>
+<td><p>接続受付に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][single-thread][accept][start][error]</span></p></td>
+<td><p>シングルスレッドモードでの接続受付の開始に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][multi-thread][accept][error]</span></p></td>
+<td><p>マルチスレッドモードでの接続受付の開始に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][multi-thread][error]</span></p></td>
+<td><p>スレッドプールにスレッド追加時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][watch][error]</span></p></td>
+<td><p>listen中のソケットにエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][prepare][error]</span></p></td>
+<td><p>初期化時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][prepare][listen][error]</span></p></td>
+<td><p>listen(2)に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][pid-file][error][remove]</span></p></td>
+<td><p>PIDファイルの削除時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][pid-file][save][error]</span></p></td>
+<td><p>PIDファイルの保存時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][run][success][cleanup][error]</span></p></td>
+<td><p>正常終了時の後処理でエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][run][fail][cleanup][error]</span></p></td>
+<td><p>異常終了時の後処理でエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][master][run][error]</span></p></td>
+<td><p>マスタープロセスの処理開始時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][worker][run][error]</span></p></td>
+<td><p>ワーカープロセスの処理開始時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][worker][run][listen][error]</span></p></td>
+<td><p>マルチワーカーモード時にワーカープロセスのlisten(2)でエラー が発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [client][workers][run][listen][error]</span></p></td>
+<td><p>マルチワーカーモード時にマスタープロセスのlisten(2)でエラー が発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">warning: [client][option][deprecated]</span></p></td>
+<td><p>非推奨のオプションを指定した。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.statistics:"></a>statistics: [sessions][finished]</span></p></td>
+<td>
+<p>セッション終了時。メッセージとして以下のフォーマットの統 計情報が付く。</p>
+<pre class="programlisting">#{総処理セッション数}(+#{前回から処理したセッション数}) #{処理中のセッション数}</pre>
+<p>例えば、前回のログ出力時には27セッション処理した状態で、 現在は追加で2セッションの処理が完了し、3セッションを処理 中である場合は以下のようになります。</p>
+<pre class="programlisting">29(+2) 3</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">statistics: [reply][end-of-message][quarantine]</span></p></td>
+<td><p>隔離レスポンスを返した。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp12322944"></a><h3>server</h3>
+<p>serverモジュールのログの一覧です。</p>
+<p>serverモジュールは同時に複数のmilterと通信する用途を想定して います。そのため、以下のようにログには通信相手のmilter名が含 まれます。</p>
+<pre class="programlisting">[#{セッションID}] [#{タグ名1}][#{タグ名2}][...] [#{milter名}] #{メッセージ}</pre>
+<p>なお、clientモジュール同様、セッションに関係ない部分では「セッ ションID」は付きません。以下はタグ部分について</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [server][dispose][body][remained]</span></p></td>
+<td><p>セッション終了後も未送信の本文が残っている。通信相手の milterが本文の通信途中で強制的に接続を切った可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][flushed][error][next-state][invalid]</span></p></td>
+<td><p>非同期のデータ書き出し時に不正な状態遷移を検出した。通信相 手のmilterがmilterプロトコルに沿っていない通信した可能性が ある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][error]</span></p></td>
+<td><p>想定外のエラーが発生。詳細はメッセージで確認する。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][error][write]</span></p></td>
+<td><p>書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][error][#{response}][state][invalid][#{state}]</span></p></td>
+<td>
+<p>状態「#{state}」の時にmilterから意図しないレスポンス 「#{response}」が返ってきた。メッセージには期待するレスポン スの一覧が含まれている。通信相手のmilterがmilterプロトコル に沿っていない通信をした可能性がある。</p>
+<p>状態「#{state}」は以下のいずれかである。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="log-list.invalid"></a>invalid</span></p></td>
+<td><p>不正な状態。通常はこの状態にならない。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.start"></a>start</span></p></td>
+<td><p>通信を開始した直後の状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.define-macro"></a>define-macro</span></p></td>
+<td><p>マクロ定義を通信している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.negotiate"></a>negotiate</span></p></td>
+<td><p>milterとセッション内でのやりとり方法を調整している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.connect"></a>connect</span></p></td>
+<td><p>negotiateが完了し、milterとの接続が確立された状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.helo"></a>helo</span></p></td>
+<td><p>SMTPのHELOコマンドに対応するmilterプロトコルを処理し ている状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.envelope-from"></a>envelope-from</span></p></td>
+<td><p>SMTPのMAIL FROMコマンドに対応するmilterプロトコルを処 理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.envelope-recipient"></a>envelope-recipient</span></p></td>
+<td><p>SMTPのRCPT TOコマンドに対応するmilterプロトコルを処 理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.data"></a>data</span></p></td>
+<td><p>SMTPのDATAコマンドに対応するmilterプロトコルを処 理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.unknown"></a>unknown</span></p></td>
+<td><p>SMTPで未知のコマンドに対応するmilterプロトコルを処 理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.header"></a>header</span></p></td>
+<td><p>SMTPのDATAコマンドで送信されたメールのヘッダーを milterプロトコルで処理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.end-of-header"></a>end-of-header</span></p></td>
+<td><p>SMTPのDATAコマンドで送信されたメールのヘッダーの処理 が終わったという通知をmilterプロトコルで処理して いる状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.body"></a>body</span></p></td>
+<td><p>SMTPのDATAコマンドで送信されたメールの本文を milterプロトコルで処理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.end-of-message"></a>end-of-message</span></p></td>
+<td><p>SMTPのDATAコマンドで送信されたメールの処理が終わった という通知をmilterプロトコルで処理している状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.quit"></a>quit</span></p></td>
+<td><p>milterプロトコルで終了処理をしている状態。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.abort"></a>abort</span></p></td>
+<td><p>milterプロトコルで中断処理をしている状態。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>milterからのレスポンス「#{response}」は以下のいずれかである。 それぞれの項目はmilterプロトコルで使われているレスポンスに 対応している。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="log-list.negotiate-reply"></a>negotiate-reply</span></p></td>
+<td><p>negotiateのレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.continue"></a>continue</span></p></td>
+<td><p>処理の継続を表すレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.reply-code"></a>reply-code</span></p></td>
+<td><p>SMTPのレスポンスコードを指定するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.add-header"></a>add-header</span></p></td>
+<td><p>ヘッダーを末尾に追加するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.insert-header"></a>insert-header</span></p></td>
+<td><p>ヘッダーを任意の位置に追加するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.change-header"></a>change-header</span></p></td>
+<td><p>ヘッダーを変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.add-recipient"></a>add-recipient</span></p></td>
+<td><p>宛先を変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.delete-recipient"></a>delete-recipient</span></p></td>
+<td><p>宛先を削除するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.replace-body"></a>replace-body</span></p></td>
+<td><p>本文を変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.progress"></a>progress</span></p></td>
+<td><p>処理が継続中であることを示すレスポンス。タイムアウト 時間を伸ばすために利用される。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.quarantine"></a>quarantine</span></p></td>
+<td><p>メールを隔離するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.skip"></a>skip</span></p></td>
+<td><p>本文の受信を中止するレスポンス。</p></td>
+</tr>
+</tbody>
+</table></div>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][timeout][connection]</span></p></td>
+<td><p>接続処理がタイムアウト。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][error][connect]</span></p></td>
+<td><p>接続エラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [server][error][connected][start]</span></p></td>
+<td><p>接続開始時の初期化処理時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">warning: [server][reply][quitted][#{state}][#{response}]</span></p></td>
+<td><p>milterプロトコルが終了したあとにレスポンスが返ってきた。 状態「#{state}」とレスポンス「#{response}」は 【[server][error][#{response}][state][invalid][#{state}]】 で説明している項目と同じ。 このログの次に error ログを出力していなければ問題ない。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect2">
+<a name="idp12405936"></a><h3>manager</h3>
+<p>managerモジュールのログの一覧です。</p>
+<p>managerモジュールもclientモジュール同様、セッションに関係ない 部分では「セッションID」は付きません。</p>
+<div class="refsect3">
+<a name="idp12407664"></a><h4>サブモジュール</h4>
+<p>一番最初のタグはmanagerモジュール内のサブモジュール名になり ます。ただし、以下のログについてはタグが付きません。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>クラッシュ時のログ</p></li>
+<li class="listitem"><p>milter-managerコマンド起動時に関連するログ</p></li>
+</ul></div>
+<p>サブモジュールは以下の8つです。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>manager</p></li>
+<li class="listitem"><p>configuration</p></li>
+<li class="listitem"><p>launcher</p></li>
+<li class="listitem"><p>process-launcher</p></li>
+<li class="listitem"><p>controller</p></li>
+<li class="listitem"><p>leader</p></li>
+<li class="listitem"><p>children</p></li>
+<li class="listitem"><p>egg</p></li>
+</ul></div>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">manager</span></p></td>
+<td><p>各モジュールを利用してmilter-managerコマンドを実装してい るサブモジュールです。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.configuration"></a>configuration</span></p></td>
+<td><p>設定ファイルを読み込むモジュール。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.launcher"></a>launcher</span></p></td>
+<td><p>子milterを起動するモジュール。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.process-launcher"></a>process-launcher</span></p></td>
+<td><p>milter-managerコマンド内でlauncherサブモジュールを起動す るモジュール。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.controller"></a>controller</span></p></td>
+<td><p>milter-managerプロセスを外部から操作するモジュール。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.leader"></a>leader</span></p></td>
+<td><p>childrenモジュールがまとめた子milter全体の処理結果をMTAに 返すモジュール。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.children"></a>children</span></p></td>
+<td><p>複数の子milterに対してmilterプロトコルで処理した結果を統 合して、全体の処理結果としてまとめるモジュール。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.egg"></a>egg</span></p></td>
+<td><p>1つの子milterに関する情報を管理するモジュール。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>それぞれのサブモジュール毎に説明します。</p>
+</div>
+<div class="refsect3">
+<a name="idp12437392"></a><h4>サブモジュール: manager</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">error: [manager][reload][signal][error]</span></p></td>
+<td><p>SIGHUPシグナルによってリクエストされた設定の再読み込み中 にエラーが発生。</p></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp12440608"></a><h4>サブモジュール: configuration</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [configuration][dispose][clear][error]</span></p></td>
+<td><p>終了時の設定クリアが失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][new][clear][error]</span></p></td>
+<td><p>初回の設定クリアが失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][load][clear][error]</span></p></td>
+<td><p>設定再読み込み前の設定クリアに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][load][error]</span></p></td>
+<td><p>設定ファイル（milter-manager.conf）の読み込みに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][load][custom][error]</span></p></td>
+<td><p>カスタム設定ファイル（milter-manager.custom.conf）の読み 込みに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][clear][custom][error]</span></p></td>
+<td><p>Rubyでの設定クリア処理に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][maintain][error]</span></p></td>
+<td><p>
+  <a class="link" href="configuration.html#configuration.manager-maintenance-interval">manager.maintenance_interval</a>
+  で指定した間隔で実行されるメンテナンス処理中にエラーが発生。
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [configuration][event-loop-created][error]</span></p></td>
+<td><p>イベントループの作成後の処理でエラーが発生。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp12457072"></a><h4>サブモジュール: launcher</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [launcher][error][child][authority][group]</span></p></td>
+<td><p>子milterを起動する時に、指定したグループへの実行権限の変 更に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [launcher][error][child][authority][groups]</span></p></td>
+<td><p>子milterを起動する時に、指定したユーザの追加グループの初 期化に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [launcher][error][child][authority][user]</span></p></td>
+<td><p>子milterを起動する時に、指定したユーザへの実行権限の変更 に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [launcher][error][launch]</span></p></td>
+<td><p>子milterの起動に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [launcher][error][write]</span></p></td>
+<td><p>子milterの起動が成功したか失敗したかを返すレスポンスの書 き込み時にエラーが発生。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp12467680"></a><h4>サブモジュール: process-launcher</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [process-launcher][error][start]</span></p></td>
+<td><p>launcherモジュールとの接続開始処理でエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [process-launcher][error]</span></p></td>
+<td><p>forkしたlauncherモジュールからのファイルディスクリプタ切り 離しに失敗。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp12472784"></a><h4>サブモジュール: controller</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [controller][error][write][success]</span></p></td>
+<td><p>成功を示すレスポンスデータの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][write][error]</span></p></td>
+<td><p>エラーを示すレスポンスデータの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][save]</span></p></td>
+<td><p>設定ファイルの保存時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][write][configuration]</span></p></td>
+<td><p>設定ファイルの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][reload][error]</span></p></td>
+<td><p>設定の再読み込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][write][status]</span></p></td>
+<td><p>ステータスを返すレスポンスの書き込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][unix]</span></p></td>
+<td><p>
+  <a class="link" href="configuration.html#configuration.controller-remove-unix-socket-on-create">controller.remove_unix_socket_on_create</a>
+  を有効にした場合に終了時に実行する、使用したUNIXドメイン ソケットの削除処理中にエラーが発生。
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][start]</span></p></td>
+<td><p>通信開始処理に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][accept]</span></p></td>
+<td><p>接続の受け付けに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][watch]</span></p></td>
+<td><p>通信中にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [controller][error][listen]</span></p></td>
+<td><p>listen(2)に失敗。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13478384"></a><h4>サブモジュール: leader</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [leader][error][invalid-state]</span></p></td>
+<td><p>不正な状態遷移を検出。milter managerのバグである可能性が高い。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error]</span></p></td>
+<td><p>childrenモジュールでエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][reply-code]</span></p></td>
+<td><p>SMTPのレスポンスコード指定に失敗。通信相手のmilterが不正 なレスポンスコードを送っている可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][add-header]</span></p></td>
+<td><p>ヘッダーを末尾に追加する時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][insert-header]</span></p></td>
+<td><p>ヘッダーを任意の位置に追加する時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][delete-header]</span></p></td>
+<td><p>ヘッダーを削除するときにエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][change-from]</span></p></td>
+<td><p>差出人を変更するときにエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][add-recipient]</span></p></td>
+<td><p>宛先を追加する時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][delete-recipient]</span></p></td>
+<td><p>宛先を削除する時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [leader][error][replace-body]</span></p></td>
+<td><p>本文を置き換える時にエラーが発生。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13495408"></a><h4>サブモジュール: children</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [children][error][negotiate]</span></p></td>
+<td><p>子milterにネゴシエーション（セッション内でのやりとり方法 の調整）開始のリクエストを送っていないのにレスポンスが返っ てきた。通信相手のmilterがmilterプロトコルに沿っていない 通信をした可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][pending-message-request]</span></p></td>
+<td><p>milter-managerプロセス内部で遅延させた子milterへのリクエ ストに問題があった。発生した場合はmilter manager内のバグ である。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][read][seek]</span></p></td>
+<td><p>本文データの読み込み位置の変更時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][read]</span></p></td>
+<td><p>本文データの読み込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][invalid-state][temporary-failure]</span></p></td>
+<td><p>milterプロトコルでは想定していないタイミングで子milterが temporary-failureレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][invalid-state][reject]</span></p></td>
+<td><p>milterプロトコルでは想定していないタイミングで子milterが rejectレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][invalid-state][accept]</span></p></td>
+<td><p>milterプロトコルでは想定していないタイミングで子milterが acceptレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][invalid-state][discard]</span></p></td>
+<td><p>milterプロトコルでは想定していないタイミングで子milterが discardレスポンスを返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][invalid-state][stopped]</span></p></td>
+<td><p>milterプロトコルでは想定していないタイミングで milter-managerプロセスが子milterの実行を停止した。 milter manager内のバグである可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][invalid-state][#{response}][#{state}]</span></p></td>
+<td>
+<p>end-of-message時しか返せないレスポンス「#{response}」を状 態「#{state}」の時に返した。通信相手のmilterが milterプロトコルに沿っていない通信をした可能性がある。</p>
+<p>レスポンス「#{response}」は以下のいずれかである。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">add-header</span></p></td>
+<td><p>ヘッダーを末尾に追加するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">insert-header</span></p></td>
+<td><p>ヘッダーを任意の位置に追加するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">change-header</span></p></td>
+<td><p>ヘッダーを変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.delete-header"></a>delete-header</span></p></td>
+<td><p>ヘッダーを変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.change-from"></a>change-from</span></p></td>
+<td><p>差出人を変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">add-recipient</span></p></td>
+<td><p>宛先を追加するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">delete-recipient</span></p></td>
+<td><p>宛先を削除するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">replace-body</span></p></td>
+<td><p>本文を変更するレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">progress</span></p></td>
+<td><p>処理が継続中であることを示すレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">quarantine</span></p></td>
+<td><p>メールを隔離するレスポンス。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>状態「#{state}」は 【[server][error][#{response}][state][invalid][#{state}]】 で説明している項目と同じ。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][timeout][writing]</span></p></td>
+<td><p>書き込みがタイムアウト。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][timeout][reading]</span></p></td>
+<td><p>読み込みがタイムアウト。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][timeout][end-of-message]</span></p></td>
+<td><p>end-of-message時に指定した時間内にレスポンスが返ってこな かった。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][#{state}][#{fallback_status}]</span></p></td>
+<td>
+<p>
+  子milterとの通信に利用しているserverモジュールでエラーが 発生。子milterの処理結果は
+  <a class="link" href="configuration.html#configuration.milter-fallback-status">milter.fallback_status</a>
+  で指定したステータス「#{fallback_status}」を利用。
+</p>
+<p>状態「#{state}」は 【[server][error][#{response}][state][invalid][#{state}]】 で説明している項目と同じ。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][start-child][write]</span></p></td>
+<td><p>launcherサブモジュールへの子milterの起動リクエストの書き 込み時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][start-child][flush]</span></p></td>
+<td><p>launcherサブモジュールへの子milterの起動リクエストのフラッ シュ時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][negotiate][not-started]</span></p></td>
+<td><p>MTAがネゴシエーション（セッション内でのやりとり方法 の調整）を開始していないのに、ネゴシエーションのレスポン ス処理を実行。milter manager内のバグである可能性がある。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][negotiate][no-response]</span></p></td>
+<td><p>すべての子milterからネゴシエーション（セッション内でのやり とり方法の調整）のレスポンスがない。子milterの問題である 可能性が高い。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][timeout][connection]</span></p></td>
+<td><p>指定した時間内に接続を確立できなかった。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][connection]</span></p></td>
+<td><p>接続処理時にエラーが発生。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][alive]</span></p></td>
+<td><p>全ての子milterが終了しているのにまだMTAからリクエストがき ている。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][message-processing]</span></p></td>
+<td><p>SMTPのDATAコマンドで送信されたメールの処理を実行している 子milterがいないのに、MTAからメール処理のリクエストがきた。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][open]</span></p></td>
+<td><p>大きなメール本文保存用の一時ファイルの作成に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][encoding]</span></p></td>
+<td><p>大きなメール本文保存用の一時ファイルの読み書き用のエンコー ディングの設定に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][write]</span></p></td>
+<td><p>大きなメール本文保存用の一時ファイルへの本文書き込みに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][send][seek]</span></p></td>
+<td><p>大きなメール本文保存用の一時ファイルの読み出し位置指定に 失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [children][error][body][send]</span></p></td>
+<td><p>大きなメール本文保存用の一時ファイルからの本文読み出しに 失敗。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13560768"></a><h4>サブモジュール: egg</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: [egg][error]</span></p></td>
+<td><p>子milter接続時に不正な接続情報が指定されていることを検出。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [egg][error][set-spec]</span></p></td>
+<td><p>子milterに不正な接続情報を指定。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13565088"></a><h4>その他: クラッシュ時のログ</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="log-list.critical:"></a>critical: [#{signal}] unable to open pipe for collecting stack trace</span></p></td>
+<td><p>クラッシュ時にスタックトレース取得用のパイプの作成に失敗 した。シグナル「#{signal}」は「SEGV」または「ABORT」にな る。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">critical: #{stack_trace}</span></p></td>
+<td><p>タグはつかない。スタックトレースの各行を表示する。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13569904"></a><h4>その他: milter-managerコマンド起動時のログ</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">error: failed to create pipe for launcher command</span></p></td>
+<td><p>launcherモジュール用へのコマンド送信用パイプ作成に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to create pipe for launcher reply</span></p></td>
+<td><p>launcherモジュール用からのレスポンス受信用パイプ作成に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to fork process launcher process</span></p></td>
+<td><p>launcherモジュール用プロセスのforkに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to find password entry for effective user</span></p></td>
+<td><p>指定した実行ユーザが見つからない。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to get password entry for effective user</span></p></td>
+<td><p>指定した実行ユーザの取得に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to get limit for RLIMIT_NOFILE</span></p></td>
+<td><p>開けるファイルディスクリプタ数の制限値取得に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to set limit for RLIMIT_NOFILE</span></p></td>
+<td><p>開けるファイルディスクリプタ数の制限値設定に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to create custom configuration directory</span></p></td>
+<td><p>カスタム設定ディレクトリの作成に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to change owner and group of configuration directory</span></p></td>
+<td><p>設定ディレクトリの所有者・グループの変更に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to listen</span></p></td>
+<td><p>listen(2)に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to drop privilege</span></p></td>
+<td><p>root権限を落とすことに失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to listen controller socket:</span></p></td>
+<td><p>controllerモジュールがlisten(2)に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to daemonize:</span></p></td>
+<td><p>デーモン化に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: failed to start milter-manager process:</span></p></td>
+<td><p>milter-managerプロセスの起動処理に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [manager][reload][custom-load-path][error]</span></p></td>
+<td><p>設定の再読込に失敗。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">error: [manager][configuration][reload][command-line-load-path][error]</span></p></td>
+<td><p>コマンドラインで指定したロードパスからの設定の読み込みに失敗。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13596544"></a><h4>その他: 統計情報</h4>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">statistics: [milter][header][add]</span></p></td>
+<td><p>子milterがヘッダを追加。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">statistics: [milter][end][#{last_state}][#{status}][#{elapsed}]</span></p></td>
+<td>
+<p>子milterが1つ終了。</p>
+<p>「[#{last_state}]」には終了時の状態が入る。 「[#{last_state}]」に入る値は 【[server][error][#{response}][state][invalid][#{state}]】 の「#{state}」と同じである。</p>
+<p>「[#{status}]」には子milterからのレスポンスが入る。レスポ ンスは以下のいずれかがである。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="log-list.reject"></a>reject</span></p></td>
+<td><p>拒否を表すレスポウンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.discard"></a>discard</span></p></td>
+<td><p>廃棄を表すレスポウンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.accept"></a>accept</span></p></td>
+<td><p>受信を表すレスポウンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.temporary-failure"></a>temporary-failure</span></p></td>
+<td><p>一時拒否を表すレスポウンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.pass"></a>pass</span></p></td>
+<td><p>暗黙的な受信を表すレスポンス。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="log-list.stop"></a>stop</span></p></td>
+<td><p>処理を途中で中断したことを表すレスポウンス。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>「[#{elapsed}]」には接続してからの経過時間が入る。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">statistics: [session][end][#{last_state}][#{status}][#{elapsed}]</span></p></td>
+<td><p>milterセッションが1つ終了。 「[#{last_state}]」、「#{status}」、「#{elapsed}」に入る 値は【[milter][end][#{last_state}][#{status}][#{elapsed}]】 と同様。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">statistics: [session][disconnected][#{elapsed}]</span></p></td>
+<td>
+<p>SMTPクライアントがセッションを途中で切断。</p>
+<p>「[#{elapsed}]」には接続してからの経過時間が入る。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">statistics: [session][header][add]</span></p></td>
+<td><p>milterセッション全体のレスポンスとしてヘッダーを追加。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

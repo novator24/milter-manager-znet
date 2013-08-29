@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-objects">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-objects.top_of_page">milter-manager-objects</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-manager-objects</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-objects.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>                    <link linkend="MilterManagerConfiguration">MilterManagerConfiguration</link>;
+                    <link linkend="MilterManagerChildren">MilterManagerChildren</link>;
+                    <link linkend="MilterManagerEgg">MilterManagerEgg</link>;
+                    <link linkend="MilterManagerApplicableCondition">MilterManagerApplicableCondition</link>;
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-objects.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-objects.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterManagerConfiguration" role="struct">
+<title>MilterManagerConfiguration</title>
+<indexterm zone="MilterManagerConfiguration"><primary>MilterManagerConfiguration</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerConfiguration;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerChildren" role="struct">
+<title>MilterManagerChildren</title>
+<indexterm zone="MilterManagerChildren"><primary>MilterManagerChildren</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerChildren;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerEgg" role="struct">
+<title>MilterManagerEgg</title>
+<indexterm zone="MilterManagerEgg"><primary>MilterManagerEgg</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerEgg;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerApplicableCondition" role="struct">
+<title>MilterManagerApplicableCondition</title>
+<indexterm zone="MilterManagerApplicableCondition"><primary>MilterManagerApplicableCondition</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerApplicableCondition;
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

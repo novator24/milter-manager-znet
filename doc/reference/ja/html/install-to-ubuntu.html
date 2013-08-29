@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ubuntuへインストール</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="install-to.html" title="プラットフォーム毎のmilter managerのインストール方法">
+<link rel="prev" href="install-options-to-debian.html" title="Debianへインストール（任意）">
+<link rel="next" href="install-options-to-ubuntu.html" title="Ubuntuへインストール（任意）">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="install-options-to-debian.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="install-to.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="install-options-to-ubuntu.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install-to-ubuntu"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install-to-ubuntu.top_of_page"></a>Ubuntuへインストール</span></h2>
+<p>Ubuntuへインストール — Ubuntu Linuxへのmilter managerのインストール方法</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6726432"></a><h2>このドキュメントについて</h2>
+<p>
+  Ubuntu Linuxに特化したmilter managerのインストール方法につい て説明します。Ubuntuに依存しない一般的なインストール情報は
+  <a class="link" href="install.html" title="インストール">インストール</a>
+  を見てください。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp8531664"></a><h2>パッケージのインストール</h2>
+<p>milter managerのサイトでは以下のUbuntu用debパッケージを提供しています。 まず、以下の内容の/etc/apt/sources.list.d/milter-manager.listを作成し ます。</p>
+<p>また、最新のClamAVを使ってウィルスチェックできるようにするため、バック ポートリポジトリも有効にします。</p>
+<div class="refsect2">
+<a name="idp5754432"></a><h3>Lucid Lynxの場合</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe</pre>
+<p>もし、まだバックポートリポジトリを有効にしていない場合は以下のような内 容の/etc/apt/sources.list.d/backports.listを作成して有効にします。</p>
+<pre class="programlisting">deb http://jp.archive.ubuntu.com/ubuntu lucid-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp8929648"></a><h3>Precise Pangolinの場合</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe</pre>
+<p>もし、まだバックポートリポジトリを有効にしていない場合は以下のような内 容の/etc/apt/sources.list.d/backports.listを作成して有効にします。</p>
+<pre class="programlisting">deb http://jp.archive.ubuntu.com/ubuntu precise-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp7356400"></a><h3>Quantal Quetzalの場合</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe</pre>
+<p>もし、まだバックポートリポジトリを有効にしていない場合は以下のような内 容の/etc/apt/sources.list.d/backports.listを作成して有効にします。</p>
+<pre class="programlisting">deb http://jp.archive.ubuntu.com/ubuntu quantal-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5799584"></a><h3>Raring Ringtailの場合</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe</pre>
+<p>もし、まだバックポートリポジトリを有効にしていない場合は以下のような内 容の/etc/apt/sources.list.d/backports.listを作成して有効にします。</p>
+<pre class="programlisting">deb http://jp.archive.ubuntu.com/ubuntu raring-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5803120"></a><h3>インストール</h3>
+<p>パッケージはmilter managerリリース用の鍵でサインされています。信用 する場合は鍵を登録します。</p>
+<pre class="programlisting">% sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1</pre>
+<p>milter managerをインストールします。</p>
+<pre class="programlisting">% sudo apt-get update
+% sudo apt-get -V -y install milter-manager</pre>
+<p>MTAはPostfixを利用することとします。</p>
+<pre class="programlisting">% sudo apt-get -V -y install postfix</pre>
+<p>milterはspamass-milter、clamav-milter、milter-greylistを使用 することとします。</p>
+<pre class="programlisting">% sudo apt-get -V -y install spamass-milter clamav-milter milter-greylist</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp10341072"></a><h2>設定</h2>
+<p>milterの基本的な設定方針は以下の通りです。</p>
+<p>UNIXドメインソケットで接続を受け付けるようにします。これは、 セキュリティ面と速度面の理由からです。</p>
+<p>UNIXドメインソケットはpostfixグループでの読み書き権限を設定し ます。これは、既存のmilterパッケージの設定をできるだけ利用す るためです。</p>
+<p>
+  必要のない配送遅延をできるだけ抑えるため、milter-greylistは
+  <a class="ulink" href="http://gabacho.reto.jp/anti-spam/" target="_top">S25R</a>
+  にマッチする ときのみ適用します。しかし、これはmilter-managerが自動で行う ため、特に設定する必要はありません。
+</p>
+<div class="refsect2">
+<a name="idp9966288"></a><h3>spamass-milterの設定</h3>
+<p>まず、spamdの設定をします。</p>
+<p>/etc/spamassassin/local.cfに以下の内容を追加します。これで、 スパム判定された場合のみ、その詳細をヘッダに追加するようにな ります。</p>
+<pre class="programlisting">report_safe 0
+
+remove_header ham Status
+remove_header ham Level</pre>
+<p>spamdを有効にするため、/etc/default/spamassassinを以下のよう に変更します。</p>
+<p>変更前:</p>
+<pre class="programlisting">ENABLED=0</pre>
+<p>変更後:</p>
+<pre class="programlisting">ENABLED=1</pre>
+<p>spamdを起動します。</p>
+<pre class="programlisting">% sudo /etc/init.d/spamassassin start</pre>
+<p>spamass-milterはデフォルトの設定で問題ありません。</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9973424"></a><h3>clamav-milterの設定</h3>
+<p>clamav-milterの設定は以下のように変更します。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>clamav-milter自身がウィルスチェックを行うのではなく、別 プロセスで動作しているclamdにウィルスチェックを行う</p></li>
+<li class="listitem"><p>clamav-milterと通信するためのソケットはpostfixグループに 読み書き権限を与える</p></li>
+</ul></div>
+<p>このように変更するため、以下のように /etc/default/clamav-milterを変更します。</p>
+<p>変更前:</p>
+<pre class="programlisting">#SOCKET_RWGROUP=postfix</pre>
+<p>変更後:</p>
+<pre class="programlisting">SOCKET_RWGROUP=postfix</pre>
+<p>clamav-milterを再起動します。</p>
+<pre class="programlisting">% sudo /etc/init.d/clamav-milter restart</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp7658496"></a><h3>milter-greylistの設定</h3>
+<p>/etc/milter-greylist/greylist.confを編集し、以下のような設定 にします。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>IPアドレスのマッチには前半24ビットのみを使う（送信元が複 数のMTAを利用している場合のGreylistの悪影響を抑えるため）</p></li>
+<li class="listitem"><p>再送チェック時間を30分後（デフォルト）から10分後に短くす る（Greylistの悪影響を抑えるため）</p></li>
+<li class="listitem"><p>オートホワイトリストの期間を1日（デフォルト）から1週間に 伸ばす（Greylistの悪影響を抑えるため）</p></li>
+<li class="listitem"><p>デフォルトでGreylistを使う</p></li>
+</ul></div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>Greylistの悪影響を抑えるために制限を緩めているため、迷惑
+メールが通過する確率がやや高くなりますが、誤判定時の悪影響を
+抑える方を重視するべきです。Greylistですべての迷惑メールをブ
+ロックしようとするのではなく、Greylistで検出できない迷惑メー
+ルはSpamAssassinなど他の手法で対応します。milter managerはそ
+のように複数のmilterを組み合わせた迷惑メール対策システムの構
+築を支援します。</div>
+<p>変更前:</p>
+<pre class="programlisting">racl whitelist default</pre>
+<p>変更後:</p>
+<pre class="programlisting">subnetmatch /24
+greylist 10m
+autowhite 1w
+racl greylist default</pre>
+<p>次に、/etc/default/milter-greylistを変更し、milter-greylist を有効にします。milter-greylistの起動ファイルではソケットファ イルをpostfixグループで作成できないため、IPv4で接続すること とします。ただし、ローカルホストからの接続のみを受け付けること にします。</p>
+<p>変更前:</p>
+<pre class="programlisting">ENABLED=0</pre>
+<p>変更後:</p>
+<pre class="programlisting">ENABLED=1
+SOCKET="inet:11125@[127.0.0.1]"</pre>
+<p>milter-greylistを起動します。</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-greylist start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11225360"></a><h3>milter-managerの設定</h3>
+<p>milter-managerはシステムにインストールされているmilterを検出 します。以下のコマンドでspamass-milter、clamav-milter、 milter-greylistを検出していることを確認してください。</p>
+<pre class="programlisting">% sudo /usr/sbin/milter-manager -u milter-manager --show-config</pre>
+<p>以下のように表示されていれば検出は成功しています。</p>
+<pre class="programlisting">...
+define_milter("milter-greylist") do |milter|
+  milter.connection_spec = "inet:11125@[127.0.0.1]"
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter("clamav-milter") do |milter|
+  milter.connection_spec = "unix:/var/run/clamav/clamav-milter.ctl"
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter("spamass-milter") do |milter|
+  milter.connection_spec = "unix:/var/spool/postfix/spamass/spamass.sock"
+  ...
+  milter.enabled = true
+  ...
+end
+..</pre>
+<p>
+  milterの名前、ソケットのパス、enabledがtrueになっていることを 確認してください。異なっていた場合は、
+  <a class="link" href="configuration.html" title="設定">設定</a>
+  を参考に /etc/milter-manager/milter-manager.confを編集してく ださい。ただ、できれば、設定を変更せずに使用できるようにした いと考えています。もし、検出できなかった環境のことを教えても らえれば、milter-manager.confを編集しなくとも使用できるように 検出方法を改良することができるかもしれません。
+</p>
+<p>Postfixと一緒に動作するように/etc/default/milter-managerを編 集します。</p>
+<p>変更前:</p>
+<pre class="programlisting"># For postfix, you might want these settings:
+# SOCKET_GROUP=postfix
+# CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</pre>
+<p>変更後:</p>
+<pre class="programlisting"># For postfix, you might want these settings:
+SOCKET_GROUP=postfix
+CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</pre>
+<p>milter-managerユーザーをpostfixグループに所属させます。</p>
+<pre class="programlisting">% sudo adduser milter-manager postfix</pre>
+<p>milter-managerの設定が完了したので、起動します。</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-manager restart</pre>
+<p>milter-test-serverで起動の確認をすることができます。</p>
+<pre class="programlisting">% sudo -u postfix milter-test-server -s unix:/var/spool/postfix/milter-manager/milter-manager.sock</pre>
+<p>このように表示されれば成功です。</p>
+<pre class="programlisting">status: accept
+elapsed-time: 0.128 seconds</pre>
+<p>起動に失敗しているときはこのように表示されます。</p>
+<pre class="programlisting">Failed to connect to unix:/var/spool/postfix/milter-manager/milter-manager.sock: No such file or directory</pre>
+<p>失敗している時はログを頼りに問題を解決します。--verboseオプショ ンをつけると詳細なログが表示されます。また、デーモンプロセス にしないことにより、標準出力にもログが表示されます。</p>
+<p>/etc/default/milter-managerに以下の内容を追加します。これによ り、標準出力に詳細なログが表示されます。</p>
+<pre class="programlisting">OPTION_ARGS="--verbose --no-daemon"</pre>
+<p>milter-managerをもう一度起動します。</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-manager restart</pre>
+<p>問題があればログが表示されます。起動しているmilter-managerは Ctrl+cで終了することができます。</p>
+<p>問題が解決した後は、/etc/default/milter-managerに追加した OPTION_ARGSをコメントアウトし、デーモンプロセスで起動するよう に戻してから、milter-managerを起動しなおしてください。</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11244016"></a><h3>Postfixの設定</h3>
+<p>まず、milterの設定をします。</p>
+<p>/etc/postfix/main.cfに以下を追加します。</p>
+<pre class="programlisting">milter_protocol = 6
+milter_default_action = accept
+milter_mail_macros = {auth_author} {auth_type} {auth_authen}</pre>
+<p>それぞれ以下のような設定です。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="install-to-ubuntu.milter-protocol"></a>milter_protocol = 6</span></p></td>
+<td><p>milterプロトコルバージョン6を使います。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-ubuntu.milter-default-action"></a>milter_default_action = accept</span></p></td>
+<td>
+<p>milterに接続できないときはメールを受信します。milterとの 通信に問題がある場合でもメールサーバの機能を停止させない ためには、この設定が有効です。ただし、milterを復旧させる までの間に、スパムメールやウィルスメールを受信してしまう 可能性が高くなります。</p>
+<p>迅速に復旧できる体制がととのっているのであれば、acceptで はなく、tempfailを指定するのがよいでしょう。デフォルトで はtempfailになっています。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-ubuntu.milter-mail-macros"></a>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</span></p></td>
+<td><p>SMTP Auth関連の情報をmilterに渡します。milter-greylistな どが使用します。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>続いて、Postfixにmilter-managerを登録します。spamass-milter、 clamav-milter、milter-greylistはmilter-manager経由で利用する ので、Postfixにはmilter-managerだけを登録すればよいことに注 意してください。</p>
+<p>/etc/postfix/main.cfに以下を追加します。Postfixは /var/spool/postfix/にchrootすることに注意してください。</p>
+<pre class="programlisting">smtpd_milters = unix:/milter-manager/milter-manager.sock</pre>
+<p>Postfixの設定を再読み込みします。</p>
+<pre class="programlisting">% sudo /etc/init.d/postfix reload</pre>
+<p>以上で設定は完了です。</p>
+<p>milter-managerはいくつかsyslogにログを出力します。mail.info に出力するので、正常に動作していればmilter-managerからのログ が/var/log/mail.infoにログがでるはずです。テストメールを送信 して確認してください。</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp11257488"></a><h2>まとめ</h2>
+<p>milter-managerを導入することにより、milterとPostfixを連携さ せる手間が削減されています。</p>
+<p>通常であれば、Postfixのsmtpd_miltersにspamass-milter、 clamav-milter、miler-greylistのソケットを指定する必要がありま す。しかし、milter-managerを導入することにより、 milter-managerのソケットのみを指定するだけですむようになりま した。各milterのソケットはmilter-managerが検出するため、typo などの小さいですが気づきにくいミスに惑わされることがなくなり ます。</p>
+<p>また、ここでは触れませんでしたが、milter-managerは /etc/default/milter-greylist内にあるようなENABLEDの設定も検出 します。そのため、milterを無効にしたい場合は、以下のような手 順になります。</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-greylist stop
+% sudo vim /etc/default/milter-greylist # ENABLED=1 =&gt; ENABLED=0</pre>
+<p>milterを無効にしたら、milter-managerの設定を再読み込みします。 milter-managerはmilterが無効になったことを検出し、無効になっ たmilter とは接続しなくなります。</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-manager reload</pre>
+<p>Postfixのmain.cfを変更する必要はありません。</p>
+<p>Ubuntu上でmilterを複数使っている場合は、milter-managerを導入 して、管理コストを削減することができます。</p>
+<p>
+  milter managerは運用を支援するツールも提供しています。インス トールは必須ではありませんが、それらを導入することで運用コス トを削減することができます。それらのツールもインストールする 場合は
+  <a class="link" href="install-options-to-ubuntu.html" title="Ubuntuへインストール（任意）">Ubuntuへインストール（任 意）</a>
+  を参照してください。
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

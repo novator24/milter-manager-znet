@@ -1,0 +1,68 @@
+<!-- ##### SECTION Title ##### -->
+MilterEncoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterEncoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_encoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_encoder_get_buffer ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_encoder_pack ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_encoder_encode_negotiate ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@option: 
+
+

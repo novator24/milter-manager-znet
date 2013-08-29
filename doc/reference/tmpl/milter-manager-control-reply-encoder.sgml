@@ -1,0 +1,96 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerControlReplyEncoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterManagerControlReplyEncoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_control_reply_encoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_control_reply_encoder_encode_success ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_manager_control_reply_encoder_encode_failure ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@message: 
+
+
+<!-- ##### FUNCTION milter_manager_control_reply_encoder_encode_error ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@message: 
+
+
+<!-- ##### FUNCTION milter_manager_control_reply_encoder_encode_configuration ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@configuration: 
+@configuration_size: 
+
+
+<!-- ##### FUNCTION milter_manager_control_reply_encoder_encode_status ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@status: 
+@status_size: 
+
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE indexdiv PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<indexdiv>
+<indexdiv><title>L</title>
+<indexentry><primaryie linkends="milter-client-main"><link linkend="milter-client-main">milter_client_main</link>, function in <link linkend="milter-manager-Client-library">MilterClient</link></primaryie></indexentry>
+</indexdiv>
+</indexdiv>

@@ -1,0 +1,84 @@
+# -*- rd -*-
+
+= インストール --- milter managerのインストール方法
+
+== このドキュメントについて
+
+milter managerのインストール方法について説明します。
+
+== 依存ソフトウェア
+
+milter managerが依存しているソフトウェアについて説明します。
+
+=== 必須
+
+milter managerは以下のソフトウェアに依存しているため、milter
+manager のビルドには以下のソフトウェアが事前にインストールさ
+れている必要があります。
+
+  * GLib >= 2.12.3
+  * Ruby >= 1.8.5 (milter manager 1.8.4 から Ruby1.9 にも対応しました)
+  * Ruby/GLib2 (Ruby-GNOME2) >= 0.16.0
+
+=== 任意: テスト実行
+
+milter managerの単体テストを実行するためには以下のソフトウェ
+アが必要ですが、milter managerの実行には必須ではありません。
+
+  * Cutter >= 1.0.6
+  * LCOV
+
+=== 任意: グラフ生成
+
+milter managerはログからmilterの適用状況などをグラフ化する機
+能も提供しています。グラフを生成する場合は以下のソフトウェア
+が必要ですが、milter managerの実行には必須ではありません。
+
+  * RRDtool
+  * RRDtoolのRubyバインディング
+
+((<Munin|URL:http://munin-monitoring.org/>))と連携する場合は
+以下のソフトウェアも必要です。
+
+  * munin-node
+
+== milter-manager
+
+milter-managerはmilter managerパッケージの中核となるプログラ
+ムです。milter-managerがmilterとして動作し、MTA・子milterと
+接続します。
+
+milter-managerのインストール方法はプラットフォーム毎に解説し
+ています。
+
+  * ((<Debian|install-to-debian.rd.ja>))
+  * ((<Ubuntu|install-to-ubuntu.rd.ja>))
+  * ((<CentOS|install-to-centos.rd.ja>))
+  * ((<FreeBSD|install-to-freebsd.rd.ja>))
+  * ((<その他|install-to-others.rd.ja>))
+
+== milter-manager-log-analyzer
+
+((<milter-manager-log-analyzerが生成するグラフ|milter-manager-log-analyzer-graphs.svg>))
+
+milter-manager-log-analyzerはmilter-managerのログからグラフを
+出力するプログラムです。milter-manager-log-analyzerの設定は必
+須ではありません。
+
+milter-manager-log-analyzerを用いると、milterの状況を時系列で
+確認することができます。新しく追加したmilterの効果や、milter
+の適用結果の傾向などを視覚的に確認したい場合に有用です。
+
+milter-manager-log-analyzerはsyslogに出力された
+milter-managerのログを解析し、
+((<RRDtool|URL:http://oss.oetiker.ch/rrdtool/>))でグラフ化し
+ます。cronを設定し、定期的にログを確認します。
+
+milter-manager-log-analyzerのインストール方法はプラットフォー
+ム毎に解説しています。
+
+  * ((<Debian|install-options-to-debian.rd.ja>))
+  * ((<Ubuntu|install-options-to-ubuntu.rd.ja>))
+  * ((<CentOS|install-options-to-centos.rd.ja>))
+  * ((<FreeBSD|install-options-to-freebsd.rd.ja>))
+

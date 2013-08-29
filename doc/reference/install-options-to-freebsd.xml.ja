@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install-options-to-freebsd">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install-options-to-freebsd.top_of_page'>FreeBSDへインストール（任意）</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>FreeBSDへインストール（任意）</refname>
+  <refpurpose>FreeBSDへのmilter manager関連ソフトウェアのインストール方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  FreeBSDに特化したmilter manager関連ソフトウェアのインストール 方法について説明します。milter manager本体のインストール情報 は
+  <link linkend='install-to-freebsd'>FreeBSDへインストール</link>
+  、 FreeBSDに依存しない一般的なインストール情報は
+  <link linkend='install'>インストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1 id='install-options-to-freebsd.milter-manager-log-analyzer'>
+  <title>milter-manager-log-analyzerのインストール</title>
+  <para>milter-manager-log-analyzerはmilter managerのログを解析して 統計情報をグラフ化します。</para>
+  <para>
+  milter-manager-log-analyzerが出力するグラフは同じホストにWeb サーバを設置して閲覧する方法と
+  <ulink url='http://munin-monitoring.org/'>Munin</ulink>
+  を利用して別ホス トで閲覧する方法があります。すでにMuninを導入していたり、メー ルサーバとは別にシステム監視用のサーバがある場合はMuninを利用 するとよいでしょう。そうでない場合は同じホストにWebサーバを設 置するのがよいでしょう
+  <footnote>
+  <para>同じホストでMuninを動かす場合もWebサー バが必要になります。</para>
+</footnote>
+  。
+</para>
+  <para>まずは、milter-manager-log-analyzerのインストール方法を説明 します。次に、グラフを閲覧する環境を説明します。</para>
+  <para>グラフを閲覧する環境の設定方法は、まず、同じホストにWebサーバ を設置する方法を説明し、次に別ホストにあるMuninから閲覧する方 法を説明します。</para>
+  <para>それでは、まず、milter-manager-log-analyzerのインストール方 法です。</para>
+  <refsect2>
+  <title>パッケージのインストール</title>
+  <para>グラフを生成するためにRRDtoolを使います。RRDtoolのRubyインター フェイスもインストールします。</para>
+  <para>
+  <emphasis>注: RRDtool 1.3.8のRubyバインディングにはバグがあるので、 1.3.8を使うときは&quot;-M'WITH_RUBY_MODULE=yes'&quot;オプションは指定 しないでください。</emphasis>
+  
+</para>
+  <programlisting>% sudo /usr/local/sbin/portupgrade -NRr -m 'WITH_RUBY_MODULE=true' databases/rrdtool</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>milter-manager-log-analyzerの設定</title>
+  <para>milter-manager-log-analyzerはcronで定期的にログを解析し、グ ラフを生成します。そのためのcronの設定をするファイルが /usr/local/etc/milter-manager/cron.d/freebsd/milter-manager-log にインストールされています。このファイルを使うと、5分毎にロ グを解析し、~milter-manager/public_html/log/以下にグラフを生 成します。</para>
+  <programlisting>% sudo -u milter-manager -H crontab /usr/local/etc/milter-manager/cron.d/freebsd/milter-manager-log</programlisting>
+  <para>milter-manager-log-analyzerは5分おきに実行されているかどうか は、/var/log/cronを見ると確認できます。</para>
+  <para>これで、milter-manager-log-analyzerのインストールが完了した ので、milter-manager-log-analyzerが生成するグラフを閲覧する ための環境を設定します。まずは、同じホストにWebサーバを設置 する方法です。</para>
+</refsect2>
+
+  <refsect2>
+  <title>同じホストにWebサーバを設置する場合</title>
+  <refsect3>
+  <title>パッケージのインストール</title>
+  <para>WebサーバとしてApacheを使います。ここでは、Apache 2.2系列 （www/apache22）をインストールします。</para>
+  <programlisting>% sudo /usr/local/sbin/portupgrade -NRr www/apache22</programlisting>
+</refsect3>
+
+  <refsect3>
+  <title>Apacheの設定</title>
+  <para>グラフは~milter-manager/public_html/log/以下に生成しているの で、http://localhost/~milter-manager/log/で閲覧できるように します。</para>
+  <para>Apacheで各ユーザ毎にファイルを公開できるようにします。 /usr/local/etc/apache22/httpd.confを以下のように編集します。</para>
+  <para>編集前:</para>
+  <programlisting># User home directories
+#Include etc/apache22/extra/httpd-userdir.conf</programlisting>
+  <para>編集後:</para>
+  <programlisting># User home directories
+Include etc/apache22/extra/httpd-userdir.conf</programlisting>
+  <para>設定を再読み込みします。</para>
+  <programlisting>% sudo /usr/local/etc/rc.d/apache22 reload</programlisting>
+  <para>これでhttp://localhost/~milter-manager/log/でグラフを閲覧でき るようになります。</para>
+</refsect3>
+
+</refsect2>
+
+  <refsect2 id='install-options-to-freebsd.munin'>
+  <title>別ホストにあるMuninを利用する方法</title>
+  <para>次は、別ホストにあるMunin上でグラフを閲覧する方法です。</para>
+</refsect2>
+
+  <refsect3>
+  <title>パッケージのインストール</title>
+  <para>Muninサーバに統計情報を送るmunin-nodeをインストールします。</para>
+  <programlisting>% sudo /usr/local/sbin/portupgrade -NRr munin-node</programlisting>
+</refsect3>
+
+  <refsect3>
+  <title>munin-nodeの設定</title>
+  <para>milter-manager-log-analyzerが収集した統計情報をMuninに提供す るMuninプラグインをインストールします。プラグインは /usr/local/share/munin/plugins/以下にインストールされている ので、まずは、それらをmunin-nodeのプラグインディレクトリにイ ンストールします。</para>
+  <programlisting>% sudo ln -s /usr/local/share/milter-manager/munin/plugins/* /usr/local/share/munin/plugins</programlisting>
+  <para>これらのプラグインの設定を書いた /usr/local/etc/munin/plugin-conf.d/milter-manager.confを作成 します。</para>
+  <para>/usr/local/etc/munin/plugin-conf.d/milter-manager.conf:</para>
+  <programlisting>[milter_manager_*]
+  user milter-manager
+  env.PATH /bin:/usr/local/bin:/usr/bin
+  env.logdir /home/milter-manager/public_html/log
+  env.pidfile /var/run/milter-manager/milter-manager.pid</programlisting>
+  <para>最後にインストールしたプラグインのうち必要なものだけ有効にし ます。</para>
+  <programlisting>% sudo /usr/local/sbin/munin-node-configure --shell | grep -e '\(milter_manager_\|postfix_processes\|sendmail_processes\)' | sudo sh</programlisting>
+  <para>プラグインのインストールはこれで完了です。</para>
+  <para>
+  <emphasis>注: Muninに統計情報を提供する場合はmilter manager 1.5.0以 降のmilter-manager-log-analyzerが生成したデータベースを使う 必要があります。1.5.0より前のバージョンからアップデートして いる場合は~milter-manager/public_html/log/以下を削除してくだ さい。削除すると5分後に新しく統計情報データベースが作成され ます。</emphasis>
+  
+</para>
+  <para>次に、Muninサーバからの接続を許可します。Muninサーバが 192.168.1.254の場合は以下の行を /usr/local/etc/munin/munin-node.confに追加します。</para>
+  <para>/usr/local/etc/munin/munin-node.conf:</para>
+  <programlisting>allow ^192\.168\.1\.254$</programlisting>
+  <para>munin-nodeを再起動し設定を反映させます。</para>
+  <programlisting>% sudo /usr/local/etc/rc.d/munin-node.sh restart</programlisting>
+</refsect3>
+
+  <refsect3>
+  <title>Muninサーバの設定</title>
+  <para>ここからは監視用サーバでの設定です。監視用サーバもFreeBSDで動 いているとします。</para>
+  <para>まず、muninとApacheをインストールします。</para>
+  <programlisting>monitoring-server% sudo /usr/local/sbin/portupgrade -NRr munin-main www/apache22</programlisting>
+  <para>muninの監視対象にmunin-nodeが動いているメールサーバを追加しま す。メールサーバが以下の場合の /usr/local/etc/munin/munin.confへ追加する設定項目を示します。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='install-options-to-freebsd.ホスト名'>ホスト名</term>
+  <listitem>
+  <para>mail.example.com</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='install-options-to-freebsd.IPアドレス'>IPアドレス</term>
+  <listitem>
+  <para>192.168.1.2</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>このメールサーバを登録するには、以下の内容を /usr/local/etc/munin/munin.confに追記します。</para>
+  <para>/usr/local/etc/munin/munin.conf:</para>
+  <programlisting>[mail.example.com]
+    address 192.168.1.2
+    use_node_name yes</programlisting>
+  <para>Muninは/usr/local/www/munin/以下にグラフを生成するので、それ をhttp://monitoring-server/munin/で閲覧できるようにします。</para>
+  <programlisting>% sudo ln -s /usr/local/www/munin/ /usr/local/www/apache22/data/</programlisting>
+  <para>5分後にはhttp://monitoring-server/munin/でグラフを閲覧できる ようになります。</para>
+</refsect3>
+
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>
+  milter-manager-log-analyzerを利用することによりmilterを導入し た効果を視覚的に確認することができます。MTAとしてPostfixを使 用しているのであれば、
+  <ulink url='http://mailgraph.schweikert.ch/'>Mailgraph</ulink>
+  のグラフと 見くらべてmilter導入の効果を確認することができます。milterを 試験的に導入している場合などに有効に活用できます。
+</para>
+</refsect1>
+</refentry>

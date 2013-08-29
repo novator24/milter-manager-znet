@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-module">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-module.top_of_page">MilterManagerModule</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerModule</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-module.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-MODULE:CAPS">MILTER_MANAGER_MODULE</link>               (obj)
+struct              <link linkend="MilterManagerModule">MilterManagerModule</link>;
+<link linkend="MilterManagerModule"><returnvalue>MilterManagerModule</returnvalue></link> * <link linkend="milter-manager-module-load-module">milter_manager_module_load_module</link> (<parameter>const <link linkend="gchar"><type>gchar</type></link> *base_dir</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="milter-manager-module-load-modules">milter_manager_module_load_modules</link>  (<parameter>const <link linkend="gchar"><type>gchar</type></link> *base_dir</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="milter-manager-module-load-modules-unique">milter_manager_module_load_modules_unique</link>
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *base_dir</parameter>,
+                                                         <parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>);
+<link linkend="MilterManagerModule"><returnvalue>MilterManagerModule</returnvalue></link> * <link linkend="milter-manager-module-find">milter_manager_module_find</link>        (<parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="GObject"><returnvalue>GObject</returnvalue></link> *           <link linkend="milter-manager-module-instantiate">milter_manager_module_instantiate</link>   (<parameter><link linkend="MilterManagerModule"><type>MilterManagerModule</type></link> *module</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *first_property</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> var_args</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="milter-manager-module-collect-registered-types">milter_manager_module_collect_registered_types</link>
+                                                        (<parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="milter-manager-module-collect-names">milter_manager_module_collect_names</link> (<parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-module-unload">milter_manager_module_unload</link>        (<parameter><link linkend="MilterManagerModule"><type>MilterManagerModule</type></link> *module</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-module.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-module.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-MODULE:CAPS" role="macro">
+<title>MILTER_MANAGER_MODULE()</title>
+<indexterm zone="MILTER-MANAGER-MODULE:CAPS"><primary>MILTER_MANAGER_MODULE</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), MILTER_TYPE_MANAGER_MODULE, MilterManagerModule))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerModule" role="struct">
+<title>struct MilterManagerModule</title>
+<indexterm zone="MilterManagerModule"><primary>MilterManagerModule</primary></indexterm>
+<programlisting>struct MilterManagerModule {
+    GTypeModule object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-load-module" role="function">
+<title>milter_manager_module_load_module ()</title>
+<indexterm zone="milter-manager-module-load-module"><primary>milter_manager_module_load_module</primary></indexterm>
+<programlisting><link linkend="MilterManagerModule"><returnvalue>MilterManagerModule</returnvalue></link> * milter_manager_module_load_module (<parameter>const <link linkend="gchar"><type>gchar</type></link> *base_dir</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-load-modules" role="function">
+<title>milter_manager_module_load_modules ()</title>
+<indexterm zone="milter-manager-module-load-modules"><primary>milter_manager_module_load_modules</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             milter_manager_module_load_modules  (<parameter>const <link linkend="gchar"><type>gchar</type></link> *base_dir</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-load-modules-unique" role="function">
+<title>milter_manager_module_load_modules_unique ()</title>
+<indexterm zone="milter-manager-module-load-modules-unique"><primary>milter_manager_module_load_modules_unique</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             milter_manager_module_load_modules_unique
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *base_dir</parameter>,
+                                                         <parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-find" role="function">
+<title>milter_manager_module_find ()</title>
+<indexterm zone="milter-manager-module-find"><primary>milter_manager_module_find</primary></indexterm>
+<programlisting><link linkend="MilterManagerModule"><returnvalue>MilterManagerModule</returnvalue></link> * milter_manager_module_find        (<parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-instantiate" role="function">
+<title>milter_manager_module_instantiate ()</title>
+<indexterm zone="milter-manager-module-instantiate"><primary>milter_manager_module_instantiate</primary></indexterm>
+<programlisting><link linkend="GObject"><returnvalue>GObject</returnvalue></link> *           milter_manager_module_instantiate   (<parameter><link linkend="MilterManagerModule"><type>MilterManagerModule</type></link> *module</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *first_property</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> var_args</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-collect-registered-types" role="function">
+<title>milter_manager_module_collect_registered_types ()</title>
+<indexterm zone="milter-manager-module-collect-registered-types"><primary>milter_manager_module_collect_registered_types</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             milter_manager_module_collect_registered_types
+                                                        (<parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-collect-names" role="function">
+<title>milter_manager_module_collect_names ()</title>
+<indexterm zone="milter-manager-module-collect-names"><primary>milter_manager_module_collect_names</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             milter_manager_module_collect_names (<parameter><link linkend="GList"><type>GList</type></link> *modules</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-module-unload" role="function">
+<title>milter_manager_module_unload ()</title>
+<indexterm zone="milter-manager-module-unload"><primary>milter_manager_module_unload</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_module_unload        (<parameter><link linkend="MilterManagerModule"><type>MilterManagerModule</type></link> *module</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

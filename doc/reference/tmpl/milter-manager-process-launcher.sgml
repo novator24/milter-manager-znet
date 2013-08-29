@@ -1,0 +1,83 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerProcessLauncher
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_PROCESS_LAUNCHER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_PROCESS_LAUNCHER ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerProcessLauncherError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_BAD_COMMAND_STRING: 
+@MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_START_FAILURE: 
+@MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_INVALID_USER_NAME: 
+@MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_ALREADY_LAUNCHED: 
+@MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_MILTER_EXIT: 
+
+<!-- ##### STRUCT MilterManagerProcessLauncher ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_process_launcher_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_process_launcher_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_process_launcher_run ##### -->
+<para>
+
+</para>
+
+@launcher: 
+
+

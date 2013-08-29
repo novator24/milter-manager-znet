@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Install</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="start.html" title="Part I. Getting start">
+<link rel="prev" href="introduction.html" title="Introduction">
+<link rel="next" href="install-to.html" title="Install milter manager to your platform">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="introduction.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="install-to.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install.top_of_page"></a>Install</span></h2>
+<p>Install — How to install milter manager</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp8094736"></a><h2>About this document</h2>
+<p>This document describes how to install milter manager.</p>
+</div>
+<div class="refsect1">
+<a name="idp8027984"></a><h2>Dependencies</h2>
+<p>This section describes softwares that are depended on milter manager.</p>
+<div class="refsect2">
+<a name="idp7989408"></a><h3>Required</h3>
+<p>milter manager depends on the following softwares. They should be installed before building milter manager.</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>GLib &gt;= 2.12.3</p></li>
+<li class="listitem"><p>Ruby &gt;= 1.8.5 (Support 1.9.x since milter manager 1.8.4)</p></li>
+<li class="listitem"><p>Ruby/GLib2 (Ruby-GNOME2) &gt;= 0.16.0</p></li>
+</ul></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5623520"></a><h3>Optional: Testing</h3>
+<p>To run milter manager's unit tests, the following softwares are needed. They are needed for running unit tests but not needed for running milter manager.</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Cutter &gt;= 1.0.6</p></li>
+<li class="listitem"><p>LCOV</p></li>
+</ul></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9576160"></a><h3>Optional: Graph</h3>
+<p>milter manager provides a feature that generates graphs for milter's status and so on from milter manager log. The following softwares are required to generate graphs but they are not required for running milter manager.</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>RRDtool</p></li>
+<li class="listitem"><p>RRDtool's Ruby bindings</p></li>
+</ul></div>
+<p>
+  The following software is also needed to integrate with
+  <a class="ulink" href="http://munin-monitoring.org/" target="_top">Munin</a>
+  :
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>munin-node</p></li></ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp5903728"></a><h2>milter-manager</h2>
+<p>milter-manager is a core program of the milter manager package. milter-manager works as a milter and connects to MTA and child miltres.</p>
+<p>Here are documents about how to install milter-manager to your platform:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="install-to-debian.html" title="Install to Debian">Debian</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-ubuntu.html" title="Install to Ubuntu">Ubuntu</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-centos.html" title="Install to CentOS 6">CentOS</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-freebsd.html" title="Install to FreeBSD">FreeBSD</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-to-others.html" title="Install to other platforms">Etc</a>
+  
+</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp5404640"></a><h2>milter-manager-log-analyzer</h2>
+<p>
+  <span class="inlinemediaobject"><img src="milter-manager-log-analyzer-graphs.png" alt="\n graphs generated by milter-manager-log-analyzer\n"></span>
+  
+</p>
+<p>milter-manager-log-analyzer is a program that generates graphs from milter-manager's log. Installing milter-manager-log-analyzer is optional.</p>
+<p>To confirm milter behavior, we can use milter-manager-log-analyzer. It's convenient for confirming new milter's effect and milter result in chronological order visually.</p>
+<p>
+  milter-manager-log-analyzer analyzes milter-manager logs from syslog output. It uses
+  <a class="ulink" href="http://oss.oetiker.ch/rrdtool/" target="_top">RRDtool</a>
+   to generate graphs. milter-manager-log-analyzer analyzes the logs periodically by cron.
+</p>
+<p>Here are documents about how to install milter-manager-log-analyzer.</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-debian.html" title="Install to Debian (optional)">Debian</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-ubuntu.html" title="Install to Ubuntu (optional)">Ubuntu</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-centos.html" title="Install to CentOS (optional)">CentOS</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="install-options-to-freebsd.html" title="Install to FreeBSD (optional)">FreeBSD</a>
+  
+</p></li>
+</ul></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

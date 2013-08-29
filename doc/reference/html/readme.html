@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>README</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="start.html" title="Part I. Getting start">
+<link rel="prev" href="news.html" title="NEWS">
+<link rel="next" href="commands.html" title="Commands">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="news.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="commands.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="readme"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="readme.top_of_page"></a>README</span></h2>
+<p>README — milter manager: a milter to use milters effectively.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp9103408"></a><h2>Name</h2>
+<p>milter manager</p>
+</div>
+<div class="refsect1">
+<a name="idp9348000"></a><h2>Site</h2>
+<p>
+  <a class="ulink" href="http://milter-manager.sourceforge.net/" target="_top">&lt;URL:http://milter-manager.sourceforge.net/&gt;</a>
+  
+</p>
+</div>
+<div class="refsect1">
+<a name="idp8539632"></a><h2>License</h2>
+<p>Use the following rules:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Files that describe their license: their license</p></li>
+<li class="listitem"><p>Commands: GPL3(license/gpl.txt)</p></li>
+<li class="listitem"><p>Documents: GFDL(license/fdl.txt)</p></li>
+<li class="listitem"><p>Images: Public Domain</p></li>
+<li class="listitem"><p>Libraries: LGPL3(license/lgpl.txt)</p></li>
+</ul></div>
+<p>Here is a concrete list:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>Files that describe their license:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>milter/core/milter-memory-profile.c: LGPL2+</p></li>
+<li class="listitem"><p>binding/ruby/lib/milter/compatible.rb: Ruby's</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Commands: GPL3</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>src/*</p></li>
+<li class="listitem"><p>tool/*</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Documents: GFDL</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>README, README.ja</p></li>
+<li class="listitem"><p>doc/*</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Images: Public Domain</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>doc/*.svg, doc/*.png, html/*.svg, html/*.png</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>Libraries: LGPL3</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>others than those above</p></li></ul></div>
+</li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp9202528"></a><h2>milter manager</h2>
+<p>milter manager is a milter to use multiple milters effectively.</p>
+<p>If milter manager is introduced, milter manager administrates milters instead of MTA. The has some advantages:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>reduce milter administration cost</p></li>
+<li class="listitem"><p>combine milters flexibly</p></li>
+</ul></div>
+<p>
+  See 
+  <a class="link" href="introduction.html" title="Introduction">Introduction</a>
+   for more details.
+</p>
+</div>
+<div class="refsect1">
+<a name="idp6534048"></a><h2>Dependencies</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>MTA that supports milter</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>Sendmail &gt;= 8.13.8</p></li>
+<li class="listitem"><p>Postfix &gt;= 2.3.3</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>GLib &gt;= 2.12.3</p></li>
+<li class="listitem"><p>Ruby &gt;= 1.8.5</p></li>
+<li class="listitem">
+<p>UN*X OS</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>Linux（Debian GNU/Linux, Ubuntu, CentOS）</p></li>
+<li class="listitem"><p>FreeBSD, NetBSD</p></li>
+<li class="listitem"><p>Solaris</p></li>
+</ul></div>
+</li>
+</ul></div>
+<div class="refsect2">
+<a name="idp10171008"></a><h3>Optional dependencies</h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>
+  <a class="ulink" href="http://cutter.sourceforge.net/" target="_top">Cutter: unit testing framework for C</a>
+  &gt;= 1.0.6
+</p>
+<p>It is needed for 'make check' and 'make coverage'.</p>
+</li>
+<li class="listitem">
+<p>LCOV: graphical front-end for GCC's coverage testing tool gcov</p>
+<p>It is needed for 'make coverage'.</p>
+<p>
+  <a class="ulink" href="http://ltp.sourceforge.net/coverage/lcov.php" target="_top">LCOV - the LTP GCOV extension</a>
+  
+</p>
+</li>
+<li class="listitem">
+<p>RRDtool (It's better that bundled Ruby bindings are also installed)</p>
+<p>It is needed for milter-manager-log-analyzer.</p>
+<p>
+  <a class="ulink" href="http://oss.oetiker.ch/rrdtool/" target="_top">RRDtool</a>
+  
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp10179520"></a><h2>Install</h2>
+<p>
+  See 
+  <a class="link" href="install.html" title="Install">Install</a>
+  .
+</p>
+</div>
+<div class="refsect1">
+<a name="idp6119632"></a><h2>Configuration</h2>
+<p>
+  See 
+  <a class="link" href="configuration.html" title="Configuration">Configuration</a>
+  .
+</p>
+</div>
+<div class="refsect1">
+<a name="idp6121696"></a><h2>Usage</h2>
+<p>milter-manager command is installed into sbin/ not bin/. In most cases, normal user doesn't include sbin/ in PATH. You will need to use absolute path.</p>
+<p>If you don't specify --prefix option for configure script, milter-manager is installed into /usr/local/sbin/. You can run milter-manager like the following:</p>
+<pre class="programlisting">% /usr/local/sbin/milter-manager --help</pre>
+<p>
+  Available options are shown if installation is succeeded. See 
+  <a class="link" href="milter-manager.html" title="milter-manager">milter-manager</a>
+   for more details.
+</p>
+</div>
+<div class="refsect1">
+<a name="idp6125712"></a><h2>Tools</h2>
+<p>milter manager includes some useful tools. They are installed into bin/.</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="milter-test-server.html" title="milter-test-server">milter-test-server</a>
+  : It talks MTA side milter protocol. It can be used for testing a milter without MTA.
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="milter-test-client.html" title="milter-test-client">milter-test-client</a>
+  : It is a milter that just shows received data from MTA. It can be used for confirming what data is sent from MTA.
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check</a>
+  : It is a SMTP client that measures MTA performance.
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="milter-manager-log-analyzer.html" title="milter-manager-log-analyzer">milter-manager-log-analyzer</a>
+  : It analyzes log of milter-manager and visualizes behavior of milters registered to milter-manager.
+</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp6134320"></a><h2>Mailing list</h2>
+<p>
+  There is
+  <a class="ulink" href="https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en" target="_top">milter-manager-users-en</a>
+  mailing list. Questions and bug reports are accepted on it. New release announce is also done on the mailing list. If you are using milter manager, it's a good idea that you subscribe the mailling list.
+</p>
+</div>
+<div class="refsect1">
+<a name="idp9452160"></a><h2>Source code</h2>
+<p>The latest source is available from the Git repository:</p>
+<pre class="programlisting">% git clone https://github.com/milter-manager/milter-manager.git</pre>
+</div>
+<div class="refsect1">
+<a name="idp9454128"></a><h2>Thanks</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>OBATA Akio: reported a bug.</p></li>
+<li class="listitem"><p>Павел Гришин: reported bugs.</p></li>
+<li class="listitem">
+<p>Fumihisa Tonaka:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>reported bugs.</p></li>
+<li class="listitem"><p>suggested new features.</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>sgyk: reported bugs.</p></li>
+<li class="listitem"><p>Tsuchiya: reported bugs.</p></li>
+<li class="listitem"><p>Syunsuke Komma: reported a bug.</p></li>
+<li class="listitem">
+<p>Yuto Hayamizu:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>cleaned test.</p></li>
+<li class="listitem"><p>added useful features for creating milter by Ruby.</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>gorimaru: suggested usage improvements.</p></li>
+<li class="listitem">
+<p>ZnZ:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>fixed typos.</p></li>
+<li class="listitem"><p>reported useful advises.</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>Antuan Avdioukhine: suggestions.</p></li>
+<li class="listitem">
+<p>SATOH Fumiyasu:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>reported bugs.</p></li>
+<li class="listitem"><p>improved Solaris support.</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>ROSSO: reported a bug.</p></li>
+<li class="listitem">
+<p>akira yamada:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>reported a bug.</p></li>
+<li class="listitem"><p>suggested about Debian package.</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Kenji Shiono:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>reported bugs.</p></li>
+<li class="listitem"><p>suggested new features.</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Jordao:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>reported a bug.</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>Mitsuru Ogino:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>reported bugs.</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>moto kawasaki:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>added /etc/rc.conf.local loading support on FreeBSD.</p></li></ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

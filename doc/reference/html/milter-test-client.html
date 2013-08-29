@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter-test-client</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="commands.html" title="Commands">
+<link rel="prev" href="milter-test-server.html" title="milter-test-server">
+<link rel="next" href="milter-performance-check.html" title="milter-performance-check">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="milter-test-server.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="commands.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="milter-performance-check.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="milter-test-client"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="milter-test-client.top_of_page"></a>milter-test-client</span></h2>
+<p>milter-test-client — milter side milter protocol implemented program</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp5416160"></a><h2>NAME</h2>
+<p>milter-test-client - milter side milter protocol implemented program</p>
+</div>
+<div class="refsect1">
+<a name="idp9270832"></a><h2>SYNOPSIS</h2>
+<p>
+  <code class="code">milter-test-client</code>
+   [
+  <span class="emphasis"><em>option ...</em></span>
+  ]
+</p>
+</div>
+<div class="refsect1">
+<a name="idp5651168"></a><h2>DESCRIPTION</h2>
+<p>milter-test-client is a milter that just shows received data from MTA. It also shows macros received from MTA, it can be used for confirming MTA's milter configuration.</p>
+<p>Postfix's source archive includes similar tool. It's src/milter/test-milter.c. It seems that it's used for testing Postfix's milter implementation. But test-milter doesn't show macros. If you have a milter that doesn't work as you expect and uses macro, milter-test-client is useful tool for looking into the problems.</p>
+</div>
+<div class="refsect1">
+<a name="idp9008800"></a><h2>Options</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--help"></a>--help</span></p></td>
+<td><p>Shows available options and exits.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--connection-spec"></a>--connection-spec=SPEC</span></p></td>
+<td>
+<p>Specifies a socket that accepts connections from MTA. SPEC should be formatted as one of the followings:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:PATH</p></li>
+<li class="listitem"><p>inet:PORT</p></li>
+<li class="listitem"><p>inet:PORT@HOST</p></li>
+<li class="listitem"><p>inet:PORT@[ADDRESS]</p></li>
+<li class="listitem"><p>inet6:POST</p></li>
+<li class="listitem"><p>inet6:PORT@HOST</p></li>
+<li class="listitem"><p>inet6:PORT@[ADDRESS]</p></li>
+</ul></div>
+<p>Examples:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:/tmp/milter-test-client.sock</p></li>
+<li class="listitem"><p>inet:10025</p></li>
+<li class="listitem"><p>inet:10025@localhost</p></li>
+<li class="listitem"><p>inet:10025@[127.0.0.1]</p></li>
+<li class="listitem"><p>inet6:10025</p></li>
+<li class="listitem"><p>inet6:10025@localhost</p></li>
+<li class="listitem"><p>inet6:10025@[::1]</p></li>
+</ul></div>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--verbose"></a>--verbose</span></p></td>
+<td>
+<p>Logs verbosely.</p>
+<p>"MILTER_LOG_LEVEL=all" environment variable configuration has the same effect.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--syslog"></a>--syslog</span></p></td>
+<td><p>Logs Syslog too.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--no-report-request"></a>--no-report-request</span></p></td>
+<td><p>Doesn't show any information received from MTA.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--report-memory-profile"></a>--report-memory-profile</span></p></td>
+<td>
+<p>Reports memory usage each milter session finished.</p>
+<p>When MILTER_MEMORY_PROFILE environment variable is set to 'yes', details are reported.</p>
+<p>Example:</p>
+<pre class="programlisting">% MILTER_MEMORY_PROFILE=yes milter-test-client -s inet:10025</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--daemon"></a>--daemon</span></p></td>
+<td><p>Runs as daemon process.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--user"></a>--user=USER</span></p></td>
+<td><p>Runs as USER's process. root privilege is needed.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--group"></a>--group=GROUP</span></p></td>
+<td><p>Runs as GROUP's process. root privilege is needed.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--unix-socket-group"></a>--unix-socket-group=GROUP</span></p></td>
+<td><p>Changes UNIX domain socket group to GROUP when "unix:PATH" format SPEC is used.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--n-workers"></a>--n-workers=N_WORKERS</span></p></td>
+<td>
+<p>
+  Runs 
+  <code class="varname">N_WORKERS</code>
+   processes to process mails. Availble value is between 0 and 1000. If it is 0, no worker processes will be used.
+</p>
+<p>
+  <span class="emphasis"><em>NOTE: This item is an experimental feature.</em></span>
+  
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--event-loop-backend"></a>--event-loop-backend=BACKEDN</span></p></td>
+<td>
+<p>
+  Uses 
+  <code class="varname">BACKEND</code>
+   as event loop backend. Availble values are 
+  <span class="command"><strong>glib</strong></span>
+   or 
+  <span class="command"><strong>libev</strong></span>
+  .
+</p>
+<p>
+  <span class="emphasis"><em>NOTE: This item is an experimental feature.</em></span>
+  
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--packet-buffer-size"></a>--packet-buffer-size=SIZE</span></p></td>
+<td>
+<p>
+  Uses 
+  <code class="varname">SIZE</code>
+   as send packets buffer size on end-of-message. Buffered packets are sent when buffer size is rather than 
+  <code class="varname">SIZE</code>
+   bytes. Buffering is disabled when 
+  <code class="varname">SIZE</code>
+   is 0.
+</p>
+<p>The default is 0KB. It means packet buffering is disabled by default.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--version"></a>--version</span></p></td>
+<td><p>Shows version and exits.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp2916784"></a><h2>EXIT STATUS</h2>
+<p>The exit status is 0 if milter starts to listen and non 0 otherwise. milter-test-client can't start to listen when connection spec is invalid format or other connection specific problems. e.g. the port number is already used, permission isn't granted for create UNIX domain socket and so on.</p>
+</div>
+<div class="refsect1">
+<a name="idp2918400"></a><h2>EXAMPLE</h2>
+<p>The following example runs a milter which listens at 10025 port and waits a connection from MTA.</p>
+<pre class="programlisting">% milter-test-client -s inet:10025</pre>
+</div>
+<div class="refsect1">
+<a name="idp2920560"></a><h2>SEE ALSO</h2>
+<p>
+  <a class="link" href="milter-test-server.html" title="milter-test-server">milter-test-server.rd</a>
+  (1),
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check.rd</a>
+  (1)
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

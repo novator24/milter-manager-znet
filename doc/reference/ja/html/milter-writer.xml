@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-writer">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-writer.top_of_page">MilterWriter</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterWriter</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-writer.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-WRITER-ERROR:CAPS">MILTER_WRITER_ERROR</link>
+enum                <link linkend="MilterWriterError">MilterWriterError</link>;
+struct              <link linkend="MilterWriter">MilterWriter</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-writer-error-quark">milter_writer_error_quark</link>           (<parameter><type>void</type></parameter>);
+<link linkend="MilterWriter"><returnvalue>MilterWriter</returnvalue></link> *      <link linkend="milter-writer-io-channel-new">milter_writer_io_channel_new</link>        (<parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *channel</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-writer-write">milter_writer_write</link>                 (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> chunk_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-writer-flush">milter_writer_flush</link>                 (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-writer-start">milter_writer_start</link>                 (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>,
+                                                         <parameter><link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *loop</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-writer-is-watching">milter_writer_is_watching</link>           (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-writer-shutdown">milter_writer_shutdown</link>              (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-writer.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-writer.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-WRITER-ERROR:CAPS" role="macro">
+<title>MILTER_WRITER_ERROR</title>
+<indexterm zone="MILTER-WRITER-ERROR:CAPS"><primary>MILTER_WRITER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_WRITER_ERROR           (milter_writer_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterWriterError" role="enum">
+<title>enum MilterWriterError</title>
+<indexterm zone="MilterWriterError"><primary>MilterWriterError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_WRITER_ERROR_NO_CHANNEL,
+    MILTER_WRITER_ERROR_IO_ERROR,
+    MILTER_WRITER_ERROR_NOT_READY
+} MilterWriterError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterWriter" role="struct">
+<title>struct MilterWriter</title>
+<indexterm zone="MilterWriter"><primary>MilterWriter</primary></indexterm>
+<programlisting>struct MilterWriter {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-error-quark" role="function">
+<title>milter_writer_error_quark ()</title>
+<indexterm zone="milter-writer-error-quark"><primary>milter_writer_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_writer_error_quark           (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-io-channel-new" role="function">
+<title>milter_writer_io_channel_new ()</title>
+<indexterm zone="milter-writer-io-channel-new"><primary>milter_writer_io_channel_new</primary></indexterm>
+<programlisting><link linkend="MilterWriter"><returnvalue>MilterWriter</returnvalue></link> *      milter_writer_io_channel_new        (<parameter><link linkend="GIOChannel"><type>GIOChannel</type></link> *channel</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-write" role="function">
+<title>milter_writer_write ()</title>
+<indexterm zone="milter-writer-write"><primary>milter_writer_write</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_writer_write                 (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> chunk_size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-flush" role="function">
+<title>milter_writer_flush ()</title>
+<indexterm zone="milter-writer-flush"><primary>milter_writer_flush</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_writer_flush                 (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-start" role="function">
+<title>milter_writer_start ()</title>
+<indexterm zone="milter-writer-start"><primary>milter_writer_start</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_writer_start                 (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>,
+                                                         <parameter><link linkend="MilterEventLoop"><type>MilterEventLoop</type></link> *loop</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-is-watching" role="function">
+<title>milter_writer_is_watching ()</title>
+<indexterm zone="milter-writer-is-watching"><primary>milter_writer_is_watching</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_writer_is_watching           (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-writer-shutdown" role="function">
+<title>milter_writer_shutdown ()</title>
+<indexterm zone="milter-writer-shutdown"><primary>milter_writer_shutdown</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_writer_shutdown              (<parameter><link linkend="MilterWriter"><type>MilterWriter</type></link> *writer</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

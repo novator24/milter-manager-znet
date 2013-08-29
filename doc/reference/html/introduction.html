@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Introduction</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="start.html" title="Part I. Getting start">
+<link rel="prev" href="milter-manager-log-analyzer.html" title="milter-manager-log-analyzer">
+<link rel="next" href="install.html" title="Install">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="milter-manager-log-analyzer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="install.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="introduction"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="introduction.top_of_page"></a>Introduction</span></h2>
+<p>Introduction — An introduction of milter-manager</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp9027088"></a><h2>About this document</h2>
+<p>This document describes the following advantages by introducing milter manager:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>reduce milter administration cost</p></li>
+<li class="listitem"><p>combine milters flexibly</p></li>
+</ul></div>
+<p>This document describes about milter because this document doesn't assume that readers knows milter.</p>
+</div>
+<div class="refsect1">
+<a name="idp7849104"></a><h2>milter</h2>
+<p>
+  milter is an abbreviation for '
+  <span class="emphasis"><em>m</em></span>
+  ail f
+  <span class="emphasis"><em>ilter</em></span>
+  '. It is an mail filter plugin system developed by Sendmail. We can introduce spam mail filter and/or virus check filter to Sendmail without modifying Sendmail by milter. We can also implement more effective mail filter by combining multiple features because multiple milters can be applied concurrently.
+</p>
+<p>We confirm terms used in milter manager's documents before we show a figure that describes relation between Sendmail and milter.</p>
+<p>The term "milter" is used as "mail filter plugin system" and "mail filter plugin". In the documents, we use other terms for them:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>milter: mail filter plugin</p></li>
+<li class="listitem"><p>milter system: mail filter plugin system</p></li>
+</ul></div>
+<p>milter and Sendmail isn't same process. milter works as another process. milter and Sendmail is communicated with dedicated protocol. The protocol is called as "milter protocol" in the documents. Communication between Sendmail connects and takes off a milter is called "milter session".</p>
+<p>Here is a figure that describes relation between Sendmail and milter with terms as mentioned above:</p>
+<p>
+  <span class="inlinemediaobject"><img src="sendmail-and-milter.png" alt="\n Relation between Sendmail and milter\n"></span>
+  
+</p>
+<p>
+  Many milters has been developed since Sendmail provides milter system. We can search registered milters at
+  <a class="ulink" href="https://www.milter.org/" target="_top">&lt;URL:https://www.milter.org/&gt;</a>
+  . There are 62 milters in the site at 2008/12. There are many milters that isn't registered at milter.org. It seems that there are more than 100 milters. For example:
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="introduction.clamav-milter"></a>clamav-milter</span></p></td>
+<td><p>
+  A milter for using anti-virus free software
+  <a class="ulink" href="http://www.clamav.net/" target="_top">ClamAV</a>
+  . (including in ClamAV)
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="introduction.&lt;ulink"></a>
+  <a class="ulink" href="http://amavisd-milter.sourceforge.net/" target="_top">amavisd-milter</a>
+</span></p></td>
+<td><p>
+  A milter for using general content check free software
+  <a class="ulink" href="http://www.ijs.si/software/amavisd/" target="_top">amavisd-new</a>
+  .
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term">
+  <a class="ulink" href="http://savannah.nongnu.org/projects/spamass-milt/" target="_top">spamass-milter</a>
+</span></p></td>
+<td><p>
+  A milter for using anti-spam free software
+  <a class="ulink" href="http://spamassassin.apache.org/" target="_top">SpamAssassin</a>
+  .
+</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>Some new anti-spam implementations are implemented as milter. Implemented milters will be increased in the future.</p>
+<div class="refsect2">
+<a name="idp7510608"></a><h3>Postfix supports milter system</h3>
+<p>Originally, milter system is dedicated system for Sendmail but Postfix starts supporting milter system since 2.3. It means that we can use and development mail filter that is used with both Sendmail and Postfix. It makes milter more portable.</p>
+<p>
+  <span class="inlinemediaobject"><img src="sendmail-and-postfix-and-milter.png" alt="\n Relation between Sendmail, Postfix and milter\n"></span>
+  
+</p>
+<p>milter can be used with any milter system support MTA like Sendmail and Postfix. But configuration for using milter is different in all MTAs. We can share same milter with both Sendmail and Postfix but cannot share effective milter combination configuration.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp6154912"></a><h3>More effective milter combination</h3>
+<p>There are many anti-spam techniques. But there is not the perfect technique. We need to combine some techniques. All techniques have a weakness. For example, it doesn't have false detection but low detection rate, it has high detection rate but long processing time, it has high detection rate but high load and so on.</p>
+<p>We need to use some techniques with using its advantages and covering its weaknesses because there are many spam techniques in the Internet.</p>
+<p>There are two big kinds of anti-spam techniques, content based technique and connection based technique. Content based technique use mail content for detecting spam mail. Connection based technique doesn't use mail content, just use connected host, from address, recipient addresses and so on for detecting spam mail.</p>
+<p>Connection based technique has good detection rate and more lower load than content based technique. But it will not work well against spam mails that uses normal mail server like Gmail. But content based technique will be able to detect spam mails that can't be detected by connection based technique.</p>
+<p>Here is a mainstream anti-spam technique at 2008/12.</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>detects most spam mails by connection based technique.</p></li>
+<li class="listitem"><p>detects spam mails that can't be detected by connection based technique by content based technique.</p></li>
+</ol></div>
+<p>
+  There are some connection based techniques, Greylisting that denies delivered a mail at first and accepts only retransmitted mail, blacklist that uses blacklist database to detect spam and so on. Most commertial products use their own blacklist database. Most free softwares use DNSBL that uses DNS for accessing blacklist database. 
+  <a class="ulink" href="http://gabacho.reto.jp/en/anti-spam/" target="_top">S25R</a>
+  (Selective SMTP Rejection) doesn't use database, just use some regular expressions.
+</p>
+<p>If we use Greylisting and/or DNSBL, retransmission and/or network connection are occurred. They are low load but occurs deliver delay and/or long processing time. If a delivered mail is not spam clearly, (e.g. submitted from localhost, submitted by authorized user and so on) we can skip those techniques to avoid delay.</p>
+<p>Here is an example to use those techniques with using its advantages and covering its weaknesses:</p>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<p>detects spam by S25R</p>
+<div class="orderedlist"><ol class="orderedlist" type="a">
+<li class="listitem">
+<p>spam: detects spam by DNSBL</p>
+<div class="orderedlist"><ol class="orderedlist" type="i">
+<li class="listitem">
+<p>spam: detects spam by Greylisting</p>
+<div class="orderedlist"><ol class="orderedlist" type="A">
+<li class="listitem"><p>retransmitted: not spam</p></li>
+<li class="listitem"><p>not retransmitted: spam</p></li>
+</ol></div>
+</li>
+<li class="listitem"><p>not spam: skip Greylisting</p></li>
+</ol></div>
+</li>
+<li class="listitem"><p>not spam: skip both DNSBL and Greylisting</p></li>
+</ol></div>
+</li></ol></div>
+<p>In the above example, Greylisting is apllied only if both S25R and DNSBL detects spam. It reduces false delay by Greylisting. It also uses Greylisting for maintaining S25R's whitelist. S25R has a weakness that needes to maintain whitelist by hand but it is covered by combined with Greylisting.</p>
+<p>As mentioned above, we can create effective anti-spam technique by combine each techniques.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5306224"></a><h3>MTA configuration problems</h3>
+<p>Many anti-spam techniques are implemented as milter. How to configure Sendmail or Postfix to use milters effectively.</p>
+<p>
+  Both Sendmail and Postfix apply registered milters to all mails. We cannot apply milters only if some condition is true as mentioned above. 
+  <a href="#ftn.idp5307936" class="footnote" name="idp5307936"><sup class="footnote">[1]</sup></a>
+  
+</p>
+<p>Sendmail can specify default action and timeout for each milter but Postfix can specify them only for all milters.</p>
+<p>milter is useful because there are many implementation and uses with other MTA. But we can't use it effectively because MTA doesn't support flexible milter apply configuration.</p>
+<p>milter manager is a free software to use milter's advantages effectively.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5311392"></a><h3>milter manager</h3>
+<p>milter manager is a milter that manages multiple milters. We can register multiple milters to milter managers and a milter session for milter manager is transferred to registered milters. Registered milter is called "child milter".</p>
+<p>milter manager works as a proxy. milter manager looks like a milter from MTA side. milter manager looks like an MTA from child milter.</p>
+<p>
+  <span class="inlinemediaobject"><img src="mta-and-milter-manager-and-child-milter.png" alt="\n MTA, milter manager and child milter\n"></span>
+  
+</p>
+<p>milters can be managed by milter manager layer not MTA layer by the structure. milter manager has the following features that improve milter management:</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>milter detection feature</p></li>
+<li class="listitem"><p>flexible milter apply feature</p></li>
+</ol></div>
+<p>The former is for "reduce milter administration cost" advantage, the the latter is for "combine milters flexibly" advantage.</p>
+<p>We can use milters effectively by milter manager's those features.</p>
+</div>
+<div class="refsect3">
+<a name="idp5321104"></a><h4>Advantage: milter detection feature</h4>
+<p>milter manager embeds Ruby interpreter. Ruby is a real programming language that provides easy to read syntax and flexibility.</p>
+<p>milter manager can configure milters more flexible than existing MTA because milter manager's configuration file is processed as a Ruby script. For example, milter manager can detect milters installed in your system and register it. It means that you can change each milter's configuration without updating milter manager's configuration.</p>
+<p>
+  Currently, Ubuntu (Debian) and FreeBSD are supported. If you want to use milters installed by package system (dpkg or ports), you don't need to change milter manager's configuration. If a milter is installed by package system and enabled, milter manager detects and uses it. See
+  <a class="link" href="install.html" title="Install">Install</a>
+   for more information.
+</p>
+<p>
+  There is a opinion that milter manager's configuration file has more difficult syntax than MTA's configuration file. As mentioned above, Ruby has easy to read syntax, it's not difficult in normal use. 
+  <a href="#ftn.idp5325120" class="footnote" name="idp5325120"><sup class="footnote">[2]</sup></a>
+  
+</p>
+<p>For example, here is a configuration for connection socket:</p>
+<pre class="programlisting">manager.connection_spec = "inet:10025@localhost"</pre>
+<p>It's almost same as Postfix's configuration syntax. ("item = value")</p>
+<p>milter manager will also provide Web interface for configuration since the next release.</p>
+</div>
+<div class="refsect3">
+<a name="idp5328352"></a><h4>Advantage: flexible milter apply feature</h4>
+<p>In MTA configuration, each milter always applies or not. It can't be done that a milter applies only when some conditions are true. milter manager has some check points in milter session. They can be used for it.</p>
+<p>We can decide whether apply a milter or not by using S25R result by the feature.</p>
+</div>
+<div class="refsect3">
+<a name="idp5330272"></a><h4>Speed</h4>
+<p>We have effect about performance by introducing milter manager. But the effect is very small because milter manager works fast enough. So, it seems that the effect is none. milter manager will not be bottleneck.</p>
+<p>Registered child milters to milter manager are applied only if some conditions are true. It means that child milters doesn't run if they aren't needed. But registered milters to MTA are always ran. Total processing time for milter system is almost same as milter system without milter manager or less than milter system without milter manager because the number of child milters to be ran are less than the number of whole milters.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp5332832"></a><h2>Conclusion</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>there is milter that introduces mail filter to MTA</p></li>
+<li class="listitem"><p>anti-spam and anti-virus can be implemented as milter</p></li>
+<li class="listitem"><p>Sendmail and Postfix support milter</p></li>
+<li class="listitem"><p>anti-spam techniques have advantages and weaknesses</p></li>
+<li class="listitem"><p>to use anti-spam techniques effectively, we need to combine some techniques</p></li>
+<li class="listitem">
+<p>milter has advantages and weaknesses</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+<p>advantages:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; ">
+<li class="listitem"><p>can be used with other MTA</p></li>
+<li class="listitem"><p>there are many implementations</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>weakness:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; ">
+<li class="listitem"><p>it's hard to maintain configuration of MTA and milter because configurations for MTA and milter are separated</p></li>
+<li class="listitem"><p>MTA doesn't provide configuration for combining milters effectively</p></li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li class="listitem"><p>we can use milters effectively and cover milters' weakness by using milter manager</p></li>
+</ul></div>
+</div>
+<div class="footnotes">
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.idp5307936" class="footnote"><p><a href="#idp5307936" class="para"><sup class="para">[1] </sup></a>
+  We can use 
+  <a class="ulink" href="http://www.postfix.org/SMTPD_POLICY_README.html" target="_top">SMTP Access Policy Delegation</a>
+  for Postfix for combining S25R and Greylisting.
+</p></div>
+<div id="ftn.idp5325120" class="footnote"><p><a href="#idp5325120" class="para"><sup class="para">[2] </sup></a>At least, it's more easier rather than Sendmail's one.</p></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterMacrosRequests">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterMacrosRequests.top_of_page">MilterMacrosRequests</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterMacrosRequests</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="MilterMacrosRequests.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>struct              <link linkend="MilterMacrosRequests-struct">MilterMacrosRequests</link>;
+<link linkend="MilterMacrosRequests"><returnvalue>MilterMacrosRequests</returnvalue></link> * <link linkend="milter-macros-requests-new">milter_macros_requests_new</link>       (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-macros-requests-set-symbols">milter_macros_requests_set_symbols</link>  (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *first_symbol</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-macros-requests-set-symbols-va-list">milter_macros_requests_set_symbols_va_list</link>
+                                                        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *first_symbol</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> args</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-macros-requests-set-symbols-string-array">milter_macros_requests_set_symbols_string_array</link>
+                                                        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **strings</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="milter-macros-requests-get-symbols">milter_macros_requests_get_symbols</link>  (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>);
+<link linkend="GHashTable"><returnvalue>GHashTable</returnvalue></link> *        <link linkend="milter-macros-requests-get-all-symbols">milter_macros_requests_get_all_symbols</link>
+                                                        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-macros-requests-merge">milter_macros_requests_merge</link>        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *src</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-macros-requests-foreach">milter_macros_requests_foreach</link>      (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="GHFunc"><type>GHFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterMacrosRequests.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----MilterMacrosRequests
+</synopsis>
+</refsect1>
+
+<refsect1 id="MilterMacrosRequests.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="MilterMacrosRequests.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterMacrosRequests-struct" role="struct">
+<title>struct MilterMacrosRequests</title>
+<indexterm zone="MilterMacrosRequests-struct"><primary>MilterMacrosRequests</primary></indexterm>
+<programlisting>struct MilterMacrosRequests;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-new" role="function">
+<title>milter_macros_requests_new ()</title>
+<indexterm zone="milter-macros-requests-new"><primary>milter_macros_requests_new</primary></indexterm>
+<programlisting><link linkend="MilterMacrosRequests"><returnvalue>MilterMacrosRequests</returnvalue></link> * milter_macros_requests_new       (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-set-symbols" role="function">
+<title>milter_macros_requests_set_symbols ()</title>
+<indexterm zone="milter-macros-requests-set-symbols"><primary>milter_macros_requests_set_symbols</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_macros_requests_set_symbols  (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *first_symbol</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-set-symbols-va-list" role="function">
+<title>milter_macros_requests_set_symbols_va_list ()</title>
+<indexterm zone="milter-macros-requests-set-symbols-va-list"><primary>milter_macros_requests_set_symbols_va_list</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_macros_requests_set_symbols_va_list
+                                                        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *first_symbol</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> args</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-set-symbols-string-array" role="function">
+<title>milter_macros_requests_set_symbols_string_array ()</title>
+<indexterm zone="milter-macros-requests-set-symbols-string-array"><primary>milter_macros_requests_set_symbols_string_array</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_macros_requests_set_symbols_string_array
+                                                        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **strings</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-get-symbols" role="function">
+<title>milter_macros_requests_get_symbols ()</title>
+<indexterm zone="milter-macros-requests-get-symbols"><primary>milter_macros_requests_get_symbols</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             milter_macros_requests_get_symbols  (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> command</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-get-all-symbols" role="function">
+<title>milter_macros_requests_get_all_symbols ()</title>
+<indexterm zone="milter-macros-requests-get-all-symbols"><primary>milter_macros_requests_get_all_symbols</primary></indexterm>
+<programlisting><link linkend="GHashTable"><returnvalue>GHashTable</returnvalue></link> *        milter_macros_requests_get_all_symbols
+                                                        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-merge" role="function">
+<title>milter_macros_requests_merge ()</title>
+<indexterm zone="milter-macros-requests-merge"><primary>milter_macros_requests_merge</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_macros_requests_merge        (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *dest</parameter>,
+                                                         <parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *src</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-macros-requests-foreach" role="function">
+<title>milter_macros_requests_foreach ()</title>
+<indexterm zone="milter-macros-requests-foreach"><primary>milter_macros_requests_foreach</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_macros_requests_foreach      (<parameter><link linkend="MilterMacrosRequests"><type>MilterMacrosRequests</type></link> *requests</parameter>,
+                                                         <parameter><link linkend="GHFunc"><type>GHFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

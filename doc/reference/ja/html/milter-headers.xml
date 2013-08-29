@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-headers">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-headers.top_of_page">MilterHeaders</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterHeaders</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-headers.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis><link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      <link linkend="milter-header-new">milter_header_new</link>                   (<parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-header-free">milter_header_free</link>                  (<parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-header-equal">milter_header_equal</link>                 (<parameter><link linkend="gconstpointer"><type>gconstpointer</type></link> header1</parameter>,
+                                                         <parameter><link linkend="gconstpointer"><type>gconstpointer</type></link> header2</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="milter-header-compare">milter_header_compare</link>               (<parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header_a</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header_b</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-header-inspect">milter_header_inspect</link>               (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="gconstpointer"><type>gconstpointer</type></link> header</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+struct              <link linkend="MilterHeaders">MilterHeaders</link>;
+<link linkend="MilterHeaders"><returnvalue>MilterHeaders</returnvalue></link> *     <link linkend="milter-headers-new">milter_headers_new</link>                  (<parameter><type>void</type></parameter>);
+<link linkend="MilterHeaders"><returnvalue>MilterHeaders</returnvalue></link> *     <link linkend="milter-headers-copy">milter_headers_copy</link>                 (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>);
+const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       <link linkend="milter-headers-get-list">milter_headers_get_list</link>             (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-headers-add-header">milter_headers_add_header</link>           (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-headers-insert-header">milter_headers_insert_header</link>        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> position</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-headers-change-header">milter_headers_change_header</link>        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> index</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-headers-delete-header">milter_headers_delete_header</link>        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> index</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-headers-length">milter_headers_length</link>               (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>);
+<link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      <link linkend="milter-headers-get-nth-header">milter_headers_get_nth_header</link>       (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> index</parameter>);
+<link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      <link linkend="milter-headers-find">milter_headers_find</link>                 (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);
+<link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      <link linkend="milter-headers-lookup-by-name">milter_headers_lookup_by_name</link>       (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-headers-remove">milter_headers_remove</link>               (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="milter-headers-index-in-same-header-name">milter_headers_index_in_same_header_name</link>
+                                                        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-headers.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-headers.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="milter-header-new" role="function">
+<title>milter_header_new ()</title>
+<indexterm zone="milter-header-new"><primary>milter_header_new</primary></indexterm>
+<programlisting><link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      milter_header_new                   (<parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-header-free" role="function">
+<title>milter_header_free ()</title>
+<indexterm zone="milter-header-free"><primary>milter_header_free</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_header_free                  (<parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-header-equal" role="function">
+<title>milter_header_equal ()</title>
+<indexterm zone="milter-header-equal"><primary>milter_header_equal</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_header_equal                 (<parameter><link linkend="gconstpointer"><type>gconstpointer</type></link> header1</parameter>,
+                                                         <parameter><link linkend="gconstpointer"><type>gconstpointer</type></link> header2</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-header-compare" role="function">
+<title>milter_header_compare ()</title>
+<indexterm zone="milter-header-compare"><primary>milter_header_compare</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                milter_header_compare               (<parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header_a</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header_b</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-header-inspect" role="function">
+<title>milter_header_inspect ()</title>
+<indexterm zone="milter-header-inspect"><primary>milter_header_inspect</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_header_inspect               (<parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="gconstpointer"><type>gconstpointer</type></link> header</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterHeaders" role="struct">
+<title>struct MilterHeaders</title>
+<indexterm zone="MilterHeaders"><primary>MilterHeaders</primary></indexterm>
+<programlisting>struct MilterHeaders {
+    GObject object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-new" role="function">
+<title>milter_headers_new ()</title>
+<indexterm zone="milter-headers-new"><primary>milter_headers_new</primary></indexterm>
+<programlisting><link linkend="MilterHeaders"><returnvalue>MilterHeaders</returnvalue></link> *     milter_headers_new                  (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-copy" role="function">
+<title>milter_headers_copy ()</title>
+<indexterm zone="milter-headers-copy"><primary>milter_headers_copy</primary></indexterm>
+<programlisting><link linkend="MilterHeaders"><returnvalue>MilterHeaders</returnvalue></link> *     milter_headers_copy                 (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-get-list" role="function">
+<title>milter_headers_get_list ()</title>
+<indexterm zone="milter-headers-get-list"><primary>milter_headers_get_list</primary></indexterm>
+<programlisting>const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       milter_headers_get_list             (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-add-header" role="function">
+<title>milter_headers_add_header ()</title>
+<indexterm zone="milter-headers-add-header"><primary>milter_headers_add_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_headers_add_header           (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-insert-header" role="function">
+<title>milter_headers_insert_header ()</title>
+<indexterm zone="milter-headers-insert-header"><primary>milter_headers_insert_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_headers_insert_header        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> position</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-change-header" role="function">
+<title>milter_headers_change_header ()</title>
+<indexterm zone="milter-headers-change-header"><primary>milter_headers_change_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_headers_change_header        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> index</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-delete-header" role="function">
+<title>milter_headers_delete_header ()</title>
+<indexterm zone="milter-headers-delete-header"><primary>milter_headers_delete_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_headers_delete_header        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> index</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-length" role="function">
+<title>milter_headers_length ()</title>
+<indexterm zone="milter-headers-length"><primary>milter_headers_length</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_headers_length               (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-get-nth-header" role="function">
+<title>milter_headers_get_nth_header ()</title>
+<indexterm zone="milter-headers-get-nth-header"><primary>milter_headers_get_nth_header</primary></indexterm>
+<programlisting><link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      milter_headers_get_nth_header       (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> index</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-find" role="function">
+<title>milter_headers_find ()</title>
+<indexterm zone="milter-headers-find"><primary>milter_headers_find</primary></indexterm>
+<programlisting><link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      milter_headers_find                 (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-lookup-by-name" role="function">
+<title>milter_headers_lookup_by_name ()</title>
+<indexterm zone="milter-headers-lookup-by-name"><primary>milter_headers_lookup_by_name</primary></indexterm>
+<programlisting><link linkend="MilterHeader"><returnvalue>MilterHeader</returnvalue></link> *      milter_headers_lookup_by_name       (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-remove" role="function">
+<title>milter_headers_remove ()</title>
+<indexterm zone="milter-headers-remove"><primary>milter_headers_remove</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_headers_remove               (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-headers-index-in-same-header-name" role="function">
+<title>milter_headers_index_in_same_header_name ()</title>
+<indexterm zone="milter-headers-index-in-same-header-name"><primary>milter_headers_index_in_same_header_name</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                milter_headers_index_in_same_header_name
+                                                        (<parameter><link linkend="MilterHeaders"><type>MilterHeaders</type></link> *headers</parameter>,
+                                                         <parameter><link linkend="MilterHeader"><type>MilterHeader</type></link> *header</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

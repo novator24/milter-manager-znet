@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="milter-manager.css" type="text/css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.png" />
+    <title>an effective anti-spam with milter - milter manager</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>
+        <a href="./">
+	  <span class="title">an effective anti-spam with milter</span>
+	  <span class="title-separator">-</span>
+	  <span class="title-project">milter manager</span>
+        </a>
+      </h1>
+      <ul class="other-languages">
+        <li id="other-language-japanese" lang="ja" xml:lang="ja"><a href="index.html.ja">日本語</a></li>
+      </ul>
+      <ul class="menu">
+	<li id="menu-introduction"><a href="reference/introduction.html">Introduction</a></li>
+	<li id="menu-install"><a href="reference/install-to.html">Install</a></li>
+        <li id="menu-document"><a href="reference/">Document</a></li>
+	<li id="menu-download"><a href="http://downloads.sourceforge.net/milter-manager/milter-manager-2.0.0.tar.gz">Download</a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div class="main">
+	<h2 id="latest">The latest release</h2>
+	<p>
+	  2.0.0 is the latest stable release. It had been released at 2013-07-25.
+        </p>
+	<ul>
+          <li><a href="reference/news.html#news.release-2-0-0">Changes</a></li>
+          <li><a href="http://downloads.sourceforge.net/milter-manager/milter-manager-2.0.0.tar.gz">Download</a></li>
+	</ul>
+
+	<p>
+	  Here are install documents for each enviroment.
+	</p>
+	<ul>
+	  <li>
+	    <a href="reference/install-to-debian.html">Debian</a>
+	  </li>
+	  <li>
+	    <a href="reference/install-to-ubuntu.html">Ubuntu</a>
+	  </li>
+	  <li>
+	    <a href="reference/install-to-centos5.html">CentOS 5</a>
+	  </li>
+	  <li>
+	    <a href="reference/install-to-centos.html">CentOS 6</a>
+	  </li>
+	  <li>
+	    <a href="reference/install-to-freebsd.html">FreeBSD</a>
+	  </li>
+	  <li>
+	    <a href="reference/install-to-others.html">Others</a>
+	  </li>
+	</ul>
+
+	<p>
+	  Here are upgrade documents for each enviroment.
+	</p>
+	<ul>
+	  <li>
+	    <a href="reference/upgrade-on-debian.html">Debian</a>
+	  </li>
+	  <li>
+	    <a href="reference/upgrade-on-ubuntu.html">Ubuntu</a>
+	  </li>
+	  <li>
+	    <a href="reference/upgrade-on-centos.html">CentOS</a>
+	  </li>
+	  <li>
+	    <a href="reference/upgrade-on-freebsd.html">FreeBSD</a>
+	  </li>
+	</ul>
+
+	<h2 id="about">milter manager?</h2>
+        <p>
+          milter manager is a free software to protect you from spam mails and virus mails effectively with milter.
+        </p>
+        <p>
+          milter manager can be used with MTAs that supports milter like Sendmail and Postfix. It works on Ubuntu, CentOS, FreeBSD and so on.
+        </p>
+        <ul>
+          <li><a href="reference/introduction.html">Introduction of milter manager</a></li>
+          <li><a href="reference/readme.html">README</a></li>
+        </ul>
+
+        <h2 id="support">Support</h2>
+	<p>
+	  Questions and bug reports are accepted on <a href="https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en">mailing list</a>. New release announce is also done on the mailing list. If you are using milter manager, it's a good idea that you subscribe the mailling list.
+	</p>
+
+	<h2 id="development-release">Development release</h2>
+	<p>
+	  1.5.3 is the latest development release. It had been released at 2010-08-03.
+	  Development seriese includes many new features but it may not work stably. You should use the latest stable release for production.
+        </p>
+	<ul>
+          <li><a href="http://downloads.sourceforge.net/milter-manager/milter-manager-1.5.3.tar.gz">Download</a></li>
+          <li><a href="dev/reference/news.html#news.release-1-5-3">Changes</a></li>
+          <li><a href="dev/reference/">Documents</a></li>
+	</ul>
+
+	<h3>Packages of development releases for Ubuntu 8.04 LTS Hardy Heron</h3>
+	<p>
+	  apt-line for:
+	  <pre class="file">deb http://milter-manager.sourceforge.net/ubuntu/development/ hardy universe
+deb-src http://milter-manager.sourceforge.net/ubuntu/development/ hardy universe</pre>
+	</p>
+	<p>
+	  Packages are signed by key of milter manager. If you trust the key, you can register the key:
+	  <pre class="command">% gpg --keyserver hkp://subkeys.pgp.net --recv-keys 1BD22CD1
+% gpg --export 1BD22CD1 | sudo apt-key add -</pre>
+	</p>
+
+	<h3>Packages of development releases for Ubuntu 10.4 LTS Lucid Lynx</h3>
+	<p>
+	  apt-line for:
+	  <pre class="file">deb http://milter-manager.sourceforge.net/ubuntu/development/ lucid universe
+deb-src http://milter-manager.sourceforge.net/ubuntu/development/ lucid universe</pre>
+	</p>
+	<p>
+	  Packages are signed by key of milter manager. If you trust the key, you can register the key:
+	  <pre class="command">% gpg --keyserver hkp://subkeys.pgp.net --recv-keys 1BD22CD1
+% gpg --export 1BD22CD1 | sudo apt-key add -</pre>
+	</p>
+
+	<h3>Packages of development releases for Debian GNU/Linux lenny</h3>
+	<p>
+	  apt-line:
+	  <pre class="file">deb http://milter-manager.sourceforge.net/debian/development/ lenny main
+deb-src http://milter-manager.sourceforge.net/debian/development/ lenny main</pre>
+	</p>
+	<p>
+	  Packages are signed by key of milter manager. If you trust the key, you can register the key:
+	  <pre class="command">% gpg --keyserver hkp://subkeys.pgp.net --recv-keys 1BD22CD1
+% gpg --export 1BD22CD1 | sudo apt-key add -</pre>
+	</p>
+
+	<h3>Packages of development releases for CentOS 5.5</h3>
+	<p>
+	  Packages are provided as yum repository. You need to register milter manager yum repository at the first time:
+	  <pre class="command">% sudo rpm -Uvh http://milter-manager.sourceforge.net/centos/5/milter-manager-repository-1.0.0-1.noarch.rpm</pre>
+	</p>
+	<p>
+	  You can install milter manager from the yum repository by the following command:
+	  <pre class="command">% sudo yum install --enablerepo=milter-manager-development -y milter-manager</pre>
+	</p>
+
+	<h2 id="development">Join milter manager developement</h2>
+	<p>
+	  milter manager uses <a href="https://github.com/milter-manager/milter-manager">git repository</a> on GitHub. You can get the latest milter manager source code by the following command:
+	  <pre class="command">% git clone https://github.com/milter-manager/milter-manager.git</pre>
+	  If you want to send a patch for a new feature or a bug fix, please fork the milter manager repository and send a pull request. Patches are also accepted on <a href="https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en">mailing list</a>.
+	</p>
+      </div>
+
+      <div class="sidebar">
+        <div class="sidebar-item">
+	  <h2>Installation</h2>
+	  <ul>
+	    <li class="sidebar-install">
+	      <a href="reference/install-to.html">Install</a>
+	      <ul>
+		<li>
+		  <a href="reference/install-to-debian.html">Debian</a>
+		</li>
+		<li>
+		  <a href="reference/install-to-ubuntu.html">Ubuntu</a>
+		</li>
+		<li>
+		  <a href="reference/install-to-centos5.html">CentOS 5</a>
+		</li>
+		<li>
+		  <a href="reference/install-to-centos.html">CentOS 6</a>
+		</li>
+		<li>
+		  <a href="reference/install-to-freebsd.html">FreeBSD</a>
+		</li>
+	      </ul>
+	    </li>
+	    <li class="sidebar-upgrade">
+	      <a href="reference/upgrade.html">Upgrade</a>
+	      <ul>
+		<li>
+		  <a href="reference/upgrade-on-debian.html">Debian</a>
+		</li>
+		<li>
+		  <a href="reference/upgrade-on-ubuntu.html">Ubuntu</a>
+		</li>
+		<li>
+		  <a href="reference/upgrade-on-centos.html">CentOS</a>
+		</li>
+		<li>
+		  <a href="reference/upgrade-on-freebsd.html">FreeBSD</a>
+		</li>
+	      </ul>
+	    </li>
+	    <li>
+	      <a href="reference/users.html">Users</a>
+	    </li>
+	    <li>
+	      <a href="reference/available-milters.html">Available milters</a>
+	    </li>
+          </ul>
+	</div>
+
+	<div class="sidebar-item">
+	  <h2>Documents</h2>
+	  <ul>
+	    <li>
+	      <a href="reference/">Index</a>
+	    </li>
+	    <li>
+	      <a href="reference/news.html">NEWS</a>
+	    </li>
+	    <li>
+	      <a href="reference/readme.html">README</a>
+	    </li>
+	    <li>
+	      <a href="reference/introduction.html">Introduction</a>
+	    </li>
+	  </ul>
+        </div>
+
+        <div class="sidebar-item">
+	  <h2>About Project</h2>
+	  <ul>
+	    <li><a href="http://sourceforge.net/projects/milter-manager/">Project Page</a></li>
+	    <li>
+	      <a href="https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en">Mailing List</a>
+	    </li>
+	    <li>
+	      <a href="coverage/">Coverage</a>
+	    </li>
+  	  </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sponsors">
+      <p id="sponsor-ipa">
+        <a href="http://www.clear-code.com/">ClearCode Inc.</a> has been developing milter manager. This project was sponsored by <a href="http://www.ipa.go.jp/">IPA (Information-technology Promotion Agency, Japan)</a>.
+      </p>
+      <p id="sponsor-sf-net">
+        <a href="http://sourceforge.net/projects/milter-manager">
+          <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=236233&type=12" width="120" height="30" border="0" alt="Get milter manager at SourceForge.net. Fast, secure and Free Open Source software downloads" />
+        </a>
+      </p>
+      <p id="sponsor-github">
+        <a href="http://github.com/milter-manager/">
+          <img src="github-logo.png" width="100" height="45" border="0" alt="GitHub's git repositories are used." />
+        </a>
+      </p>
+      <p id="sponsor-tango">
+	<a href="http://tango.freedesktop.org/">
+          <img width="120" height="53" border="0" alt="Tango Desktop Project's icons are used." src="tango-logo.png" />
+        </a>
+      </p>
+      <p id="sponsor-famfamfam">
+	<a href="http://www.famfamfam.com/">
+          <img width="120" height="18" border="0" alt="famfamfam.com's flags are used." src="famfamfam-logo.png" />
+        </a>
+      </p>
+
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/milter-manager/" : "http://apps.sourceforge.net/piwik/milter-manager/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+piwik_action_name = '';
+piwik_idsite = 1;
+piwik_url = pkBaseURL + "piwik.php";
+piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+</script>
+<object><noscript><p><img src="http://apps.sourceforge.net/piwik/milter-manager/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
+<!-- End Piwik Tag -->
+    </div>
+  </body>
+</html>

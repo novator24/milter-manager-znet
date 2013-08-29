@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-options-on-ubuntu">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-options-on-ubuntu.top_of_page'>Ubuntuで更新（任意）</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Ubuntuで更新（任意）</refname>
+  <refpurpose>Ubuntu Linuxでのmilter manager関連ソフトウェアの更新方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  Ubuntu Linuxに特化したmilter manager関連ソフトウェアの更新方 法について説明します。新規にインストールする方法は
+  <link linkend='install-options-to-ubuntu'>Ubuntuへ インストール（任意）</link>
+  を見て ください。
+</para>
+  <para>
+  まず、milter manager本体を更新する必要があるので、まだの場合 は
+  <link linkend='upgrade-on-ubuntu'>Ubuntuで更新</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>milter-manager-log-analyzerの更新</title>
+  <para>パッケージを更新した時点で作業は完了しているので、追加の作業 は必要ありません。</para>
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>milter manager本体同様にmilter manager関連ソフトウェアも簡単 に更新することができます。新しいバージョンで行われている様々 な改善を利用したい場合は更新を検討してください。</para>
+</refsect1>
+</refentry>

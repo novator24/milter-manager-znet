@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ruby-milter-tutorial">
+<refmeta>
+  <refentrytitle role='top_of_page' id='ruby-milter-tutorial.top_of_page'>milter development with Ruby</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter development with Ruby</refname>
+  <refpurpose>A tutorial for Ruby bindings</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>This document describes how to develop a milter with Ruby bindings for the milter library provided by milter manager.</para>
+  <para>TODO...</para>
+</refsect1>
+</refentry>

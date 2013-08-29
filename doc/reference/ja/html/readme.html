@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>README</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="start.html" title="Part I. はじめよう">
+<link rel="prev" href="news.html" title="お知らせ">
+<link rel="next" href="commands.html" title="コマンド">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="news.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="commands.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="readme"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="readme.top_of_page"></a>README</span></h2>
+<p>README — milter manager: より効果的にmilterを使うためのmilter</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp9559648"></a><h2>名前</h2>
+<p>milter manager</p>
+</div>
+<div class="refsect1">
+<a name="idp9552368"></a><h2>サイト</h2>
+<p>
+  <a class="ulink" href="http://milter-manager.sourceforge.net/" target="_top">&lt;URL:http://milter-manager.sourceforge.net/&gt;</a>
+  
+</p>
+</div>
+<div class="refsect1">
+<a name="idp7431040"></a><h2>ライセンス</h2>
+<p>以下の規則に従います。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>ライセンスが明記してあるファイル: そのライセンス</p></li>
+<li class="listitem"><p>コマンド: GPL3(license/gpl.txt)</p></li>
+<li class="listitem"><p>ドキュメント: GFDL(license/fdl.txt)</p></li>
+<li class="listitem"><p>画像: Public Domain</p></li>
+<li class="listitem"><p>ライブラリ: LGPL3(license/lgpl.txt)</p></li>
+</ul></div>
+<p>具体的には以下の通りです。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>ライセンスが明記してあるファイル:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>milter/core/milter-memory-profile.c: LGPL2+</p></li>
+<li class="listitem"><p>binding/ruby/lib/milter/compatible.rb: Ruby's</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>コマンド: GPL3</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>src/以下</p></li>
+<li class="listitem"><p>tool/直下</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>ドキュメント: GFDL</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>README, README.ja</p></li>
+<li class="listitem"><p>doc/以下</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>画像: Public Domain</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>doc/*.svg, doc/*.png, html/*.svg, html/*.png</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>ライブラリ: LGPL3</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>上記以外</p></li></ul></div>
+</li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp6552016"></a><h2>milter manager</h2>
+<p>milter managerはmilter効果的に利用するためのmilterです。</p>
+<p>milter managerを導入することにより、MTAが行っていたmilter管理 をmilter managerが行うことになるため、以下のような利点があり ます。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>milter管理コストを減らすことができる</p></li>
+<li class="listitem"><p>milterを柔軟に組み合わせることができる</p></li>
+</ul></div>
+<p>
+  詳細は
+  <a class="link" href="introduction.html" title="はじめに">はじめに</a>
+  に書いてありま す。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp6152224"></a><h2>依存ソフトウェア</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>milterをサポートしたMTA</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>Sendmail &gt;= 8.13.8</p></li>
+<li class="listitem"><p>Postfix &gt;= 2.3.3 （ただし、Postfixがサポートしているmilterの機能のみ利 用可能）</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>GLib &gt;= 2.12.3</p></li>
+<li class="listitem"><p>Ruby &gt;= 1.8.5</p></li>
+<li class="listitem"><p>Ruby/GLib2 (Ruby-GNOME2) &gt;= 0.16.0</p></li>
+<li class="listitem">
+<p>UNIX系OS</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>Linux（Debian GNU/Linux, Ubuntu, CentOS）</p></li>
+<li class="listitem"><p>FreeBSD, NetBSD</p></li>
+<li class="listitem"><p>Solaris</p></li>
+</ul></div>
+</li>
+</ul></div>
+<div class="refsect2">
+<a name="idp8236208"></a><h3>あるとよいソフトウェア</h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>
+  <a class="ulink" href="URL:http://cutter.sourceforge.net/index.html.ja" target="_top">Cutter: C言語用テスティングフレームワーク</a>
+  &gt;= 1.0.6
+</p>
+<p>make checkおよびmake coverageを実行する場合は必要。</p>
+</li>
+<li class="listitem">
+<p>LCOV: カバレッジ結果整形ツール</p>
+<p>make coverageを実行する場合は必要。</p>
+<p>
+  <a class="ulink" href="http://ltp.sourceforge.net/coverage/lcov.php" target="_top">&lt;URL:http://ltp.sourceforge.net/coverage/lcov.php&gt;</a>
+  
+</p>
+</li>
+<li class="listitem">
+<p>RRDtool（付属のRubyバインディングもあるとなおよい）</p>
+<p>milter-manager-log-analyzerでmilter managerに登録された milterの動作のグラフを表示する場合は必要。</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp8243504"></a><h2>インストール</h2>
+<p>
+  <a class="link" href="install.html" title="インストール">インストール</a>
+  を見てください。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp8245584"></a><h2>設定</h2>
+<p>
+  <a class="link" href="configuration.html" title="設定">設定</a>
+  を見てください。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp10024864"></a><h2>使い方</h2>
+<p>milter-managerコマンドはbin/以下ではなくsbin/以下にインストー ルされることに注意してください。非常に多くの場合、一般ユーザ はsbin/にパスが通っていないので、フルパスで起動します。</p>
+<p>configure時に--prefixオプションを指定していない場合は /usr/local/sbin/以下にインストールされているので以下のように なります。</p>
+<pre class="programlisting">% /usr/local/sbin/milter-manager --help</pre>
+<p>
+  インストールが成功していれば、使用できるオプションが表示され ます。詳細は
+  <a class="link" href="milter-manager.html" title="milter-manager">milter-manager</a>
+  を 見てください。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp10029072"></a><h2>ツール</h2>
+<p>milter managerにはいくつか便利なツールが付属されていて、bin/ 以下にインストールされます。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="milter-test-server.html" title="milter-test-server">milter-test-server</a>
+  : MTA側のmilterプロトコルの機能を提供する。MTA無しでmilter の動作をテストするために使用することができる。
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="milter-test-client.html" title="milter-test-client">milter-test-client</a>
+  : MTA側から渡ってきた情報を表示するだけのmilter。MTA側から 渡っている情報を確認するために使用することができる。
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check</a>
+  : MTAの性能を計測するSMTPクライアント。
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="milter-manager-log-analyzer.html" title="milter-manager-log-analyzer">milter-manager-log-analyzer</a>
+  : milter-managerのログを解析し、milter-managerに登録された milterの動作をグラフ化する。
+</p></li>
+</ul></div>
+</div>
+<div class="refsect1">
+<a name="idp10037840"></a><h2>メーリングリスト</h2>
+<p>
+  <a class="ulink" href="https://lists.sourceforge.net/lists/listinfo/milter-manager-users-ja" target="_top">milter-manager-users-ja</a>
+  があり、質問・バグレポートを受け付けています。新バージョンの アナウンスもメーリングリストに告知されるので、milter manager を利用している場合はメーリングリストの購読を検討してください。
+</p>
+</div>
+<div class="refsect1">
+<a name="idp10040144"></a><h2>ソースコード</h2>
+<p>最新のソースコードはGitリポジトリから入手することがで きます。</p>
+<pre class="programlisting">% git clone https://github.com/milter-manager/milter-manager.git</pre>
+</div>
+<div class="refsect1">
+<a name="idp10042256"></a><h2>感謝</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>おばたさん: バグを報告してくれました。</p></li>
+<li class="listitem"><p>Павел Гришинさん: バグを報告してくれました。</p></li>
+<li class="listitem">
+<p>となかさん:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>バグを報告してくれました。</p></li>
+<li class="listitem"><p>アドバイスをしてくれました。</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>sgykさん: バグを報告してくれました。</p></li>
+<li class="listitem"><p>土谷さん: バグを報告してくれました。</p></li>
+<li class="listitem"><p>今間さん: バグを報告してくれました。</p></li>
+<li class="listitem">
+<p>はやみずさん:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>テストをきれいにしてくれました。</p></li>
+<li class="listitem"><p>Rubyでのmilter作成に有用な機能を追加してくれました。</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>ゴリ丸さん: 使いやすくなるようにアドバイスをしてくれました。</p></li>
+<li class="listitem">
+<p>西山さん:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>typoを直してくれました。</p></li>
+<li class="listitem"><p>有用なアドバイスをしてくれました。</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>Antuan Avdioukhineさん: 有用なアドバイスをしてくれました。</p></li>
+<li class="listitem">
+<p>さとうふみやすさん:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>バグを報告してくれました。</p></li>
+<li class="listitem"><p>Solarisに対応してくれました。</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p>ROSSOさん: バグを報告してくれました。</p></li>
+<li class="listitem">
+<p>やまだあきらさん:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>バグを報告してくれました。</p></li>
+<li class="listitem"><p>Debianパッケージの問題の修正方法を教えてくれました。</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Kenji Shionoさん:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem"><p>バグを報告してくれました。</p></li>
+<li class="listitem"><p>新しい機能を提案してくれました。</p></li>
+</ul></div>
+</li>
+<li class="listitem">
+<p>Jordaoさん</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>バグを報告してくれました。</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>荻野さん</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>バグを報告してくれました。</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>川崎さん</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>FreeBSDでの/etc/rc.conf.local読み込み対応をしてくれました。</p></li></ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

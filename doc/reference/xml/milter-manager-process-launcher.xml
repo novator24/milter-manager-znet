@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-process-launcher">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-process-launcher.top_of_page">MilterManagerProcessLauncher</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerProcessLauncher</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-process-launcher.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-PROCESS-LAUNCHER-ERROR:CAPS">MILTER_MANAGER_PROCESS_LAUNCHER_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-PROCESS-LAUNCHER:CAPS">MILTER_MANAGER_PROCESS_LAUNCHER</link>     (obj)
+enum                <link linkend="MilterManagerProcessLauncherError">MilterManagerProcessLauncherError</link>;
+struct              <link linkend="MilterManagerProcessLauncher">MilterManagerProcessLauncher</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-manager-process-launcher-error-quark">milter_manager_process_launcher_error_quark</link>
+                                                        (<parameter><type>void</type></parameter>);
+<link linkend="MilterManagerProcessLauncher"><returnvalue>MilterManagerProcessLauncher</returnvalue></link> * <link linkend="milter-manager-process-launcher-new">milter_manager_process_launcher_new</link>
+                                                        (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-process-launcher-run">milter_manager_process_launcher_run</link> (<parameter><link linkend="MilterManagerProcessLauncher"><type>MilterManagerProcessLauncher</type></link> *launcher</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-process-launcher.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-process-launcher.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-PROCESS-LAUNCHER-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_PROCESS_LAUNCHER_ERROR</title>
+<indexterm zone="MILTER-MANAGER-PROCESS-LAUNCHER-ERROR:CAPS"><primary>MILTER_MANAGER_PROCESS_LAUNCHER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_PROCESS_LAUNCHER_ERROR           (milter_manager_process_launcher_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-PROCESS-LAUNCHER:CAPS" role="macro">
+<title>MILTER_MANAGER_PROCESS_LAUNCHER()</title>
+<indexterm zone="MILTER-MANAGER-PROCESS-LAUNCHER:CAPS"><primary>MILTER_MANAGER_PROCESS_LAUNCHER</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_PROCESS_LAUNCHER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_PROCESS_LAUNCHER, MilterManagerProcessLauncher))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerProcessLauncherError" role="enum">
+<title>enum MilterManagerProcessLauncherError</title>
+<indexterm zone="MilterManagerProcessLauncherError"><primary>MilterManagerProcessLauncherError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_BAD_COMMAND_STRING,
+    MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_START_FAILURE,
+    MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_INVALID_USER_NAME,
+    MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_ALREADY_LAUNCHED,
+    MILTER_MANAGER_PROCESS_LAUNCHER_ERROR_MILTER_EXIT
+} MilterManagerProcessLauncherError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerProcessLauncher" role="struct">
+<title>struct MilterManagerProcessLauncher</title>
+<indexterm zone="MilterManagerProcessLauncher"><primary>MilterManagerProcessLauncher</primary></indexterm>
+<programlisting>struct MilterManagerProcessLauncher {
+    MilterAgent object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-process-launcher-error-quark" role="function">
+<title>milter_manager_process_launcher_error_quark ()</title>
+<indexterm zone="milter-manager-process-launcher-error-quark"><primary>milter_manager_process_launcher_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_manager_process_launcher_error_quark
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-process-launcher-new" role="function">
+<title>milter_manager_process_launcher_new ()</title>
+<indexterm zone="milter-manager-process-launcher-new"><primary>milter_manager_process_launcher_new</primary></indexterm>
+<programlisting><link linkend="MilterManagerProcessLauncher"><returnvalue>MilterManagerProcessLauncher</returnvalue></link> * milter_manager_process_launcher_new
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-process-launcher-run" role="function">
+<title>milter_manager_process_launcher_run ()</title>
+<indexterm zone="milter-manager-process-launcher-run"><primary>milter_manager_process_launcher_run</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_process_launcher_run (<parameter><link linkend="MilterManagerProcessLauncher"><type>MilterManagerProcessLauncher</type></link> *launcher</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

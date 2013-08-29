@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-manager-log-analyzer">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-manager-log-analyzer.top_of_page'>milter-manager-log-analyzer</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-manager-log-analyzer</refname>
+  <refpurpose>milter-managerのログを解析するプログラム</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>名前</title>
+  <para>milter-manager-log-analyzer - milter-managerのログを解析するプログラム</para>
+</refsect1>
+
+<refsect1>
+  <title>書式</title>
+  <para>
+  <code>milter-manager-log-analyzer</code>
+   [
+  <emphasis>オプション ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>説明</title>
+  <para>milter-manager-log-analyzerはmilter-managerのログを解析し、 milter-managerや子milterの動作結果をグラフ化します。グラフは 時系列で表示されるので、状況の推移を確認することができます。 このため、新しい子milterを導入した前後での変化を確認する用途 にも使うことができます。</para>
+</refsect1>
+
+<refsect1>
+  <title>オプション</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--help'>--help</term>
+  <listitem>
+  <para>利用できるオプションを表示して終了します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--log'>--log=LOG_FILE</term>
+  <listitem>
+  <para>LOG_FILEからログを読み込みます。</para>
+  <para>既定値は標準入力から読み込みます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--output-directory'>--output-directory=DIRECTORY</term>
+  <listitem>
+  <para>DIRECTORYにグラフ、HTML、グラフ生成用のデータを保存します。</para>
+  <para>既定値はカレントディレクトリ（&quot;.&quot;）です。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--no-update-db'>--no-update-db</term>
+  <listitem>
+  <para>これまでに読み込んだデータが入っているデータベースを更新 しません。グラフを出力する場合のみに有用です。</para>
+  <para>このオプションを指定しない場合は更新します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>終了ステータス</title>
+  <para>常に0。</para>
+</refsect1>
+
+<refsect1>
+  <title>例</title>
+  <para>milter-manager-log-analyzerはcrontab内で使われるでしょう。以 下はサンプルのcrontabです。</para>
+  <programlisting>PATH=/bin:/usr/local/bin:/usr/bin
+*/5 * * * * root cat /var/log/mail.info | su milter-manager -s /bin/sh -c &quot;milter-manager-log-analyzer --output-directory ~milter-manager/public_html/log&quot;</programlisting>
+  <para>このサンプルでは、rootがメールログを読み込んで、 milter-managerユーザ権限で動いている milter-manager-log-analyzerに渡しています。 milter-manager-log-analyzerは解析した結果 を~milter-manager/public_html/log/に出力します。解析結果は http://localhost/~milter-manager/log/で見ることができます。</para>
+</refsect1>
+
+<refsect1>
+  <title>関連項目</title>
+  <para>
+  <link linkend='milter-manager'>milter-manager.rd.ja</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

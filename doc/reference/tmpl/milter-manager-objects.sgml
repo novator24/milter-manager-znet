@@ -1,0 +1,52 @@
+<!-- ##### SECTION Title ##### -->
+milter-manager-objects
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterManagerConfiguration ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### STRUCT MilterManagerChildren ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### STRUCT MilterManagerEgg ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### STRUCT MilterManagerApplicableCondition ##### -->
+<para>
+
+</para>
+
+@object: 
+

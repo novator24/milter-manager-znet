@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-on-freebsd">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-on-freebsd.top_of_page'>Upgrade on FreeBSD</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Upgrade on FreeBSD</refname>
+  <refpurpose>How to upgrade milter manager on FreeBSD</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes how to upgrade milter manager on FreeBSD. See 
+  <link linkend='install-to-freebsd'>Install to FreeBSD</link>
+  for newly install information.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Upgrade</title>
+  <para>We can upgrade milter manager by overriding existing installation.</para>
+  <para>NOTE: /usr/local/etc/milter-manager/milter-manager.conf is overridden. If you changed it, please backup it before upgrading. If you are using milter-manager.local.conf not milter-manager.conf, you don't need to backup milter-manager.conf.</para>
+  <programlisting>% cd ~/src/
+% fetch http://downloads.sourceforge.net/milter-manager/milter-manager-2.0.0.tar.gz
+% tar xvzf milter-manager-2.0.0.tar.gz
+% cd milter-manager-2.0.0
+% ./configure CPPFLAGS=&quot;-I/usr/local/include&quot;
+% gmake
+% sudo cp /usr/local/etc/milter-manager/milter-manager.conf{,.`date +%Y%m%d`}
+% sudo gmake install</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>Conclusion</title>
+  <para>milter manager can be upgraded easily. It means that milter manager is a low maintenance cost software.</para>
+  <para>If we want to use improvements in a new version, please upgrade your milter manager.</para>
+  <para>
+  If we've also installed optional packages, we will go to
+  <link linkend='upgrade-options-on-freebsd'>Upgrade on FreeBSD (optional)</link>
+  .
+</para>
+</refsect1>
+</refentry>

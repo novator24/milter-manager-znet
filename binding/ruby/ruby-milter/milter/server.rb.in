@@ -1,0 +1,5 @@
+# This file is generated automatically.
+
+$LOAD_PATH.unshift('@expanded_binding_extdir@')
+$LOAD_PATH.unshift('@expanded_binding_libdir@')
+load '@expanded_binding_libdir@/milter/server.rb'

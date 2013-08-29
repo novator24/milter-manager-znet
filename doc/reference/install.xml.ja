@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install.top_of_page'>インストール</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>インストール</refname>
+  <refpurpose>milter managerのインストール方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>milter managerのインストール方法について説明します。</para>
+</refsect1>
+
+<refsect1>
+  <title>依存ソフトウェア</title>
+  <para>milter managerが依存しているソフトウェアについて説明します。</para>
+  <refsect2>
+  <title>必須</title>
+  <para>milter managerは以下のソフトウェアに依存しているため、milter manager のビルドには以下のソフトウェアが事前にインストールさ れている必要があります。</para>
+  <itemizedlist>
+  <listitem>
+  <para>GLib &gt;= 2.12.3</para>
+</listitem>
+  <listitem>
+  <para>Ruby &gt;= 1.8.5 (milter manager 1.8.4 から Ruby1.9 にも対応しました)</para>
+</listitem>
+  <listitem>
+  <para>Ruby/GLib2 (Ruby-GNOME2) &gt;= 0.16.0</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>任意: テスト実行</title>
+  <para>milter managerの単体テストを実行するためには以下のソフトウェ アが必要ですが、milter managerの実行には必須ではありません。</para>
+  <itemizedlist>
+  <listitem>
+  <para>Cutter &gt;= 1.0.6</para>
+</listitem>
+  <listitem>
+  <para>LCOV</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>任意: グラフ生成</title>
+  <para>milter managerはログからmilterの適用状況などをグラフ化する機 能も提供しています。グラフを生成する場合は以下のソフトウェア が必要ですが、milter managerの実行には必須ではありません。</para>
+  <itemizedlist>
+  <listitem>
+  <para>RRDtool</para>
+</listitem>
+  <listitem>
+  <para>RRDtoolのRubyバインディング</para>
+</listitem>
+</itemizedlist>
+  <para>
+  <ulink url='http://munin-monitoring.org/'>Munin</ulink>
+  と連携する場合は 以下のソフトウェアも必要です。
+</para>
+  <itemizedlist>
+  <listitem>
+  <para>munin-node</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>milter-manager</title>
+  <para>milter-managerはmilter managerパッケージの中核となるプログラ ムです。milter-managerがmilterとして動作し、MTA・子milterと 接続します。</para>
+  <para>milter-managerのインストール方法はプラットフォーム毎に解説し ています。</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='install-to-debian'>Debian</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-to-ubuntu'>Ubuntu</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-to-centos'>CentOS</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-to-freebsd'>FreeBSD</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-to-others'>その他</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>milter-manager-log-analyzer</title>
+  <para>
+  <inlinemediaobject>["<imageobject>\n  <imagedata fileref='milter-manager-log-analyzer-graphs.png' format='PNG'>\n\n</imagedata>\n</imageobject>", "<textobject>\n  <phrase>milter-manager-log-analyzerが生成するグラフ</phrase>\n</textobject>"]</inlinemediaobject>
+  
+</para>
+  <para>milter-manager-log-analyzerはmilter-managerのログからグラフを 出力するプログラムです。milter-manager-log-analyzerの設定は必 須ではありません。</para>
+  <para>milter-manager-log-analyzerを用いると、milterの状況を時系列で 確認することができます。新しく追加したmilterの効果や、milter の適用結果の傾向などを視覚的に確認したい場合に有用です。</para>
+  <para>
+  milter-manager-log-analyzerはsyslogに出力された milter-managerのログを解析し、
+  <ulink url='http://oss.oetiker.ch/rrdtool/'>RRDtool</ulink>
+  でグラフ化し ます。cronを設定し、定期的にログを確認します。
+</para>
+  <para>milter-manager-log-analyzerのインストール方法はプラットフォー ム毎に解説しています。</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-debian'>Debian</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-ubuntu'>Ubuntu</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-centos'>CentOS</link>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend='install-options-to-freebsd'>FreeBSD</link>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

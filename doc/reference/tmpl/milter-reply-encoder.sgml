@@ -1,0 +1,262 @@
+<!-- ##### SECTION Title ##### -->
+MilterReplyEncoder
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MilterReplyEncoder ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_reply_encoder_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_negotiate ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@option: 
+@macros_requests: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_continue ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_reply_code ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@code: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_temporary_failure ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_reject ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_accept ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_discard ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_add_header ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@name: 
+@value: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_insert_header ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@index: 
+@name: 
+@value: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_change_header ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@name: 
+@index: 
+@value: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_delete_header ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@name: 
+@index: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_change_from ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@from: 
+@parameters: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_add_recipient ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@recipient: 
+@parameters: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_delete_recipient ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@recipient: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_replace_body ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@body: 
+@body_size: 
+@packed_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_progress ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_quarantine ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+@reason: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_connection_failure ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_shutdown ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+
+<!-- ##### FUNCTION milter_reply_encoder_encode_skip ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@packet: 
+@packet_size: 
+
+

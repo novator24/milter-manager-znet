@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-report-statistics">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-report-statistics.top_of_page'>milter-statistics-report</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-statistics-report</refname>
+  <refpurpose>milter process statistics reporter</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>NAME</title>
+  <para>milter-statistics-report - milter process statistics reporter</para>
+</refsect1>
+
+<refsect1>
+  <title>SYNOPSIS</title>
+  <para>
+  <code>milter-statistics-report</code>
+   [
+  <emphasis>option ...</emphasis>
+  ] 
+  <emphasis>target process name ...</emphasis>
+  
+</para>
+</refsect1>
+
+<refsect1>
+  <title>DESCRIPTION</title>
+  <para>milter-statistics-report observes milter processes and reports statistics of them periodically. Here are reported statistics.</para>
+  <itemizedlist>
+  <listitem>
+  <para>PID (Process ID)</para>
+</listitem>
+  <listitem>
+  <para>VSS (Virtual Set Size)</para>
+</listitem>
+  <listitem>
+  <para>RSS (Resident Set Size)</para>
+</listitem>
+  <listitem>
+  <para>CPU usage percent</para>
+</listitem>
+  <listitem>
+  <para>Used CPU time</para>
+</listitem>
+  <listitem>
+  <para>Number of opened file descriptors</para>
+</listitem>
+</itemizedlist>
+  <para>milter-report-statistics can handle any process even if it isn't milter.</para>
+</refsect1>
+
+<refsect1>
+  <title>OPTIONS</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-report-statistics.--help'>--help</term>
+  <listitem>
+  <para>Shows available options and exits.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-report-statistics.--filter'>--filter=REGEXP</term>
+  <listitem>
+  <para>
+  Filters target processes by regular expression
+  <varname>REGEXP</varname>
+   . Processes which matches their command line in all processes that has 
+  <emphasis>target process name</emphasis>
+   to
+  <varname>REGEXP</varname>
+   are only reported their statistics.
+</para>
+  <para>The default is none. (No filter is applied.)</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-report-statistics.--interval'>--interval=INTERVAL</term>
+  <listitem>
+  <para>Reports statistics at intervals of INTERVAL seconds/minutes/hours.</para>
+  <para>The default is 1 second.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>EXIT STATUS</title>
+  <para>Always 0.</para>
+</refsect1>
+
+<refsect1>
+  <title>EXAMPLE</title>
+  <para>In the following example, milter-test-client and smtpd are observed:</para>
+  <programlisting>% milter-report-statistics milter-test-client smtpd
+    Time    PID       VSS       RSS  %CPU CPU time   #FD command
+16:42:02  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:02  23231  56656 kB   2904 kB   4.0  0:00.06     0 smtpd -n smtp -t inet -u
+16:42:03  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:03  23234  56656 kB   2900 kB   2.0  0:00.02     0 smtpd -n smtp -t inet -u
+16:42:04  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:05  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:05  23237  56656 kB   2904 kB   4.0  0:00.04     0 smtpd -n smtp -t inet -u
+16:42:06  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:06  23239  57436 kB   2900 kB   4.0  0:00.02     0 smtpd -n smtp -t inet -u
+16:42:07  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:07  23239  57436 kB   2900 kB                    0 smtpd -n smtp -t inet -u
+16:42:08  23133  37060 kB   1652 kB   0.0  0:00.00    10 milter-test-client -s inet:10025
+16:42:08  23242  56656 kB   2904 kB   4.0  0:00.03     0 smtpd -n smtp -t inet -u</programlisting>
+  <para>In the following example, milter implemented by Ruby are observed at intervals of 1 second:</para>
+  <programlisting>% milter-report-statistics --filter milter --interval 5 ruby
+    Time    PID       VSS       RSS  %CPU CPU time   #FD command
+16:44:45  23257 184224 kB   9700 kB   0.0  0:05.79    10 ruby milter-test-client.rb
+16:44:50  23257 184224 kB   9700 kB  34.0  0:07.02    14 ruby milter-test-client.rb
+16:44:55  23257 184224 kB   9700 kB  36.0  0:08.79    13 ruby milter-test-client.rb
+16:45:00  23257 184224 kB   9728 kB  36.0  0:10.57    14 ruby milter-test-client.rb
+16:45:05  23257 184224 kB   9728 kB  36.0  0:11.42    14 ruby milter-test-client.rb</programlisting>
+</refsect1>
+
+<refsect1>
+  <title>SEE ALSO</title>
+  <para>
+  <link linkend='milter-performance-check'>milter-performance-check.rd.ja</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

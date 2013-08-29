@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ruby-milter-reference">
+<refmeta>
+  <refentrytitle role='top_of_page' id='ruby-milter-reference.top_of_page'>Ruby用milter APIリファレンス</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Ruby用milter APIリファレンス</refname>
+  <refpurpose>Rubyバインディングのリファレンス</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  Rubyでmilterを開発するためのAPIリファレンスです。はじめて Rubyでmilterを開発する場合は、まず
+  <link linkend='ruby-milter-tutorial'>チュートリアル</link>
+  を読んでください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>概要</title>
+  <para>Rubyでmilterを開発するに当たって重要なクラスは以下の3つです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>Milter::Client::CommandLine</para>
+</listitem>
+  <listitem>
+  <para>Milter::ClientSession</para>
+</listitem>
+  <listitem>
+  <para>Milter::ClientSessionContext</para>
+</listitem>
+</itemizedlist>
+  <para>このAPIリファレンスでは、まず、この重要なクラスから記述しま す。</para>
+  <para>知っておいた方がよいクラスは以下の通りです。</para>
+  <itemizedlist>
+  <listitem>
+  <para>Milter::Client</para>
+</listitem>
+  <listitem>
+  <para>Milter::Logger</para>
+</listitem>
+  <listitem>
+  <para>Milter::SocketAddress::*</para>
+</listitem>
+</itemizedlist>
+  <para>
+  このうち、Milter::SocketAddress::*は
+  <link linkend='configuration.socket-address'>設定</link>
+  の方に記述してあるので、 そちらを参照してください。ここでは触れません。その他のクラス は重要なクラスの後に記述します。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Milter::Client::CommandLine</title>
+  <para>TODO...</para>
+</refsect1>
+
+<refsect1>
+  <title>Milter::ClientSession</title>
+  <para>TODO...</para>
+</refsect1>
+
+<refsect1>
+  <title>Milter::ClientSessionContext</title>
+  <para>TODO...</para>
+</refsect1>
+
+<refsect1>
+  <title>Milter::Client</title>
+  <para>TODO...</para>
+</refsect1>
+
+<refsect1>
+  <title>Milter::Logger</title>
+  <para>TODO...</para>
+</refsect1>
+</refentry>

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Install to CentOS 5</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="install-to.html" title="Install milter manager to your platform">
+<link rel="prev" href="install-options-to-ubuntu.html" title="Install to Ubuntu (optional)">
+<link rel="next" href="install-to-centos.html" title="Install to CentOS 6">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="install-options-to-ubuntu.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="install-to.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="install-to-centos.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install-to-centos5"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install-to-centos5.top_of_page"></a>Install to CentOS 5</span></h2>
+<p>Install to CentOS 5 — How to install milter manager to CentOS 5</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6664800"></a><h2>About this document</h2>
+<p>
+  This document describes how to install milter manager to CentOS 5. See
+  <a class="link" href="install-to-centos.html" title="Install to CentOS 6">Install to CentOS 6</a>
+   for CentOS 6 specific install information. See 
+  <a class="link" href="install.html" title="Install">Install</a>
+   for general install information.
+</p>
+<p>We assume that CentOS version is 5.8. We also assume that we use sudo to run a command with root authority. If you don't use sudo, use su instead.</p>
+</div>
+<div class="refsect1">
+<a name="idp7746848"></a><h2>Install packages</h2>
+<p>To install the following packages, related packages are also installed:</p>
+<pre class="programlisting">% sudo yum install -y glib2 ruby</pre>
+<p>We use Sendmail as MTA because it's installed by default.</p>
+<pre class="programlisting">% sudo yum install -y sendmail-cf</pre>
+<p>We use spamass-milter, clamav-milter and milter-greylist as milters. We use milter packages registered in RPMforge.</p>
+<p>We register RPMforge like the following.</p>
+<p>On 32bit environment:</p>
+<pre class="programlisting">% sudo rpm -Uhv http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el5.rf.i386.rpm</pre>
+<p>On 64bit environment:</p>
+<pre class="programlisting">% sudo rpm -Uhv http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el5.rf.x86_64.rpm</pre>
+<p>Now, we can install milters:</p>
+<pre class="programlisting">% sudo yum install -y spamass-milter clamav-milter milter-greylist</pre>
+<p>And we install RRDtool for generating graphs:</p>
+<pre class="programlisting">% sudo yum install -y ruby-rrdtool</pre>
+</div>
+<div class="refsect1">
+<a name="idp5504496"></a><h2>Build and Install</h2>
+<p>milter manager can be installed by yum.</p>
+<p>We register milter manager yum repository like the following:</p>
+<pre class="programlisting">% sudo rpm -Uvh http://downloads.sourceforge.net/milter-manager/centos/milter-manager-release-1.1.0-0.noarch.rpm</pre>
+<p>Now, we can install milter manager:</p>
+<pre class="programlisting">% sudo yum install -y milter-manager</pre>
+</div>
+<div class="refsect1">
+<a name="idp5391568"></a><h2>Configuration</h2>
+<p>Here is a basic configuration policy.</p>
+<p>We use IPv4 socket and accepts connections only from localhost.</p>
+<p>
+  milter-greylist should be applied only if
+  <a class="ulink" href="http://gabacho.reto.jp/en/anti-spam/" target="_top">S25R</a>
+  condition is matched to reduce needless delivery delay. But the configuration is automatically done by milter-manager. We need to do nothing for it.
+</p>
+<div class="refsect2">
+<a name="idp5394480"></a><h3>Configure spamass-milter</h3>
+<p>At first, we configure spamd.</p>
+<p>spamd adds "[SPAM]" to spam mail's subject by default. If you don't like the behavior, edit /etc/mail/spamassassin/local.cf.</p>
+<p>Before:</p>
+<pre class="programlisting">rewrite_header Subject [SPAM]</pre>
+<p>After:</p>
+<pre class="programlisting"># rewrite_header Subject [SPAM]</pre>
+<p>We add the following configuration to /etc/spamassassin/local.cf. This configuration is for adding headers only if spam detected.</p>
+<pre class="programlisting">remove_header ham Status
+remove_header ham Level</pre>
+<p>We start spamd on startup:</p>
+<pre class="programlisting">% sudo /sbin/chkconfig spamassassin on</pre>
+<p>We start spamd:</p>
+<pre class="programlisting">% sudo /sbin/service spamassassin start</pre>
+<p>Here are spamass-milter's configuration items:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Change socket address.</p></li>
+<li class="listitem"><p>Disable needless body change feature.</p></li>
+<li class="listitem"><p>Reject if score is larger than or equal to 15.</p></li>
+</ul></div>
+<p>We change /etc/sysconfig/spamass-milter:</p>
+<p>Before:</p>
+<pre class="programlisting">#SOCKET=/var/run/spamass.sock
+#EXTRA_FLAGS="-m -r 15"</pre>
+<p>After:</p>
+<pre class="programlisting">SOCKET="inet:11120@[127.0.0.1]"
+EXTRA_FLAGS="-m -r 15"</pre>
+<p>We start spamass-milter on startup:</p>
+<pre class="programlisting">% sudo /sbin/chkconfig spamass-milter on</pre>
+<p>We start spamass-milter:</p>
+<pre class="programlisting">% sudo /sbin/service spamass-milter start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9993472"></a><h3>Configure clamav-milter</h3>
+<p>We start clamd.</p>
+<pre class="programlisting">% sudo /sbin/service clamd start</pre>
+<p>We edit /etc/clamav-milter.conf to change clamav-milter's socket address.</p>
+<p>Before:</p>
+<pre class="programlisting">#MilterSocketMode 0660</pre>
+<p>After:</p>
+<pre class="programlisting">MilterSocketMode 0660</pre>
+<p>We start clamav-milter:</p>
+<pre class="programlisting">% sudo /sbin/service clamav-milter start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9999440"></a><h3>Configure milter-greylist</h3>
+<p>We change /etc/mail/greylist.conf for the following configurations:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>use the leading 24bits for IP address match to avoid Greylist adverse effect for sender uses some MTA case.</p></li>
+<li class="listitem"><p>decrease retransmit check time to 10 minutes from 30 minutes (default value) to avoid Greylist adverse effect.</p></li>
+<li class="listitem"><p>increase auto whitelist period to a week from 1 day (default value) to avoid Greylist adverse effect.</p></li>
+<li class="listitem"><p>use Greylist by default.</p></li>
+</ul></div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>The configuration relaxes Greylist check to avoid Greylist
+adverse effect. It increases received spam mails but we
+should give priority to avoid false positive rather than
+false negative. We should not consider that we blocks all
+spam mails by Greylist. We can blocks spam mails that
+isn't blocked by Greylist by other anti-spam technique
+such as SpamAssassin. milter manager helps constructing
+mail system that combines some anti-spam techniques.</div>
+<p>Before:</p>
+<pre class="programlisting">racl whitelist default</pre>
+<p>After:</p>
+<pre class="programlisting">subnetmatch /24
+greylist 10m
+autowhite 1w
+racl greylist default</pre>
+<p>We create /etc/sysconfig/milter-greylist with the following content:</p>
+<pre class="programlisting">OPTIONS="$OPTIONS -p inet:11122@[127.0.0.1]"</pre>
+<p>We start milter-greylist on startup:</p>
+<pre class="programlisting">% sudo /sbin/chkconfig milter-greylist on</pre>
+<p>We start milter-greylist:</p>
+<pre class="programlisting">% sudo /sbin/service milter-greylist start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11002128"></a><h3>Configure milter-manager</h3>
+<p>We add 'milter-manager' user to 'clamav' group to access clamav-milter's socket:</p>
+<pre class="programlisting">% sudo usermod -G clamav -a milter-manager</pre>
+<p>milter-manager detects milters that installed in system. We can confirm spamass-milter, clamav-milter and milter-greylist are detected:</p>
+<pre class="programlisting">% sudo /usr/sbin/milter-manager -u milter-manager --show-config</pre>
+<p>The following output shows milters are detected:</p>
+<pre class="programlisting">...
+define_milter("milter-greylist") do |milter|
+  milter.connection_spec = "inet:11122@[127.0.0.1]"
+  ...
+  milter.enabled = true
+  ...
+end
+...
+define_milter("clamav-milter") do |milter|
+  milter.connection_spec = "unix:/var/clamav/clmilter.socket"
+  ...
+  milter.enabled = true
+  ...
+end
+...
+define_milter("spamass-milter") do |milter|
+  milter.connection_spec = "inet:11120@[127.0.0.1]"
+  ...
+  milter.enabled = true
+  ...
+end
+...</pre>
+<p>
+  We should confirm that milter's name, socket path and 'enabled = true'. If the values are unexpected, we need to change /etc/milter-manager/milter-manager.conf. See 
+  <a class="link" href="configuration.html" title="Configuration">Configuration</a>
+   for details of milter-manager.conf.
+</p>
+<p>But if we can, we want to use milter manager without editing miter-manager.conf. If you report your environment to the milter manager project, the milter manager project may improve detect method.</p>
+<p>milter-manager's configuration is finished. We start to milter-manager:</p>
+<pre class="programlisting">% sudo /sbin/service milter-manager start</pre>
+<p>milter-test-server is usuful to confirm milter-manager was ran:</p>
+<pre class="programlisting">% sudo -u milter-manager milter-test-server -s unix:/var/run/milter-manager/milter-manager.sock</pre>
+<p>Here is a sample success output:</p>
+<pre class="programlisting">status: pass
+elapsed-time: 0.128 seconds</pre>
+<p>If milter-manager fails to run, the following message will be shown:</p>
+<pre class="programlisting">Failed to connect to unix:/var/run/milter-manager/milter-manager.sock</pre>
+<p>In this case, we can use log to solve the problem. milter-manager is verbosily if --verbose option is specified. milter-manager outputs logs to standard output if milter-manager isn't daemon process.</p>
+<p>We can add the following configuration to /etc/sysconfig/milter-manager to output verbose log to standard output:</p>
+<pre class="programlisting">OPTION_ARGS="--verbose --no-daemon"</pre>
+<p>We start milter-manager again:</p>
+<pre class="programlisting">% sudo /sbin/service milter-manager restart</pre>
+<p>Some logs are output if there is a problem. Running milter-manager can be exitted by Ctrl+c.</p>
+<p>OPTION_ARGS configuration in /etc/sysconfig/milter-manager should be commented out after the problem is solved to run milter-manager as daemon process. And we should restart milter-manager.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp11017648"></a><h3>Configure Sendmail</h3>
+<p>First, we enable Sendmail:</p>
+<pre class="programlisting">% sudo /sbin/chkconfig --add sendmail
+% sudo /sbin/service sendmail start</pre>
+<p>We append the following content to /etc/mail/sendmail.mc to register milter-manager to Sendmail.</p>
+<pre class="programlisting">INPUT_MAIL_FILTER(`milter-manager', `S=local:/var/run/milter-manager/milter-manager.sock')</pre>
+<p>It's important that spamass-milter, clamav-milter, milter-greylist aren't needed to be registered because they are used via milter-manager.</p>
+<p>We update Sendmail configuration and reload it.</p>
+<pre class="programlisting">% sudo make -C /etc/mail
+% sudo /sbin/service sendmail reload</pre>
+<p>Sendmail's milter configuration is completed.</p>
+<p>milter-manager logs to syslog. If milter-manager works well, some logs can be shown in /var/log/maillog. We need to sent a test mail for confirming.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp11023856"></a><h2>Conclusion</h2>
+<p>There are many configurations to work milter and Sendmail together. They can be reduced by introducing milter-manager.</p>
+<p>Without milter-manager, we need to specify sockets of spamass-milter, clamav-milter and milter-greylist to sendmail.mc. With milter-manager, we doesn't need to specify sockets of them, just specify a socket of milter-manager. They are detected automatically. We doesn't need to take care some small mistakes like typo.</p>
+<p>milter-manager also detects which '/sbin/chkconfig -add' is done or not. If we disable a milter, we use the following steps:</p>
+<pre class="programlisting">% sudo /sbin/service milter-greylist stop
+% sudo /sbin/chkconfig --del milter-greylist</pre>
+<p>We need to reload milter-manager after we disable a milter.</p>
+<pre class="programlisting">% sudo /sbin/service milter-manager reload</pre>
+<p>milter-manager detects a milter is disabled and doesn't use it. We doesn't need to change Sendmail's sendmail.mc.</p>
+<p>We can reduce maintainance cost by introducing milter-manager if we use some milters on CentOS.</p>
+<p>
+  milter manager also provides tools to help operation. Installing them is optional but we can reduce operation cost too. If we also install them, we will go to
+  <a class="link" href="install-options-to-centos.html" title="Install to CentOS (optional)">Install to CentOS (optional)</a>
+  .
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

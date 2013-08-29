@@ -1,0 +1,72 @@
+<!-- ##### SECTION Title ##### -->
+MilterSyslogLogger
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_TYPE_SYSLOG_LOGGER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_SYSLOG_LOGGER ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### MACRO MILTER_SYSLOG_LOGGER_IS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### MACRO MILTER_SYSLOG_LOGGER_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### STRUCT MilterSyslogLogger ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_syslog_logger_new ##### -->
+<para>
+
+</para>
+
+@identity: 
+@facility: 
+@Returns: 
+
+

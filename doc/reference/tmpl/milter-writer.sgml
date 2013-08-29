@@ -1,0 +1,113 @@
+<!-- ##### SECTION Title ##### -->
+MilterWriter
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_WRITER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterWriterError ##### -->
+<para>
+
+</para>
+
+@MILTER_WRITER_ERROR_NO_CHANNEL: 
+@MILTER_WRITER_ERROR_IO_ERROR: 
+@MILTER_WRITER_ERROR_NOT_READY: 
+
+<!-- ##### STRUCT MilterWriter ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_writer_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_writer_io_channel_new ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_writer_write ##### -->
+<para>
+
+</para>
+
+@writer: 
+@chunk: 
+@chunk_size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_writer_flush ##### -->
+<para>
+
+</para>
+
+@writer: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_writer_start ##### -->
+<para>
+
+</para>
+
+@writer: 
+@loop: 
+
+
+<!-- ##### FUNCTION milter_writer_is_watching ##### -->
+<para>
+
+</para>
+
+@writer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_writer_shutdown ##### -->
+<para>
+
+</para>
+
+@writer: 
+
+

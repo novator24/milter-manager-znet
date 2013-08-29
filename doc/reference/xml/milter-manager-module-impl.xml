@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-module-impl">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-module-impl.top_of_page">milter-manager-module-impl</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-manager-module-impl</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-module-impl.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis><link linkend="GList"><returnvalue>GList</returnvalue></link> *             (<link linkend="MilterManagerModuleInitFunc">*MilterManagerModuleInitFunc</link>)      (<parameter><link linkend="GTypeModule"><type>GTypeModule</type></link> *module</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                (<link linkend="MilterManagerModuleExitFunc">*MilterManagerModuleExitFunc</link>)      (<parameter><type>void</type></parameter>);
+<link linkend="GObject"><returnvalue>GObject</returnvalue></link> *           (<link linkend="MilterManagerModuleInstantiateFunc">*MilterManagerModuleInstantiateFunc</link>)
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *first_property</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> var_args</parameter>);
+#define             <link linkend="MILTER-MANAGER-MODULE-IMPL-INIT:CAPS">MILTER_MANAGER_MODULE_IMPL_INIT</link>
+#define             <link linkend="MILTER-MANAGER-MODULE-IMPL-EXIT:CAPS">MILTER_MANAGER_MODULE_IMPL_EXIT</link>
+#define             <link linkend="MILTER-MANAGER-MODULE-IMPL-INSTANTIATE:CAPS">MILTER_MANAGER_MODULE_IMPL_INSTANTIATE</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-module-impl.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-module-impl.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MilterManagerModuleInitFunc" role="function">
+<title>MilterManagerModuleInitFunc ()</title>
+<indexterm zone="MilterManagerModuleInitFunc"><primary>MilterManagerModuleInitFunc</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             (*MilterManagerModuleInitFunc)      (<parameter><link linkend="GTypeModule"><type>GTypeModule</type></link> *module</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerModuleExitFunc" role="function">
+<title>MilterManagerModuleExitFunc ()</title>
+<indexterm zone="MilterManagerModuleExitFunc"><primary>MilterManagerModuleExitFunc</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                (*MilterManagerModuleExitFunc)      (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerModuleInstantiateFunc" role="function">
+<title>MilterManagerModuleInstantiateFunc ()</title>
+<indexterm zone="MilterManagerModuleInstantiateFunc"><primary>MilterManagerModuleInstantiateFunc</primary></indexterm>
+<programlisting><link linkend="GObject"><returnvalue>GObject</returnvalue></link> *           (*MilterManagerModuleInstantiateFunc)
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *first_property</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> var_args</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-MODULE-IMPL-INIT:CAPS" role="macro">
+<title>MILTER_MANAGER_MODULE_IMPL_INIT</title>
+<indexterm zone="MILTER-MANAGER-MODULE-IMPL-INIT:CAPS"><primary>MILTER_MANAGER_MODULE_IMPL_INIT</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_MODULE_IMPL_INIT           milter_manager_module_impl_init
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-MODULE-IMPL-EXIT:CAPS" role="macro">
+<title>MILTER_MANAGER_MODULE_IMPL_EXIT</title>
+<indexterm zone="MILTER-MANAGER-MODULE-IMPL-EXIT:CAPS"><primary>MILTER_MANAGER_MODULE_IMPL_EXIT</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_MODULE_IMPL_EXIT           milter_manager_module_impl_exit
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-MODULE-IMPL-INSTANTIATE:CAPS" role="macro">
+<title>MILTER_MANAGER_MODULE_IMPL_INSTANTIATE</title>
+<indexterm zone="MILTER-MANAGER-MODULE-IMPL-INSTANTIATE:CAPS"><primary>MILTER_MANAGER_MODULE_IMPL_INSTANTIATE</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_MODULE_IMPL_INSTANTIATE    milter_manager_module_impl_instantiate
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="milter-manager-log-analyzer">
+<refmeta>
+  <refentrytitle role='top_of_page' id='milter-manager-log-analyzer.top_of_page'>milter-manager-log-analyzer</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>milter-manager-log-analyzer</refname>
+  <refpurpose>log analyzer for milter-manager</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>NAME</title>
+  <para>milter-manager-log-analyzer - log analyzer for milter-manager</para>
+</refsect1>
+
+<refsect1>
+  <title>SYNOPSIS</title>
+  <para>
+  <code>milter-manager-log-analyzer</code>
+   [
+  <emphasis>option ...</emphasis>
+  ]
+</para>
+</refsect1>
+
+<refsect1>
+  <title>DESCRIPTION</title>
+  <para>milter-manager-log-analyzer analyzes milter-manager log and generates graphs for milters' result. It's useful for confirming system status transition because graphs shows data in time-line. Graphs can also be used for comparing changes between before introducing new milter and after introducing new milter.</para>
+</refsect1>
+
+<refsect1>
+  <title>Options</title>
+  <variablelist>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--help'>--help</term>
+  <listitem>
+  <para>Shows available options and exits.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--log'>--log=lOG_FILE</term>
+  <listitem>
+  <para>Reads log from LOG_FILE</para>
+  <para>The default is standard input.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--output-directory'>--output-directory=DIRECTORY</term>
+  <listitem>
+  <para>Outputs graphs, HTML and data to DIRECTORY.</para>
+  <para>The default is the current directory. (&quot;.&quot;)</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='milter-manager-log-analyzer.--no-update-db'>--no-update-db</term>
+  <listitem>
+  <para>Doesn't update database. It's useful for just generates graphs.</para>
+  <para>If this option is not specified, database will be updated.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1>
+  <title>EXIT STATUS</title>
+  <para>Always 0.</para>
+</refsect1>
+
+<refsect1>
+  <title>EXAMPLE</title>
+  <para>milter-manager-log-analyzer will be used in crontab. Here is a sample crontab:</para>
+  <programlisting>PATH=/bin:/usr/local/bin:/usr/bin
+*/5 * * * * root cat /var/log/mail.info | su milter-manager -s /bin/sh -c &quot;milter-manager-log-analyzer --output-directory ~milter-manager/public_html/log&quot;</programlisting>
+  <para>In the above sample, mail log are read by root and milter-manager-log-analyzer run as milter-manager user is received it. milter-manager-log-analyzer outputs analyzed result into ~milter-manager/public_html/log/. Analyzed result can be seen at http://localhost/~milter-manager/log/.</para>
+</refsect1>
+
+<refsect1>
+  <title>SEE ALSO</title>
+  <para>
+  <link linkend='milter-manager'>milter-manager.rd</link>
+  (1)
+</para>
+</refsect1>
+</refentry>

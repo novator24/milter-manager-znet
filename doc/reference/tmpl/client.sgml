@@ -1,0 +1,360 @@
+<!-- ##### SECTION Title ##### -->
+MilterClient
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_CLIENT_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterClientError ##### -->
+<para>
+
+</para>
+
+@MILTER_CLIENT_ERROR_RUNNING: 
+@MILTER_CLIENT_ERROR_UNIX_SOCKET: 
+@MILTER_CLIENT_ERROR_IO_ERROR: 
+@MILTER_CLIENT_ERROR_THREAD: 
+@MILTER_CLIENT_ERROR_PASSWORD_ENTRY: 
+@MILTER_CLIENT_ERROR_GROUP_ENTRY: 
+@MILTER_CLIENT_ERROR_DROP_PRIVILEGE: 
+@MILTER_CLIENT_ERROR_DETACH_IO: 
+@MILTER_CLIENT_ERROR_DAEMONIZE: 
+@MILTER_CLIENT_ERROR_NOT_LISTENED_YET: 
+@MILTER_CLIENT_ERROR_PROCESS: 
+@MILTER_CLIENT_ERROR_PID_FILE: 
+
+<!-- ##### STRUCT MilterClient ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL MilterClient::connection-established ##### -->
+<para>
+
+</para>
+
+@milterclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClient::event-loop-created ##### -->
+<para>
+
+</para>
+
+@milterclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClient::listen-started ##### -->
+<para>
+
+</para>
+
+@milterclient: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL MilterClient::maintain ##### -->
+<para>
+
+</para>
+
+@milterclient: the object which received the signal.
+
+<!-- ##### SIGNAL MilterClient::sessions-finished ##### -->
+<para>
+
+</para>
+
+@milterclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### ARG MilterClient:connection-spec ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:custom-fork ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:default-packet-buffer-size ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:event-loop ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:event-loop-backend ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:maintenance-interval ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:max-pending-finished-sessions ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:n-workers ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:pid-file ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:remove-pid-file-on-exit ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:run-as-daemon ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:start-syslog ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:syslog-facility ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:syslog-identify ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClient:worker-id ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION milter_client_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_get_default_connection_spec ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_set_connection_spec ##### -->
+<para>
+
+</para>
+
+@client: 
+@spec: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_get_listen_channel ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_set_listen_channel ##### -->
+<para>
+
+</para>
+
+@client: 
+@channel: 
+
+
+<!-- ##### FUNCTION milter_client_set_listen_backlog ##### -->
+<para>
+
+</para>
+
+@client: 
+@backlog: 
+
+
+<!-- ##### FUNCTION milter_client_is_remove_unix_socket_on_create ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_set_remove_unix_socket_on_create ##### -->
+<para>
+
+</para>
+
+@client: 
+@remove: 
+
+
+<!-- ##### FUNCTION milter_client_set_timeout ##### -->
+<para>
+
+</para>
+
+@client: 
+@timeout: 
+
+
+<!-- ##### FUNCTION milter_client_get_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_get_default_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_set_default_unix_socket_mode ##### -->
+<para>
+
+</para>
+
+@client: 
+@mode: 
+
+
+<!-- ##### FUNCTION milter_client_get_unix_socket_group ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_get_default_unix_socket_group ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_set_default_unix_socket_group ##### -->
+<para>
+
+</para>
+
+@client: 
+@group: 
+
+
+<!-- ##### FUNCTION milter_client_is_remove_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_get_default_remove_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_set_default_remove_unix_socket_on_close ##### -->
+<para>
+
+</para>
+
+@client: 
+@remove: 
+
+
+<!-- ##### FUNCTION milter_client_main ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_shutdown ##### -->
+<para>
+
+</para>
+
+@client: 
+
+

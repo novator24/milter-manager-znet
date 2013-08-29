@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="available-milters">
+<refmeta>
+  <refentrytitle role='top_of_page' id='available-milters.top_of_page'>Available milters</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Available milters</refname>
+  <refpurpose>can be used with milter manager</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>This document shows milters reported that they are works with milter manager.</para>
+  <para>
+  Milters that not listed here will be able to work with milter manager. If you can work a milter not listed here with milter manager, please report the milter to 
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en'>mailing list</ulink>
+  .
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Anti spam</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://hcpnet.free.fr/milter-greylist/'>milter-greylist</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://savannah.nongnu.org/projects/spamass-milt/'>spamass-milter</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.cloudmark.com/en/serviceproviders/authority.html'>Cloudmark Authority</ulink>
+  : also supports anti-virus.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.kaspersky.com/anti-spam'>Kaspersky Anti-Spam 3.0</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>Anti virus</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.drweb.hk/products/e_products_m_unix.php'>Dr.Web</ulink>
+  : also supports anti-spam.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.clamav.net/'>clamav-milter</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.promark-inc.com/products/mailserver.html'>ProScan</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.kaspersky.com/anti-virus_linux_mail_server'>Kaspersky Anti-Virus Linux Mail Server 5.6</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>Domain authentication</title>
+  <refsect2>
+  <title>DKIM/DomainKeys</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.opendkim.org/'>OpenDKIM</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://enma.sourceforge.net/'>ENMA</ulink>
+  : also supports SPF/Sender ID.
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://sourceforge.net/projects/dkim-milter/'>dkim-milter</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+  <refsect2>
+  <title>SPF/Sender ID</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.acme.com/software/spfmilter/'>spfmilter</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://sourceforge.net/projects/sid-milter/'>sid-milter</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>Others</title>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://amavisd-milter.sourceforge.net/'>amavisd-milter</ulink>
+  
+</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+
+<refsect1>
+  <title>Not confirmed</title>
+  <para>
+  If you confirm that they can work with milter manager, please report it to 
+  <ulink url='https://lists.sourceforge.net/lists/listinfo/milter-manager-users-en'>mailing list</ulink>
+  .
+</para>
+  <itemizedlist>
+  <listitem>
+  <para>
+  <ulink url='http://www.avira.com/en/products/avira_antivir_mailgate.html'>AntiVir MailGate</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.benzedrine.cx/milter-regex.html'>milter-regex</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <ulink url='http://www.mimedefang.org/'>MIMEDefang</ulink>
+  
+</para>
+</listitem>
+  <listitem>
+  <para>...</para>
+</listitem>
+</itemizedlist>
+</refsect1>
+</refentry>

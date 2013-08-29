@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install-options-to-debian">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install-options-to-debian.top_of_page'>Debianへインストール（任意）</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Debianへインストール（任意）</refname>
+  <refpurpose>Debian GNU/Linuxへのmilter manager関連ソフトウェアのインストール方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  Debian GNU/Linuxに特化したmilter manager関連ソフトウェアのイ ンストール方法について説明します。milter manager本体のインス トール情報は
+  <link linkend='install-to-debian'>Debianへインストール</link>
+  、Debianに依存しない一般的なインス トール情報は
+  <link linkend='install'>インストール</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1 id='install-options-to-debian.milter-manager-log-analyzer'>
+  <title>milter-manager-log-analyzerのインストール</title>
+  <para>milter-manager-log-analyzerはmilter-managerパッケージに含ま れているので、すでにインストールされています。ここでは、 milter-manager-log-analyzerが出力するグラフを閲覧するための 設定を行います。</para>
+  <para>
+  milter-manager-log-analyzerが出力するグラフは同じホストにWeb サーバを設置して閲覧する方法と
+  <ulink url='http://munin-monitoring.org/'>Munin</ulink>
+  を利用して別ホス トで閲覧する方法があります。すでにMuninを導入していたり、メー ルサーバとは別にシステム監視用のサーバがある場合はMuninを利用 するとよいでしょう。そうでない場合は同じホストにWebサーバを設 置するのがよいでしょう
+  <footnote>
+  <para>同じホストでMuninを動かす場合もWebサー バが必要になります。</para>
+</footnote>
+  。
+</para>
+  <para>まずは、同じホストにWebサーバを設置する方法を説明し、次に別 ホストにあるMuninから閲覧する方法を説明します。</para>
+  <refsect2>
+  <title>同じホストにWebサーバを設置する場合</title>
+  <refsect3>
+  <title>パッケージのインストール</title>
+  <para>WebサーバとしてApacheを使います。</para>
+  <programlisting>% sudo aptitude -V -D -y install apache2</programlisting>
+</refsect3>
+
+  <refsect3>
+  <title>milter-manager-log-analyzerの設定</title>
+  <para>グラフはインストール時に作成したmilter-managerユーザのホーム ディレクトリ（/var/lib/milter-manager/）以下に出力されていま す。このグラフをhttp://localhost/milter-manager-log/で閲覧で きるようにします。</para>
+  <para>以下の内容の/etc/apache2/conf.d/milter-manager-logを作成しま す。</para>
+  <para>/etc/apache2/conf.d/milter-manager-log:</para>
+  <programlisting>Alias /milter-manager-log/ /var/lib/milter-manager/public_html/log/</programlisting>
+  <para>作成したら、再読み込みします。</para>
+  <programlisting>% sudo /etc/init.d/apache2 force-reload</programlisting>
+  <para>これでhttp://localhost/milter-manager-log/でグラフを閲覧で きるようになります。</para>
+</refsect3>
+
+</refsect2>
+
+  <refsect2 id='install-options-to-debian.munin'>
+  <title>別ホストにあるMuninを利用する方法</title>
+  <para>次は、別ホストにあるMunin上でグラフを閲覧する方法です。</para>
+</refsect2>
+
+  <refsect3>
+  <title>パッケージのインストール</title>
+  <para>milter-manager-log-analyzerが収集した統計情報をMuninに提供す るmilter-manager-munin-pluginsパッケージをインストールします。</para>
+  <programlisting>% sudo aptitude -V -D -y install milter-manager-munin-plugins</programlisting>
+  <para>
+  <emphasis>注: Muninに統計情報を提供する場合はmilter manager 1.5.0以 降のmilter-manager-log-analyzerが生成したデータベースを使う 必要があります。1.5.0より前のバージョンからアップデートして いる場合は~milter-manager/public_html/log/以下を削除してくだ さい。削除すると5分後に新しく統計情報データベースが作成され ます。</emphasis>
+  
+</para>
+</refsect3>
+
+  <refsect3>
+  <title>munin-nodeの設定</title>
+  <para>Muninサーバからの接続を許可します。Muninサーバが 192.168.1.254の場合は以下の行を/etc/munin/munin-node.confに 追加します。</para>
+  <para>/etc/munin/munin-node.conf:</para>
+  <programlisting>allow ^192\.168\.1\.254$</programlisting>
+  <para>munin-nodeを再起動し設定を反映させます。</para>
+  <programlisting>% sudo /usr/sbin/service munin-node restart</programlisting>
+</refsect3>
+
+  <refsect3>
+  <title>Muninサーバの設定</title>
+  <para>ここからは監視用サーバでの設定です。監視用サーバもDebian GNU/Linuxで動いているとします。</para>
+  <para>まず、muninをインストールします。</para>
+  <programlisting>monitoring-server% sudo aptitude -V -D -y install munin</programlisting>
+  <para>muninの監視対象にmunin-nodeが動いているメールサーバを追加しま す。メールサーバが以下の場合の/etc/munin/munin.confへ追加する 設定項目を示します。</para>
+  <variablelist>
+  <varlistentry>
+  <term id='install-options-to-debian.ホスト名'>ホスト名</term>
+  <listitem>
+  <para>mail.example.com</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='install-options-to-debian.IPアドレス'>IPアドレス</term>
+  <listitem>
+  <para>192.168.1.2</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>このメールサーバを登録するには、以下の内容を /etc/munin/munin.confに追記します。</para>
+  <para>/etc/munin/munin.conf:</para>
+  <programlisting>[mail.example.com]
+    address 192.168.1.2
+    use_node_name yes</programlisting>
+  <para>5分後にはhttp://monitoring-server/munin/でグラフを閲覧できる ようになります。</para>
+</refsect3>
+
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>
+  milter-manager-log-analyzerを利用することによりmilterを導入し た効果を視覚的に確認することができます。MTAとしてPostfixを使 用しているのであれば、
+  <ulink url='http://mailgraph.schweikert.ch/'>Mailgraph</ulink>
+  のグラフと 見くらべてmilter導入の効果を確認することができます。milterを 試験的に導入している場合などに有効に活用できます。
+</para>
+</refsect1>
+</refentry>

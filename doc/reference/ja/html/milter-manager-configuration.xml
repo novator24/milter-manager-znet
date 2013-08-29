@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-configuration">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-configuration.top_of_page">MilterManagerConfiguration</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerConfiguration</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-configuration.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-CONFIGURATION-ERROR:CAPS">MILTER_MANAGER_CONFIGURATION_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-CONFIGURATION:CAPS">MILTER_MANAGER_CONFIGURATION</link>        (obj)
+enum                <link linkend="MilterManagerConfigurationError">MilterManagerConfigurationError</link>;
+                    <link linkend="MilterManagerConfiguration">MilterManagerConfiguration</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-manager-configuration-error-quark">milter_manager_configuration_error_quark</link>
+                                                        (<parameter><type>void</type></parameter>);
+<link linkend="MilterManagerConfiguration"><returnvalue>MilterManagerConfiguration</returnvalue></link> * <link linkend="milter-manager-configuration-new">milter_manager_configuration_new</link>
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *first_property</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-append-load-path">milter_manager_configuration_append_load_path</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-prepend-load-path">milter_manager_configuration_prepend_load_path</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-clear-load-paths">milter_manager_configuration_clear_load_paths</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       <link linkend="milter-manager-configuration-get-load-paths">milter_manager_configuration_get_load_paths</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-load">milter_manager_configuration_load</link>   (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-load-if-exist">milter_manager_configuration_load_if_exist</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-load-custom">milter_manager_configuration_load_custom</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-load-custom-if-exist">milter_manager_configuration_load_custom_if_exist</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-reload">milter_manager_configuration_reload</link> (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-save-custom">milter_manager_configuration_save_custom</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *content</parameter>,
+                                                         <parameter><link linkend="gssize"><type>gssize</type></link> size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-is-privilege-mode">milter_manager_configuration_is_privilege_mode</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-privilege-mode">milter_manager_configuration_set_privilege_mode</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> mode</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-controller-connection-spec">milter_manager_configuration_get_controller_connection_spec</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-controller-connection-spec">milter_manager_configuration_set_controller_connection_spec</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-manager-connection-spec">milter_manager_configuration_get_manager_connection_spec</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-manager-connection-spec">milter_manager_configuration_set_manager_connection_spec</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-effective-user">milter_manager_configuration_get_effective_user</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-effective-user">milter_manager_configuration_set_effective_user</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *user_name</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-effective-group">milter_manager_configuration_get_effective_group</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-effective-group">milter_manager_configuration_set_effective_group</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *group_name</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-manager-configuration-get-manager-unix-socket-mode">milter_manager_configuration_get_manager_unix_socket_mode</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-manager-unix-socket-mode">milter_manager_configuration_set_manager_unix_socket_mode</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mode</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="milter-manager-configuration-get-controller-unix-socket-mode">milter_manager_configuration_get_controller_unix_socket_mode</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-controller-unix-socket-mode">milter_manager_configuration_set_controller_unix_socket_mode</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mode</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-manager-unix-socket-group">milter_manager_configuration_get_manager_unix_socket_group</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-manager-unix-socket-group">milter_manager_configuration_set_manager_unix_socket_group</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *group</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-is-remove-manager-unix-socket-on-close">milter_manager_configuration_is_remove_manager_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-remove-manager-unix-socket-on-close">milter_manager_configuration_set_remove_manager_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-is-remove-controller-unix-socket-on-close">milter_manager_configuration_is_remove_controller_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-remove-controller-unix-socket-on-close">milter_manager_configuration_set_remove_controller_unix_socket_on_close</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-is-remove-manager-unix-socket-on-create">milter_manager_configuration_is_remove_manager_unix_socket_on_create</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-remove-manager-unix-socket-on-create">milter_manager_configuration_set_remove_manager_unix_socket_on_create</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-is-remove-controller-unix-socket-on-create">milter_manager_configuration_is_remove_controller_unix_socket_on_create</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-remove-controller-unix-socket-on-create">milter_manager_configuration_set_remove_controller_unix_socket_on_create</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-is-daemon">milter_manager_configuration_is_daemon</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-daemon">milter_manager_configuration_set_daemon</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> daemon</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-pid-file">milter_manager_configuration_get_pid_file</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-pid-file">milter_manager_configuration_set_pid_file</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *pid_file</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-manager-configuration-get-fallback-status">milter_manager_configuration_get_fallback_status</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-fallback-status">milter_manager_configuration_set_fallback_status</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterStatus"><type>MilterStatus</type></link> status</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-package-platform">milter_manager_configuration_get_package_platform</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-package-platform">milter_manager_configuration_set_package_platform</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *platform</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-configuration-get-package-options">milter_manager_configuration_get_package_options</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-set-package-options">milter_manager_configuration_set_package_options</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *options</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-add-egg">milter_manager_configuration_add_egg</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="MilterManagerEgg"><returnvalue>MilterManagerEgg</returnvalue></link> *  <link linkend="milter-manager-configuration-find-egg">milter_manager_configuration_find_egg</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       <link linkend="milter-manager-configuration-get-eggs">milter_manager_configuration_get_eggs</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-remove-egg">milter_manager_configuration_remove_egg</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-remove-egg-by-name">milter_manager_configuration_remove_egg_by_name</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-clear-eggs">milter_manager_configuration_clear_eggs</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-add-applicable-condition">milter_manager_configuration_add_applicable_condition</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerApplicableCondition"><type>MilterManagerApplicableCondition</type></link> *condition</parameter>);
+<link linkend="MilterManagerApplicableCondition"><returnvalue>MilterManagerApplicableCondition</returnvalue></link> * <link linkend="milter-manager-configuration-find-applicable-condition">milter_manager_configuration_find_applicable_condition</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       <link linkend="milter-manager-configuration-get-applicable-conditions">milter_manager_configuration_get_applicable_conditions</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-remove-applicable-condition">milter_manager_configuration_remove_applicable_condition</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerApplicableCondition"><type>MilterManagerApplicableCondition</type></link> *condition</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-remove-applicable-condition-by-name">milter_manager_configuration_remove_applicable_condition_by_name</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-clear-applicable-conditions">milter_manager_configuration_clear_applicable_conditions</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-configuration-clear">milter_manager_configuration_clear</link>  (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-manager-configuration-to-xml">milter_manager_configuration_to_xml</link> (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-configuration-to-xml-string">milter_manager_configuration_to_xml_string</link>
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-manager-configuration-dump">milter_manager_configuration_dump</link>   (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-configuration.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-configuration.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-MANAGER-CONFIGURATION-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_CONFIGURATION_ERROR</title>
+<indexterm zone="MILTER-MANAGER-CONFIGURATION-ERROR:CAPS"><primary>MILTER_MANAGER_CONFIGURATION_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONFIGURATION_ERROR           (milter_manager_configuration_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONFIGURATION:CAPS" role="macro">
+<title>MILTER_MANAGER_CONFIGURATION()</title>
+<indexterm zone="MILTER-MANAGER-CONFIGURATION:CAPS"><primary>MILTER_MANAGER_CONFIGURATION</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONFIGURATION(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_CONFIGURATION, MilterManagerConfiguration))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerConfigurationError" role="enum">
+<title>enum MilterManagerConfigurationError</title>
+<indexterm zone="MilterManagerConfigurationError"><primary>MilterManagerConfigurationError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_CONFIGURATION_ERROR_NOT_IMPLEMENTED,
+    MILTER_MANAGER_CONFIGURATION_ERROR_NOT_EXIST,
+    MILTER_MANAGER_CONFIGURATION_ERROR_UNKNOWN,
+    MILTER_MANAGER_CONFIGURATION_ERROR_SAVE
+} MilterManagerConfigurationError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerConfiguration" role="struct">
+<title>MilterManagerConfiguration</title>
+<indexterm zone="MilterManagerConfiguration"><primary>MilterManagerConfiguration</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerConfiguration;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-error-quark" role="function">
+<title>milter_manager_configuration_error_quark ()</title>
+<indexterm zone="milter-manager-configuration-error-quark"><primary>milter_manager_configuration_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_manager_configuration_error_quark
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-new" role="function">
+<title>milter_manager_configuration_new ()</title>
+<indexterm zone="milter-manager-configuration-new"><primary>milter_manager_configuration_new</primary></indexterm>
+<programlisting><link linkend="MilterManagerConfiguration"><returnvalue>MilterManagerConfiguration</returnvalue></link> * milter_manager_configuration_new
+                                                        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *first_property</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-append-load-path" role="function">
+<title>milter_manager_configuration_append_load_path ()</title>
+<indexterm zone="milter-manager-configuration-append-load-path"><primary>milter_manager_configuration_append_load_path</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_append_load_path
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-prepend-load-path" role="function">
+<title>milter_manager_configuration_prepend_load_path ()</title>
+<indexterm zone="milter-manager-configuration-prepend-load-path"><primary>milter_manager_configuration_prepend_load_path</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_prepend_load_path
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-clear-load-paths" role="function">
+<title>milter_manager_configuration_clear_load_paths ()</title>
+<indexterm zone="milter-manager-configuration-clear-load-paths"><primary>milter_manager_configuration_clear_load_paths</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_clear_load_paths
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-load-paths" role="function">
+<title>milter_manager_configuration_get_load_paths ()</title>
+<indexterm zone="milter-manager-configuration-get-load-paths"><primary>milter_manager_configuration_get_load_paths</primary></indexterm>
+<programlisting>const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       milter_manager_configuration_get_load_paths
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-load" role="function">
+<title>milter_manager_configuration_load ()</title>
+<indexterm zone="milter-manager-configuration-load"><primary>milter_manager_configuration_load</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_load   (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-load-if-exist" role="function">
+<title>milter_manager_configuration_load_if_exist ()</title>
+<indexterm zone="milter-manager-configuration-load-if-exist"><primary>milter_manager_configuration_load_if_exist</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_load_if_exist
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-load-custom" role="function">
+<title>milter_manager_configuration_load_custom ()</title>
+<indexterm zone="milter-manager-configuration-load-custom"><primary>milter_manager_configuration_load_custom</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_load_custom
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-load-custom-if-exist" role="function">
+<title>milter_manager_configuration_load_custom_if_exist ()</title>
+<indexterm zone="milter-manager-configuration-load-custom-if-exist"><primary>milter_manager_configuration_load_custom_if_exist</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_load_custom_if_exist
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *file_name</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-reload" role="function">
+<title>milter_manager_configuration_reload ()</title>
+<indexterm zone="milter-manager-configuration-reload"><primary>milter_manager_configuration_reload</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_reload (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-save-custom" role="function">
+<title>milter_manager_configuration_save_custom ()</title>
+<indexterm zone="milter-manager-configuration-save-custom"><primary>milter_manager_configuration_save_custom</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_save_custom
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *content</parameter>,
+                                                         <parameter><link linkend="gssize"><type>gssize</type></link> size</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-is-privilege-mode" role="function">
+<title>milter_manager_configuration_is_privilege_mode ()</title>
+<indexterm zone="milter-manager-configuration-is-privilege-mode"><primary>milter_manager_configuration_is_privilege_mode</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_is_privilege_mode
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-privilege-mode" role="function">
+<title>milter_manager_configuration_set_privilege_mode ()</title>
+<indexterm zone="milter-manager-configuration-set-privilege-mode"><primary>milter_manager_configuration_set_privilege_mode</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_privilege_mode
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> mode</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-controller-connection-spec" role="function">
+<title>milter_manager_configuration_get_controller_connection_spec ()</title>
+<indexterm zone="milter-manager-configuration-get-controller-connection-spec"><primary>milter_manager_configuration_get_controller_connection_spec</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_controller_connection_spec
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-controller-connection-spec" role="function">
+<title>milter_manager_configuration_set_controller_connection_spec ()</title>
+<indexterm zone="milter-manager-configuration-set-controller-connection-spec"><primary>milter_manager_configuration_set_controller_connection_spec</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_controller_connection_spec
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-manager-connection-spec" role="function">
+<title>milter_manager_configuration_get_manager_connection_spec ()</title>
+<indexterm zone="milter-manager-configuration-get-manager-connection-spec"><primary>milter_manager_configuration_get_manager_connection_spec</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_manager_connection_spec
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-manager-connection-spec" role="function">
+<title>milter_manager_configuration_set_manager_connection_spec ()</title>
+<indexterm zone="milter-manager-configuration-set-manager-connection-spec"><primary>milter_manager_configuration_set_manager_connection_spec</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_manager_connection_spec
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-effective-user" role="function">
+<title>milter_manager_configuration_get_effective_user ()</title>
+<indexterm zone="milter-manager-configuration-get-effective-user"><primary>milter_manager_configuration_get_effective_user</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_effective_user
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-effective-user" role="function">
+<title>milter_manager_configuration_set_effective_user ()</title>
+<indexterm zone="milter-manager-configuration-set-effective-user"><primary>milter_manager_configuration_set_effective_user</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_effective_user
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *user_name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-effective-group" role="function">
+<title>milter_manager_configuration_get_effective_group ()</title>
+<indexterm zone="milter-manager-configuration-get-effective-group"><primary>milter_manager_configuration_get_effective_group</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_effective_group
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-effective-group" role="function">
+<title>milter_manager_configuration_set_effective_group ()</title>
+<indexterm zone="milter-manager-configuration-set-effective-group"><primary>milter_manager_configuration_set_effective_group</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_effective_group
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *group_name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-manager-unix-socket-mode" role="function">
+<title>milter_manager_configuration_get_manager_unix_socket_mode ()</title>
+<indexterm zone="milter-manager-configuration-get-manager-unix-socket-mode"><primary>milter_manager_configuration_get_manager_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_manager_configuration_get_manager_unix_socket_mode
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-manager-unix-socket-mode" role="function">
+<title>milter_manager_configuration_set_manager_unix_socket_mode ()</title>
+<indexterm zone="milter-manager-configuration-set-manager-unix-socket-mode"><primary>milter_manager_configuration_set_manager_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_manager_unix_socket_mode
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mode</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-controller-unix-socket-mode" role="function">
+<title>milter_manager_configuration_get_controller_unix_socket_mode ()</title>
+<indexterm zone="milter-manager-configuration-get-controller-unix-socket-mode"><primary>milter_manager_configuration_get_controller_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               milter_manager_configuration_get_controller_unix_socket_mode
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-controller-unix-socket-mode" role="function">
+<title>milter_manager_configuration_set_controller_unix_socket_mode ()</title>
+<indexterm zone="milter-manager-configuration-set-controller-unix-socket-mode"><primary>milter_manager_configuration_set_controller_unix_socket_mode</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_controller_unix_socket_mode
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mode</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-manager-unix-socket-group" role="function">
+<title>milter_manager_configuration_get_manager_unix_socket_group ()</title>
+<indexterm zone="milter-manager-configuration-get-manager-unix-socket-group"><primary>milter_manager_configuration_get_manager_unix_socket_group</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_manager_unix_socket_group
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-manager-unix-socket-group" role="function">
+<title>milter_manager_configuration_set_manager_unix_socket_group ()</title>
+<indexterm zone="milter-manager-configuration-set-manager-unix-socket-group"><primary>milter_manager_configuration_set_manager_unix_socket_group</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_manager_unix_socket_group
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *group</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-is-remove-manager-unix-socket-on-close" role="function">
+<title>milter_manager_configuration_is_remove_manager_unix_socket_on_close ()</title>
+<indexterm zone="milter-manager-configuration-is-remove-manager-unix-socket-on-close"><primary>milter_manager_configuration_is_remove_manager_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_is_remove_manager_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-remove-manager-unix-socket-on-close" role="function">
+<title>milter_manager_configuration_set_remove_manager_unix_socket_on_close ()</title>
+<indexterm zone="milter-manager-configuration-set-remove-manager-unix-socket-on-close"><primary>milter_manager_configuration_set_remove_manager_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_remove_manager_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-is-remove-controller-unix-socket-on-close" role="function">
+<title>milter_manager_configuration_is_remove_controller_unix_socket_on_close ()</title>
+<indexterm zone="milter-manager-configuration-is-remove-controller-unix-socket-on-close"><primary>milter_manager_configuration_is_remove_controller_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_is_remove_controller_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-remove-controller-unix-socket-on-close" role="function">
+<title>milter_manager_configuration_set_remove_controller_unix_socket_on_close ()</title>
+<indexterm zone="milter-manager-configuration-set-remove-controller-unix-socket-on-close"><primary>milter_manager_configuration_set_remove_controller_unix_socket_on_close</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_remove_controller_unix_socket_on_close
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-is-remove-manager-unix-socket-on-create" role="function">
+<title>milter_manager_configuration_is_remove_manager_unix_socket_on_create ()</title>
+<indexterm zone="milter-manager-configuration-is-remove-manager-unix-socket-on-create"><primary>milter_manager_configuration_is_remove_manager_unix_socket_on_create</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_is_remove_manager_unix_socket_on_create
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-remove-manager-unix-socket-on-create" role="function">
+<title>milter_manager_configuration_set_remove_manager_unix_socket_on_create ()</title>
+<indexterm zone="milter-manager-configuration-set-remove-manager-unix-socket-on-create"><primary>milter_manager_configuration_set_remove_manager_unix_socket_on_create</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_remove_manager_unix_socket_on_create
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-is-remove-controller-unix-socket-on-create" role="function">
+<title>milter_manager_configuration_is_remove_controller_unix_socket_on_create ()</title>
+<indexterm zone="milter-manager-configuration-is-remove-controller-unix-socket-on-create"><primary>milter_manager_configuration_is_remove_controller_unix_socket_on_create</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_is_remove_controller_unix_socket_on_create
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-remove-controller-unix-socket-on-create" role="function">
+<title>milter_manager_configuration_set_remove_controller_unix_socket_on_create ()</title>
+<indexterm zone="milter-manager-configuration-set-remove-controller-unix-socket-on-create"><primary>milter_manager_configuration_set_remove_controller_unix_socket_on_create</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_remove_controller_unix_socket_on_create
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> remove</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-is-daemon" role="function">
+<title>milter_manager_configuration_is_daemon ()</title>
+<indexterm zone="milter-manager-configuration-is-daemon"><primary>milter_manager_configuration_is_daemon</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_is_daemon
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-daemon" role="function">
+<title>milter_manager_configuration_set_daemon ()</title>
+<indexterm zone="milter-manager-configuration-set-daemon"><primary>milter_manager_configuration_set_daemon</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_daemon
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> daemon</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-pid-file" role="function">
+<title>milter_manager_configuration_get_pid_file ()</title>
+<indexterm zone="milter-manager-configuration-get-pid-file"><primary>milter_manager_configuration_get_pid_file</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_pid_file
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-pid-file" role="function">
+<title>milter_manager_configuration_set_pid_file ()</title>
+<indexterm zone="milter-manager-configuration-set-pid-file"><primary>milter_manager_configuration_set_pid_file</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_pid_file
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *pid_file</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-fallback-status" role="function">
+<title>milter_manager_configuration_get_fallback_status ()</title>
+<indexterm zone="milter-manager-configuration-get-fallback-status"><primary>milter_manager_configuration_get_fallback_status</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_manager_configuration_get_fallback_status
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-fallback-status" role="function">
+<title>milter_manager_configuration_set_fallback_status ()</title>
+<indexterm zone="milter-manager-configuration-set-fallback-status"><primary>milter_manager_configuration_set_fallback_status</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_fallback_status
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterStatus"><type>MilterStatus</type></link> status</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-package-platform" role="function">
+<title>milter_manager_configuration_get_package_platform ()</title>
+<indexterm zone="milter-manager-configuration-get-package-platform"><primary>milter_manager_configuration_get_package_platform</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_package_platform
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-package-platform" role="function">
+<title>milter_manager_configuration_set_package_platform ()</title>
+<indexterm zone="milter-manager-configuration-set-package-platform"><primary>milter_manager_configuration_set_package_platform</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_package_platform
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *platform</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-package-options" role="function">
+<title>milter_manager_configuration_get_package_options ()</title>
+<indexterm zone="milter-manager-configuration-get-package-options"><primary>milter_manager_configuration_get_package_options</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_configuration_get_package_options
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-set-package-options" role="function">
+<title>milter_manager_configuration_set_package_options ()</title>
+<indexterm zone="milter-manager-configuration-set-package-options"><primary>milter_manager_configuration_set_package_options</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_set_package_options
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *options</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-add-egg" role="function">
+<title>milter_manager_configuration_add_egg ()</title>
+<indexterm zone="milter-manager-configuration-add-egg"><primary>milter_manager_configuration_add_egg</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_add_egg
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-find-egg" role="function">
+<title>milter_manager_configuration_find_egg ()</title>
+<indexterm zone="milter-manager-configuration-find-egg"><primary>milter_manager_configuration_find_egg</primary></indexterm>
+<programlisting><link linkend="MilterManagerEgg"><returnvalue>MilterManagerEgg</returnvalue></link> *  milter_manager_configuration_find_egg
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-eggs" role="function">
+<title>milter_manager_configuration_get_eggs ()</title>
+<indexterm zone="milter-manager-configuration-get-eggs"><primary>milter_manager_configuration_get_eggs</primary></indexterm>
+<programlisting>const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       milter_manager_configuration_get_eggs
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-remove-egg" role="function">
+<title>milter_manager_configuration_remove_egg ()</title>
+<indexterm zone="milter-manager-configuration-remove-egg"><primary>milter_manager_configuration_remove_egg</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_remove_egg
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-remove-egg-by-name" role="function">
+<title>milter_manager_configuration_remove_egg_by_name ()</title>
+<indexterm zone="milter-manager-configuration-remove-egg-by-name"><primary>milter_manager_configuration_remove_egg_by_name</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_remove_egg_by_name
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-clear-eggs" role="function">
+<title>milter_manager_configuration_clear_eggs ()</title>
+<indexterm zone="milter-manager-configuration-clear-eggs"><primary>milter_manager_configuration_clear_eggs</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_clear_eggs
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-add-applicable-condition" role="function">
+<title>milter_manager_configuration_add_applicable_condition ()</title>
+<indexterm zone="milter-manager-configuration-add-applicable-condition"><primary>milter_manager_configuration_add_applicable_condition</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_add_applicable_condition
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerApplicableCondition"><type>MilterManagerApplicableCondition</type></link> *condition</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-find-applicable-condition" role="function">
+<title>milter_manager_configuration_find_applicable_condition ()</title>
+<indexterm zone="milter-manager-configuration-find-applicable-condition"><primary>milter_manager_configuration_find_applicable_condition</primary></indexterm>
+<programlisting><link linkend="MilterManagerApplicableCondition"><returnvalue>MilterManagerApplicableCondition</returnvalue></link> * milter_manager_configuration_find_applicable_condition
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-get-applicable-conditions" role="function">
+<title>milter_manager_configuration_get_applicable_conditions ()</title>
+<indexterm zone="milter-manager-configuration-get-applicable-conditions"><primary>milter_manager_configuration_get_applicable_conditions</primary></indexterm>
+<programlisting>const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       milter_manager_configuration_get_applicable_conditions
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-remove-applicable-condition" role="function">
+<title>milter_manager_configuration_remove_applicable_condition ()</title>
+<indexterm zone="milter-manager-configuration-remove-applicable-condition"><primary>milter_manager_configuration_remove_applicable_condition</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_remove_applicable_condition
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="MilterManagerApplicableCondition"><type>MilterManagerApplicableCondition</type></link> *condition</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-remove-applicable-condition-by-name" role="function">
+<title>milter_manager_configuration_remove_applicable_condition_by_name ()</title>
+<indexterm zone="milter-manager-configuration-remove-applicable-condition-by-name"><primary>milter_manager_configuration_remove_applicable_condition_by_name</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_remove_applicable_condition_by_name
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-clear-applicable-conditions" role="function">
+<title>milter_manager_configuration_clear_applicable_conditions ()</title>
+<indexterm zone="milter-manager-configuration-clear-applicable-conditions"><primary>milter_manager_configuration_clear_applicable_conditions</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_clear_applicable_conditions
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-clear" role="function">
+<title>milter_manager_configuration_clear ()</title>
+<indexterm zone="milter-manager-configuration-clear"><primary>milter_manager_configuration_clear</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_configuration_clear  (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-to-xml" role="function">
+<title>milter_manager_configuration_to_xml ()</title>
+<indexterm zone="milter-manager-configuration-to-xml"><primary>milter_manager_configuration_to_xml</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_manager_configuration_to_xml (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-to-xml-string" role="function">
+<title>milter_manager_configuration_to_xml_string ()</title>
+<indexterm zone="milter-manager-configuration-to-xml-string"><primary>milter_manager_configuration_to_xml_string</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_configuration_to_xml_string
+                                                        (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>,
+                                                         <parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-configuration-dump" role="function">
+<title>milter_manager_configuration_dump ()</title>
+<indexterm zone="milter-manager-configuration-dump"><primary>milter_manager_configuration_dump</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_manager_configuration_dump   (<parameter><link linkend="MilterManagerConfiguration"><type>MilterManagerConfiguration</type></link> *configuration</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

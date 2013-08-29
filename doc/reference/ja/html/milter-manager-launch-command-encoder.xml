@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-MilterManagerLaunchCommandEncoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-MilterManagerLaunchCommandEncoder.top_of_page">MilterManagerLaunchCommandEncoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerLaunchCommandEncoder</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-MilterManagerLaunchCommandEncoder.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>struct              <link linkend="MilterManagerLaunchCommandEncoder">MilterManagerLaunchCommandEncoder</link>;
+<link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     <link linkend="milter-manager-launch-command-encoder-new">milter_manager_launch_command_encoder_new</link>
+                                                        (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-launch-command-encoder-encode-launch">milter_manager_launch_command_encoder_encode_launch</link>
+                                                        (<parameter><link linkend="MilterManagerLaunchCommandEncoder"><type>MilterManagerLaunchCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command_line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *user_name</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-MilterManagerLaunchCommandEncoder.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-MilterManagerLaunchCommandEncoder.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterManagerLaunchCommandEncoder" role="struct">
+<title>struct MilterManagerLaunchCommandEncoder</title>
+<indexterm zone="MilterManagerLaunchCommandEncoder"><primary>MilterManagerLaunchCommandEncoder</primary></indexterm>
+<programlisting>struct MilterManagerLaunchCommandEncoder {
+    MilterEncoder object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-launch-command-encoder-new" role="function">
+<title>milter_manager_launch_command_encoder_new ()</title>
+<indexterm zone="milter-manager-launch-command-encoder-new"><primary>milter_manager_launch_command_encoder_new</primary></indexterm>
+<programlisting><link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     milter_manager_launch_command_encoder_new
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-launch-command-encoder-encode-launch" role="function">
+<title>milter_manager_launch_command_encoder_encode_launch ()</title>
+<indexterm zone="milter-manager-launch-command-encoder-encode-launch"><primary>milter_manager_launch_command_encoder_encode_launch</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_launch_command_encoder_encode_launch
+                                                        (<parameter><link linkend="MilterManagerLaunchCommandEncoder"><type>MilterManagerLaunchCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command_line</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *user_name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

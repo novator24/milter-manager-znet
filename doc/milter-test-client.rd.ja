@@ -1,0 +1,141 @@
+= milter-test-client / milter manager / milter managerのマニュアル
+
+== 名前
+
+milter-test-client - milter側のmilterプロトコルを実装したプログラム
+
+== 書式
+
+(({milter-test-client})) [((*オプション ...*))]
+
+== 説明
+
+milter-test-clientはMTA側から渡ってきた情報を表示するだけの
+milterです。マクロも含めてMTA側から渡っている情報を表示する
+ので、MTA側のmilterの設定を確認するために利用できます。
+
+Postfixのアーカイブの中にも同様のツールがあります。
+src/milter/内にあるtest-milter.cがそれで、Postfixのmilterの実
+装のテストにも使っているようです。ただし、test-milterはマクロ
+までは表示してくれません。もし、マクロを利用しているmilterが
+期待通りに動かない場合の問題調査を行うのであれば、
+milter-test-clientが役立つでしょう。
+
+== オプション
+
+: --help
+
+   利用できるオプションを表示して終了します。
+
+: --connection-spec=SPEC
+
+   接続を待ち受けるソケットを指定します。SPECの書式は次のう
+   ちのどれかです。
+
+     * unix:パス
+     * inet:ポート番号
+     * inet:ポート番号@ホスト名
+     * inet:ポート番号@[アドレス]
+     * inet6:ポート番号
+     * inet6:ポート番号@ホスト名
+     * inet6:ポート番号@[アドレス]
+
+   例:
+     * unix:/tmp/milter-test-client.sock
+     * inet:10025
+     * inet:10025@localhost
+     * inet:10025@[127.0.0.1]
+     * inet6:10025
+     * inet6:10025@localhost
+     * inet6:10025@[::1]
+
+: --verbose
+
+   実行時のログをより詳細に出力します。
+
+   「milter_log_level=all」というように環境変数を設定している
+   場合と同じ効果があります。
+
+: --syslog
+
+   Syslogにもログを出力します。
+
+: --no-report-request
+
+   MTAから受け取った情報を表示しません。
+
+: --report-memory-profile
+
+   milterセッションが終了する毎にメモリ使用量を表示します。
+
+   MILTER_MEMORY_PROFILE環境変数をyesに設定するとより詳細な
+   情報を表示します。
+
+   例:
+     % MILTER_MEMORY_PROFILE=yes milter-test-client -s inet:10025
+
+: --daemon
+
+   デーモンプロセスとして起動します。
+
+: --user=USER
+
+   実効ユーザをUSERとします。root権限が必要です。
+
+: --group=GROUP
+
+   実効グループをGROUPとします。root権限が必要です。
+
+: --unix-socket-group=GROUP
+
+   SPECで「unix:パス」を指定したときにUNIXドメインソケットの
+   グループを変更します。
+
+: --n-workers=N_WORKERS
+
+   メールを処理するプロセスを((|N_WORKERS|))個起動します。
+   指定できる値は0以上、1000以下です。0のときにワーカープロセスを使用し
+   ません。
+
+   ((*注意: この項目は実験的な機能扱いです。*))
+
+: --event-loop-backend=BACKEND
+
+   イベントループのバックエンドを指定します。
+   ((|BACKEND|))に指定できる値は、((%glib%))か((%libev%))のいずれかです。
+
+   ((*注意: この項目は実験的な機能扱いです。*))
+
+: --packet-buffer-size=SIZE
+
+   end-of-message時に送信パケットをバッファリングするための
+   バッファサイズを指定します。パケットの量が((|SIZE|))バイ
+   ト以上になるとまとめてパケットを送信します。0を指定すると
+   バッファリングしません。
+
+   既定値は0KBで、バッファリングしません。
+
+: --version
+
+   バージョンを表示して終了します。
+
+== 終了ステータス
+
+MTAからの接続を受け付ける状態になった場合は0になり、そうでな
+い場合は0以外になります。milter-test-clientはソケットの書式が
+間違っている場合か、ソケットまわりの問題が起こると接続を受け
+付ける状態になれません。そけっとまわりの問題とは、例えば、ポー
+トがすでに使用されているとか、UNIXドメインソケットを作成する
+パーミッションがない、などです。
+
+== 例
+
+以下の例では、10025番ポートでMTAからの接続を待つmilterを起動
+します。
+
+  % milter-test-client -s inet:10025
+
+== 関連項目
+
+((<milter-test-server.rd.ja>))(1),
+((<milter-performance-check.rd.ja>))(1)

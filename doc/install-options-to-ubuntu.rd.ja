@@ -1,0 +1,127 @@
+# -*- rd -*-
+
+= Ubuntuへインストール（任意） --- Ubuntu Linuxへのmilter manager関連ソフトウェアのインストール方法
+
+== このドキュメントについて
+
+Ubuntu Linuxに特化したmilter manager関連ソフトウェアのインス
+トール方法について説明します。milter manager本体のインストー
+ル情報は((<Ubuntuへインストール|install-to-ubuntu.rd.ja>))、
+Ubuntu Linuxに依存しない一般的なインストール情報は((<インストー
+ル|install.rd.ja>))を見てください。
+
+== [milter-manager-log-analyzer] milter-manager-log-analyzerのインストール
+
+milter-manager-log-analyzerはmilter-managerパッケージに含ま
+れているので、すでにインストールされています。ここでは、
+milter-manager-log-analyzerが出力するグラフを閲覧するための
+設定を行います。
+
+milter-manager-log-analyzerが出力するグラフは同じホストにWeb
+サーバを設置して閲覧する方法と
+((<Munin|URL:http://munin-monitoring.org/>))を利用して別ホス
+トで閲覧する方法があります。すでにMuninを導入していたり、メー
+ルサーバとは別にシステム監視用のサーバがある場合はMuninを利用
+するとよいでしょう。そうでない場合は同じホストにWebサーバを設
+置するのがよいでしょう((-同じホストでMuninを動かす場合もWebサー
+バが必要になります。-))。
+
+まずは、同じホストにWebサーバを設置する方法を説明し、次に別
+ホストにあるMuninから閲覧する方法を説明します。
+
+=== 同じホストにWebサーバを設置する場合
+
+==== パッケージのインストール
+
+WebサーバとしてApacheを使います。
+
+  % sudo apt-get -V -y install apache2
+
+==== milter-manager-log-analyzerの設定
+
+グラフはインストール時に作成したmilter-managerユーザのホーム
+ディレクトリ（/var/lib/milter-manager/）以下に出力されていま
+す。このグラフをhttp://localhost/milter-manager-log/で閲覧で
+きるようにします。
+
+以下の内容の/etc/apache2/conf.d/milter-manager-logを作成しま
+す。
+
+/etc/apache2/conf.d/milter-manager-log:
+  Alias /milter-manager-log/ /var/lib/milter-manager/public_html/log/
+
+作成したら、再読み込みします。
+
+  % sudo /etc/init.d/apache2 force-reload
+
+これでhttp://localhost/milter-manager-log/でグラフを閲覧で
+きるようになります。
+
+=== [munin] 別ホストにあるMuninを利用する方法
+
+次は、別ホストにあるMunin上でグラフを閲覧する方法です。
+
+==== パッケージのインストール
+
+milter-manager-log-analyzerが収集した統計情報をMuninに提供す
+るmilter-manager-munin-pluginsパッケージをインストールします。
+
+  % sudo apt-get -V -y install milter-manager-munin-plugins
+
+((*注: Muninに統計情報を提供する場合はmilter manager 1.5.0以
+降のmilter-manager-log-analyzerが生成したデータベースを使う
+必要があります。1.5.0より前のバージョンからアップデートして
+いる場合は~milter-manager/public_html/log/以下を削除してくだ
+さい。削除すると5分後に新しく統計情報データベースが作成され
+ます。*))
+
+==== munin-nodeの設定
+
+Muninサーバからの接続を許可します。Muninサーバが
+192.168.1.254の場合は以下の行を/etc/munin/munin-node.confに
+追加します。
+
+/etc/munin/munin-node.conf:
+  allow ^192\.168\.1\.254$
+
+munin-nodeを再起動し設定を反映させます。
+
+  % sudo /usr/sbin/service munin-node restart
+
+==== Muninサーバの設定
+
+ここからは監視用サーバでの設定です。監視用サーバもUbuntuで動
+いているとします。
+
+まず、muninとApacheをインストールします。
+
+  monitoring-server% sudo apt-get -V -y install munin httpd
+
+muninの監視対象にmunin-nodeが動いているメールサーバを追加しま
+す。メールサーバが以下の場合の/etc/munin/munin.confへ追加する
+設定項目を示します。
+
+: ホスト名
+    mail.example.com
+: IPアドレス
+    192.168.1.2
+
+このメールサーバを登録するには、以下の内容を
+/etc/munin/munin.confに追記します。
+
+/etc/munin/munin.conf:
+  [mail.example.com]
+      address 192.168.1.2
+      use_node_name yes
+
+5分後にはhttp://monitoring-server/munin/でグラフを閲覧できる
+ようになります。
+
+== まとめ
+
+milter-manager-log-analyzerを利用することによりmilterを導入し
+た効果を視覚的に確認することができます。MTAとしてPostfixを使
+用しているのであれば、
+((<Mailgraph|URL:http://mailgraph.schweikert.ch/>))のグラフと
+見くらべてmilter導入の効果を確認することができます。milterを
+試験的に導入している場合などに有効に活用できます。

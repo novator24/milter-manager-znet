@@ -1,0 +1,115 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerModule
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_MODULE ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### STRUCT MilterManagerModule ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_module_load_module ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_load_modules ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_load_modules_unique ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+@modules: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_find ##### -->
+<para>
+
+</para>
+
+@modules: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_instantiate ##### -->
+<para>
+
+</para>
+
+@module: 
+@first_property: 
+@var_args: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_collect_registered_types ##### -->
+<para>
+
+</para>
+
+@modules: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_collect_names ##### -->
+<para>
+
+</para>
+
+@modules: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_module_unload ##### -->
+<para>
+
+</para>
+
+@module: 
+
+

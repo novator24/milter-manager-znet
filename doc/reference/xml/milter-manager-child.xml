@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-child">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-child.top_of_page">MilterManagerChild</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerChild</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-child.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-CHILD-ERROR:CAPS">MILTER_MANAGER_CHILD_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-CHILD:CAPS">MILTER_MANAGER_CHILD</link>                (obj)
+enum                <link linkend="MilterManagerChildError">MilterManagerChildError</link>;
+struct              <link linkend="MilterManagerChild">MilterManagerChild</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-manager-child-error-quark">milter_manager_child_error_quark</link>    (<parameter><type>void</type></parameter>);
+<link linkend="MilterManagerChild"><returnvalue>MilterManagerChild</returnvalue></link> * <link linkend="milter-manager-child-new">milter_manager_child_new</link>           (<parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="MilterManagerChild"><returnvalue>MilterManagerChild</returnvalue></link> * <link linkend="milter-manager-child-new-va-list">milter_manager_child_new_va_list</link>   (<parameter>const <link linkend="gchar"><type>gchar</type></link> *first_name</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> args</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-manager-child-get-command-line-string">milter_manager_child_get_command_line_string</link>
+                                                        (<parameter><link linkend="MilterManagerChild"><type>MilterManagerChild</type></link> *milter</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-manager-child-get-user-name">milter_manager_child_get_user_name</link>  (<parameter><link linkend="MilterManagerChild"><type>MilterManagerChild</type></link> *milter</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-child.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-child.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-CHILD-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_CHILD_ERROR</title>
+<indexterm zone="MILTER-MANAGER-CHILD-ERROR:CAPS"><primary>MILTER_MANAGER_CHILD_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CHILD_ERROR           (milter_manager_child_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CHILD:CAPS" role="macro">
+<title>MILTER_MANAGER_CHILD()</title>
+<indexterm zone="MILTER-MANAGER-CHILD:CAPS"><primary>MILTER_MANAGER_CHILD</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CHILD(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_CHILD, MilterManagerChild))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerChildError" role="enum">
+<title>enum MilterManagerChildError</title>
+<indexterm zone="MilterManagerChildError"><primary>MilterManagerChildError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_CHILD_ERROR_BAD_COMMAND_STRING,
+    MILTER_MANAGER_CHILD_ERROR_START_FAILURE,
+    MILTER_MANAGER_CHILD_ERROR_INVALID_USER_NAME,
+    MILTER_MANAGER_CHILD_ERROR_NO_PRIVILEGE_MODE,
+    MILTER_MANAGER_CHILD_ERROR_MILTER_TERMINATED_BY_SIGNAL,
+    MILTER_MANAGER_CHILD_ERROR_MILTER_EXIT
+} MilterManagerChildError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerChild" role="struct">
+<title>struct MilterManagerChild</title>
+<indexterm zone="MilterManagerChild"><primary>MilterManagerChild</primary></indexterm>
+<programlisting>struct MilterManagerChild {
+    MilterServerContext object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-child-error-quark" role="function">
+<title>milter_manager_child_error_quark ()</title>
+<indexterm zone="milter-manager-child-error-quark"><primary>milter_manager_child_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_manager_child_error_quark    (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-child-new" role="function">
+<title>milter_manager_child_new ()</title>
+<indexterm zone="milter-manager-child-new"><primary>milter_manager_child_new</primary></indexterm>
+<programlisting><link linkend="MilterManagerChild"><returnvalue>MilterManagerChild</returnvalue></link> * milter_manager_child_new           (<parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-child-new-va-list" role="function">
+<title>milter_manager_child_new_va_list ()</title>
+<indexterm zone="milter-manager-child-new-va-list"><primary>milter_manager_child_new_va_list</primary></indexterm>
+<programlisting><link linkend="MilterManagerChild"><returnvalue>MilterManagerChild</returnvalue></link> * milter_manager_child_new_va_list   (<parameter>const <link linkend="gchar"><type>gchar</type></link> *first_name</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> args</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-child-get-command-line-string" role="function">
+<title>milter_manager_child_get_command_line_string ()</title>
+<indexterm zone="milter-manager-child-get-command-line-string"><primary>milter_manager_child_get_command_line_string</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_manager_child_get_command_line_string
+                                                        (<parameter><link linkend="MilterManagerChild"><type>MilterManagerChild</type></link> *milter</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-child-get-user-name" role="function">
+<title>milter_manager_child_get_user_name ()</title>
+<indexterm zone="milter-manager-child-get-user-name"><primary>milter_manager_child_get_user_name</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_manager_child_get_user_name  (<parameter><link linkend="MilterManagerChild"><type>MilterManagerChild</type></link> *milter</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

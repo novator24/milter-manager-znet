@@ -1,0 +1,426 @@
+#!/usr/bin/env ruby
+#
+# Copyright (C) 2011  Kouhei Sutou <kou@clear-code.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+require 'pathname'
+require 'time'
+require 'optparse'
+
+class LinuxStatuses
+  class << self
+    def find_all
+      statuses = new
+      Pathname.glob("/proc/[0-9]*") do |proc_path|
+        status = Status.new(proc_path)
+        statuses << status if yield(status)
+      end
+      statuses
+    end
+
+    def find_pid(pids)
+      statuses = new
+      pids.each do |pid|
+        statuses << Status.new("/proc/#{pid}")
+      end
+      statuses
+    end
+  end
+
+  def initialize
+    @statuses = []
+    @top = Top.new
+  end
+
+  def <<(status)
+    @statuses << status
+  end
+
+  def each
+    @statuses.each do |status|
+      status.top = @top[status.pid] || {}
+      yield(status)
+    end
+  end
+
+  def empty?
+    @statuses.empty?
+  end
+
+  class Top
+    def initialize
+      @pids = []
+    end
+
+    def <<(pid)
+      @pids << pid
+    end
+
+    def [](pid)
+      processes[pid]
+    end
+
+    private
+    def processes
+      @processes ||= retrieve
+    end
+
+    def split_pids
+      splitted_pids = []
+      @pids.each do |pid|
+        splitted_pids << pid
+        if splitted_pids.size >= 20
+          yield(splitted_pids)
+          splitted_pids.clear
+        end
+      end
+      yield(splitted_pids) unless splitted_pids.empty?
+    end
+
+    def retrieve
+      _processes = {}
+      split_pids do |pids|
+        result = `env LANG=C top -n 1 -b -p #{pids.join(',')}`
+        header, body = result.split(/\n\n/, 2)
+        labels = nil
+        body.each_line do |line|
+          values = line.strip.split(/\s+/, 12)
+          if labels.nil?
+            labels = values[1..-1]
+          else
+            pid = values.shift
+            _processes[pid] = process = {}
+            labels.each_with_index do |label, i|
+              process[label] = values[i]
+            end
+          end
+        end
+      end
+      _processes
+    end
+  end
+
+  class Status
+    attr_accessor :top
+    def initialize(proc_path)
+      @proc_path = proc_path
+      @status = parse_status(read_proc_path("status"))
+      @top = nil
+    end
+
+    def name
+      @name ||= File.basename(command_line[0] || '')
+    end
+
+    def pid
+      @status["Pid"]
+    end
+
+    def vss
+      @status["VmSize"]
+    end
+
+    def rss
+      @status["VmRSS"]
+    end
+
+    def cpu_time
+      @top["TIME+"]
+    end
+
+    def cpu_percent
+      @top["%CPU"]
+    end
+
+    def n_file_descriptors
+      @n_file_descriptors ||= entries("fd").size
+    end
+
+    def command_line
+      @command_line ||= read_proc_path("cmdline").split(/\0/)
+    end
+
+    private
+    def read_proc_path(type)
+      begin
+        (@proc_path + type).read
+      rescue SystemCallError
+        ""
+      end
+    end
+
+    def entries(type)
+      begin
+        (@proc_path + type).entries
+      rescue SystemCallError
+        []
+      end
+    end
+
+    def parse_status(status_text)
+      status = {}
+      status_text.each_line do |line|
+        key, value = line.chomp.split(/\s*:\s*/, 2)
+        status[key] = value
+      end
+      status
+    end
+  end
+end
+
+class SolarisStatuses
+  class << self
+    def find_all
+      statuses = new
+      n_processes = Pathname.glob("/proc/[0-9]*").size
+      prstat_result = `env LANG=C prstat -n #{n_processes} 0 1`
+      parse_prstat_result(prstat_result) do |status|
+        statuses << status if yield(status)
+      end
+      statuses
+    end
+
+    def find_pid(pids)
+      statuses = new
+      unless pids.empty?
+        prstat_result = `env LANG=C prstat -p #{pids.join(',')} 0 1`
+        parse_prstat_result(prstat_result) do |status|
+          statuses << status
+        end
+      end
+      statuses
+    end
+
+    private
+    def parse_prstat_result(prstat_result)
+      header = nil
+      prstat_result.each_line do |line|
+        if header.nil?
+          header = line.split
+        else
+          case line
+          when /\A\s*$/, /\ATotal:/
+            break
+          else
+            values = line.lstrip.split(/\s+/, header.size)
+            attributes = {}
+            header.each_with_index do |name, i|
+              attributes[name] = values[i]
+            end
+            yield(Status.new(attributes))
+          end
+        end
+      end
+    end
+  end
+
+  def initialize
+    @statuses = []
+  end
+
+  def <<(status)
+    @statuses << status
+    self
+  end
+
+  def each
+    @statuses.each do |status|
+      yield(status)
+    end
+  end
+
+  def empty?
+    @statuses.empty?
+  end
+
+  class Status
+    def initialize(attributes)
+      @attributes = attributes
+    end
+
+    def name
+      @name ||= File.basename(command_line[0] || '')
+    end
+
+    def pid
+      @attributes["PID"]
+    end
+
+    def vss
+      @attributes["SIZE"]
+    end
+
+    def rss
+      @attributes["RSS"]
+    end
+
+    def cpu_time
+      @attributes["TIME"]
+    end
+
+    def cpu_percent
+      @attributes["CPU"]
+    end
+
+    def n_file_descriptors
+      @n_file_descriptors ||= retrieve_n_file_descriptors
+    end
+
+    def command_line
+      @command_line ||= [@attributes["PROCESS/NLWP"].gsub(/\/[^\/]+\z/, '')]
+    end
+
+    private
+    def retrieve_n_file_descriptors
+      proc_path = "/proc/#{pid}/path/"
+      return "-" unless File.readable?(proc_path)
+      return "-" unless File.executable?(proc_path)
+      Dir.glob("#{proc_path}[0-9]*").size.to_s
+    end
+  end
+end
+
+class MilterStatisticsReporter
+  def initialize
+    @targets = []
+    @filters = []
+    @target_pids = []
+    @interval = 1
+  end
+
+  def parse(argv=ARGV)
+    @targets = option_parser.parse!(argv)
+    if @targets.empty? and @target_pids.empty?
+      puts option_parser
+      exit(false)
+    end
+  end
+
+  def run
+    show_header
+    loop do
+      begin
+        start = Time.now
+        report(@target_pids)
+        report_time = Time.now - start
+        sleep(@interval - report_time) if report_time < @interval
+      rescue Interrupt
+        break
+      end
+    end
+  end
+
+  def show_header
+    show("Time", "PID", "VSS", "RSS", "%CPU", "CPU time", "#FD", "command")
+  end
+
+  def report(pids)
+    reported = false
+    if !pids or pids.empty?
+      statuses = statuses_class.find_all do |status|
+        next false if status.pid.to_i == Process.pid
+        next false unless target_process?(status.name)
+        command_line = status.command_line.join(" ")
+        next false unless @filters.all? {|filter| filter =~ command_line}
+        true
+      end
+    else
+      statuses = statuses_class.find_pid(pids)
+    end
+    statuses.each do |status|
+      show(time_stamp,
+           status.pid,
+           status.vss,
+           status.rss,
+           status.cpu_percent || "",
+           status.cpu_time || "",
+           status.n_file_descriptors,
+           status.command_line.join(" "))
+    end
+    puts("%8s not found" % time_stamp) if statuses.empty?
+  end
+
+  private
+  def option_parser
+    @option_parser ||= create_option_parser
+  end
+
+  def create_option_parser
+    OptionParser.new do |parser|
+      parser.banner += " TARGET1 TARGET2 ..."
+
+      parser.on("--filter=REGEXP",
+                "Filter report targets by REGEXP.",
+                "Multiple --filter options are accepted.") do |regexp|
+        @filters << /#{regexp}/i
+      end
+
+      parser.on("--pid=PID",
+                "Report only process whose ID is PID.") do |pid|
+        @target_pids << pid
+      end
+
+      parser.on("--pid-directory=DIR",
+                "Report only processes which have the pid file " +
+                "with .pid extension under DIR.") do |dir|
+        Dir.glob("#{dir}/**/*.pid") do |pid_file|
+          if File.file?(pid_file)
+            @target_pids << File.read(pid_file).chomp
+          end
+        end
+      end
+
+      parser.on("--interval=INTERVAL", Float,
+                "Report each INTERVAL second.") do |interval|
+        @interval = interval
+      end
+    end
+  end
+
+  def show(time, pid, vss, rss, cpu_percent, cpu_time, n_fds, command_line)
+    items = [time, pid, vss, rss, cpu_percent, cpu_time, n_fds, command_line]
+    puts("%8s %6s %9s %9s %5s %8s %5s %s" % items)
+  end
+
+  def time_stamp
+    Time.now.strftime("%H:%M:%S")
+  end
+
+  def statuses_class
+    case RUBY_PLATFORM
+    when /linux/
+      LinuxStatuses
+    when /solaris/
+      SolarisStatuses
+    else
+      raise "unsupported platform #{RUBY_PLATFORM}"
+    end
+  end
+
+  def target_process?(name)
+    name
+    return false if name.empty?
+    no_lt_name = name.sub(/\Alt-/, '')
+    @targets.any? {|target| name == target or no_lt_name == target}
+  end
+end
+
+if __FILE__ == $0
+  reporter = MilterStatisticsReporter.new
+  reporter.parse(ARGV)
+  reporter.run
+end
+
+# vi:ts=2:nowrap:ai:expandtab:sw=2

@@ -1,0 +1,312 @@
+<!-- ##### SECTION Title ##### -->
+milter-enum-types
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION milter_command_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_COMMAND ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_socket_family_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_SOCKET_FAMILY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_reply_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_REPLY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_status_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_STATUS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_macro_stage_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_MACRO_STAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_decoder_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_decoder_compare_type_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_DECODER_COMPARE_TYPE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_command_decoder_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_COMMAND_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_reply_decoder_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_REPLY_DECODER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_agent_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_AGENT_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_action_flags_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_ACTION_FLAGS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_step_flags_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_STEP_FLAGS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_reader_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_READER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_writer_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_WRITER_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_log_level_flags_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_LOG_LEVEL_FLAGS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_log_item_flags_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_LOG_ITEM_FLAGS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_log_colorize_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_LOG_COLORIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION milter_connection_error_get_type ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### MACRO MILTER_TYPE_CONNECTION_ERROR ##### -->
+<para>
+
+</para>
+
+
+

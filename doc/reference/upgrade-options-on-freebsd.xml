@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-options-on-freebsd">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-options-on-freebsd.top_of_page'>Upgrade on FreeBSD (optional)</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Upgrade on FreeBSD (optional)</refname>
+  <refpurpose>How to upgrade milter manager related softwares on FreeBSD</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes how to upgrade milter manager on FreeBSD. See 
+  <link linkend='install-to-freebsd'>Install to FreeBSD (optional)</link>
+   for newly install information.
+</para>
+  <para>
+  You need to upgrade milter manager before you upgrade optional packages.  See 
+  <link linkend='upgrade-on-freebsd'>Upgrade on FreeBSD</link>
+   if you don't upgrade milter manager yet.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Upgrade milter-manager-log-analyzer</title>
+  <para>You already upgrade milter-manager-log-analyzer when you upgrade milter-manager package.</para>
+</refsect1>
+
+<refsect1>
+  <title>Conclusion</title>
+  <para>We can upgrade milter manager related softwares as easily as milter manager. We can upgrade if we want improvements in newer version.</para>
+</refsect1>
+</refentry>

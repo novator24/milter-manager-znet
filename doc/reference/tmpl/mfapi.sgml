@@ -1,0 +1,838 @@
+<!-- ##### SECTION Title ##### -->
+mfapi
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO SMFI_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SM_LM_VRS_MAJOR ##### -->
+<para>
+
+</para>
+
+@version: 
+
+
+<!-- ##### MACRO SM_LM_VRS_MINOR ##### -->
+<para>
+
+</para>
+
+@version: 
+
+
+<!-- ##### MACRO SM_LM_VRS_PLVL ##### -->
+<para>
+
+</para>
+
+@version: 
+
+
+<!-- ##### MACRO MI_SUCCESS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MI_FAILURE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### TYPEDEF SMFICTX ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF SMFICTX_PTR ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF smfiDesc_str ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF smfiDesc_ptr ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF sfsistat ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO bool ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO true ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO false ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION xxfi_connect ##### -->
+<para>
+
+</para>
+
+@context: 
+@host_name: 
+@address: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_helo ##### -->
+<para>
+
+</para>
+
+@context: 
+@fqdn: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_envfrom ##### -->
+<para>
+
+</para>
+
+@context: 
+@arguments: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_envrcpt ##### -->
+<para>
+
+</para>
+
+@context: 
+@arguments: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_header ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_eoh ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_body ##### -->
+<para>
+
+</para>
+
+@context: 
+@data: 
+@data_size: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_eom ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_abort ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_close ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_unknown ##### -->
+<para>
+
+</para>
+
+@context: 
+@command: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_data ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION xxfi_negotiate ##### -->
+<para>
+
+</para>
+
+@context: 
+@actions: 
+@steps: 
+@unused0: 
+@unused1: 
+@actions_output: 
+@steps_output: 
+@unused0_output: 
+@unused1_output: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_opensocket ##### -->
+<para>
+
+</para>
+
+@remove_socket: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_register ##### -->
+<para>
+
+</para>
+
+@description: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_main ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setbacklog ##### -->
+<para>
+
+</para>
+
+@backlog: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setdbg ##### -->
+<para>
+
+</para>
+
+@level: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_settimeout ##### -->
+<para>
+
+</para>
+
+@timeout: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setconn ##### -->
+<para>
+
+</para>
+
+@connection_spec: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_stop ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_version ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@patch_level: 
+@Returns: 
+
+
+<!-- ##### MACRO SMFIF_ADDHDRS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_CHGBODY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_MODBODY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_ADDRCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_DELRCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_CHGHDRS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_QUARANTINE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_CHGFROM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_ADDRCPT_PAR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIF_SETSYMLIST ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_CONTINUE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_REJECT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_DISCARD ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_ACCEPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_TEMPFAIL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_NOREPLY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_SKIP ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIS_ALL_OPTS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_CONNECT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_HELO ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_ENVFROM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_ENVRCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_DATA ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_EOM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIM_EOH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOCONNECT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOHELO ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOMAIL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NORCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOBODY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOHDRS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOEOH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_HDR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOHREPL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NOUNKNOWN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NODATA ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_SKIP ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_RCPT_REJ ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_CONN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_HELO ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_MAIL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_RCPT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_DATA ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_UNKN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_EOH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_NR_BODY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SMFIP_HDR_LEADSPC ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION smfi_getsymval ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setreply ##### -->
+<para>
+
+</para>
+
+@context: 
+@return_code: 
+@extended_code: 
+@message: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setmlreply ##### -->
+<para>
+
+</para>
+
+@context: 
+@return_code: 
+@extended_code: 
+@...: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_addheader ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_chgheader ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@index: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_insheader ##### -->
+<para>
+
+</para>
+
+@context: 
+@index: 
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_chgfrom ##### -->
+<para>
+
+</para>
+
+@context: 
+@mail: 
+@arguments: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_addrcpt ##### -->
+<para>
+
+</para>
+
+@context: 
+@recipient: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_addrcpt_par ##### -->
+<para>
+
+</para>
+
+@context: 
+@recipient: 
+@arguments: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_delrcpt ##### -->
+<para>
+
+</para>
+
+@context: 
+@recipient: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_progress ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_replacebody ##### -->
+<para>
+
+</para>
+
+@context: 
+@new_body: 
+@new_body_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_quarantine ##### -->
+<para>
+
+</para>
+
+@context: 
+@reason: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setpriv ##### -->
+<para>
+
+</para>
+
+@context: 
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_getpriv ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION smfi_setsymlist ##### -->
+<para>
+
+</para>
+
+@context: 
+@state: 
+@macros: 
+@Returns: 
+
+

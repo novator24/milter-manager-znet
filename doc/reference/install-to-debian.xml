@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="install-to-debian">
+<refmeta>
+  <refentrytitle role='top_of_page' id='install-to-debian.top_of_page'>Install to Debian</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Install to Debian</refname>
+  <refpurpose>How to install milter manager to Debian GNU/Linux</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>
+  This document describes how to install milter manager to Debian GNU/Linux. See 
+  <link linkend='install'>Install</link>
+   for general install information.
+</para>
+</refsect1>
+
+<refsect1>
+  <title>Install packages</title>
+  <para>Packages for squeeze, the current stable release, for wheezy, the current testing release, and for sid, the eternal unstable, are distributed on the milter manager site.</para>
+  <para>We put the following content to /etc/apt/sources.list.d/milter-manager.list:</para>
+  <refsect2>
+  <title>For squeeze</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ squeeze main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>For wheezy</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/milter-manager/debian/stable/ wheezy main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ wheezy main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>For jessie</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/milter-manager/debian/stable/ jessie main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ jessie main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>For sid</title>
+  <para>/etc/apt/sources.list.d/milter-manager.list:</para>
+  <programlisting>deb http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main
+deb-src http://downloads.sourceforge.net/project/milter-manager/debian/stable/ unstable main</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>Install</title>
+  <para>We register the key of the package repository:</para>
+  <programlisting>% sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1</programlisting>
+  <para>We install milter manager package:</para>
+  <programlisting>% sudo aptitude update
+% sudo aptitude -V -D -y install milter-manager</programlisting>
+  <para>We use Postfix as MTA:</para>
+  <programlisting>% sudo aptitude -V -D -y install postfix</programlisting>
+  <para>We use spamass-milter, clamav-milter and milter-greylist as milters.</para>
+  <programlisting>% sudo aptitude -V -D -y install spamass-milter clamav-milter milter-greylist</programlisting>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>Configuration</title>
+  <para>Here is a basic configuration policy.</para>
+  <para>We use UNIX domain socket for accepting connection from MTA because security and speed.</para>
+  <para>We set read/write permission for 'postfix' group to UNIX domain socket because existing milter packages' configuration can be used.</para>
+  <para>
+  milter-greylist should be applied only if
+  <ulink url='http://gabacho.reto.jp/en/anti-spam/'>S25R</ulink>
+  condition is matched to reduce needless delivery delay. But the configuration is automatically done by milter-manager. We need to do nothing for it.
+</para>
+  <refsect2>
+  <title>Configure spamass-milter</title>
+  <para>At first, we configure spamd.</para>
+  <para>We add the following configuration to /etc/spamassassin/local.cf. This configuration is for adding headers only if spam detected.</para>
+  <programlisting>report_safe 0
+
+remove_header ham Status
+remove_header ham Level</programlisting>
+  <para>We change /etc/default/spamassassin like the following to enable spamd:</para>
+  <para>Before:</para>
+  <programlisting>ENABLED=0</programlisting>
+  <para>After:</para>
+  <programlisting>ENABLED=1</programlisting>
+  <para>spamd should be started:</para>
+  <programlisting>% sudo /etc/init.d/spamassassin start</programlisting>
+  <para>There are no changes for spamass-milter's configuration.</para>
+</refsect2>
+
+  <refsect2>
+  <title>Configure clamav-milter</title>
+  <para>We change /etc/default/clamav-milter to change socket owner and group to 'postfix' group.</para>
+  <para>Before:</para>
+  <programlisting>#SOCKET_RWGROUP=postfix</programlisting>
+  <para>After:</para>
+  <programlisting>SOCKET_RWGROUP=postfix</programlisting>
+  <para>clamav-milter should be restarted:</para>
+  <programlisting>% sudo /etc/init.d/clamav-milter restart</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>Configure milter-greylist</title>
+  <para>We change /etc/milter-greylist/greylist.conf for the following configurations:</para>
+  <itemizedlist>
+  <listitem>
+  <para>use the leading 24bits for IP address match to avoid Greylist adverse effect for sender uses some MTA case.</para>
+</listitem>
+  <listitem>
+  <para>decrease retransmit check time to 10 minutes from 30 minutes (default value) to avoid Greylist adverse effect.</para>
+</listitem>
+  <listitem>
+  <para>increase auto whitelist period to a week from 1 day (default value) to avoid Greylist adverse effect.</para>
+</listitem>
+  <listitem>
+  <para>use Greylist by default.</para>
+</listitem>
+</itemizedlist>
+  <note>The configuration relaxes Greylist check to avoid Greylist
+adverse effect. It increases received spam mails but we
+should give priority to avoid false positive rather than
+false negative. We should not consider that we blocks all
+spam mails by Greylist. We can blocks spam mails that
+isn't blocked by Greylist by other anti-spam technique
+such as SpamAssassin. milter manager helps constructing
+mail system that combines some anti-spam techniques.</note>
+  <para>Before:</para>
+  <programlisting>racl whitelist default</programlisting>
+  <para>After:</para>
+  <programlisting>subnetmatch /24
+greylist 10m
+autowhite 1w
+racl greylist default</programlisting>
+  <para>We change /etc/default/milter-greylist to enable milter-greylist. milter-greylist uses IPv4 socket because milter-greylist's run script doesn't support changing socket's group permission:</para>
+  <para>Before:</para>
+  <programlisting>ENABLED=0</programlisting>
+  <para>After:</para>
+  <programlisting>ENABLED=1
+SOCKET=&quot;inet:11125@[127.0.0.1]&quot;</programlisting>
+  <para>milter-greylist should be started:</para>
+  <programlisting>% sudo /etc/init.d/milter-greylist start</programlisting>
+</refsect2>
+
+  <refsect2>
+  <title>Configure milter-manager</title>
+  <para>milter-manager detects milters that installed in system. We can confirm spamass-milter, clamav-milter and milter-greylist are detected:</para>
+  <programlisting>% sudo /usr/sbin/milter-manager -u milter-manager --show-config</programlisting>
+  <para>The following output shows milters are detected:</para>
+  <programlisting>...
+define_milter(&quot;milter-greylist&quot;) do |milter|
+  milter.connection_spec = &quot;inet:11125@[127.0.0.1]&quot;
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter(&quot;clamav-milter&quot;) do |milter|
+  milter.connection_spec = &quot;unix:/var/run/clamav/clamav-milter.ctl&quot;
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter(&quot;spamass-milter&quot;) do |milter|
+  milter.connection_spec = &quot;unix:/var/spool/postfix/spamass/spamass.sock&quot;
+  ...
+  milter.enabled = true
+  ...
+end
+..</programlisting>
+  <para>
+  We should confirm that milter's name, socket path and 'enabled = true'. If the values are unexpected, we need to change /etc/milter-manager/milter-manager.conf. See 
+  <link linkend='configuration'>Configuration</link>
+   for details of milter-manager.conf.
+</para>
+  <para>But if we can, we want to use milter manager without editing miter-manager.conf. If you report your environment to the milter manager project, the milter manager project may improve detect method.</para>
+  <para>We change /etc/default/milter-manager to work with Postfix:</para>
+  <para>Before:</para>
+  <programlisting># For postfix, you might want these settings:
+# SOCKET_GROUP=postfix
+# CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</programlisting>
+  <para>After:</para>
+  <programlisting># For postfix, you might want these settings:
+SOCKET_GROUP=postfix
+CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</programlisting>
+  <para>We add milter-manager user to postfix group:</para>
+  <programlisting>% sudo adduser milter-manager postfix</programlisting>
+  <para>milter-manager's configuration is completed. We start milter-manager:</para>
+  <programlisting>% sudo /etc/init.d/milter-manager restart</programlisting>
+  <para>/usr/bin/milter-test-server is useful to confirm milter-manager was ran:</para>
+  <programlisting>% sudo -u postfix milter-test-server -s unix:/var/spool/postfix/milter-manager/milter-manager.sock</programlisting>
+  <para>Here is a sample success output:</para>
+  <programlisting>status: accept
+elapsed-time: 0.128 seconds</programlisting>
+  <para>If milter-manager fails to run, the following message will be shown:</para>
+  <programlisting>Failed to connect to unix:/var/spool/postfix/milter-manager/milter-manager.sock: No such file or directory</programlisting>
+  <para>In this case, we can use log to solve the problem. milter-manager is verbosely if --verbose option is specified. milter-manager outputs logs to standard output if milter-manager isn't daemon process.</para>
+  <para>We can add the following configuration to /etc/default/milter-manager to output verbose log to standard output:</para>
+  <programlisting>OPTION_ARGS=&quot;--verbose --no-daemon&quot;</programlisting>
+  <para>We start milter-manager again:</para>
+  <programlisting>% sudo /etc/init.d/milter-manager restart</programlisting>
+  <para>Some logs are output if there is a problem. Running milter-manager can be exited by Ctrl+c.</para>
+  <para>OPTION_ARGS configuration in /etc/default/milter-manager should be commented out after the problem is solved to run milter-manager as daemon process. And we should restart milter-manager.</para>
+</refsect2>
+
+  <refsect2>
+  <title>Configure Postfix</title>
+  <para>We add the following milter configuration to /etc/postfix/main.cf.</para>
+  <programlisting>milter_default_action = accept
+milter_protocol = 6
+milter_mail_macros = {auth_author} {auth_type} {auth_authen}</programlisting>
+  <para>Here are descriptions of the configuration.</para>
+  <variablelist>
+  <varlistentry>
+  <term id='install-to-debian.milter-protocol'>milter_protocol = 6</term>
+  <listitem>
+  <para>Postfix uses milter protocol version 6.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='install-to-debian.milter-default-action'>milter_default_action = accept</term>
+  <listitem>
+  <para>Postfix accepts a mail if Postfix can't connect to milter. It's useful configuration for not stopping mail server function if milter has some problems. But it causes some problems that spam mails and virus mails may be delivered until milter is recovered.</para>
+  <para>If you can recover milter, 'tempfail' will be better choice rather than 'accept'. Default is 'tempfail'.</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term id='install-to-debian.milter-mail-macros'>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</term>
+  <listitem>
+  <para>Postfix passes SMTP Auth related information to milter. Some milters like milter-greylist use it.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+  <para>We need to register milter-manager to Postfix. It's important that spamass-milter, clamav-milter, milter-greylist aren't needed to be registered because they are used via milter-manager.</para>
+  <para>We need to add the following configuration to /etc/postfix/main.cf. Note that Postfix chrooted to /var/spool/postfix/.</para>
+  <programlisting>smtpd_milters = unix:/milter-manager/milter-manager.sock</programlisting>
+  <para>We reload Postfix configuration:</para>
+  <programlisting>% sudo /etc/init.d/postfix reload</programlisting>
+  <para>Postfix's milter configuration is completed.</para>
+  <para>milter-manager logs to syslog. If milter-manager works well, some logs can be shown in /var/log/mail.info. We need to sent a test mail for confirming.</para>
+</refsect2>
+
+</refsect1>
+
+<refsect1>
+  <title>Conclusion</title>
+  <para>There are many configurations to work milter and Postfix together. They can be reduced by introducing milter-manager.</para>
+  <para>Without milter-manager, we need to specify sockets of spamass-milter, clamav-milter and milter-greylist to smtpd_milters. With milter-manager, we doesn't need to specify sockets of them, just specify a socket of milter-manager. They are detected automatically. We doesn't need to take care some small mistakes like typo.</para>
+  <para>milter-manager also supports ENABLED configuration used in /etc/default/milter-greylist. If we disable a milter, we use the following steps:</para>
+  <programlisting>% sudo /etc/init.d/milter-greylist stop
+% sudo vim /etc/default/milter-greylist # ENABLED=1 =&gt; ENABLED=0</programlisting>
+  <para>We need to reload milter-manager after we disable a milter.</para>
+  <programlisting>% sudo /etc/init.d/milter-manager reload</programlisting>
+  <para>milter-manager detects a milter is disabled and doesn't use it. We doesn't need to change Postfix's main.cf.</para>
+  <para>We can reduce maintenance cost by introducing milter-manager if we use some milters on Debian GNU/Linux.</para>
+  <para>
+  milter manager also provides tools to help operation. Installing them is optional but we can reduce operation cost too. If we also install them, we will go to
+  <link linkend='install-options-to-debian'>Install to Debian (optional)</link>
+  .
+</para>
+</refsect1>
+</refentry>

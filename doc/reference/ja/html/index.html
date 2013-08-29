@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter managerリファレンスマニュアル</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="next" href="start.html" title="Part I. はじめよう">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div lang="ja" class="book">
+<div class="titlepage">
+<div>
+<div><table class="navigation" id="top" width="100%" cellpadding="2" cellspacing="0"><tr><th valign="middle"><p class="title">milter managerリファレンスマニュアル</p></th></tr></table></div>
+<div><p class="releaseinfo">milter manager2.0.0
+用</p></div>
+</div>
+<hr>
+</div>
+<div class="toc"><dl class="toc">
+<dt><span class="part"><a href="start.html">I. はじめよう</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="news.html">お知らせ</a></span><span class="refpurpose"> — milter managerの歴史</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="readme.html">README</a></span><span class="refpurpose"> — milter manager: より効果的にmilterを使うためのmilter</span>
+</dt>
+<dt><span class="chapter"><a href="commands.html">コマンド</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="milter-manager.html">milter-manager</a></span><span class="refpurpose"> — milterを使った効果的なスパム対策・ウィルス対策</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="milter-test-server.html">milter-test-server</a></span><span class="refpurpose"> — MTA側のmilterプロトコルを実装したプログラム</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="milter-test-client.html">milter-test-client</a></span><span class="refpurpose"> — milter側のmilterプロトコルを実装したプログラム</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="milter-performance-check.html">milter-performance-check</a></span><span class="refpurpose"> — MTAのパフォーマンスを計るプログラム</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="milter-report-statistics.html">milter-statistics-report</a></span><span class="refpurpose"> — milter（などの）プロセスの統計情報を表示するプログラム</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="milter-manager-log-analyzer.html">milter-manager-log-analyzer</a></span><span class="refpurpose"> — milter-managerのログを解析するプログラム</span>
+</dt>
+</dl></dd>
+<dt>
+<span class="refentrytitle"><a href="introduction.html">はじめに</a></span><span class="refpurpose"> — milter managerの概要</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install.html">インストール</a></span><span class="refpurpose"> — milter managerのインストール方法</span>
+</dt>
+<dt><span class="chapter"><a href="install-to.html">プラットフォーム毎のmilter managerのインストール方法</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="install-to-debian.html">Debianへインストール</a></span><span class="refpurpose"> — Debian GNU/Linuxへのmilter managerのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-options-to-debian.html">Debianへインストール（任意）</a></span><span class="refpurpose"> — Debian GNU/Linuxへのmilter manager関連ソフトウェアのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-to-ubuntu.html">Ubuntuへインストール</a></span><span class="refpurpose"> — Ubuntu Linuxへのmilter managerのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-options-to-ubuntu.html">Ubuntuへインストール（任意）</a></span><span class="refpurpose"> — Ubuntu Linuxへのmilter manager関連ソフトウェアのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-to-centos5.html">CentOS 5へインストール</a></span><span class="refpurpose"> — CentOS 5へのmilter managerのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-to-centos.html">CentOS 6へインストール</a></span><span class="refpurpose"> — CentOS 6へのmilter managerのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-options-to-centos.html">CentOSへインストール（任意）</a></span><span class="refpurpose"> — CentOSへのmilter manager関連ソフトウェアのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-to-freebsd.html">FreeBSDへインストール</a></span><span class="refpurpose"> — FreeBSDへのmilter managerのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-options-to-freebsd.html">FreeBSDへインストール（任意）</a></span><span class="refpurpose"> — FreeBSDへのmilter manager関連ソフトウェアのインストール方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="install-to-others.html">その他のプラットフォームへインストール</a></span><span class="refpurpose"> — その他のプラットフォームへのmilter managerのインストール方法</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="upgrade.html">プラットフォーム毎のmilter managerの更新方法</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="upgrade-on-debian.html">Debianで更新</a></span><span class="refpurpose"> — Debian GNU/Linuxでのmilter managerの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-options-on-debian.html">Debianで更新（任意）</a></span><span class="refpurpose"> — Debian GNU/Linuxでのmilter manager関連ソフトウェアの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-on-ubuntu.html">Ubuntuで更新</a></span><span class="refpurpose"> — Ubuntu Linuxでのmilter managerの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-options-on-ubuntu.html">Ubuntuで更新（任意）</a></span><span class="refpurpose"> — Ubuntu Linuxでのmilter manager関連ソフトウェアの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-on-centos.html">CentOSで更新</a></span><span class="refpurpose"> — CentOSでのmilter managerの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-options-on-centos.html">CentOSで更新（任意）</a></span><span class="refpurpose"> — CentOSでのmilter manager関連ソフトウェアの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-on-freebsd.html">FreeBSDで更新</a></span><span class="refpurpose"> — FreeBSDでのmilter managerの更新方法</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="upgrade-options-on-freebsd.html">FreeBSDで更新（任意）</a></span><span class="refpurpose"> — FreeBSDでのmilter manager関連ソフトウェアの更新方法</span>
+</dt>
+</dl></dd>
+<dt>
+<span class="refentrytitle"><a href="configuration.html">設定</a></span><span class="refpurpose"> — milter-manager.confの書き方</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="log-list.html">ログ一覧</a></span><span class="refpurpose"> — milter managerが出力するログの一覧</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="reverse-dictionary.html">逆引きリファレンス</a></span><span class="refpurpose"> — やりたいことからやり方へ</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="users.html">ユーザ</a></span><span class="refpurpose"> — milter managerの利用者</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="available-milters.html">利用可能なmilter</a></span><span class="refpurpose"> — milter managerで利用できるmilter</span>
+</dt>
+</dl></dd>
+<dt><span class="part"><a href="ruby.html">II. Ruby support</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="ruby-milter-tutorial.html">Rubyでmilter開発</a></span><span class="refpurpose"> — Rubyバインディングのチュートリアル</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="ruby-milter-reference.html">Ruby用milter APIリファレンス</a></span><span class="refpurpose"> — Rubyバインディングのリファレンス</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="ruby-milter-configuration.html">Ruby製milterの設定</a></span><span class="refpurpose"> — 設定ファイルの書き方</span>
+</dt>
+</dl></dd>
+</dl></div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

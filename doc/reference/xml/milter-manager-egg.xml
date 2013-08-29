@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-egg">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-egg.top_of_page">MilterManagerEgg</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerEgg</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-egg.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-EGG-ERROR:CAPS">MILTER_MANAGER_EGG_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-EGG:CAPS">MILTER_MANAGER_EGG</link>                  (obj)
+enum                <link linkend="MilterManagerEggError">MilterManagerEggError</link>;
+                    <link linkend="MilterManagerEgg">MilterManagerEgg</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-manager-egg-error-quark">milter_manager_egg_error_quark</link>      (<parameter><type>void</type></parameter>);
+<link linkend="MilterManagerEgg"><returnvalue>MilterManagerEgg</returnvalue></link> *  <link linkend="milter-manager-egg-new">milter_manager_egg_new</link>              (<parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+<link linkend="MilterManagerChild"><returnvalue>MilterManagerChild</returnvalue></link> * <link linkend="milter-manager-egg-hatch">milter_manager_egg_hatch</link>           (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-name">milter_manager_egg_set_name</link>         (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-egg-get-name">milter_manager_egg_get_name</link>         (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-description">milter_manager_egg_set_description</link>  (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *description</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-egg-get-description">milter_manager_egg_get_description</link>  (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-enabled">milter_manager_egg_set_enabled</link>      (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> enabled</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-egg-is-enabled">milter_manager_egg_is_enabled</link>       (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-egg-set-connection-spec">milter_manager_egg_set_connection_spec</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *connection_spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-egg-get-connection-spec">milter_manager_egg_get_connection_spec</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-connection-timeout">milter_manager_egg_set_connection_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> connection_timeout</parameter>);
+<link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             <link linkend="milter-manager-egg-get-connection-timeout">milter_manager_egg_get_connection_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-writing-timeout">milter_manager_egg_set_writing_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> writing_timeout</parameter>);
+<link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             <link linkend="milter-manager-egg-get-writing-timeout">milter_manager_egg_get_writing_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-reading-timeout">milter_manager_egg_set_reading_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> reading_timeout</parameter>);
+<link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             <link linkend="milter-manager-egg-get-reading-timeout">milter_manager_egg_get_reading_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-end-of-message-timeout">milter_manager_egg_set_end_of_message_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> end_of_message_timeout</parameter>);
+<link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             <link linkend="milter-manager-egg-get-end-of-message-timeout">milter_manager_egg_get_end_of_message_timeout</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-user-name">milter_manager_egg_set_user_name</link>    (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *user_name</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-egg-get-user-name">milter_manager_egg_get_user_name</link>    (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-command">milter_manager_egg_set_command</link>      (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-egg-get-command">milter_manager_egg_get_command</link>      (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-set-command-options">milter_manager_egg_set_command_options</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command_options</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-manager-egg-get-command-options">milter_manager_egg_get_command_options</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-add-applicable-condition">milter_manager_egg_add_applicable_condition</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="MilterManagerApplicableCondition"><type>MilterManagerApplicableCondition</type></link> *condition</parameter>);
+const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       <link linkend="milter-manager-egg-get-applicable-conditions">milter_manager_egg_get_applicable_conditions</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-clear-applicable-conditions">milter_manager_egg_clear_applicable_conditions</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-attach-applicable-conditions">milter_manager_egg_attach_applicable_conditions</link>
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="MilterManagerChild"><type>MilterManagerChild</type></link> *child</parameter>,
+                                                         <parameter><link linkend="MilterManagerChildren"><type>MilterManagerChildren</type></link> *children</parameter>,
+                                                         <parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-manager-egg-merge">milter_manager_egg_merge</link>            (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *other_egg</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="milter-manager-egg-to-xml">milter_manager_egg_to_xml</link>           (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-manager-egg-to-xml-string">milter_manager_egg_to_xml_string</link>    (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-egg.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-egg.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-MANAGER-EGG-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_EGG_ERROR</title>
+<indexterm zone="MILTER-MANAGER-EGG-ERROR:CAPS"><primary>MILTER_MANAGER_EGG_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_EGG_ERROR           (milter_manager_egg_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-EGG:CAPS" role="macro">
+<title>MILTER_MANAGER_EGG()</title>
+<indexterm zone="MILTER-MANAGER-EGG:CAPS"><primary>MILTER_MANAGER_EGG</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_EGG(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_EGG, MilterManagerEgg))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerEggError" role="enum">
+<title>enum MilterManagerEggError</title>
+<indexterm zone="MilterManagerEggError"><primary>MilterManagerEggError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_EGG_ERROR_INVALID
+} MilterManagerEggError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerEgg" role="struct">
+<title>MilterManagerEgg</title>
+<indexterm zone="MilterManagerEgg"><primary>MilterManagerEgg</primary></indexterm>
+<programlisting>typedef struct {
+    GObject object;
+} MilterManagerEgg;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-error-quark" role="function">
+<title>milter_manager_egg_error_quark ()</title>
+<indexterm zone="milter-manager-egg-error-quark"><primary>milter_manager_egg_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_manager_egg_error_quark      (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-new" role="function">
+<title>milter_manager_egg_new ()</title>
+<indexterm zone="milter-manager-egg-new"><primary>milter_manager_egg_new</primary></indexterm>
+<programlisting><link linkend="MilterManagerEgg"><returnvalue>MilterManagerEgg</returnvalue></link> *  milter_manager_egg_new              (<parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-hatch" role="function">
+<title>milter_manager_egg_hatch ()</title>
+<indexterm zone="milter-manager-egg-hatch"><primary>milter_manager_egg_hatch</primary></indexterm>
+<programlisting><link linkend="MilterManagerChild"><returnvalue>MilterManagerChild</returnvalue></link> * milter_manager_egg_hatch           (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-name" role="function">
+<title>milter_manager_egg_set_name ()</title>
+<indexterm zone="milter-manager-egg-set-name"><primary>milter_manager_egg_set_name</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_name         (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-name" role="function">
+<title>milter_manager_egg_get_name ()</title>
+<indexterm zone="milter-manager-egg-get-name"><primary>milter_manager_egg_get_name</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_egg_get_name         (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-description" role="function">
+<title>milter_manager_egg_set_description ()</title>
+<indexterm zone="milter-manager-egg-set-description"><primary>milter_manager_egg_set_description</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_description  (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *description</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-description" role="function">
+<title>milter_manager_egg_get_description ()</title>
+<indexterm zone="milter-manager-egg-get-description"><primary>milter_manager_egg_get_description</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_egg_get_description  (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-enabled" role="function">
+<title>milter_manager_egg_set_enabled ()</title>
+<indexterm zone="milter-manager-egg-set-enabled"><primary>milter_manager_egg_set_enabled</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_enabled      (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> enabled</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-is-enabled" role="function">
+<title>milter_manager_egg_is_enabled ()</title>
+<indexterm zone="milter-manager-egg-is-enabled"><primary>milter_manager_egg_is_enabled</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_egg_is_enabled       (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-connection-spec" role="function">
+<title>milter_manager_egg_set_connection_spec ()</title>
+<indexterm zone="milter-manager-egg-set-connection-spec"><primary>milter_manager_egg_set_connection_spec</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_egg_set_connection_spec
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *connection_spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-connection-spec" role="function">
+<title>milter_manager_egg_get_connection_spec ()</title>
+<indexterm zone="milter-manager-egg-get-connection-spec"><primary>milter_manager_egg_get_connection_spec</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_egg_get_connection_spec
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-connection-timeout" role="function">
+<title>milter_manager_egg_set_connection_timeout ()</title>
+<indexterm zone="milter-manager-egg-set-connection-timeout"><primary>milter_manager_egg_set_connection_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_connection_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> connection_timeout</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-connection-timeout" role="function">
+<title>milter_manager_egg_get_connection_timeout ()</title>
+<indexterm zone="milter-manager-egg-get-connection-timeout"><primary>milter_manager_egg_get_connection_timeout</primary></indexterm>
+<programlisting><link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             milter_manager_egg_get_connection_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-writing-timeout" role="function">
+<title>milter_manager_egg_set_writing_timeout ()</title>
+<indexterm zone="milter-manager-egg-set-writing-timeout"><primary>milter_manager_egg_set_writing_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_writing_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> writing_timeout</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-writing-timeout" role="function">
+<title>milter_manager_egg_get_writing_timeout ()</title>
+<indexterm zone="milter-manager-egg-get-writing-timeout"><primary>milter_manager_egg_get_writing_timeout</primary></indexterm>
+<programlisting><link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             milter_manager_egg_get_writing_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-reading-timeout" role="function">
+<title>milter_manager_egg_set_reading_timeout ()</title>
+<indexterm zone="milter-manager-egg-set-reading-timeout"><primary>milter_manager_egg_set_reading_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_reading_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> reading_timeout</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-reading-timeout" role="function">
+<title>milter_manager_egg_get_reading_timeout ()</title>
+<indexterm zone="milter-manager-egg-get-reading-timeout"><primary>milter_manager_egg_get_reading_timeout</primary></indexterm>
+<programlisting><link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             milter_manager_egg_get_reading_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-end-of-message-timeout" role="function">
+<title>milter_manager_egg_set_end_of_message_timeout ()</title>
+<indexterm zone="milter-manager-egg-set-end-of-message-timeout"><primary>milter_manager_egg_set_end_of_message_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_end_of_message_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> end_of_message_timeout</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-end-of-message-timeout" role="function">
+<title>milter_manager_egg_get_end_of_message_timeout ()</title>
+<indexterm zone="milter-manager-egg-get-end-of-message-timeout"><primary>milter_manager_egg_get_end_of_message_timeout</primary></indexterm>
+<programlisting><link linkend="gdouble"><returnvalue>gdouble</returnvalue></link>             milter_manager_egg_get_end_of_message_timeout
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-user-name" role="function">
+<title>milter_manager_egg_set_user_name ()</title>
+<indexterm zone="milter-manager-egg-set-user-name"><primary>milter_manager_egg_set_user_name</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_user_name    (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *user_name</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-user-name" role="function">
+<title>milter_manager_egg_get_user_name ()</title>
+<indexterm zone="milter-manager-egg-get-user-name"><primary>milter_manager_egg_get_user_name</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_egg_get_user_name    (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-command" role="function">
+<title>milter_manager_egg_set_command ()</title>
+<indexterm zone="milter-manager-egg-set-command"><primary>milter_manager_egg_set_command</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_command      (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-command" role="function">
+<title>milter_manager_egg_get_command ()</title>
+<indexterm zone="milter-manager-egg-get-command"><primary>milter_manager_egg_get_command</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_egg_get_command      (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-set-command-options" role="function">
+<title>milter_manager_egg_set_command_options ()</title>
+<indexterm zone="milter-manager-egg-set-command-options"><primary>milter_manager_egg_set_command_options</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_set_command_options
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command_options</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-command-options" role="function">
+<title>milter_manager_egg_get_command_options ()</title>
+<indexterm zone="milter-manager-egg-get-command-options"><primary>milter_manager_egg_get_command_options</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_manager_egg_get_command_options
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-add-applicable-condition" role="function">
+<title>milter_manager_egg_add_applicable_condition ()</title>
+<indexterm zone="milter-manager-egg-add-applicable-condition"><primary>milter_manager_egg_add_applicable_condition</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_add_applicable_condition
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="MilterManagerApplicableCondition"><type>MilterManagerApplicableCondition</type></link> *condition</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-get-applicable-conditions" role="function">
+<title>milter_manager_egg_get_applicable_conditions ()</title>
+<indexterm zone="milter-manager-egg-get-applicable-conditions"><primary>milter_manager_egg_get_applicable_conditions</primary></indexterm>
+<programlisting>const <link linkend="GList"><returnvalue>GList</returnvalue></link> *       milter_manager_egg_get_applicable_conditions
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-clear-applicable-conditions" role="function">
+<title>milter_manager_egg_clear_applicable_conditions ()</title>
+<indexterm zone="milter-manager-egg-clear-applicable-conditions"><primary>milter_manager_egg_clear_applicable_conditions</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_clear_applicable_conditions
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-attach-applicable-conditions" role="function">
+<title>milter_manager_egg_attach_applicable_conditions ()</title>
+<indexterm zone="milter-manager-egg-attach-applicable-conditions"><primary>milter_manager_egg_attach_applicable_conditions</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_attach_applicable_conditions
+                                                        (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="MilterManagerChild"><type>MilterManagerChild</type></link> *child</parameter>,
+                                                         <parameter><link linkend="MilterManagerChildren"><type>MilterManagerChildren</type></link> *children</parameter>,
+                                                         <parameter><link linkend="MilterClientContext"><type>MilterClientContext</type></link> *context</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-merge" role="function">
+<title>milter_manager_egg_merge ()</title>
+<indexterm zone="milter-manager-egg-merge"><primary>milter_manager_egg_merge</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_manager_egg_merge            (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *other_egg</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-to-xml" role="function">
+<title>milter_manager_egg_to_xml ()</title>
+<indexterm zone="milter-manager-egg-to-xml"><primary>milter_manager_egg_to_xml</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             milter_manager_egg_to_xml           (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-egg-to-xml-string" role="function">
+<title>milter_manager_egg_to_xml_string ()</title>
+<indexterm zone="milter-manager-egg-to-xml-string"><primary>milter_manager_egg_to_xml_string</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_manager_egg_to_xml_string    (<parameter><link linkend="MilterManagerEgg"><type>MilterManagerEgg</type></link> *egg</parameter>,
+                                                         <parameter><link linkend="GString"><type>GString</type></link> *string</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> indent</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

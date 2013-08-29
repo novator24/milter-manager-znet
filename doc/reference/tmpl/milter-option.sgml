@@ -1,0 +1,242 @@
+<!-- ##### SECTION Title ##### -->
+MilterOption
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### ENUM MilterActionFlags ##### -->
+<para>
+
+</para>
+
+@MILTER_ACTION_NONE: 
+@MILTER_ACTION_ADD_HEADERS: 
+@MILTER_ACTION_CHANGE_BODY: 
+@MILTER_ACTION_ADD_ENVELOPE_RECIPIENT: 
+@MILTER_ACTION_DELETE_ENVELOPE_RECIPIENT: 
+@MILTER_ACTION_CHANGE_HEADERS: 
+@MILTER_ACTION_QUARANTINE: 
+@MILTER_ACTION_CHANGE_ENVELOPE_FROM: 
+@MILTER_ACTION_ADD_ENVELOPE_RECIPIENT_WITH_PARAMETERS: 
+@MILTER_ACTION_SET_SYMBOL_LIST: 
+
+<!-- ##### ENUM MilterStepFlags ##### -->
+<para>
+
+</para>
+
+@MILTER_STEP_NONE: 
+@MILTER_STEP_NO_CONNECT: 
+@MILTER_STEP_NO_HELO: 
+@MILTER_STEP_NO_ENVELOPE_FROM: 
+@MILTER_STEP_NO_ENVELOPE_RECIPIENT: 
+@MILTER_STEP_NO_BODY: 
+@MILTER_STEP_NO_HEADERS: 
+@MILTER_STEP_NO_END_OF_HEADER: 
+@MILTER_STEP_NO_REPLY_HEADER: 
+@MILTER_STEP_NO_UNKNOWN: 
+@MILTER_STEP_NO_DATA: 
+@MILTER_STEP_SKIP: 
+@MILTER_STEP_ENVELOPE_RECIPIENT_REJECTED: 
+@MILTER_STEP_NO_REPLY_CONNECT: 
+@MILTER_STEP_NO_REPLY_HELO: 
+@MILTER_STEP_NO_REPLY_ENVELOPE_FROM: 
+@MILTER_STEP_NO_REPLY_ENVELOPE_RECIPIENT: 
+@MILTER_STEP_NO_REPLY_DATA: 
+@MILTER_STEP_NO_REPLY_UNKNOWN: 
+@MILTER_STEP_NO_REPLY_END_OF_HEADER: 
+@MILTER_STEP_NO_REPLY_BODY: 
+@MILTER_STEP_HEADER_VALUE_WITH_LEADING_SPACE: 
+
+<!-- ##### FUNCTION milter_step_flags_merge ##### -->
+<para>
+
+</para>
+
+@a: 
+@b: 
+@Returns: 
+
+
+<!-- ##### STRUCT MilterOption ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION milter_option_new ##### -->
+<para>
+
+</para>
+
+@version: 
+@action: 
+@step: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_new_empty ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_copy ##### -->
+<para>
+
+</para>
+
+@option: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_equal ##### -->
+<para>
+
+</para>
+
+@option1: 
+@option2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_get_version ##### -->
+<para>
+
+</para>
+
+@option: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_set_version ##### -->
+<para>
+
+</para>
+
+@option: 
+@version: 
+
+
+<!-- ##### FUNCTION milter_option_get_action ##### -->
+<para>
+
+</para>
+
+@option: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_set_action ##### -->
+<para>
+
+</para>
+
+@option: 
+@action: 
+
+
+<!-- ##### FUNCTION milter_option_add_action ##### -->
+<para>
+
+</para>
+
+@option: 
+@action: 
+
+
+<!-- ##### FUNCTION milter_option_remove_action ##### -->
+<para>
+
+</para>
+
+@option: 
+@action: 
+
+
+<!-- ##### FUNCTION milter_option_get_step ##### -->
+<para>
+
+</para>
+
+@option: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_set_step ##### -->
+<para>
+
+</para>
+
+@option: 
+@step: 
+
+
+<!-- ##### FUNCTION milter_option_add_step ##### -->
+<para>
+
+</para>
+
+@option: 
+@step: 
+
+
+<!-- ##### FUNCTION milter_option_remove_step ##### -->
+<para>
+
+</para>
+
+@option: 
+@step: 
+
+
+<!-- ##### FUNCTION milter_option_combine ##### -->
+<para>
+
+</para>
+
+@dest: 
+@src: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_merge ##### -->
+<para>
+
+</para>
+
+@dest: 
+@src: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_option_inspect ##### -->
+<para>
+
+</para>
+
+@option: 
+@Returns: 
+
+

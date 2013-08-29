@@ -1,0 +1,102 @@
+<!-- ##### SECTION Title ##### -->
+milter-connection
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_CONNECTION_DEFAULT_BACKLOG ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_CONNECTION_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### STRUCT MilterGenericSocketAddress ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM MilterConnectionError ##### -->
+<para>
+
+</para>
+
+@MILTER_CONNECTION_ERROR_INVALID_FORMAT: 
+@MILTER_CONNECTION_ERROR_SOCKET_FAILURE: 
+@MILTER_CONNECTION_ERROR_SET_SOCKET_OPTION_FAILURE: 
+@MILTER_CONNECTION_ERROR_ACCEPT_FAILURE: 
+@MILTER_CONNECTION_ERROR_BIND_FAILURE: 
+@MILTER_CONNECTION_ERROR_LISTEN_FAILURE: 
+@MILTER_CONNECTION_ERROR_UNIX_SOCKET: 
+
+<!-- ##### FUNCTION milter_connection_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_connection_parse_spec ##### -->
+<para>
+
+</para>
+
+@spec: 
+@domain: 
+@address: 
+@address_size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_connection_listen ##### -->
+<para>
+
+</para>
+
+@spec: 
+@backlog: 
+@address: 
+@address_size: 
+@remove_unix_socket: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_connection_address_to_spec ##### -->
+<para>
+
+</para>
+
+@address: 
+@Returns: 
+
+

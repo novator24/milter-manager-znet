@@ -1,0 +1,104 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerApplicableCondition
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_APPLICABLE_CONDITION ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### STRUCT MilterManagerApplicableCondition ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_set_name ##### -->
+<para>
+
+</para>
+
+@condition: 
+@name: 
+
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_get_name ##### -->
+<para>
+
+</para>
+
+@condition: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_set_description ##### -->
+<para>
+
+</para>
+
+@condition: 
+@description: 
+
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_get_description ##### -->
+<para>
+
+</para>
+
+@condition: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_merge ##### -->
+<para>
+
+</para>
+
+@condition: 
+@other_condition: 
+
+
+<!-- ##### FUNCTION milter_manager_applicable_condition_attach_to ##### -->
+<para>
+
+</para>
+
+@condition: 
+@child: 
+@children: 
+@context: 
+
+

@@ -1,0 +1,2000 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-libmilter/mfapi.h">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-libmilter/mfapi.h.top_of_page">libmilter/mfapi.h</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>libmilter/mfapi.h</refname>
+<refpurpose>libmilter互換API</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-libmilter/mfapi.h.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="SMFI-VERSION:CAPS">SMFI_VERSION</link>
+#define             <link linkend="SM-LM-VRS-MAJOR:CAPS">SM_LM_VRS_MAJOR</link>                     (version)
+#define             <link linkend="SM-LM-VRS-MINOR:CAPS">SM_LM_VRS_MINOR</link>                     (version)
+#define             <link linkend="SM-LM-VRS-PLVL:CAPS">SM_LM_VRS_PLVL</link>                      (version)
+#define             <link linkend="MI-SUCCESS:CAPS">MI_SUCCESS</link>
+#define             <link linkend="MI-FAILURE:CAPS">MI_FAILURE</link>
+typedef             <link linkend="SMFICTX:CAPS">SMFICTX</link>;
+typedef             <link linkend="SMFICTX-PTR:CAPS">SMFICTX_PTR</link>;
+typedef             <link linkend="smfiDesc-str">smfiDesc_str</link>;
+typedef             <link linkend="smfiDesc-ptr">smfiDesc_ptr</link>;
+typedef             <link linkend="sfsistat">sfsistat</link>;
+#define             <link linkend="bool">bool</link>
+#define             <link linkend="true">true</link>
+#define             <link linkend="false">false</link>
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-connect">*xxfi_connect</link>)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *host_name</parameter>,
+                                                         <parameter><link linkend="SOCK-ADDR:CAPS"><type>_SOCK_ADDR</type></link> *address</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-helo">*xxfi_helo</link>)                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *fqdn</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-envfrom">*xxfi_envfrom</link>)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> **arguments</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-envrcpt">*xxfi_envrcpt</link>)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> **arguments</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-header">*xxfi_header</link>)                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-eoh">*xxfi_eoh</link>)                         (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-body">*xxfi_body</link>)                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>unsigned <link linkend="char"><type>char</type></link> *data</parameter>,
+                                                         <parameter><link linkend="size-t"><type>size_t</type></link> data_size</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-eom">*xxfi_eom</link>)                         (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-abort">*xxfi_abort</link>)                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-close">*xxfi_close</link>)                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-unknown">*xxfi_unknown</link>)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *command</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-data">*xxfi_data</link>)                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (<link linkend="xxfi-negotiate">*xxfi_negotiate</link>)                   (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><type>unsigned long </type> actions</parameter>,
+                                                         <parameter><type>unsigned long </type> steps</parameter>,
+                                                         <parameter><type>unsigned long </type> unused0</parameter>,
+                                                         <parameter><type>unsigned long </type> unused1</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *actions_output</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *steps_output</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *unused0_output</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *unused1_output</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-opensocket">smfi_opensocket</link>                     (<parameter><link linkend="bool"><type>bool</type></link> remove_socket</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-register">smfi_register</link>                       (<parameter><type>struct smfiDesc</type> description</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-main">smfi_main</link>                           (<parameter><type>void</type></parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setbacklog">smfi_setbacklog</link>                     (<parameter><link linkend="int"><type>int</type></link> backlog</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setdbg">smfi_setdbg</link>                         (<parameter><link linkend="int"><type>int</type></link> level</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-settimeout">smfi_settimeout</link>                     (<parameter><link linkend="int"><type>int</type></link> timeout</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setconn">smfi_setconn</link>                        (<parameter><link linkend="char"><type>char</type></link> *connection_spec</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-stop">smfi_stop</link>                           (<parameter><type>void</type></parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-version">smfi_version</link>                        (<parameter>unsigned <link linkend="int"><type>int</type></link> *major</parameter>,
+                                                         <parameter>unsigned <link linkend="int"><type>int</type></link> *minor</parameter>,
+                                                         <parameter>unsigned <link linkend="int"><type>int</type></link> *patch_level</parameter>);
+#define             <link linkend="SMFIF-ADDHDRS:CAPS">SMFIF_ADDHDRS</link>
+#define             <link linkend="SMFIF-CHGBODY:CAPS">SMFIF_CHGBODY</link>
+#define             <link linkend="SMFIF-MODBODY:CAPS">SMFIF_MODBODY</link>
+#define             <link linkend="SMFIF-ADDRCPT:CAPS">SMFIF_ADDRCPT</link>
+#define             <link linkend="SMFIF-DELRCPT:CAPS">SMFIF_DELRCPT</link>
+#define             <link linkend="SMFIF-CHGHDRS:CAPS">SMFIF_CHGHDRS</link>
+#define             <link linkend="SMFIF-QUARANTINE:CAPS">SMFIF_QUARANTINE</link>
+#define             <link linkend="SMFIF-CHGFROM:CAPS">SMFIF_CHGFROM</link>
+#define             <link linkend="SMFIF-ADDRCPT-PAR:CAPS">SMFIF_ADDRCPT_PAR</link>
+#define             <link linkend="SMFIF-SETSYMLIST:CAPS">SMFIF_SETSYMLIST</link>
+#define             <link linkend="SMFIS-CONTINUE:CAPS">SMFIS_CONTINUE</link>
+#define             <link linkend="SMFIS-REJECT:CAPS">SMFIS_REJECT</link>
+#define             <link linkend="SMFIS-DISCARD:CAPS">SMFIS_DISCARD</link>
+#define             <link linkend="SMFIS-ACCEPT:CAPS">SMFIS_ACCEPT</link>
+#define             <link linkend="SMFIS-TEMPFAIL:CAPS">SMFIS_TEMPFAIL</link>
+#define             <link linkend="SMFIS-NOREPLY:CAPS">SMFIS_NOREPLY</link>
+#define             <link linkend="SMFIS-SKIP:CAPS">SMFIS_SKIP</link>
+#define             <link linkend="SMFIS-ALL-OPTS:CAPS">SMFIS_ALL_OPTS</link>
+#define             <link linkend="SMFIM-CONNECT:CAPS">SMFIM_CONNECT</link>
+#define             <link linkend="SMFIM-HELO:CAPS">SMFIM_HELO</link>
+#define             <link linkend="SMFIM-ENVFROM:CAPS">SMFIM_ENVFROM</link>
+#define             <link linkend="SMFIM-ENVRCPT:CAPS">SMFIM_ENVRCPT</link>
+#define             <link linkend="SMFIM-DATA:CAPS">SMFIM_DATA</link>
+#define             <link linkend="SMFIM-EOM:CAPS">SMFIM_EOM</link>
+#define             <link linkend="SMFIM-EOH:CAPS">SMFIM_EOH</link>
+#define             <link linkend="SMFIP-NOCONNECT:CAPS">SMFIP_NOCONNECT</link>
+#define             <link linkend="SMFIP-NOHELO:CAPS">SMFIP_NOHELO</link>
+#define             <link linkend="SMFIP-NOMAIL:CAPS">SMFIP_NOMAIL</link>
+#define             <link linkend="SMFIP-NORCPT:CAPS">SMFIP_NORCPT</link>
+#define             <link linkend="SMFIP-NOBODY:CAPS">SMFIP_NOBODY</link>
+#define             <link linkend="SMFIP-NOHDRS:CAPS">SMFIP_NOHDRS</link>
+#define             <link linkend="SMFIP-NOEOH:CAPS">SMFIP_NOEOH</link>
+#define             <link linkend="SMFIP-NR-HDR:CAPS">SMFIP_NR_HDR</link>
+#define             <link linkend="SMFIP-NOHREPL:CAPS">SMFIP_NOHREPL</link>
+#define             <link linkend="SMFIP-NOUNKNOWN:CAPS">SMFIP_NOUNKNOWN</link>
+#define             <link linkend="SMFIP-NODATA:CAPS">SMFIP_NODATA</link>
+#define             <link linkend="SMFIP-SKIP:CAPS">SMFIP_SKIP</link>
+#define             <link linkend="SMFIP-RCPT-REJ:CAPS">SMFIP_RCPT_REJ</link>
+#define             <link linkend="SMFIP-NR-CONN:CAPS">SMFIP_NR_CONN</link>
+#define             <link linkend="SMFIP-NR-HELO:CAPS">SMFIP_NR_HELO</link>
+#define             <link linkend="SMFIP-NR-MAIL:CAPS">SMFIP_NR_MAIL</link>
+#define             <link linkend="SMFIP-NR-RCPT:CAPS">SMFIP_NR_RCPT</link>
+#define             <link linkend="SMFIP-NR-DATA:CAPS">SMFIP_NR_DATA</link>
+#define             <link linkend="SMFIP-NR-UNKN:CAPS">SMFIP_NR_UNKN</link>
+#define             <link linkend="SMFIP-NR-EOH:CAPS">SMFIP_NR_EOH</link>
+#define             <link linkend="SMFIP-NR-BODY:CAPS">SMFIP_NR_BODY</link>
+#define             <link linkend="SMFIP-HDR-LEADSPC:CAPS">SMFIP_HDR_LEADSPC</link>
+<link linkend="char"><returnvalue>char</returnvalue></link> *              <link linkend="smfi-getsymval">smfi_getsymval</link>                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setreply">smfi_setreply</link>                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *return_code</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *extended_code</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *message</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setmlreply">smfi_setmlreply</link>                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *return_code</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *extended_code</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-addheader">smfi_addheader</link>                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-chgheader">smfi_chgheader</link>                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> index</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-insheader">smfi_insheader</link>                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> index</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-chgfrom">smfi_chgfrom</link>                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *mail</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *arguments</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-addrcpt">smfi_addrcpt</link>                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *recipient</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-addrcpt-par">smfi_addrcpt_par</link>                    (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *recipient</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *arguments</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-delrcpt">smfi_delrcpt</link>                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *recipient</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-progress">smfi_progress</link>                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-replacebody">smfi_replacebody</link>                    (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>unsigned <link linkend="char"><type>char</type></link> *new_body</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> new_body_size</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-quarantine">smfi_quarantine</link>                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *reason</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setpriv">smfi_setpriv</link>                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="void"><type>void</type></link> *data</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link> *              <link linkend="smfi-getpriv">smfi_getpriv</link>                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);
+<link linkend="int"><returnvalue>int</returnvalue></link>                 <link linkend="smfi-setsymlist">smfi_setsymlist</link>                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> state</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *macros</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-libmilter/mfapi.h.description" role="desc">
+<title role="desc.title">説明</title>
+<para>libmilter/mfapi.hはSendmailのlibmilter互換APIを提供します。Sendmailのlibmilterの代わりにこのライブラリを使用することができます。<ulink url="https://www.milter.org/developers/api/">milter.orgのAPIドキュメント</ulink>もみてください。</para>
+</refsect1>
+<refsect1 id="milter-manager-libmilter/mfapi.h.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="SMFI-VERSION:CAPS" role="macro">
+<title>SMFI_VERSION</title>
+<indexterm zone="SMFI-VERSION:CAPS"><primary>SMFI_VERSION</primary></indexterm>
+<programlisting>#  define SMFI_VERSION 0x01000001
+</programlisting>
+<para>libmilterのバージョン番号。</para></refsect2>
+<refsect2 id="SM-LM-VRS-MAJOR:CAPS" role="macro">
+<title>SM_LM_VRS_MAJOR()</title>
+<indexterm zone="SM-LM-VRS-MAJOR:CAPS"><primary>SM_LM_VRS_MAJOR</primary></indexterm>
+<programlisting>#define SM_LM_VRS_MAJOR(version) (((version) &amp; 0x7f000000) &gt;&gt; 24)
+</programlisting>
+<para><parameter>version</parameter>からメジャーバージョン番号を取りだします。</para><variablelist role="params">
+<varlistentry><term><parameter>version</parameter> :</term>
+<listitem><simpara>バージョン番号。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>メジャーバージョン番号。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="SM-LM-VRS-MINOR:CAPS" role="macro">
+<title>SM_LM_VRS_MINOR()</title>
+<indexterm zone="SM-LM-VRS-MINOR:CAPS"><primary>SM_LM_VRS_MINOR</primary></indexterm>
+<programlisting>#define SM_LM_VRS_MINOR(version) (((version) &amp; 0x007fff00) &gt;&gt; 8)
+</programlisting>
+<para><parameter>version</parameter>からマイナーバージョン番号を取りだします。</para><variablelist role="params">
+<varlistentry><term><parameter>version</parameter> :</term>
+<listitem><simpara>バージョン番号。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>マイナーバージョン番号。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="SM-LM-VRS-PLVL:CAPS" role="macro">
+<title>SM_LM_VRS_PLVL()</title>
+<indexterm zone="SM-LM-VRS-PLVL:CAPS"><primary>SM_LM_VRS_PLVL</primary></indexterm>
+<programlisting>#define SM_LM_VRS_PLVL(version)		((version) &amp; 0x0000007f)
+</programlisting>
+<para><parameter>version</parameter>からパッチレベルを取りだします。</para><variablelist role="params">
+<varlistentry><term><parameter>version</parameter> :</term>
+<listitem><simpara>バージョン番号。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>パッチレベル。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MI-SUCCESS:CAPS" role="macro">
+<title>MI_SUCCESS</title>
+<indexterm zone="MI-SUCCESS:CAPS"><primary>MI_SUCCESS</primary></indexterm>
+<programlisting>#define MI_SUCCESS 0
+</programlisting>
+<para>操作が成功したことを示します。</para></refsect2>
+<refsect2 id="MI-FAILURE:CAPS" role="macro">
+<title>MI_FAILURE</title>
+<indexterm zone="MI-FAILURE:CAPS"><primary>MI_FAILURE</primary></indexterm>
+<programlisting>#define MI_FAILURE (-1)
+</programlisting>
+<para>操作が失敗したことを示します。</para></refsect2>
+<refsect2 id="SMFICTX:CAPS" role="typedef">
+<title>SMFICTX</title>
+<indexterm zone="SMFICTX:CAPS"><primary>SMFICTX</primary></indexterm>
+<programlisting>typedef struct smfi_str  SMFICTX;
+</programlisting>
+<para>milterセッションの情報を持っています。<link linkend="SMFICTX:CAPS"><literal>SMFICTX</literal></link>は各milterセッション毎に作成されます。<link linkend="SMFICTX:CAPS"><literal>SMFICTX</literal></link>はlibmilter APIの中でもっとも重要なオブジェクトです。</para></refsect2>
+<refsect2 id="SMFICTX-PTR:CAPS" role="typedef">
+<title>SMFICTX_PTR</title>
+<indexterm zone="SMFICTX-PTR:CAPS"><primary>SMFICTX_PTR</primary></indexterm>
+<programlisting>typedef struct smfi_str *SMFICTX_PTR;
+</programlisting>
+<para><link linkend="SMFICTX:CAPS"><literal>SMFICTX</literal></link>のポインタ型。</para></refsect2>
+<refsect2 id="smfiDesc-str" role="typedef">
+<title>smfiDesc_str</title>
+<indexterm zone="smfiDesc-str"><primary>smfiDesc_str</primary></indexterm>
+<programlisting>typedef struct smfiDesc smfiDesc_str;
+</programlisting>
+<para>milterの情報を持っています。<link linkend="smfi-register"><function>smfi_register()</function></link>で<link linkend="smfiDesc-str"><literal>smfiDesc_str</literal></link>使います。</para></refsect2>
+<refsect2 id="smfiDesc-ptr" role="typedef">
+<title>smfiDesc_ptr</title>
+<indexterm zone="smfiDesc-ptr"><primary>smfiDesc_ptr</primary></indexterm>
+<programlisting>typedef struct smfiDesc *smfiDesc_ptr;
+</programlisting>
+<para><link linkend="smfiDesc-str"><literal>smfiDesc_str</literal></link>のポインタ型です。</para></refsect2>
+<refsect2 id="sfsistat" role="typedef">
+<title>sfsistat</title>
+<indexterm zone="sfsistat"><primary>sfsistat</primary></indexterm>
+<programlisting>typedef int sfsistat;
+</programlisting>
+<para>コールバックが返す応答ステータスを示します。</para>
+<para>利用可能な応答ステータスは以下のどれかです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-SKIP:CAPS"><literal>SMFIS_SKIP</literal></link>
+</para>
+</listitem>
+  <listitem>
+  <para>
+  <link linkend="SMFIS-ALL-OPTS:CAPS"><literal>SMFIS_ALL_OPTS</literal></link>
+</para>
+</listitem>
+</itemizedlist></refsect2>
+<refsect2 id="bool" role="macro">
+<title>bool</title>
+<indexterm zone="bool"><primary>bool</primary></indexterm>
+<programlisting>#      define bool int
+</programlisting>
+<para>真偽値型。</para></refsect2>
+<refsect2 id="true" role="macro">
+<title>true</title>
+<indexterm zone="true"><primary>true</primary></indexterm>
+<programlisting>#      define true 1
+</programlisting>
+<para>真の値。</para></refsect2>
+<refsect2 id="false" role="macro">
+<title>false</title>
+<indexterm zone="false"><primary>false</primary></indexterm>
+<programlisting>#      define false 0
+</programlisting>
+<para>偽の値。</para></refsect2>
+<refsect2 id="xxfi-connect" role="function">
+<title>xxfi_connect ()</title>
+<indexterm zone="xxfi-connect"><primary>xxfi_connect</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_connect)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *host_name</parameter>,
+                                                         <parameter><link linkend="SOCK-ADDR:CAPS"><type>_SOCK_ADDR</type></link> *address</parameter>);</programlisting>
+<para>各milterセッションの最初に呼ばれるコールバック。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在の接続に対する処理を続行します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在の接続を拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在の接続を受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在の接続を一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxのステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="SMFIP-NR-CONN:CAPS"><literal>SMFIP_NR_CONN</literal></link>フラグを<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに設定していなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_connect">xxfi_connect</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host_name</parameter> :</term>
+<listitem><simpara>SMTPクライアントのホスト名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter> :</term>
+<listitem><simpara>SMTPクライアントのアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-helo" role="function">
+<title>xxfi_helo ()</title>
+<indexterm zone="xxfi-helo"><primary>xxfi_helo</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_helo)                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *fqdn</parameter>);</programlisting>
+<para>このコールバックはSMTPの"HELO"/"EHLO"コマンドのときに呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在の接続に対する処理を続行します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在の接続を拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在の接続を受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在の接続を一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxのステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに<link linkend="SMFIP-NR-HELO:CAPS"><literal>SMFIP_NR_HELO</literal></link>フラグを設定しなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_helo"> xxfi_helo</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fqdn</parameter> :</term>
+<listitem><simpara>SMTPの"HELO"/"EHLO"コマンドでのFQDN。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-envfrom" role="function">
+<title>xxfi_envfrom ()</title>
+<indexterm zone="xxfi-envfrom"><primary>xxfi_envfrom</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_envfrom)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> **arguments</parameter>);</programlisting>
+<para>このコールバックはSMTPの"MAIL FROM"コマンドのときに呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在の差出人とメッセージを拒否します。新しい差出人が指定されるかもしれません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在のメッセージを受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在の差出人とメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxのステータスコードになります。）新しい差出人が指定されるかもしれません。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに<link linkend="SMFIP-NR-MAIL:CAPS"><literal>SMFIP_NR_MAIL</literal></link>フラグを設定しなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_envfrom"> xxfi_envfrom</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arguments</parameter> :</term>
+<listitem><simpara>SMTPの"MAIL FROM"コマンドの引数。最初の要素は差出人のアドレスです。<link linkend="NULL:CAPS"><literal>NULL</literal></link>終端しています。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-envrcpt" role="function">
+<title>xxfi_envrcpt ()</title>
+<indexterm zone="xxfi-envrcpt"><primary>xxfi_envrcpt</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_envrcpt)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> **arguments</parameter>);</programlisting>
+<para>このコールバックはSMTPの"RCPT TO"コマンドのときに呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在の宛先を拒否します。現在のメッセージの処理は続きます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>現在の宛先を受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在の宛先を一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxのステータスコードになります。）現在のメッセージの処理は継続します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="SMFIP-NR-RCPT:CAPS"><literal>SMFIP_NR_RCPT</literal></link>フラグを<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに設定していなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_envrcpt"> xxfi_envrcpt</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arguments</parameter> :</term>
+<listitem><simpara>SMTPの"RCPT TO"コマンドの引数。最初の要素は宛先です。<link linkend="NULL:CAPS"><literal>NULL</literal></link>終端しています。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-header" role="function">
+<title>xxfi_header ()</title>
+<indexterm zone="xxfi-header"><primary>xxfi_header</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_header)                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);</programlisting>
+<para>このコールバックは各ヘッダに対して呼ばれます。もし、<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに<link linkend="SMFIP-HDR-LEADSPC:CAPS"><literal>SMFIP_HDR_LEADSPC</literal></link>フラグが設定されていれば、<parameter>value</parameter>はヘッダ名と値を区切る":"の後ろにあるスペースも含みます。</para>
+<para>例:</para>
+<para>
+<informalexample><programlisting>
+From: from &lt;from@example.com&gt;
+To: recipient &lt;recipient@example.com&gt;
+Subject:a subject
+</programlisting></informalexample>
+</para>
+<para><link linkend="SMFIP-HDR-LEADSPC:CAPS"><literal>SMFIP_HDR_LEADSPC</literal></link>あり:</para>
+<para>
+<informalexample><programlisting>
+"From", " from &lt;from@example.com&gt;"
+"To", " recipient &lt;recipient@example.com&gt;"
+"Subject", "a subject"
+</programlisting></informalexample>
+</para>
+<para><link linkend="SMFIP-HDR-LEADSPC:CAPS"><literal>SMFIP_HDR_LEADSPC</literal></link>なし:</para>
+<para>
+<informalexample><programlisting>
+"From", "from &lt;from@example.com&gt;"
+"To", "recipient &lt;recipient@example.com&gt;"
+"Subject", "a subject"
+</programlisting></informalexample>
+</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在のメッセージを受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに<link linkend="SMFIP-NR-HDR:CAPS"><literal>SMFIP_NR_HDR</literal></link>フラグを設定しなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_header"> xxfi_header</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>ヘッダ名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter> :</term>
+<listitem><simpara>ヘッダ値。<parameter>value</parameter>は折り返し時に挿入された空白を含むかもしれません。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-eoh" role="function">
+<title>xxfi_eoh ()</title>
+<indexterm zone="xxfi-eoh"><primary>xxfi_eoh</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_eoh)                         (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>このコールバックはすべてのヘッダが処理されたときに呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在のメッセージを受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに<link linkend="SMFIP-NR-EOH:CAPS"><literal>SMFIP_NR_EOH</literal></link>フラグを設定しなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_eof"> xxfi_eof</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-body" role="function">
+<title>xxfi_body ()</title>
+<indexterm zone="xxfi-body"><primary>xxfi_body</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_body)                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>unsigned <link linkend="char"><type>char</type></link> *data</parameter>,
+                                                         <parameter><link linkend="size-t"><type>size_t</type></link> data_size</parameter>);</programlisting>
+<para>このコールバックは本文のデータを受け取ったときに呼ばれます。このコールバックは<link linkend="xxfi-eoh"><function>xxfi_eoh()</function></link>と<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の間に0回以上呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在のメッセージを受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-SKIP:CAPS"><literal>SMFIS_SKIP</literal></link>
+</term>
+  <listitem>
+  <para>これ以上の本文の処理を省略します。<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>は呼ばれます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="SMFIP-NR-BODY:CAPS"><literal>SMFIP_NR_BODY</literal></link>フラグを<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに設定していなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_body"> xxfi_body</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter> :</term>
+<listitem><simpara>本文の1かたまり。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data_size</parameter> :</term>
+<listitem><simpara><parameter>data</parameter>のサイズ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-eom" role="function">
+<title>xxfi_eom ()</title>
+<indexterm zone="xxfi-eom"><primary>xxfi_eom</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_eom)                         (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>このコールバックはすべての<link linkend="xxfi-body"><function>xxfi_body()</function></link>呼び出しが終わった後に呼ばれます。すべてのメッセージ変更はこのコールバックの中でだけ行えます。変更は<link linkend="smfi-addheader"><function>smfi_addheader()</function></link>、<link linkend="smfi-chgfrom"><function>smfi_chgfrom()</function></link>などです。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在のメッセージを受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_eom"> xxfi_eom</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-abort" role="function">
+<title>xxfi_abort ()</title>
+<indexterm zone="xxfi-abort"><primary>xxfi_abort</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_abort)                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>このコールバックは <link linkend="xxfi-envfrom"><function>xxfi_envfrom()</function></link>から<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の間のどこかのタイミングで呼び出される可能性があります。このコールバックはmilter内部でエラーが発生し、かつ、メッセージ処理が完了していないときだけ実行されます。例えば、milterが<link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>、<link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>、<link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>、<link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>を返しているときはこのコールバックは呼ばれません。</para>
+<para>milterが<link linkend="xxfi-envfrom"><function>xxfi_envfrom()</function></link>から<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の間にメッセージのために割り当てたリソースがある場合は、このコールバックの中で解放してください。しかし、接続用に割り当てられたリソースは解放しないで下さい。そのリソースは<link linkend="xxfi-close"><function>xxfi_close()</function></link>で解放してください。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>これ以上処理を続けずに、現在のメッセージを受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_abort"> xxfi_abort</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-close" role="function">
+<title>xxfi_close ()</title>
+<indexterm zone="xxfi-close"><primary>xxfi_close</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_close)                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>このコールバックは各milterセッションの最後に呼ばれます。milterがセッション中で割り当てたリソースはこのコールバックの中で解放してください。</para>
+<para>すべての応答ステータスは無視されます。<link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>を使って下さい。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_close"> xxfi_close</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-unknown" role="function">
+<title>xxfi_unknown ()</title>
+<indexterm zone="xxfi-unknown"><primary>xxfi_unknown</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_unknown)                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *command</parameter>);</programlisting>
+<para>このコールバックは未知のSMTPコマンドまたは未実装のSMTPコマンドが送られてきた場合に呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="SMFIP-NR-UNKN:CAPS"><literal>SMFIP_NR_UNKN</literal></link>フラグを<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに設定していなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>MTAは、未知のSMTPコマンドまたは未実装のSMTPコマンドは常に拒否することに中してください。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_unknown"> xxfi_unknown</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command</parameter> :</term>
+<listitem><simpara>未知のSMTPコマンド。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-data" role="function">
+<title>xxfi_data ()</title>
+<indexterm zone="xxfi-data"><primary>xxfi_data</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_data)                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>このコールバックはSMTPの"DATA"コマンドのときに呼ばれます。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージに対する処理を続けます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-DISCARD:CAPS"><literal>SMFIS_DISCARD</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを受け入れて、だまって破棄します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-ACCEPT:CAPS"><literal>SMFIS_ACCEPT</literal></link>
+</term>
+  <listitem>
+  <para>現在の宛先を受け入れます。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>
+</term>
+  <listitem>
+  <para>現在のメッセージを一時的な障害が発生したとして拒否します。（つまり、SMTPでは4xxステータスコードになります。）</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-NOREPLY:CAPS"><literal>SMFIS_NOREPLY</literal></link>
+</term>
+  <listitem>
+  <para>MTAに返答しません。</para>
+  <para>milterは<link linkend="SMFIP-NR-DATA:CAPS"><literal>SMFIP_NR_DATA</literal></link>フラグを<link linkend="smfiDesc"><literal>smfiDesc</literal></link>::xxfi_flagsに設定していなければいけません。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_data"> xxfi_data</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="xxfi-negotiate" role="function">
+<title>xxfi_negotiate ()</title>
+<indexterm zone="xxfi-negotiate"><primary>xxfi_negotiate</primary></indexterm>
+<programlisting><link linkend="sfsistat"><returnvalue>sfsistat</returnvalue></link>            (*xxfi_negotiate)                   (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><type>unsigned long </type> actions</parameter>,
+                                                         <parameter><type>unsigned long </type> steps</parameter>,
+                                                         <parameter><type>unsigned long </type> unused0</parameter>,
+                                                         <parameter><type>unsigned long </type> unused1</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *actions_output</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *steps_output</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *unused0_output</parameter>,
+                                                         <parameter>unsigned <link linkend="long"><type>long</type></link> *unused1_output</parameter>);</programlisting>
+<para>このコールバックはMTAからネゴシエーション要求があったときに呼ばれます。MTAから受け取った<parameter>actions</parameter>と<parameter>steps</parameter>を変更したい場合は、<parameter>actions_output</parameter>と<parameter>steps_output</parameter>を設定して、<link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>を返してください。もし、<parameter>actions</parameter>と<parameter>steps</parameter>の両方を変更しない場合は、たんに<link linkend="SMFIS-ALL-OPTS:CAPS"><literal>SMFIS_ALL_OPTS</literal></link>を返してください。</para>
+<para>すべての利用可能な応答ステータスは以下の通りです。</para>
+<variablelist>
+  <varlistentry>
+  <term id="xml.&lt;link">
+  <link linkend="SMFIS-ALL-OPTS:CAPS"><literal>SMFIS_ALL_OPTS</literal></link>
+</term>
+  <listitem>
+  <para>すべての利用可能なアクションとステップを有効にします。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>
+</term>
+  <listitem>
+  <para>現在のセッションを拒否します。</para>
+</listitem>
+</varlistentry>
+  <varlistentry>
+  <term>
+  <link linkend="SMFIS-CONTINUE:CAPS"><literal>SMFIS_CONTINUE</literal></link>
+</term>
+  <listitem>
+  <para><parameter>actions_output</parameter>と<parameter>steps_output</parameter>を使って、現在のセッションの処理を継続します。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/xxfi_negotiate"> xxfi_negotiate</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>actions</parameter> :</term>
+<listitem><simpara>MTAから受け取ったアクション。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>steps</parameter> :</term>
+<listitem><simpara>MTAから提案されたmilterプロトコルの実行ステップ。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>unused0</parameter> :</term>
+<listitem><simpara>使われません。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>unused1</parameter> :</term>
+<listitem><simpara>使われません。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>actions_output</parameter> :</term>
+<listitem><simpara>MTAに要求するアクション。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>steps_output</parameter> :</term>
+<listitem><simpara>MTAに要求するmilterプロトコルの実行ステップ。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>unused0_output</parameter> :</term>
+<listitem><simpara>使われません。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>unused1_output</parameter> :</term>
+<listitem><simpara>使われません。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>応答ステータス。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-opensocket" role="function">
+<title>smfi_opensocket ()</title>
+<indexterm zone="smfi-opensocket"><primary>smfi_opensocket</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_opensocket                     (<parameter><link linkend="bool"><type>bool</type></link> remove_socket</parameter>);</programlisting>
+<para>MTAからの接続されるソケットを作成します。</para>
+<para>通常は、<link linkend="smfi-opensocket"><function>smfi_opensocket()</function></link>を明示的に呼ぶ必要はありません。ソケットは<link linkend="smfi-main"><function>smfi_main()</function></link>の中で暗黙的に作られます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>の呼び出しに成功していない。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-setconn"><function>smfi_setconn()</function></link>の呼び出しに成功していない。</para>
+</listitem>
+  <listitem>
+  <para>接続指定がUNIXドメインソケットで<parameter>remove_socket</parameter>が真のとき、<link linkend="smfi-opensocket"><function>smfi_opensocket()</function></link>が既存のUNIXドメインソケットの削除に失敗した場合。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-opensocket"><function>smfi_opensocket()</function></link>が新しいソケットの作成に失敗した場合。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_opensocket"> smfi_opensocket</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>remove_socket</parameter> :</term>
+<listitem><simpara>新しいソケットを作る前に、既存のUNIXドメインソケットを削除しようとするかどうか。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-register" role="function">
+<title>smfi_register ()</title>
+<indexterm zone="smfi-register"><primary>smfi_register</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_register                       (<parameter><type>struct smfiDesc</type> description</parameter>);</programlisting>
+<para>milterの実装をコールバックとして登録します。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para>互換性のないxxfi_version。</para>
+</listitem>
+  <listitem>
+  <para>不正なxxfi_flagsの値。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_register"> smfi_register</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>description</parameter> :</term>
+<listitem><simpara>milterの説明。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-main" role="function">
+<title>smfi_main ()</title>
+<indexterm zone="smfi-main"><primary>smfi_main</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_main                           (<parameter><type>void</type></parameter>);</programlisting>
+<para>イベントループに入ります。milterは<link linkend="smfi-main"><function>smfi_main()</function></link>を呼ぶ前に、<link linkend="smfi-register"><function>smfi_register()</function></link>、<link linkend="smfi-setconn"><function>smfi_setconn()</function></link>などで初期化していなければいけません。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para>ソケットの作成に失敗したとき。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_main"> smfi_main</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setbacklog" role="function">
+<title>smfi_setbacklog ()</title>
+<indexterm zone="smfi-setbacklog"><primary>smfi_setbacklog</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setbacklog                     (<parameter><link linkend="int"><type>int</type></link> backlog</parameter>);</programlisting>
+<para>listen(2)で使われるmilterの接続キューの最大長を設定します。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para>
+  <parameter>backlog</parameter> &amp;lt;= 0.
+</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setbacklog"> smfi_setbacklog</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>backlog</parameter> :</term>
+<listitem><simpara>処理待ちの接続キューの最大長。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setdbg" role="function">
+<title>smfi_setdbg ()</title>
+<indexterm zone="smfi-setdbg"><primary>smfi_setdbg</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setdbg                         (<parameter><link linkend="int"><type>int</type></link> level</parameter>);</programlisting>
+<para>ログレベルを設定します。<parameter>level</parameter>が0ならすべてのログメッセージが抑制されます。大きい値を指定すればするほど多くのログメッセージが出力されます。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setdbg"> smfi_setdbg</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>level</parameter> :</term>
+<listitem><simpara>ログレベル。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>常に<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-settimeout" role="function">
+<title>smfi_settimeout ()</title>
+<indexterm zone="smfi-settimeout"><primary>smfi_settimeout</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_settimeout                     (<parameter><link linkend="int"><type>int</type></link> timeout</parameter>);</programlisting>
+<para>入出力のタイムアウト時間を秒で設定します。既定値は7210秒です。<parameter>timeout</parameter> == 0は待たないことを意味します。"永遠に待つ"ではありません。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_settimeout"> smfi_settimeout</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>timeout</parameter> :</term>
+<listitem><simpara>タイムアウト値を秒で指定します。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>常に<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setconn" role="function">
+<title>smfi_setconn ()</title>
+<indexterm zone="smfi-setconn"><primary>smfi_setconn</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setconn                        (<parameter><link linkend="char"><type>char</type></link> *connection_spec</parameter>);</programlisting>
+<para>接続指定を設定します。</para>
+<para><parameter>connection_spec</parameter>の書式は以下のいずれかです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para>"unix:/PATH/TO/SOCKET": UNIXドメインソケット。</para>
+</listitem>
+  <listitem>
+  <para>"inet:PORT"、"inet:PORT&commat;HOST_NAME"、"inet:PORT&commat;IP_ADDRESS": IPv4。</para>
+</listitem>
+  <listitem>
+  <para>"inet6:PORT"、"inet6:PORT&commat;HOST_NAME"、"inet6:PORT&commat;IP_ADDRESS": IPv6。</para>
+</listitem>
+</itemizedlist>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para>不正な形式。</para>
+</listitem>
+  <listitem>
+  <para><parameter>connection_spec</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setconn"> smfi_setconn</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>connection_spec</parameter> :</term>
+<listitem><simpara>MTAと通信するための接続指定。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-stop" role="function">
+<title>smfi_stop ()</title>
+<indexterm zone="smfi-stop"><primary>smfi_stop</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_stop                           (<parameter><type>void</type></parameter>);</programlisting>
+<para>milterを中止します。これ以上の接続を受け付けませんが、処理中の接続は最後まで続けます。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_stop"> smfi_stop</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>常に<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-version" role="function">
+<title>smfi_version ()</title>
+<indexterm zone="smfi-version"><primary>smfi_version</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_version                        (<parameter>unsigned <link linkend="int"><type>int</type></link> *major</parameter>,
+                                                         <parameter>unsigned <link linkend="int"><type>int</type></link> *minor</parameter>,
+                                                         <parameter>unsigned <link linkend="int"><type>int</type></link> *patch_level</parameter>);</programlisting>
+<para>libmilterのバージョンを取得します。バージョンはビルド時のlibmilterのバージョンではなくて、実行時に使用しているバージョンです。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_version"> smfi_version</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>major</parameter> :</term>
+<listitem><simpara>メジャーバージョンを返すアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>minor</parameter> :</term>
+<listitem><simpara>マイナーバージョンを返すアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>patch_level</parameter> :</term>
+<listitem><simpara>パッチレベルを返すアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>常に<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="SMFIF-ADDHDRS:CAPS" role="macro">
+<title>SMFIF_ADDHDRS</title>
+<indexterm zone="SMFIF-ADDHDRS:CAPS"><primary>SMFIF_ADDHDRS</primary></indexterm>
+<programlisting>#define SMFIF_ADDHDRS     0x00000001L
+</programlisting>
+<para>milterは<link linkend="smfi-addheader"><function>smfi_addheader()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-CHGBODY:CAPS" role="macro">
+<title>SMFIF_CHGBODY</title>
+<indexterm zone="SMFIF-CHGBODY:CAPS"><primary>SMFIF_CHGBODY</primary></indexterm>
+<programlisting>#define SMFIF_CHGBODY     0x00000002L
+</programlisting>
+<para>milterは<link linkend="smfi-chgbody"><function>smfi_chgbody()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-MODBODY:CAPS" role="macro">
+<title>SMFIF_MODBODY</title>
+<indexterm zone="SMFIF-MODBODY:CAPS"><primary>SMFIF_MODBODY</primary></indexterm>
+<programlisting>#define SMFIF_MODBODY     SMFIF_CHGBODY
+</programlisting>
+<para><link linkend="SMFIF-CHGBODY:CAPS"><literal>SMFIF_CHGBODY</literal></link>と同じ。</para></refsect2>
+<refsect2 id="SMFIF-ADDRCPT:CAPS" role="macro">
+<title>SMFIF_ADDRCPT</title>
+<indexterm zone="SMFIF-ADDRCPT:CAPS"><primary>SMFIF_ADDRCPT</primary></indexterm>
+<programlisting>#define SMFIF_ADDRCPT     0x00000004L
+</programlisting>
+<para>milterは<link linkend="smfi-addrcpt"><function>smfi_addrcpt()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-DELRCPT:CAPS" role="macro">
+<title>SMFIF_DELRCPT</title>
+<indexterm zone="SMFIF-DELRCPT:CAPS"><primary>SMFIF_DELRCPT</primary></indexterm>
+<programlisting>#define SMFIF_DELRCPT     0x00000008L
+</programlisting>
+<para>milterは<link linkend="smfi-delrcpt"><function>smfi_delrcpt()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-CHGHDRS:CAPS" role="macro">
+<title>SMFIF_CHGHDRS</title>
+<indexterm zone="SMFIF-CHGHDRS:CAPS"><primary>SMFIF_CHGHDRS</primary></indexterm>
+<programlisting>#define SMFIF_CHGHDRS     0x00000010L
+</programlisting>
+<para>milterは<link linkend="smfi-chgheader"><function>smfi_chgheader()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-QUARANTINE:CAPS" role="macro">
+<title>SMFIF_QUARANTINE</title>
+<indexterm zone="SMFIF-QUARANTINE:CAPS"><primary>SMFIF_QUARANTINE</primary></indexterm>
+<programlisting>#define SMFIF_QUARANTINE  0x00000020L
+</programlisting>
+<para>milterは<link linkend="smfi-quarantine"><function>smfi_quarantine()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-CHGFROM:CAPS" role="macro">
+<title>SMFIF_CHGFROM</title>
+<indexterm zone="SMFIF-CHGFROM:CAPS"><primary>SMFIF_CHGFROM</primary></indexterm>
+<programlisting>#define SMFIF_CHGFROM     0x00000040L
+</programlisting>
+<para>milterは<link linkend="smfi-chgfrom"><function>smfi_chgfrom()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-ADDRCPT-PAR:CAPS" role="macro">
+<title>SMFIF_ADDRCPT_PAR</title>
+<indexterm zone="SMFIF-ADDRCPT-PAR:CAPS"><primary>SMFIF_ADDRCPT_PAR</primary></indexterm>
+<programlisting>#define SMFIF_ADDRCPT_PAR 0x00000080L
+</programlisting>
+<para>milterは<link linkend="smfi-addrcpt-par"><function>smfi_addrcpt_par()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIF-SETSYMLIST:CAPS" role="macro">
+<title>SMFIF_SETSYMLIST</title>
+<indexterm zone="SMFIF-SETSYMLIST:CAPS"><primary>SMFIF_SETSYMLIST</primary></indexterm>
+<programlisting>#define SMFIF_SETSYMLIST  0x00000100L
+</programlisting>
+<para>milterは<link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>を呼ぶかもしれません。</para>
+<para><link linkend="smfiDesc"><literal>smfiDesc</literal></link>と<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>と<ulink url="https://www.milter.org/developers/api/smfi_register">milter.orgのsmfi_register</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-CONTINUE:CAPS" role="macro">
+<title>SMFIS_CONTINUE</title>
+<indexterm zone="SMFIS-CONTINUE:CAPS"><primary>SMFIS_CONTINUE</primary></indexterm>
+<programlisting>#define SMFIS_CONTINUE    0
+</programlisting>
+<para>現在の処理を継続します。</para>
+<para>各コールバック（<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>、<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>など）とmilter.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-REJECT:CAPS" role="macro">
+<title>SMFIS_REJECT</title>
+<indexterm zone="SMFIS-REJECT:CAPS"><primary>SMFIS_REJECT</primary></indexterm>
+<programlisting>#define SMFIS_REJECT      1
+</programlisting>
+<para>現在処理中のターゲットを拒否します。</para>
+<para>各コールバック（<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>、<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>など）とmilter.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-DISCARD:CAPS" role="macro">
+<title>SMFIS_DISCARD</title>
+<indexterm zone="SMFIS-DISCARD:CAPS"><primary>SMFIS_DISCARD</primary></indexterm>
+<programlisting>#define SMFIS_DISCARD     2
+</programlisting>
+<para>現在処理中のターゲットを受け入れて、だまって破棄します。</para>
+<para>各コールバック（<link linkend="xxfi-envfrom"><function>xxfi_envfrom()</function></link>、<link linkend="xxfi-envrcpt"><function>xxfi_envrcpt()</function></link>など）とmiler.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-ACCEPT:CAPS" role="macro">
+<title>SMFIS_ACCEPT</title>
+<indexterm zone="SMFIS-ACCEPT:CAPS"><primary>SMFIS_ACCEPT</primary></indexterm>
+<programlisting>#define SMFIS_ACCEPT      3
+</programlisting>
+<para>現在処理中のターゲットを受け入れます。</para>
+<para>各コールバック（<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>、<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>など）とmilter.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-TEMPFAIL:CAPS" role="macro">
+<title>SMFIS_TEMPFAIL</title>
+<indexterm zone="SMFIS-TEMPFAIL:CAPS"><primary>SMFIS_TEMPFAIL</primary></indexterm>
+<programlisting>#define SMFIS_TEMPFAIL    4
+</programlisting>
+<para>現在のターゲットに対して、一時的な障害ステータスを返します。</para>
+<para>各コールバック（<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>、<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>など）とmilter.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-NOREPLY:CAPS" role="macro">
+<title>SMFIS_NOREPLY</title>
+<indexterm zone="SMFIS-NOREPLY:CAPS"><primary>SMFIS_NOREPLY</primary></indexterm>
+<programlisting>#define SMFIS_NOREPLY     7
+</programlisting>
+<para>MTAに返答しません。</para>
+<para>各コールバック（<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>、<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>など）とmilter.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-SKIP:CAPS" role="macro">
+<title>SMFIS_SKIP</title>
+<indexterm zone="SMFIS-SKIP:CAPS"><primary>SMFIS_SKIP</primary></indexterm>
+<programlisting>#define SMFIS_SKIP        8
+</programlisting>
+<para>残りの本文を省略します。<link linkend="xxfi-body"><function>xxfi_body()</function></link>の中でだけ使えます。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/#conn-spec">コールバックの返値の説明</ulink>も見てください。</para></refsect2>
+<refsect2 id="SMFIS-ALL-OPTS:CAPS" role="macro">
+<title>SMFIS_ALL_OPTS</title>
+<indexterm zone="SMFIS-ALL-OPTS:CAPS"><primary>SMFIS_ALL_OPTS</primary></indexterm>
+<programlisting>#define SMFIS_ALL_OPTS    10
+</programlisting>
+<para>MTAから受け取ったすべてのネゴシエーションオプションを使います。これは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の中でだけ使えます。</para></refsect2>
+<refsect2 id="SMFIM-CONNECT:CAPS" role="macro">
+<title>SMFIM_CONNECT</title>
+<indexterm zone="SMFIM-CONNECT:CAPS"><primary>SMFIM_CONNECT</primary></indexterm>
+<programlisting>#define SMFIM_CONNECT	  0
+</programlisting>
+<para><link linkend="xxfi-connect"><function>xxfi_connect()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIM-HELO:CAPS" role="macro">
+<title>SMFIM_HELO</title>
+<indexterm zone="SMFIM-HELO:CAPS"><primary>SMFIM_HELO</primary></indexterm>
+<programlisting>#define SMFIM_HELO	  1
+</programlisting>
+<para><link linkend="xxfi-helo"><function>xxfi_helo()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIM-ENVFROM:CAPS" role="macro">
+<title>SMFIM_ENVFROM</title>
+<indexterm zone="SMFIM-ENVFROM:CAPS"><primary>SMFIM_ENVFROM</primary></indexterm>
+<programlisting>#define SMFIM_ENVFROM	  2
+</programlisting>
+<para><link linkend="xxfi-envfrom"><function>xxfi_envfrom()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIM-ENVRCPT:CAPS" role="macro">
+<title>SMFIM_ENVRCPT</title>
+<indexterm zone="SMFIM-ENVRCPT:CAPS"><primary>SMFIM_ENVRCPT</primary></indexterm>
+<programlisting>#define SMFIM_ENVRCPT	  3
+</programlisting>
+<para><link linkend="xxfi-envrcpt"><function>xxfi_envrcpt()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIM-DATA:CAPS" role="macro">
+<title>SMFIM_DATA</title>
+<indexterm zone="SMFIM-DATA:CAPS"><primary>SMFIM_DATA</primary></indexterm>
+<programlisting>#define SMFIM_DATA	  4
+</programlisting>
+<para><link linkend="xxfi-data"><function>xxfi_data()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIM-EOM:CAPS" role="macro">
+<title>SMFIM_EOM</title>
+<indexterm zone="SMFIM-EOM:CAPS"><primary>SMFIM_EOM</primary></indexterm>
+<programlisting>#define SMFIM_EOM	  5
+</programlisting>
+<para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIM-EOH:CAPS" role="macro">
+<title>SMFIM_EOH</title>
+<indexterm zone="SMFIM-EOH:CAPS"><primary>SMFIM_EOH</primary></indexterm>
+<programlisting>#define SMFIM_EOH	  6
+</programlisting>
+<para><link linkend="xxfi-eoh"><function>xxfi_eoh()</function></link>のプロトコル段階であることを示します。</para>
+<para><link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>も見てください。</para></refsect2>
+<refsect2 id="SMFIP-NOCONNECT:CAPS" role="macro">
+<title>SMFIP_NOCONNECT</title>
+<indexterm zone="SMFIP-NOCONNECT:CAPS"><primary>SMFIP_NOCONNECT</primary></indexterm>
+<programlisting>#define SMFIP_NOCONNECT       0x00000001L
+</programlisting>
+<para>MTAは<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NOHELO:CAPS" role="macro">
+<title>SMFIP_NOHELO</title>
+<indexterm zone="SMFIP-NOHELO:CAPS"><primary>SMFIP_NOHELO</primary></indexterm>
+<programlisting>#define SMFIP_NOHELO          0x00000002L
+</programlisting>
+<para>MTAが<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NOMAIL:CAPS" role="macro">
+<title>SMFIP_NOMAIL</title>
+<indexterm zone="SMFIP-NOMAIL:CAPS"><primary>SMFIP_NOMAIL</primary></indexterm>
+<programlisting>#define SMFIP_NOMAIL          0x00000004L
+</programlisting>
+<para>MTAが<link linkend="xxfi-mail"><function>xxfi_mail()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NORCPT:CAPS" role="macro">
+<title>SMFIP_NORCPT</title>
+<indexterm zone="SMFIP-NORCPT:CAPS"><primary>SMFIP_NORCPT</primary></indexterm>
+<programlisting>#define SMFIP_NORCPT          0x00000008L
+</programlisting>
+<para>MTAが<link linkend="xxfi-rcpt"><function>xxfi_rcpt()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NOBODY:CAPS" role="macro">
+<title>SMFIP_NOBODY</title>
+<indexterm zone="SMFIP-NOBODY:CAPS"><primary>SMFIP_NOBODY</primary></indexterm>
+<programlisting>#define SMFIP_NOBODY          0x00000010L
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="SMFIP-NOHDRS:CAPS" role="macro">
+<title>SMFIP_NOHDRS</title>
+<indexterm zone="SMFIP-NOHDRS:CAPS"><primary>SMFIP_NOHDRS</primary></indexterm>
+<programlisting>#define SMFIP_NOHDRS          0x00000020L
+</programlisting>
+<para>MTAが<link linkend="xxfi-header"><function>xxfi_header()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NOEOH:CAPS" role="macro">
+<title>SMFIP_NOEOH</title>
+<indexterm zone="SMFIP-NOEOH:CAPS"><primary>SMFIP_NOEOH</primary></indexterm>
+<programlisting>#define SMFIP_NOEOH           0x00000040L
+</programlisting>
+<para>MTAが<link linkend="xxfi-eoh"><function>xxfi_eoh()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-HDR:CAPS" role="macro">
+<title>SMFIP_NR_HDR</title>
+<indexterm zone="SMFIP-NR-HDR:CAPS"><primary>SMFIP_NR_HDR</primary></indexterm>
+<programlisting>#define SMFIP_NR_HDR          0x00000080L
+</programlisting>
+<para>milterが<link linkend="xxfi-header"><function>xxfi_header()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NOHREPL:CAPS" role="macro">
+<title>SMFIP_NOHREPL</title>
+<indexterm zone="SMFIP-NOHREPL:CAPS"><primary>SMFIP_NOHREPL</primary></indexterm>
+<programlisting>#define SMFIP_NOHREPL         SMFIP_NR_HDR
+</programlisting>
+<para><link linkend="SMFIP-NR-HDR:CAPS"><literal>SMFIP_NR_HDR</literal></link>と同じ。</para></refsect2>
+<refsect2 id="SMFIP-NOUNKNOWN:CAPS" role="macro">
+<title>SMFIP_NOUNKNOWN</title>
+<indexterm zone="SMFIP-NOUNKNOWN:CAPS"><primary>SMFIP_NOUNKNOWN</primary></indexterm>
+<programlisting>#define SMFIP_NOUNKNOWN       0x00000100L
+</programlisting>
+<para>MTAが<link linkend="xxfi-unknown"><function>xxfi_unknown()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NODATA:CAPS" role="macro">
+<title>SMFIP_NODATA</title>
+<indexterm zone="SMFIP-NODATA:CAPS"><primary>SMFIP_NODATA</primary></indexterm>
+<programlisting>#define SMFIP_NODATA          0x00000200L
+</programlisting>
+<para>MTAが<link linkend="xxfi-data"><function>xxfi_data()</function></link>の情報を送信しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-SKIP:CAPS" role="macro">
+<title>SMFIP_SKIP</title>
+<indexterm zone="SMFIP-SKIP:CAPS"><primary>SMFIP_SKIP</primary></indexterm>
+<programlisting>#define SMFIP_SKIP            0x00000400L
+</programlisting>
+<para>MTAが<link linkend="xxfi-body"><function>xxfi_body()</function></link>での<link linkend="SMFIS-SKIP:CAPS"><literal>SMFIS_SKIP</literal></link>をサポートしていることを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-RCPT-REJ:CAPS" role="macro">
+<title>SMFIP_RCPT_REJ</title>
+<indexterm zone="SMFIP-RCPT-REJ:CAPS"><primary>SMFIP_RCPT_REJ</primary></indexterm>
+<programlisting>#define SMFIP_RCPT_REJ        0x00000800L
+</programlisting>
+<para>MTAは拒否した宛先も送信し、<link linkend="xxfi-envrcpt"><function>xxfi_envrcpt()</function></link>が呼び出されることを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-CONN:CAPS" role="macro">
+<title>SMFIP_NR_CONN</title>
+<indexterm zone="SMFIP-NR-CONN:CAPS"><primary>SMFIP_NR_CONN</primary></indexterm>
+<programlisting>#define SMFIP_NR_CONN         0x00001000L
+</programlisting>
+<para>milterが<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-HELO:CAPS" role="macro">
+<title>SMFIP_NR_HELO</title>
+<indexterm zone="SMFIP-NR-HELO:CAPS"><primary>SMFIP_NR_HELO</primary></indexterm>
+<programlisting>#define SMFIP_NR_HELO         0x00002000L
+</programlisting>
+<para>milterが<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-MAIL:CAPS" role="macro">
+<title>SMFIP_NR_MAIL</title>
+<indexterm zone="SMFIP-NR-MAIL:CAPS"><primary>SMFIP_NR_MAIL</primary></indexterm>
+<programlisting>#define SMFIP_NR_MAIL         0x00004000L
+</programlisting>
+<para>milterが<link linkend="xxfi-envfrom"><function>xxfi_envfrom()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-RCPT:CAPS" role="macro">
+<title>SMFIP_NR_RCPT</title>
+<indexterm zone="SMFIP-NR-RCPT:CAPS"><primary>SMFIP_NR_RCPT</primary></indexterm>
+<programlisting>#define SMFIP_NR_RCPT         0x00008000L
+</programlisting>
+<para>milterが<link linkend="xxfi-envrcpt"><function>xxfi_envrcpt()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-DATA:CAPS" role="macro">
+<title>SMFIP_NR_DATA</title>
+<indexterm zone="SMFIP-NR-DATA:CAPS"><primary>SMFIP_NR_DATA</primary></indexterm>
+<programlisting>#define SMFIP_NR_DATA         0x00010000L
+</programlisting>
+<para>milterが<link linkend="xxfi-data"><function>xxfi_data()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-UNKN:CAPS" role="macro">
+<title>SMFIP_NR_UNKN</title>
+<indexterm zone="SMFIP-NR-UNKN:CAPS"><primary>SMFIP_NR_UNKN</primary></indexterm>
+<programlisting>#define SMFIP_NR_UNKN         0x00020000L
+</programlisting>
+<para>milterが<link linkend="xxfi-unknown"><function>xxfi_unknown()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-EOH:CAPS" role="macro">
+<title>SMFIP_NR_EOH</title>
+<indexterm zone="SMFIP-NR-EOH:CAPS"><primary>SMFIP_NR_EOH</primary></indexterm>
+<programlisting>#define SMFIP_NR_EOH          0x00040000L
+</programlisting>
+<para>milterが<link linkend="xxfi-eoh"><function>xxfi_eoh()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-NR-BODY:CAPS" role="macro">
+<title>SMFIP_NR_BODY</title>
+<indexterm zone="SMFIP-NR-BODY:CAPS"><primary>SMFIP_NR_BODY</primary></indexterm>
+<programlisting>#define SMFIP_NR_BODY         0x00080000L
+</programlisting>
+<para>milterが<link linkend="xxfi-body"><function>xxfi_body()</function></link>に返答しないことを示します。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="SMFIP-HDR-LEADSPC:CAPS" role="macro">
+<title>SMFIP_HDR_LEADSPC</title>
+<indexterm zone="SMFIP-HDR-LEADSPC:CAPS"><primary>SMFIP_HDR_LEADSPC</primary></indexterm>
+<programlisting>#define SMFIP_HDR_LEADSPC     0x00100000L
+</programlisting>
+<para><link linkend="xxfi-header"><function>xxfi_header()</function></link>コールバックが':'の後のスペース付きでヘッダの値を受けとることを示します。例は<link linkend="xxfi-header"><function>xxfi_header()</function></link>を見てください。</para>
+<para>このフラグは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の<parameter>steps_output</parameter>で取得・設定できます。</para></refsect2>
+<refsect2 id="smfi-getsymval" role="function">
+<title>smfi_getsymval ()</title>
+<indexterm zone="smfi-getsymval"><primary>smfi_getsymval</primary></indexterm>
+<programlisting><link linkend="char"><returnvalue>char</returnvalue></link> *              smfi_getsymval                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>);</programlisting>
+<para>現在のmilterセッションコンテキスト中での<parameter>name</parameter>というマクロ名の値を返します。<link linkend="smfi-getsymval"><function>smfi_getsymval()</function></link>はxxfi_XXXコールバックの中で使えます。（例えば、<link linkend="xxfi-connect"><function>xxfi_connect()</function></link>、<link linkend="xxfi-helo"><function>xxfi_helo()</function></link>など）</para>
+<para><parameter>name</parameter>が"i"のように1文字でない場合は、"{if_name}"のようにかっこ（"{"と"}"）で囲みます。</para>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_getsymval"> smfi_getsymval</ulink>も見てください。Sendmailの既定のマクロもそのページに載っています。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>マクロ名。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>もしあれば<parameter>name</parameter>というマクロ名の値、なければ<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setreply" role="function">
+<title>smfi_setreply ()</title>
+<indexterm zone="smfi-setreply"><primary>smfi_setreply</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setreply                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *return_code</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *extended_code</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *message</parameter>);</programlisting>
+<para>エラー応答コードを設定します。4xx <parameter>return_code</parameter>は<link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>のときに使います。5xx <parameter>return_code</parameter>は<link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>のときに使います。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>return_code</parameter>が4xxでも5xxでもない。</para>
+</listitem>
+  <listitem>
+  <para><parameter>extended_code</parameter>が4.x.xでも5.x.xでもない。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setreply"> smfi_setreply</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>return_code</parameter> :</term>
+<listitem><simpara>3桁のSMTPエラー応答コード。（RFC 2821）4xxと5xxだけが使えます。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>extended_code</parameter> :</term>
+<listitem><simpara>拡張応答コード（RFC 1893/2034）または<link linkend="NULL:CAPS"><literal>NULL</literal></link>。4.x.xと5.x.xだけが使えます。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>message</parameter> :</term>
+<listitem><simpara>SMTP応答のテキスト部分または<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setmlreply" role="function">
+<title>smfi_setmlreply ()</title>
+<indexterm zone="smfi-setmlreply"><primary>smfi_setmlreply</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setmlreply                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *return_code</parameter>,
+                                                         <parameter>const <link linkend="char"><type>char</type></link> *extended_code</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>エラー応答コードを設定します。4xx <parameter>return_code</parameter>は<link linkend="SMFIS-TEMPFAIL:CAPS"><literal>SMFIS_TEMPFAIL</literal></link>のときに使います。5xx <parameter>return_code</parameter>は<link linkend="SMFIS-REJECT:CAPS"><literal>SMFIS_REJECT</literal></link>のときに使います。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>return_code</parameter>が4xxでも5xxでもない。</para>
+</listitem>
+  <listitem>
+  <para><parameter>extended_code</parameter>が4.x.xでも5.x.xでもない。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setmlreply"> smfi_setmlreply</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>return_code</parameter> :</term>
+<listitem><simpara>3桁のSMTPエラー応答コード。（RFC 2821）4xxと5xxだけが使えます。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>extended_code</parameter> :</term>
+<listitem><simpara>拡張応答コード（RFC 1893/2034）または<link linkend="NULL:CAPS"><literal>NULL</literal></link>。4.x.xと5.x.xだけが使えます。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter> :</term>
+<listitem><simpara>SMTP応答のテキスト部分の一行。最後に<link linkend="NULL:CAPS"><literal>NULL</literal></link>を指定すること。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-addheader" role="function">
+<title>smfi_addheader ()</title>
+<indexterm zone="smfi-addheader"><primary>smfi_addheader</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_addheader                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);</programlisting>
+<para>現在のメッセージのヘッダリストにヘッダを追加します。<link linkend="smfi-addheader"><function>smfi_addheader()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>name</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</para>
+</listitem>
+  <listitem>
+  <para><parameter>value</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外のところで呼ばれた。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="SMFIF-ADDHDRS:CAPS"><literal>SMFIF_ADDHDRS</literal></link>フラグが<link linkend="smfi-register"><function>smfi_register()</function></link>の中でも、<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>でも指定されていない。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_addheader"> smfi_addheader</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>ヘッダ名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter> :</term>
+<listitem><simpara>ヘッダ値。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-chgheader" role="function">
+<title>smfi_chgheader ()</title>
+<indexterm zone="smfi-chgheader"><primary>smfi_chgheader</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_chgheader                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> index</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);</programlisting>
+<para><parameter>name</parameter>という名前のヘッダのうち、<parameter>index</parameter>番目にあるヘッダを変更します。<parameter>value</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>ならそのヘッダは削除されます。<link linkend="smfi-chgheader"><function>smfi_chgheader()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>name</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-CHGHDRS:CAPS"><literal>SMFIF_CHGHDRS</literal></link>フラグが設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_chgheader"> smfi_chgheader</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>ヘッダ名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter> :</term>
+<listitem><simpara>名前が<parameter>name</parameter>のすべてのヘッダの中の位置。（1ベース）</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter> :</term>
+<listitem><simpara>ヘッダ値。ターゲットのヘッダを削除する場合は<link linkend="NULL:CAPS"><literal>NULL</literal></link>を指定してください。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-insheader" role="function">
+<title>smfi_insheader ()</title>
+<indexterm zone="smfi-insheader"><primary>smfi_insheader</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_insheader                      (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> index</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *name</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *value</parameter>);</programlisting>
+<para>ヘッダの<parameter>index</parameter>番目にヘッダを挿入します。<link linkend="smfi-insheader"><function>smfi_insheader()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>name</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</para>
+</listitem>
+  <listitem>
+  <para><parameter>value</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-ADDHDRS:CAPS"><literal>SMFIF_ADDHDRS</literal></link>フラグが設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_insheader"> smfi_insheader</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter> :</term>
+<listitem><simpara>挿入されるヘッダの位置。0は先頭に追加するという意味になります。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>ヘッダ名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter> :</term>
+<listitem><simpara>ヘッダ値。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-chgfrom" role="function">
+<title>smfi_chgfrom ()</title>
+<indexterm zone="smfi-chgfrom"><primary>smfi_chgfrom</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_chgfrom                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *mail</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *arguments</parameter>);</programlisting>
+<para>送信者のアドレスを変更します。<link linkend="smfi-chgfrom"><function>smfi_chgfrom()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>mail</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-CHGFROM:CAPS"><literal>SMFIF_CHGFROM</literal></link>フラグが設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_chgfrom"> smfi_chgfrom</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mail</parameter> :</term>
+<listitem><simpara>新しい送信者のアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arguments</parameter> :</term>
+<listitem><simpara>ESMTPの追加の引数。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-addrcpt" role="function">
+<title>smfi_addrcpt ()</title>
+<indexterm zone="smfi-addrcpt"><primary>smfi_addrcpt</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_addrcpt                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *recipient</parameter>);</programlisting>
+<para>宛先アドレスを追加します。<link linkend="smfi-addrcpt"><function>smfi_addrcpt()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>recipient</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-ADDRCPT:CAPS"><literal>SMFIF_ADDRCPT</literal></link>フラグが設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_addrcpt"> smfi_addrcpt</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter> :</term>
+<listitem><simpara>新しい宛先アドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-addrcpt-par" role="function">
+<title>smfi_addrcpt_par ()</title>
+<indexterm zone="smfi-addrcpt-par"><primary>smfi_addrcpt_par</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_addrcpt_par                    (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *recipient</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *arguments</parameter>);</programlisting>
+<para>追加のESMTP引数付きで宛先アドレスを追加します。<link linkend="smfi-addrcpt-par"><function>smfi_addrcpt_par()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>recipient</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-ADDRCPT-PAR:CAPS"><literal>SMFIF_ADDRCPT_PAR</literal></link>フラグが設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_addrcpt_par"> smfi_addrcpt_par</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter> :</term>
+<listitem><simpara>宛先アドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arguments</parameter> :</term>
+<listitem><simpara>ESMTPの追加の引数。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-delrcpt" role="function">
+<title>smfi_delrcpt ()</title>
+<indexterm zone="smfi-delrcpt"><primary>smfi_delrcpt</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_delrcpt                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *recipient</parameter>);</programlisting>
+<para>宛先のアドレスを削除します。<link linkend="smfi-delrcpt"><function>smfi_delrcpt()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>recipient</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-DELRCPT:CAPS"><literal>SMFIF_DELRCPT</literal></link>フラグが設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_delrcpt"> smfi_delrcpt</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter> :</term>
+<listitem><simpara>宛先アドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-progress" role="function">
+<title>smfi_progress ()</title>
+<indexterm zone="smfi-progress"><primary>smfi_progress</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_progress                       (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>現在の接続を維持します。<link linkend="smfi-progress"><function>smfi_progress()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_progress"> smfi_progress</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-replacebody" role="function">
+<title>smfi_replacebody ()</title>
+<indexterm zone="smfi-replacebody"><primary>smfi_replacebody</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_replacebody                    (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter>unsigned <link linkend="char"><type>char</type></link> *new_body</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> new_body_size</parameter>);</programlisting>
+<para>現在の本文のデータを<parameter>new_body</parameter>で置き換えます。<link linkend="smfi-replacebody"><function>smfi_replacebody()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>new_body</parameter> == <link linkend="NULL:CAPS"><literal>NULL</literal></link>で<parameter>new_body_size</parameter> &gt; 0のとき。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-CHGBODY:CAPS"><literal>SMFIF_CHGBODY</literal></link>が設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_replacebody"> smfi_replacebody</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>new_body</parameter> :</term>
+<listitem><simpara>新しい本文のデータ。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>new_body_size</parameter> :</term>
+<listitem><simpara><parameter>new_body</parameter>のサイズ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-quarantine" role="function">
+<title>smfi_quarantine ()</title>
+<indexterm zone="smfi-quarantine"><primary>smfi_quarantine</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_quarantine                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *reason</parameter>);</programlisting>
+<para>現在のメッセージを<parameter>reason</parameter>という理由で隔離します。<link linkend="smfi-quarantine"><function>smfi_quarantine()</function></link>は<link linkend="xxfi-eom"><function>xxfi_eom()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>reason</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>または空。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-eom"><function>xxfi_eom()</function></link>以外で呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="smfi-register"><function>smfi_register()</function></link>あるいは<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>で<link linkend="SMFIF-QUARANTINE:CAPS"><literal>SMFIF_QUARANTINE</literal></link>が設定されていない。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_quarantine"> smfi_quarantine</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reason</parameter> :</term>
+<listitem><simpara>隔離理由。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setpriv" role="function">
+<title>smfi_setpriv ()</title>
+<indexterm zone="smfi-setpriv"><primary>smfi_setpriv</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setpriv                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="void"><type>void</type></link> *data</parameter>);</programlisting>
+<para>プライベートなデータを設定します。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>context</parameter>が不正。FIXME: 未実装。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setpriv"> smfi_setpriv</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter> :</term>
+<listitem><simpara>プライベートなデータ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-getpriv" role="function">
+<title>smfi_getpriv ()</title>
+<indexterm zone="smfi-getpriv"><primary>smfi_getpriv</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link> *              smfi_getpriv                        (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>);</programlisting>
+<para>プライベートなデータを取得します。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>context</parameter>が不正。FIXME: 未実装。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_getpriv"> smfi_getpriv</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara><link linkend="smfi-setpriv"><function>smfi_setpriv()</function></link>で設定したプライベートなデータか<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="smfi-setsymlist" role="function">
+<title>smfi_setsymlist ()</title>
+<indexterm zone="smfi-setsymlist"><primary>smfi_setsymlist</primary></indexterm>
+<programlisting><link linkend="int"><returnvalue>int</returnvalue></link>                 smfi_setsymlist                     (<parameter><link linkend="SMFICTX:CAPS"><type>SMFICTX</type></link> *context</parameter>,
+                                                         <parameter><link linkend="int"><type>int</type></link> state</parameter>,
+                                                         <parameter><link linkend="char"><type>char</type></link> *macros</parameter>);</programlisting>
+<para>要求するマクロのリストを設定します。<link linkend="smfi-setsymlist"><function>smfi_setsymlist()</function></link>は<link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>の中で呼ぶことができます。</para>
+<para>失敗条件は以下の通りです。</para>
+
+<itemizedlist>
+  <listitem>
+  <para><parameter>state</parameter>が不正。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><parameter>macros</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>または空。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><parameter>state</parameter>の要求マクロリストがすでに設定されている。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para><link linkend="xxfi-negotiate"><function>xxfi_negotiate()</function></link>以外から呼ばれた。FIXME: 未実装。</para>
+</listitem>
+  <listitem>
+  <para>ネットワークエラー発生。</para>
+</listitem>
+</itemizedlist>
+<para>milter.orgの<ulink url="https://www.milter.org/developers/api/smfi_setsymlist"> smfi_setsymlist</ulink>も見てください。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara>現在のmilterセッションのコンテキスト。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter> :</term>
+<listitem><simpara><link linkend="SMFIM-CONNECT:CAPS"><literal>SMFIM_CONNECT</literal></link>のようなSMFIM_XXXとして定義された状態。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>macros</parameter> :</term>
+<listitem><simpara>"{rcpt_mailer} {rcpt_host}"のような空白で区切られたマクロ名のリスト。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功した場合は<link linkend="MI-SUCCESS:CAPS"><literal>MI_SUCCESS</literal></link>、そうでない場合は<link linkend="MI-FAILURE:CAPS"><literal>MI_FAILURE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+</refentry>

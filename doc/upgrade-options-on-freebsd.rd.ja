@@ -1,0 +1,24 @@
+# -*- rd -*-
+
+= FreeBSDで更新（任意） --- FreeBSDでのmilter manager関連ソフトウェアの更新方法
+
+== このドキュメントについて
+
+FreeBSDに特化したmilter manager関連ソフトウェアの更新方法につ
+いて説明します。新規にインストールする方法は((<FreeBSDへインス
+トール（任意）|install-options-to-freebsd.rd.ja>))を見てくださ
+い。
+
+まず、milter manager本体を更新する必要があるので、まだの場合
+は((<FreeBSDで更新|upgrade-on-freebsd.rd.ja>))を見てください。
+
+== milter-manager-log-analyzerの更新
+
+milter managerを上書きインストールするだけなので、追加の作業
+は必要ありません。
+
+== まとめ
+
+milter manager本体同様にmilter manager関連ソフトウェアも簡単
+に更新することができます。新しいバージョンで行われている様々
+な改善を利用したい場合は更新を検討してください。

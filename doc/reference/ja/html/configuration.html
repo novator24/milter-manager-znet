@@ -1,0 +1,2387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>設定</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="start.html" title="Part I. はじめよう">
+<link rel="prev" href="upgrade-options-on-freebsd.html" title="FreeBSDで更新（任意）">
+<link rel="next" href="log-list.html" title="ログ一覧">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="upgrade-options-on-freebsd.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="start.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="log-list.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="configuration"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="configuration.top_of_page"></a>設定</span></h2>
+<p>設定 — milter-manager.confの書き方</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6696624"></a><h2>このドキュメントについて</h2>
+<p>milter-managerの設定ファイルmilter-manager.confの書き方につ いて説明します。</p>
+</div>
+<div class="refsect1">
+<a name="idp7276000"></a><h2>場所</h2>
+<p>ここでは/usr/local/以下にインストールされたものとして説明しま す。configure時に--prefix=/usr/local/オプションを指定する か、--prefixオプションを省略した場合は/usr/local/以下にインス トールされます。</p>
+<p>この場合は、設定ファイルは /usr/local/etc/milter-manager/milter-manager.confになります。 インストールが成功していれば、もうすでにファイルが存在するは ずです。</p>
+</div>
+<div class="refsect1">
+<a name="idp5173504"></a><h2>概要</h2>
+<p>設定ファイルの先頭は以下のようになっています。</p>
+<pre class="programlisting"># -*- ruby -*-
+
+load("applicable-conditions/*.conf")
+load_default
+load_if_exist("milter-manager.local.conf")</pre>
+<p>通常は、この部分はそのままにしておき、milter-manager.confと 同じディレクトリにmilter-manager.local.confというファイルを 作成し、そのファイルに設定を記述します。</p>
+<p>設定項目は以下のように分類されています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.package" title="パッケージ関連">パッケージ関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.security" title="セキュリティ関連">セキュリティ関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.log" title="ログ関連">ログ関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.milter-manager" title="milter-manager関連">milter-manager関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.controller" title="コントローラ関連">コントローラ関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.child-milter" title="子milter関連">子milter関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.built-in-applicable-conditions" title="組み込み適用条件">組み込み適用条件</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.applicable-condition" title="適用条件定義">適用条件定義関連</a>
+  
+</p></li>
+<li class="listitem"><p>
+  <a class="link" href="configuration.html#configuration.database" title="データベース関連">データベース関連</a>
+  
+</p></li>
+</ul></div>
+<p>
+  このうち、適用条件関連とデータベース関連はRubyの知識が必要に なります。
+  <a class="ulink" href="http://gabacho.reto.jp/anti-spam/" target="_top">S25R</a>
+  な どの有用な適用条件は標準で提供されているので、必ずしも自分で 適用条件を定義できる必要はありません。そのため、適用条件の説 明は一番最後にあります。適用条件を定義する必要がない場合は、 適用条件関連の部分は読み飛ばしても構いません。
+</p>
+<p>それぞれ順に説明する前に、設定をする上で便利なmilter-manager 機能を紹介します。milter-managerを--show-configオプションを付 きで起動すると、現在の設定内容が表示されます。</p>
+<pre class="programlisting">% /usr/local/sbin/milter-manager --show-config
+package.platform = "debian"
+package.options = nil
+
+security.privilege_mode = false
+security.effective_user = nil
+security.effective_group = nil
+
+log.level = "default"
+log.use_syslog = true
+log.syslog_facility = "mail"
+
+manager.connection_spec = nil
+manager.unix_socket_mode = 0660
+manager.unix_socket_group = nil
+manager.remove_unix_socket_on_create = true
+manager.remove_unix_socket_on_close = true
+manager.daemon = false
+manager.pid_file = nil
+manager.maintenance_interval = 10
+manager.suspend_time_on_unacceptable = 5
+manager.max_connections = 0
+manager.custom_configuration_directory = nil
+manager.fallback_status = "accept"
+manager.fallback_status_at_disconnect = "temporary-failure"
+manager.event_loop_backend = "glib"
+manager.n_workers = 0
+manager.packet_buffer_size = 0
+manager.connection_check_interval = 0
+manager.chunk_size = 65535
+manager.max_pending_finished_sessions = 0
+
+controller.connection_spec = nil
+controller.unix_socket_mode = 0660
+controller.remove_unix_socket_on_create = true
+controller.remove_unix_socket_on_close = true
+
+define_applicable_condition("S25R") do |condition|
+  condition.description = "Selective SMTP Rejection"
+end
+
+define_applicable_condition("Remote Network") do |condition|
+  condition.description = "Check only remote network"
+end</pre>
+<p>この内容で設定内容を確認することができます。</p>
+<p>また、この書式はそのまま設定ファイルの書式になっているので、 設定の書き方を忘れたときにはこの内容をヒントにすることができ ます。</p>
+<p>それでは、それぞれの分類毎に説明します。</p>
+</div>
+<div class="refsect1">
+<a name="configuration.package"></a><h2>パッケージ関連</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.package-platform"></a>package.platform</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は変更する必要はありません。</em></span>
+  
+</p>
+<p>milterの自動検出方法はプラットフォーム毎に異なります。自 動検出はmilterがプラットフォームで用いているパッケージシ ステムでインストールされていることを前提としています。そ のため、実際のプラットフォームとmilter-managerが認識して いるプラットフォームが異なると、自動検出がうまく動きませ ん。</p>
+<p>プラットフォームはビルド時に検出しています。検出結果が間 違っている場合は、ビルド時に修正することができます。検出 結果が間違っているが、ビルドをやり直すことができない場合 に、この設定項目を利用します。</p>
+<p>現在、標準で利用可能なプラットフォームは以下の通りです。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>debian: Debian GNU/LinuxやUbuntu LinuxなどDebian系Linux用</p></li>
+<li class="listitem"><p>redhat: CentOSなどRedHat系Linux</p></li>
+<li class="listitem"><p>freebsd: FreeBSD用</p></li>
+<li class="listitem"><p>pkgsrc: NetBSDやDragonFly BSDなどpkgsrcを利用している*BSD用</p></li>
+</ul></div>
+<p>プラットフォーム名は「"」で囲んて"debian"というように指定 します。</p>
+<p>
+  注意: 変更する場合はload_defaultの
+  <span class="emphasis"><em>前</em></span>
+  に行って下さい。
+</p>
+<p>例:</p>
+<pre class="programlisting">package.platform = "pkgsrc"</pre>
+<p>既定値:</p>
+<pre class="programlisting">package.platform = "debian" # 環境に依存</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.package-options"></a>package.options</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は変更する必要はありません。</em></span>
+  
+</p>
+<p>package.platformと同様にビルド時に決定しています。</p>
+<p>milter自動検出処理へ付加情報を渡すための項目です。 "名前1=値1,名前2=値2,.."という形式で複数の情報を渡すこと ができます。</p>
+<p>現在、この付加情報を使っているのはpkgsrcプラットフォーム のときだけで、"prefix=rc.dがあるディレクトリのパス"という 情報を使っています。例えば、/etc/rc.d/以下に起動スクリプ トをインストールしている時は、"prefix=/etc"と指定します。</p>
+<p>
+  注意: 変更する場合はload_defaultの
+  <span class="emphasis"><em>前</em></span>
+  に行って下さい。
+</p>
+<p>例:</p>
+<pre class="programlisting">package.options = "prefix=/etc,name=value"</pre>
+<p>既定値:</p>
+<pre class="programlisting">package.options = nil # 環境に依存</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="configuration.security"></a><h2>セキュリティ関連</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.security-privilege-mode"></a>security.privilege_mode</span></p></td>
+<td>
+<p>特権モードで動作するかどうかを指定します。子milter自動起 動機能を利用する場合は有効にする必要があります。</p>
+<p>有効にする場合はtrueを指定します。無効にする場合はfalseを 指定します。</p>
+<p>例:</p>
+<pre class="programlisting">security.privilege_mode = true</pre>
+<p>既定値:</p>
+<pre class="programlisting">security.privilege_mode = false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.security-effective-user"></a>security.effective_user</span></p></td>
+<td>
+<p>milter-managerプロセスの実効ユーザを指定します。ユーザを 切り替えるにはmilter-managerコマンドをroot権限で起動する 必要があります。</p>
+<p>実効ユーザは「"」で囲んて"nobody"というように指定します。 ユーザを指定しない場合はnilを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">security.effective_user = "nobody"</pre>
+<p>既定値:</p>
+<pre class="programlisting">security.effective_user = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.security-effective-group"></a>security.effective_group</span></p></td>
+<td>
+<p>milter-managerプロセスの実効グループを指定します。グルー プを切り替えるにはmilter-managerコマンドをroot権限で起動 する必要があります。</p>
+<p>実効グループは「"」で囲んで"nogroup"というように指定します。 グループを指定しない場合はnilを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">security.effective_group = "nogroup"</pre>
+<p>既定値:</p>
+<pre class="programlisting">security.effective_group = nil</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="configuration.log"></a><h2>ログ関連</h2>
+<p>1.6.6から使用可能。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.log-level"></a>log.level</span></p></td>
+<td>
+<p>ログレベルを指定します。ログレベルはすべて独立しているの で、必要なログレベルを組み合わせて指定します。例えば、 「infoとdebugとerrorレベルのログを出力する」というような 指定になります</p>
+<p>指定可能なログレベルは以下の通りです。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.default"></a>default</span></p></td>
+<td><p>critical、error、warnings、message、 statisticsレベルのログを出力。既定値。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.all"></a>all</span></p></td>
+<td><p>すべてのレベルのログを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.critical"></a>critical</span></p></td>
+<td><p>致命的な問題のログを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.error"></a>error</span></p></td>
+<td><p>エラー時のログを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.warning"></a>warning</span></p></td>
+<td><p>警告時のログを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.message"></a>message</span></p></td>
+<td><p>重要なメッセージを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.info"></a>info</span></p></td>
+<td><p>通常のメッセージを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.debug"></a>debug</span></p></td>
+<td><p>デバッグログを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.statistics"></a>statistics</span></p></td>
+<td><p>統計用ログを出力。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.profile"></a>profile</span></p></td>
+<td><p>プロファイル用ログを出力。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>ログレベルは「"」で囲んで"all"というように指定します。 複数のログレベルを指定する場合は"critical|error|warning" というように「|」で区切ります。</p>
+<p>例:</p>
+<pre class="programlisting">log.level = "all"        # すべてのログを出力</pre>
+<p>既定値:</p>
+<pre class="programlisting">log.level = "default"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.log-use-syslog"></a>log.use_syslog</span></p></td>
+<td>
+<p>syslogにもログを出力するかどうかを指定します。</p>
+<p>出力する場合はtrueを指定します。出力しない場合はfalseを指 定します。</p>
+<p>例:</p>
+<pre class="programlisting">log.use_syslog = false   # syslogに出力しない</pre>
+<p>既定値:</p>
+<pre class="programlisting">log.use_syslog = true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.log-syslog-facility"></a>log.syslog_facility</span></p></td>
+<td>
+<p>syslog出力時に利用するファシリティを指定します。</p>
+<p>指定可能なファシリティと対応するsyslogの定数は以下の通りで す。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.authpriv"></a>authpriv</span></p></td>
+<td><p>LOG_AUTHPRIV</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.cron"></a>cron</span></p></td>
+<td><p>LOG_CRON</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.daemon"></a>daemon</span></p></td>
+<td><p>LOG_DAEMON</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.kern"></a>kern</span></p></td>
+<td><p>LOG_KERN</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local0"></a>local0</span></p></td>
+<td><p>LOG_LOCAL0</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local1"></a>local1</span></p></td>
+<td><p>LOG_LOCAL1</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local2"></a>local2</span></p></td>
+<td><p>LOG_LOCAL2</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local3"></a>local3</span></p></td>
+<td><p>LOG_LOCAL3</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local4"></a>local4</span></p></td>
+<td><p>LOG_LOCAL4</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local5"></a>local5</span></p></td>
+<td><p>LOG_LOCAL5</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local6"></a>local6</span></p></td>
+<td><p>LOG_LOCAL6</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local7"></a>local7</span></p></td>
+<td><p>LOG_LOCAL7</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.lpr"></a>lpr</span></p></td>
+<td><p>LOG_LPR</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.mail"></a>mail</span></p></td>
+<td><p>LOG_MAIL</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.news"></a>news</span></p></td>
+<td><p>LOG_NEWS</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.user"></a>user</span></p></td>
+<td><p>LOG_USER</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.uucp"></a>uucp</span></p></td>
+<td><p>LOG_UUCP</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>ファシリティは「"」で囲んで"mail"というように指定します。</p>
+<p>例:</p>
+<pre class="programlisting">log.syslog_facility = "local4"   # LOG_LOCAL4を使う</pre>
+<p>既定値:</p>
+<pre class="programlisting">log.syslog_facility = "mail"</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="configuration.milter-manager"></a><h2>milter-manager関連</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-connection-spec"></a>manager.connection_spec</span></p></td>
+<td>
+<p>milter-managerが接続を受け付けるソケットを指定します。</p>
+<p>ソケットは「"」で囲んて"inet:10025"というように指定します。 指定できる書式は以下の通りです。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p>UNIXドメインソケット: unix:パス</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: unix:/var/run/milter/milter-manager.sock</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>IPv4ソケット: inet:ポート番号</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: inet:10025</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>IPv4ソケット: inet:ポート番号@ホスト名</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: inet:10025@localhost</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>IPv4ソケット: inet:ポート番号@[アドレス]</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: inet:10025@[127.0.0.1]</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>IPv6ソケット: inet6:ポート番号</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: inet6:10025</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>IPv6ソケット: inet6:ポート番号@ホスト名</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: inet6:10025@localhost</p></li></ul></div>
+</li>
+<li class="listitem">
+<p>IPv6ソケット: inet6:ポート番号@[アドレス]</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>例: inet6:10025@[::1]</p></li></ul></div>
+</li>
+</ul></div>
+<p>もし、security.effective_user, security.effective_groupを 指定している場合は、その権限でUNIXドメインソケットを作成し ます。ソケットを作成するディレクトリのパーミッションに注意 してください。</p>
+<p>IPv4ソケット・IPv6ソケットでホスト名を省略した場合は、す べてのネットワークインターフェイスから接続を受け付けます。 ホスト名やアドレスを指定した場合はそのアドレスからのみ接 続を受け付けます。</p>
+<p>例:</p>
+<pre class="programlisting">manager.connection_spec = "unix:/var/run/milter/milter-manager.sock"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.connection_spec = "inet:10025@[127.0.0.1]"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-unix-socket-mode"></a>manager.unix_socket_mode</span></p></td>
+<td>
+<p>milter-managerが接続を受け付けるUNIXドメインソケットのパー ミッションを指定します。manager.connection_specでUNIXドメ インソケットを使用している場合のみ利用されます。</p>
+<p>8進数で値を指定するために、先頭に「0」をつけることを忘れ ないでください。</p>
+<p>例:</p>
+<pre class="programlisting">manager.unix_socket_mode = 0600</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.unix_socket_mode = 0660</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-unix-socket-group"></a>manager.unix_socket_group</span></p></td>
+<td>
+<p>milter-managerが接続を受け付けるUNIXドメインソケットのグ ループを指定します。manager.connection_specでUNIXドメイン ソケットを使用している場合のみ利用されます。</p>
+<p>ソケットのグループは security.effective_user/security.effective_group権限で作 成された後に、chown(2)で変更します。そのため、指定するグルー プはsecurity.effective_userの補助グループである必要があり ます。</p>
+<p>グループは「"」で囲んて"nogroup"というように指定します。 グループを指定しない場合はnilを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.unix_socket_group = "nobody"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.unix_socket_group = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-remove-unix-socket-on-create"></a>manager.remove_unix_socket_on_create</span></p></td>
+<td>
+<p>milter-managerが接続を受け付けるUNIXドメインソケットを作 成する前にすでにファイルが存在した場合、削除するかどうか を指定します。manager.connection_specでUNIXドメインソケッ トを使用している場合のみ利用されます。</p>
+<p>削除する場合はtrueを指定します。削除しない場合はfalseを指 定します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.remove_unix_socket_on_create = false</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.remove_unix_socket_on_create = true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-remove-unix-socket-on-close"></a>manager.remove_unix_socket_on_close</span></p></td>
+<td>
+<p>milter-managerが終了するときに、接続を受け付けていたUNIX ドメインソケットを削除するかどうかを指定します。 manager.connection_specでUNIXドメインソケットを使用してい る場合のみ利用されます。</p>
+<p>削除する場合はtrueを指定します。削除しない場合はfalseを指 定します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.remove_unix_socket_on_close = false</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.remove_unix_socket_on_close = true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-daemon"></a>manager.daemon</span></p></td>
+<td>
+<p>デーモンプロセスとして動作するかどうかを指定します。デー モンプロセスで動作する場合は、端末を切り離し、バックグラ ウンドで動作します。運用時はバックグラウンドで起動するこ とをお勧めします。この設定項目はmilter-managerの--daemon コマンドラインオプションで上書きできるため、必ずしも設定ファ イル内で設定する必要はありません。</p>
+<p>デーモンプロセスとして動作する場合はtrueを指定します。そ うでない場合はfalseを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.daemon = true</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.daemon = false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-pid-file"></a>manager.pid_file</span></p></td>
+<td>
+<p>起動したmilter-managerのプロセスIDを保存するファイルを指 定します。</p>
+<p>もし、security.effective_user, security.effective_groupを 指定して場合は、その権限でファイルへ書き込みます。ファイ ルのパーミッションに注意してください。</p>
+<p>ファイルのパスは「"」で囲んで "/var/run/milter/milter-manager.pid"というように指定しま す。保存しない場合はnilを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.pid_file = "/var/run/milter/milter-manager.pid"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.pid_file = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-maintenance-interval"></a>manager.maintenance_interval</span></p></td>
+<td>
+<p>何セッション終了毎にメンテナンス処理を実行するかを指定し ます。</p>
+<p>現時点でのメンテナンス処理とはメモリ解放処理のことです。 同時アクセス数が少ない環境では各セッション終了毎にメンテ ナンス処理を実行することによりメモリ使用量を抑えることが できます。同時アクセス数が多い環境では複数セッション終了 毎にまとめてメンテナンス処理を実行することにより処理効率 をあげることができます。</p>
+<p>0またはnilを指定した場合はメンテナンス処理を実行しません。</p>
+<p>例:</p>
+<pre class="programlisting">manager.maintenance_interval = nil</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.maintenance_interval = 10</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-suspend-time-on-unacceptable"></a>manager.suspend_time_on_unacceptable</span></p></td>
+<td>
+<p>同時に多数の接続があり、MTAからの接続を受け付けることがで きないときに何秒待つかを指定します。ulimitやlimitで同時に 開くことができるファイルディスクリプタ数を増やすことも検 討してください。</p>
+<p>例:</p>
+<pre class="programlisting">manager.suspend_time_on_unacceptable = 10</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.suspend_time_on_unacceptable = 5</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-max-connections"></a>manager.max_connections</span></p></td>
+<td>
+<p>1.3.1から使用可能。</p>
+<p>最大同時接続数を指定します。0を指定すると無制限になります。 既定値では無制限です。</p>
+<p>
+  最大同時接続数の処理を行っているときに新しく接続要求があ ると、処理中の接続が終了するのを待ちます。処理中の接続が 終了したかどうかは
+  <a class="link" href="configuration.html#configuration.manager-suspend-time-on-unacceptable">manager.suspend_time_on_unacceptable</a>
+  で指定した秒数毎に確認します。
+</p>
+<p>例:</p>
+<pre class="programlisting">manager.max_connections = 10 # 同時に最大10接続のみ受け付ける</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.max_connections = 0 # 制限無し</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-max-file-descriptors"></a>manager.max_file_descriptors</span></p></td>
+<td>
+<p>1.3.1から使用可能。</p>
+<p>プロセスが開くことができるファイルディスクリプタ数を指定 します。0を指定するとシステムの既定値を変更しません。 既定値は0なので、システムの既定値をそのまま使います。</p>
+<p>milter-managerは1つのリクエストに対して「子milter数 + 1（MTAとの接続用）」個のファイルディスクリプタを開きます。 milter-manager内部でも数個のファイルディスクリプタを開く ので少なくとも以下の個数のファイルディスクリプタが開ける ようにしてください。</p>
+<pre class="programlisting">(子milter数 + 1) * 最大同時接続数 + 10（milter-manager内部で使用 + α）</pre>
+<p>プロセスが開くことができるファイルディスクリプタ数は setrlimit(2)でソフトリミットとハードリミットを変更します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.max_file_descriptors = 65535</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.max_file_descriptors = 0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-custom-configuration-directory"></a>manager.custom_configuration_directory</span></p></td>
+<td>
+<p>Webインターフェイスから変更した設定内容を保存するディレク トリを指定します。</p>
+<p>ディレクトリのパスは「"」で囲んで"/tmp/milter-manager/"と いうように指定します。</p>
+<p>nilを指定した場合は実効ユーザのホームディレクトリ直下に ".milter-manager"というディレクトリを作成し、そのディレク トリを利用します。</p>
+<p>例:</p>
+<pre class="programlisting">manager.custom_configuration_directory = "/tmp/milter-manager/"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.custom_configuration_directory = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-fallback-status"></a>manager.fallback_status</span></p></td>
+<td>
+<p>1.6.3から使用可能。</p>
+<p>milter-manager内部で問題があったときにSMTPサーバへ返すス テータスを指定します。milter-manager内部で問題が起こるの は以下のような場合です。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>子milterが1つも登録されていない。</p></li>
+<li class="listitem"><p>メール本文用の一時ファイルを作成できない。</p></li>
+<li class="listitem"><p>など…</p></li>
+</ul></div>
+<p>指定できる値は以下のいずれかの値です。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>"accept": メールを受信します。既定値です。</p></li>
+<li class="listitem"><p>"temporary-failure": メールを一時的に拒否します。</p></li>
+<li class="listitem"><p>"reject": メールを拒否します。</p></li>
+<li class="listitem"><p>"discard": メールを破棄します。</p></li>
+</ul></div>
+<p>例:</p>
+<pre class="programlisting">manager.fallback_status = "reject"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.fallback_status = "accept"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-fallback-status-at-disconnect"></a>manager.fallback_status_at_disconnect</span></p></td>
+<td>
+<p>1.6.3から使用可能。</p>
+<p>
+  SMTPクライアントがSMTPセッションの途中でSMTPサーバとの接 続を切断したことを検出した時に返すステータスを指定します。 切断の検出は既定値では無効になっているので、既定値ではこ の設定が利用されることがありません。切断の検出を有効にす る場合は
+  <a class="link" href="configuration.html#configuration.manager-use-netstat-connection-checker">manager.use_netstat_connection_checker</a>
+  を利用してください。
+</p>
+<p>指定できる値は以下のいずれかの値です。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>"accept": メールを受信します。</p></li>
+<li class="listitem"><p>"temporary-failure": メールを一時的に拒否します。既定値です。</p></li>
+<li class="listitem"><p>"reject": メールを拒否します。</p></li>
+<li class="listitem"><p>"discard": メールを破棄します。</p></li>
+</ul></div>
+<p>例:</p>
+<pre class="programlisting">manager.fallback_status_at_disconnect = "discard"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.fallback_status_at_disconnect = "temporary-failure"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-event-loop-backend"></a>manager.event_loop_backend</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は使用する必要はありません。</em></span>
+  
+</p>
+<p>1.6.3から使用可能。</p>
+<p>イベントループのバックエンドを指定します。100メール/秒以 下のメール流量を処理するような中小規模のメールシステムで はこの値を変更する必要はありません。100メール/秒以上のメー ル流量を処理するような大規模のメールシステムではこの値を "libev"に設定する必要があります。</p>
+<p>指定できる値は以下のいずれかの値です。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>"glib": GLibのイベントループを使います。GLibのイベン トループではI/O多重化にpoll(2)を使っています。既定値 です。</p></li>
+<li class="listitem"><p>
+  "libev": I/O多重化に
+  <a class="ulink" href="http://libev.schmorp.de/" target="_top">libev</a>
+  を使います。 システムによってepoll、kqueueまたはevent portsを使い ます。
+</p></li>
+</ul></div>
+<p>例:</p>
+<pre class="programlisting">manager.event_loop_backend = "libev"</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.event_loop_backend = "glib"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-n-workers"></a>manager.n_workers</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は使用する必要はありません。</em></span>
+  
+</p>
+<p>1.6.3から使用可能。</p>
+<p>メールを処理するプロセス数を指定します。100メール/秒以下のメール流量 を処理するような中小規模のメールシステムや、非常に重いmilterを使用し ないようなメールシステムではこの値を変更する必要はありません。非常に 重いmilterを使用しながら100メール/秒以上のメール流量を処理するような 大規模のメールシステムではこの値を増やす必要があります。</p>
+<p>指定できる値は0以上、1000以下です。0のときはワーカープロセスを使用し ません。</p>
+<p>例:</p>
+<pre class="programlisting">manager.n_workers = 10</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.n_workers = 0 # ワーカープロセスを使用しない</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-packet-buffer-size"></a>manager.packet_buffer_size</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は使用する必要はありません。</em></span>
+  
+</p>
+<p>1.6.3から使用可能。</p>
+<p>end-of-message時に送信パケットをバッファリングするための バッファサイズを指定します。バッファリングしているパケット の量が指定したバイト以上になるとまとめてパケットを送信し ます。0を指定するとバッファリングしません。</p>
+<p>end-of-message時にadd_headerやdelete_recipientなどメッセー ジ変更操作を多くする場合にパフォーマンスがよくなる可能性 があります。通常はほとんど影響がありません。</p>
+<p>例:</p>
+<pre class="programlisting">manager.packet_buffer_size = 4096 # 4KB溜まるまで送信しない。</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.packet_buffer_size = 0 # バッファリングを無効にする。</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-chunk-size"></a>manager.chunk_size</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は使用する必要はありません。</em></span>
+  
+</p>
+<p>1.8.0から使用可能。</p>
+<p>2番目以降の子milterにbodyパケットを送るときのデータサイズ を指定します。最大値は65535バイトで、これが既定値です。デー タサイズを小さくすることにより通信のオーバーヘッドが少し増 えますが、それでも1回あたりのデータサイズを小さくしたい場 合のみ使ってください。</p>
+<p>例:</p>
+<pre class="programlisting">manager.chunk_size = 4096 # 本文データを4KBずつ送る</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.chunk_size = 65535 # 本文データを64KBずつ送る</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-max-pending-finished-sessions"></a>manager.max_pending_finished_sessions</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は使用する必要はありません。</em></span>
+  
+</p>
+<p>1.8.6から使用可能。</p>
+<p>milter managerはスループットを向上させるため、スループットに影響しな い処理は何も処理がないときまで処理を遅延します。終了したmilterセッショ ンの後始末処理もそのような遅延される処理の1つです。</p>
+<p>この項目を設定することで、他に処理があるときでもmilterセッションの後 始末処理を行うようになります。通常は、複数のmilterセッションを処理し ている場合でも途中に他に何も処理するものがない状態になりますが、同時 接続数が非常に多くなると常になんらかの処理を実施し続けるため、後始末 処理が実行されなくなります。後始末処理ではソケットのクローズも行って いるため、長い間、後始末処理が実行されないと開けるファイルディスクリ プタ数が足りなくなる危険性があります。</p>
+<p>
+  常になんらかの処理を実行し続けている状態は過負荷の状態なので、本来で あれば、そうならないように
+  <a class="link" href="configuration.html#configuration.manager-n-workers">manager.n_workers</a>
+  を設定してワーカー 数を増やした構成にすることが望ましいです。
+</p>
+<p>この項目に0より大きい値を設定すると、他に処理があるときでも、指定した 値分セッションを処理した後に後始末処理を実行します。もちろん、他に処 理がないときも後始末処理を実行するので、通常時はスループットへの影響 はありません。負荷が高くなった時のみこの値が影響します。</p>
+<p>規定値は0でこの機能は無効になっています。</p>
+<p>例:</p>
+<pre class="programlisting"># セッションが終了したら毎回すぐに終了処理を行う
+manager.max_pending_finished_sessions = 1</pre>
+<p>既定値:</p>
+<pre class="programlisting"># なにも処理がないときのみセッションの終了処理を行う
+manager.max_pending_finished_sessions = 0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-use-netstat-connection-checker"></a>manager.use_netstat_connection_checker</span></p></td>
+<td>
+<p>1.5.0から使用可能。</p>
+<p>
+  <span class="command"><strong>netstat</strong></span>
+  コマンドの出力を解析してSMTPクライアントがま だSMTPサーバと接続しているかを確認します。
+</p>
+<p>
+  この機能はmilter（milter-greylist）を用いた
+  <a class="ulink" href="http://k2net.hakuba.jp/targrey/" target="_top">taRgrey</a>
+  を 実現しているときなど、SMTPクライアントが自発的に切断した ことを検出して途中で処理を止めたい場合に有用です。この機 能を用いることによりtaRgreyの問題点の1つであるSMTPサーバ のプロセス数増大を抑えることができます。プロセス数が増大 するとメモリ使用量が増えるため、プロセス数増大を抑えるこ とはメモリ使用量を抑えることにつながります。
+</p>
+<p>接続は5秒毎に確認します。この間隔は変更することも可能です が、通常は変更する必要はありません。</p>
+<p>例:</p>
+<pre class="programlisting">manager.use_netstat_connection_checker    # 5秒間隔で確認
+manager.use_netstat_connection_checker(1) # 1秒間隔で確認</pre>
+<p>初期値:</p>
+<pre class="programlisting">確認しない</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-connection-check-interval"></a>manager.connection_check_interval</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は直接使用する必要はありません。</em></span>
+  
+</p>
+<p>1.5.0から使用可能。</p>
+<p>SMTPクライアントがまだSMTPサーバと接続しているかどうかを 確認する間隔を秒単位で指定します。</p>
+<p>0を指定すると確認しません。</p>
+<p>
+  どのようにして接続しているかどうかを確認するかは
+  <a class="link" href="configuration.html#configuration.manager-define-connection-checker">manager.define_connection_checker</a>
+  で定義します。
+</p>
+<p>例:</p>
+<pre class="programlisting">manager.connection_check_interval = 5 # 5秒間隔で確認</pre>
+<p>既定値:</p>
+<pre class="programlisting">manager.connection_check_interval = 0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-define-connection-checker"></a>manager.define_connection_checker(name) {|context| ... # -&gt; true/false}</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は直接使用する必要はありません。</em></span>
+  
+</p>
+<p>1.5.0から使用可能。</p>
+<p>
+  <a class="link" href="configuration.html#configuration.manager-connection-check-interval">manager.connection_check_interval</a>
+  で指定した秒毎にSMTPクライアントがまだSMTPサーバと接続し ているかを確認します。ブロックがtrueを返したときはまだ接 続していることを示し、falseを返したときは接続が切れたこと を示します。
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.name"></a>name</span></p></td>
+<td><p>確認処理につける名前です。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context"></a>context</span></p></td>
+<td><p>ブロックに渡される現在の状況を知っているオブジェクトで す。以下の情報を取得できます。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-smtp-client-address"></a>context.smtp_client_address</span></p></td>
+<td><p>
+  接続確認対象のSMTPクライアントのIPアドレスです。
+  <a class="link" href="configuration.html#configuration.socket-address" title="socket_address">socket_address</a>
+  と同じオブジェ クトです。
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-smtp-server-address"></a>context.smtp_server_address</span></p></td>
+<td><p>
+  SMTPクライアントの接続を受け付けたSMTPサーバ側のIPアド レスです。
+  <a class="link" href="configuration.html#configuration.socket-address" title="socket_address">socket_address</a>
+  と同じ オブジェクトです。
+</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>例:</p>
+<pre class="programlisting"># ローカルネットワーク以外からの接続は強制的に切断したとみなす
+manager.define_connection_checker("netstat-check") do |context|
+  context.smtp_client_address.local?
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-report-memory-statistics"></a>manager.report_memory_statistics</span></p></td>
+<td>
+<p>1.5.0から使用可能。</p>
+<p>メンテナンス処理が実行される度にメモリ使用量をログに出力 します。</p>
+<p>現在は以下のようなフォーマットで出力されますが、変更され る可能性があります。</p>
+<pre class="programlisting">Mar 28 15:16:58 mail milter-manager[19026]: [statistics] [maintain][memory] (28048KB) total:6979 Proc:44 GLib::Object:18</pre>
+<p>使用例:</p>
+<pre class="programlisting">manager.report_memory_statistics</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-maintained"></a>manager.maintained {...}</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は直接使用する必要はありません。</em></span>
+  
+</p>
+<p>1.5.0から使用可能。</p>
+<p>メンテナンス処理が実行される度に指定した処理を実行します。</p>
+<p>以下の例はメンテナンス処理が実行する度にログを出力する設 定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">manager.maintained do
+  Milter::Logger.info("maintained!")
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.manager-event-loop-created"></a>manager.event_loop_created {|loop| ...}</span></p></td>
+<td>
+<p>
+  <span class="emphasis"><em>この項目は通常は直接使用する必要はありません。</em></span>
+  
+</p>
+<p>1.6.8から使用可能。</p>
+<p>イベントループが作成されたときに指定した処理を実行します。 イベントループが作成されるのは初期化時のみです。 時のみ指定した実行します。</p>
+<p>以下の例は1秒ごとにログを出力するコールバックを登録する設 定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">manager.event_loop_created do |loop|
+  loop.add_timeout(1) do
+    Milter::Logger.info("timeout!")
+    true
+  end
+end</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="configuration.controller"></a><h2>コントローラ関連</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.controller-connection-spec"></a>controller.connection_spec</span></p></td>
+<td>
+<p>milter-managerを制御するための接続を受け付けるソケットを指 定します。</p>
+<p>書式はmanager.connection_specと同じです。</p>
+<p>例:</p>
+<pre class="programlisting">controller.connection_spec = "inet:10026@localhost"</pre>
+<p>既定値:</p>
+<pre class="programlisting">controller.connection_spec = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.controller-unix-socket-mode"></a>controller.unix_socket_mode</span></p></td>
+<td>
+<p>milter-managerを制御するための接続を受け付けるUNIXドメイン ソケットのパーミッションを指定します。 controller.connection_specでUNIXドメインソケットを使用し ている場合のみ利用されます。</p>
+<p>8進数で値を指定するために、先頭に「0」をつけることを忘れ ないでください。</p>
+<p>例:</p>
+<pre class="programlisting">controller.unix_socket_mode = 0600</pre>
+<p>既定値:</p>
+<pre class="programlisting">controller.unix_socket_mode = 0660</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.controller-remove-unix-socket-on-create"></a>controller.remove_unix_socket_on_create</span></p></td>
+<td>
+<p>milter-managerを制御するための接続を受け付けるUNIXドメイン ソケットを作成する前にすでにファイルが存在した場合、削除 するかどうかを指定します。controller.connection_specで UNIXドメインソケットを使用している場合のみ利用されます。</p>
+<p>削除する場合はtrueを指定します。削除しない場合はfalseを指 定します。</p>
+<p>例:</p>
+<pre class="programlisting">controller.remove_unix_socket_on_create = false</pre>
+<p>既定値:</p>
+<pre class="programlisting">controller.remove_unix_socket_on_create = true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.controller-remove-unix-socket-on-close"></a>controller.remove_unix_socket_on_close</span></p></td>
+<td>
+<p>milter-managerが終了するときに、milter-managerを制御する ための接続を受け付けていたUNIXドメインソケットを削除する かどうかを指定します。controller.connection_specでUNIXドメ インソケットを使用している場合のみ利用されます。</p>
+<p>削除する場合はtrueを指定します。削除しない場合はfalseを指 定します。</p>
+<p>例:</p>
+<pre class="programlisting">controller.remove_unix_socket_on_close = false</pre>
+<p>既定値:</p>
+<pre class="programlisting">controller.remove_unix_socket_on_close = true</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="configuration.child-milter"></a><h2>子milter関連</h2>
+<p>子milterに関連する設定項目について説明します。</p>
+<div class="refsect2">
+<a name="idp12919600"></a><h3>子milter定義</h3>
+<p>子milterは以下の書式で登録します。</p>
+<pre class="programlisting">define_milter("名前") do |milter|
+  milter.XXX = ...
+  milter.YYY = ...
+  milter.ZZZ = ...
+end</pre>
+<p>例えば、「inet:10026@localhost」で接続待ちしているmilterを 「test-milter」という名前で登録する場合は以下のようになります。</p>
+<pre class="programlisting">define_milter("test-milter") do |milter|
+  milter.connection_spec = "inet:10026@localhost"
+end</pre>
+<p>define_milter do ... end内で設定できる項目は以下の通りです。</p>
+<p>必須の項目はmilter.connection_specだけです。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-connection-spec"></a>milter.connection_spec</span></p></td>
+<td>
+<p>
+  子milterが接続待ちしているソケットを指定します。
+  <span class="emphasis"><em>必須項目</em></span>
+  です。
+</p>
+<p>書式はmanager.connection_specと同じです。</p>
+<p>例:</p>
+<pre class="programlisting">milter.connection_spec = "inet:10026@localhost"</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.connection_spec = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-description"></a>milter.description</span></p></td>
+<td>
+<p>子milterの説明を指定します。</p>
+<p>説明は「"」で囲んで"test milter"というように指定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.description = "test milter"</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.description = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-enabled"></a>milter.enabled</span></p></td>
+<td>
+<p>子milterを利用するかどうかを指定します。</p>
+<p>利用する場合はtrueを指定します。利用しない場合はfalseを指 定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.enabled = false</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.enabled = true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-fallback-status"></a>milter.fallback_status</span></p></td>
+<td>
+<p>子milterに問題があったとき、指定したステータスを返したと して扱います。</p>
+<p>指定できる値は以下のいずれかの値です。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>"accept": メールを受信します。既定値です。</p></li>
+<li class="listitem"><p>"temporary-failure": メールを一時的に拒否します。</p></li>
+<li class="listitem"><p>"reject": メールを拒否します。</p></li>
+<li class="listitem"><p>"discard": メールを破棄します。</p></li>
+</ul></div>
+<p>例:</p>
+<pre class="programlisting">milter.fallback_status = "temporary-failure"</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.fallback_status = "accept"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-evaluation-mode"></a>milter.evaluation_mode</span></p></td>
+<td>
+<p>1.3.1から使用可能。</p>
+<p>評価モードにするかどうかを指定します。評価モードでは子 milterの結果をMTAに返さないので、既存のメールシステムには 影響を与えません。</p>
+<p>評価モードでも統計用のログが出力されるため、本来なら子 milterがMTAにどのような結果を返していたかを視覚化できます。</p>
+<p>評価モードにする場合はtrueを指定します。</p>
+<p>false（既定値）の場合は、子milterがrejectを返すとMTAに rejectと返し、処理が終了してします。trueの場合は子milterが rejectを返してもMTAにはrejectを返さず、処理が継続します。 継続している処理の中では「子milterがrejectを返した」とい う情報を利用できます。その情報を利用して適用条件を記述する ことができます。</p>
+<p>例:</p>
+<pre class="programlisting">milter.evaluation_mode = true</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.evaluation_mode = false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-applicable-conditions"></a>milter.applicable_conditions</span></p></td>
+<td>
+<p>子milterを適用する条件を指定します。 条件は複数指定できます。1つでも条件を満たさない場合は子 milterの適用は中止されます。</p>
+<p>利用可能は適用条件は以下のコマンドで確認できます。</p>
+<pre class="programlisting">% /usr/local/sbin/milter-manager --show-config | grep define_applicable_condition
+define_applicable_condition("S25R") do |condition|
+define_applicable_condition("Remote Network") do |condition|</pre>
+<p>この場合は"S25R"と"Remote Network"が利用可能です。</p>
+<p>
+  適用条件は標準で提供されているだけではなく、独自に定義す ることもできます。定義方法については
+  <a class="link" href="configuration.html#configuration.applicable-condition" title="適用条件定義">適用条件定義</a>
+  を見てください。ただし、独自に定義する場合にはRubyの知識が 必要になります。
+</p>
+<p>適用条件は以下のように「,」でくぎって複数指定できます。</p>
+<pre class="programlisting">milter.applicable_conditions = ["S25R", "Remote Network"]</pre>
+<p>例:</p>
+<pre class="programlisting">milter.applicable_conditions = ["S25R"]</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.applicable_conditions = []</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-add-applicable-condition"></a>milter.add_applicable_condition(name)</span></p></td>
+<td>
+<p>子milterを適用する条件を追加します。適用する条件について はmilter.applicable_conditionsを見てください。</p>
+<p>例:</p>
+<pre class="programlisting">milter.add_applicable_condition("S25R")</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-command"></a>milter.command</span></p></td>
+<td>
+<p>子milterを起動するコマンドを指定します。 security.privilege_modeがtrueでmilter-managerコマンドが root権限で実行されている場合、milter.connection_specへの 接続が失敗した時に、子milterを自動で起動します。そのとき に利用するコマンドです。</p>
+<p>/etc/init.d/以下や/usr/local/etc/rc.d/以下にある起動スク リプトを指定することを想定しています。</p>
+<p>コマンドは「"」で囲んで"/etc/init.d/milter-greylist"とい うように指定します。自動で起動しない場合はnilを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.command = "/etc/init.d/milter-greylist"</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.command = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-command-options"></a>milter.command_options</span></p></td>
+<td>
+<p>milter.commandに渡すオプションを指定します。</p>
+<p>オプションは「"」で囲んで"start"というように指定します。 複数のオプションを指定するときは"--option1 --option2"とい うように指定します。あるいは、全体を「[]」で囲み、それぞれ のオプションを「,」で区切り、["--option1", "--option2"]と いうように指定することもできます。</p>
+<p>例:</p>
+<pre class="programlisting">milter.command_options = "start"
+milter.command_options = ["--option1", "--option2"]</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.command_options = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-user-name"></a>milter.user_name</span></p></td>
+<td>
+<p>milter.commandを実行するユーザ名を指定します。</p>
+<p>ユーザ名は「"」で囲んで"nobody"というように指定します。 root権限で実行する場合はnilを指定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.user_name = "nobody"</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.user_name = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-connection-timeout"></a>milter.connection_timeout</span></p></td>
+<td>
+<p>子milterに接続したときのタイムアウト時間を秒単位で指定しま す。</p>
+<p>例:</p>
+<pre class="programlisting">milter.connection_timeout = 60</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.connection_timeout = 297.0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-writing-timeout"></a>milter.writing_timeout</span></p></td>
+<td>
+<p>子milterへデータを送信したときのタイムアウト時間を秒単位で 指定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.writing_timeout = 15</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.writing_timeout = 7.0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-reading-timeout"></a>milter.reading_timeout</span></p></td>
+<td>
+<p>子milterからデータを受信するときのタイムアウト時間を秒単位で 指定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.reading_timeout = 15</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.reading_timeout = 7.0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-end-of-message-timeout"></a>milter.end_of_message_timeout</span></p></td>
+<td>
+<p>子milterからxxfi_eom()のレスポンスを受信するときのタイム アウト時間を秒単位で指定します。</p>
+<p>例:</p>
+<pre class="programlisting">milter.end_of_message_timeout = 60</pre>
+<p>既定値:</p>
+<pre class="programlisting">milter.end_of_message_timeout = 297.0</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.milter-name"></a>milter.name</span></p></td>
+<td>
+<p>1.8.1 から利用可能。</p>
+<p>define_milter で設定した名前を返します。</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp12994896"></a><h3>子milter操作</h3>
+<p>定義された子milterを操作するために便利な機能があります。ただ し、これらの機能を利用するには多少Rubyの知識が必要になります。</p>
+<p>定義されている子milter名の一覧を取得することができます。</p>
+<pre class="programlisting">define_milter("milter1") do |milter|
+  ...
+end
+
+define_milter("milter2") do |milter|
+  ...
+end
+
+defined_milters # =&gt; ["milter1", "milter2"]</pre>
+<p>これを利用することにより、すべての子milterの設定をまとめて変 更するということが簡単にできるようになります。</p>
+<p>以下はすべての子milterを無効にする例です。</p>
+<pre class="programlisting">defined_milters.each do |name|
+  define_milter(name) do |milter|
+    milter.enabled = false
+  end
+end</pre>
+<p>以下はすべての子milterの定義を削除にする例です。無効にした場 合と違い、再び子milterを使いたい場合は一から定義しなおす必要 があります。</p>
+<pre class="programlisting">defined_milters.each do |name|
+  remove_milter(name)
+end</pre>
+<p>以下はすべての子milterの適用条件にS25Rを追加する例です。</p>
+<pre class="programlisting">defined_milters.each do |name|
+  define_milter(name) do |milter|
+    milter.add_applicable_condition("S25R")
+  end
+end</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.defined-milters"></a>defined_milters</span></p></td>
+<td>
+<p>定義されている子milterの名前の一覧を返します。返される値 は文字列の配列です。</p>
+<p>例:</p>
+<pre class="programlisting">defined_milters # =&gt; ["milter1", "milter2"]</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.remove-milter"></a>remove_milter(name)</span></p></td>
+<td>
+<p>
+  定義されているnameという名前のmilterを削除します。milter 定義を削除せずに、単に無効にするだけでよいなら
+  <a class="link" href="configuration.html#configuration.milter-enabled">milter.enabled</a>
+  を使ってください。
+</p>
+<p>例:</p>
+<pre class="programlisting"># "milter1"という名前で定義されたmilterの定義を削除
+remove_milter("milter1")</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="configuration.built-in-applicable-conditions"></a><h2>組み込み適用条件</h2>
+<p>組み込みの適用条件を説明します。</p>
+<div class="refsect2">
+<a name="idp13010176"></a><h3>S25R</h3>
+<p>この適用条件を使うと、MTAっぽいSMTPクライアントには子milter を適用せず、一般PCっぽいSMTPクライアントにのみ子milterを適用 します。</p>
+<p>
+  以下の例では一般PCっぽいSMTPクライアントにのみGreylistingを 適用することで、Greylistingによる遅延の悪影響を軽減していま す。これは
+  <a class="ulink" href="http://k2net.hakuba.jp/rgrey/" target="_top">Rgrey</a>
+  と呼 ばれる手法です。（milter-greylistで"racl greylist default"と 設定している場合）
+</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("milter-greylist") do |milter|
+  milter.add_applicable_condition("S25R")
+end</pre>
+<p>
+  SMTPクライアントが一般PCっぽいかどうかは
+  <a class="ulink" href="http://www.gabacho-net.jp/anti-spam/" target="_top">S25R</a>
+  の一般規則 を用います。
+</p>
+<p>S25Rの一般規則は一般PC以外のホストにもマッチしてしまいます。 そのため、明示的にホワイトリストを設定して誤検出を防ぐことが できます。デフォルトではgoogle.comドメインのホストと obsmtp.comドメインのホストはS25Rの一般規則にマッチしても子 milterを適用しません。</p>
+<p>また、逆にS25Rの一般規則に規則を追加して例外的なホスト名に対 応することもできます。</p>
+<p>S25R適用条件は以下の設定でカスタマイズできます。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.s25r-add-whitelist"></a>s25r.add_whitelist(matcher)</span></p></td>
+<td>
+<p>1.5.2から使用可能。</p>
+<p>
+  <code class="varname">matcher</code>
+  にマッチするホストをMTAと判断し、ホワイト リストに追加します。ホワイトリストに入っているホストに対 しては子milterを適用しません。
+</p>
+<p>
+  <code class="varname">matcher</code>
+  にはホスト名にマッチする正規表現、またはホス ト名を文字列で指定します。
+</p>
+<p>例えば、google.comドメインをホワイトリストに入れる場合は 以下のようにします。</p>
+<pre class="programlisting">s25r.add_whitelist(/\.google\.com\z/)</pre>
+<p>mx.example.comというホストをホワイトリストに入れる場合は 以下のようにします。</p>
+<pre class="programlisting">s25r.add_whitelist("mx.example.com")</pre>
+<p>[上級者向け] 複雑な条件を指定したい場合はブロックを指定す ることができます。ブロックにはホスト名が引数として渡され ます。例えば、午前8:00から午後7:59までの間だけ.jpトップレ ベルドメインをホワイトリストに入れる場合は以下のようにします。</p>
+<pre class="programlisting">s25r.add_whitelist do |host|
+  (8..19).include?(Time.now.hour) and /\.jp\z/ === host
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.s25r-add-blacklist"></a>s25r.add_blacklist(matcher)</span></p></td>
+<td>
+<p>1.5.2から使用可能。</p>
+<p>
+  <code class="varname">matcher</code>
+  にマッチするホストを一般PCと判断し、ブラック リストに追加します。ブラックリストに入っているホストに対 して子milterを適用します。ただし、ホワイトリストとブラッ クリストの両方に入っている場合はホワイトリストを優先しま す。つまり、両方に入っている場合は子milterを適用しません。
+</p>
+<p>
+  <code class="varname">matcher</code>
+  にはホスト名にマッチする正規表現、またはホス ト名を文字列で指定します。
+</p>
+<p>例えば、evil.example.comドメインをブラックリストに入れる場 合は以下のようにします。</p>
+<pre class="programlisting">s25r.add_blacklist(/\.evil\.example\.com\z/)</pre>
+<p>black.example.comというホストをブラックリストに入れる場合 は以下のようにします。</p>
+<pre class="programlisting">s25r.add_blacklist("black.example.com")</pre>
+<p>[上級者向け] 複雑な条件を指定したい場合はブロックを指定す ることができます。ブロックにはホスト名が引数として渡され ます。例えば、午後8:00から午前7:59までの間だけ.jpトップレ ベルドメインをブラックリストに入れる場合は以下のようにし ます。</p>
+<pre class="programlisting">s25r.add_blacklist do |host|
+  !(8..19).include?(Time.now.hour) and /\.jp\z/ === host
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.s25r-check-only-ipv4"></a>s25r.check_only_ipv4=(boolean)</span></p></td>
+<td>
+<p>1.6.6から使用可能。</p>
+<p>
+  <code class="code">true</code>
+  を指定した場合はIPv4からの接続してきた場合のみ S25Rのチェックを有効にします。
+  <code class="code">false</code>
+  を指定するとIPv6 からの接続の場合でもチェックします。
+</p>
+<p>例:</p>
+<pre class="programlisting">s25r.check_only_ipv4 = false # IPv4以外のときもチェック</pre>
+<p>初期値:</p>
+<pre class="programlisting">IPv4の場合のみチェックする</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp13037488"></a><h3>Remote Network</h3>
+<p>この適用条件を使うと、外部ネットワークからアクセスしてきた SMTPクライアントにのみ子milterを適用します。</p>
+<p>以下の例ではローカルネットワークからのメールにはスパムチェッ クを行わない事で誤検出を回避しています。</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("spamass-milter") do |milter|
+  milter.add_applicable_condition("Remote Network")
+end</pre>
+<p>192.168.0.0/24などのプライベートIPアドレス以外を外部ネットワー クとして扱います。プライベートIPアドレス以外もローカルネット ワークとして扱いたい場合は以下の設定で追加することができます。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><a name="configuration.remote-network-add-local-address"></a>remote_network.add_local_address(address)</span></p></td>
+<td>
+<p>1.5.0から使用可能。</p>
+<p>指定したIPv4/IPv6アドレスまたはIPv4/IPv6ネットワークをローカ ルネットワークに追加します。ローカルネットワークに追加したア ドレス・ネットワークには子milterを適用しません。</p>
+<p>使用例:</p>
+<pre class="programlisting"># 160.29.167.10からのアクセスは子milterを適用しない
+remote_network.add_local_address("160.29.167.10")
+# 160.29.167.0/24のネットワークからのアクセスは子milterを適用しない
+remote_network.add_local_address("160.29.167.0/24")
+# 2001:2f8:c2:201::fff0からのアクセスは子milterを適用しない
+remote_network.add_local_address("2001:2f8:c2:201::fff0")
+# 2001:2f8:c2:201::/64からのアクセスは子milterを適用しない
+remote_network.add_local_address("2001:2f8:c2:201::/64")</pre>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="configuration.authentication"></a><h3>Authentication</h3>
+<p>SMTP Authで認証済みのSMTPクライアントにのみ子milterを適用しま す。この適用条件を利用する場合は、MTAが認証関連のマクロを milterに渡すようにしなければいけません。Sendmailは特に設定を する必要はありません。Postfixの場合は以下の設定を追加する必 要があります。</p>
+<p>main.cf:</p>
+<pre class="programlisting">milter_mail_macros = {auth_author} {auth_type} {auth_authen}</pre>
+<p>以下の例は認証済みのSMTPクライアントが送ったメール（内部から 送信したメール）を監査用にBccする設定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("milter-bcc") do |milter|
+  milter.add_applicable_condition("Authentication")
+end</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="configuration.unauthentication"></a><h3>Unauthentication</h3>
+<p>
+  SMTP Authで認証されていないSMTPクライアントにのみ子milterを適 用します。
+  <a class="link" href="configuration.html#configuration.authentication" title="Authentication">Authentication</a>
+  と同様に、MTAが 認証関連のマクロをmilterに渡すようにしなければいけません。
+</p>
+<p>以下の例は認証されていないSMTPクライアントからのメールにのみ スパムチェックを行い、誤検出を回避する設定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("spamass-milter") do |milter|
+  milter.add_applicable_condition("Unauthentication")
+end</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp13053968"></a><h3>Sendmail Compatible</h3>
+<p>この適用条件は少し変わっています。この適用条件を設定してもす べての子milterを適用します。では何をするのかというと、 SendmailとPostfixのmilter実装の非互換を吸収し、Sendmailでし か動かないmilterをPostfixでも動くようにします。</p>
+<p>SendmailとPostfixではmilterの実装に互換性がない部分があります。 例えば、マクロ名が異なったり、マクロを渡すタイミングが異なっ たりします。</p>
+<p>この適用条件を設定すると、それらの差異を吸収し、同じmilterが SendmailでもPostfixでも動作するようになります。ただし、最近 のmilterはどちらでも動くように作られているのでこの適用条件が 必要なくなる日は近いでしょう。これはとてもよいことです。</p>
+<p>MTAがPostfixの場合にこの適用条件を設定しても悪影響はないので、 安心してください。</p>
+<p>以下の例はSendmail用にビルドしたmilter-greylistをPostfixでも 使えるようにする設定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("milter-greylist") do |milter|
+  milter.add_applicable_condition("Sendmail Compatible")
+end</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp13058928"></a><h3>stress</h3>
+<p>1.5.0から使用可能。</p>
+<p>負荷に応じて動的に処理を変更する適用条件をいくつか提供してい ます。負荷は同時接続数で判断します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.stress-threshold-n-connections"></a>stress.threshold_n_connections</span></p></td>
+<td>
+<p>1.5.0から使用可能。</p>
+<p>負荷が高いと判断する同時接続数を返します。</p>
+<p>Postfixを利用している場合はsmtpdの最大プロセス数を自動検出し、 自動検出した最大プロセス数の3/4以上の同時接続数がある場合に負 荷が高いと判断します。</p>
+<p>
+  Sendmailの場合は自動検出されないので、
+  <a class="link" href="configuration.html#configuration.stress-threshold-n-connections">stress.threshold_n_connections=</a>
+  で手動で設定する必要があります。
+</p>
+<p>例:</p>
+<pre class="programlisting"># Postfixのデフォルト設定の場合（環境によって異なる）
+stress.threshold_n_connections # =&gt; 75</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">stress.threshold_n_connections=(n)</span></p></td>
+<td>
+<p>1.5.0から使用可能。</p>
+<p>負荷が高いと判断する同時接続数を設定します。</p>
+<p>0を指定すると常に負荷が低いと判断します。</p>
+<p>例:</p>
+<pre class="programlisting"># 同時接続数が75以上の場合、負荷が高いと判断
+stress.threshold_n_connections = 75</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="refsect3">
+<a name="configuration.no-stress"></a><h4>No Stress</h4>
+<p>1.5.0から使用可能。</p>
+<p>負荷が小さいときのみ、子milterを適用する適用条件です。</p>
+<p>以下の例は負荷が高いときはspamass-milterを適用しない設定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("spamass-milter") do |milter|
+  milter.add_applicable_condition("No Stress")
+end</pre>
+</div>
+<div class="refsect3">
+<a name="configuration.stress-notify"></a><h4>Stress Notify</h4>
+<p>1.5.0から使用可能。</p>
+<p>負荷が高いときに"{stress}=yes"マクロを設定し、子milterに負荷 が高いことを通知する適用条件です。この適用条件は通知するだけ なので、設定しても常にすべての子milterは適用されます。</p>
+<p>以下の例は負荷が高いときはmilter-greylistにマクロで通知をす る設定です。</p>
+<p>使用例:</p>
+<pre class="programlisting">define_milter("milter-greylist") do |milter|
+  milter.add_applicable_condition("Stress Notify")
+end</pre>
+<p>milter-greylist側で「負荷が高いときはGreylisting、負荷が低い ときはTarpittingを使う」設定は以下のようになります。この設定 を使う場合はmilter-greylist 4.3.4以降が必要です。</p>
+<p>greylist.conf:</p>
+<pre class="programlisting">sm_macro "no_stress" "{stress}" unset
+racl whitelist sm_macro "no_stress" tarpit 125s
+racl greylist default</pre>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="configuration.trust"></a><h3>Trust</h3>
+<p>1.6.0から使用可能。</p>
+<p>信用できるセッションには「trusted_XXX=yes」というマクロを設 定します。設定されるマクロの一覧は以下の通りです。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><a name="configuration.trusted-domain"></a>trusted_domain</span></p></td>
+<td><p>envelope-fromのドメインが信用できる場合は「yes」になりま す。</p></td>
+</tr></tbody>
+</table></div>
+<p>以下は信用するドメインに対しては、SPFの検証が成功したらそのま ま受信し、失敗したらGreylistを適用する例です。</p>
+<p>milter-manager.local.conf:</p>
+<pre class="programlisting">define_milter("milter-greylist") do |milter|
+  milter.add_applicable_condition("Trust")
+end</pre>
+<p>greylist.conf:</p>
+<pre class="programlisting">sm_macro "trusted_domain" "{trusted_domain}" "yes"
+racl whitelist sm_macro "trusted_domain" spf pass
+racl greylist sm_macro "trusted_domain" not spf pass</pre>
+<p>どの情報を使って信用するかどうかを判断するかは、以下の設定を 使ってカスタマイズできます。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.trust-add-envelope-from-domain"></a>trust.add_envelope_from_domain(domain)</span></p></td>
+<td>
+<p>1.6.0から使用可能。</p>
+<p>信用するenvelope-fromのドメインを追加します。</p>
+<p>デフォルトでは、以下のドメインを信用しています。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>gmail.com</p></li>
+<li class="listitem"><p>hotmail.com</p></li>
+<li class="listitem"><p>msn.com</p></li>
+<li class="listitem"><p>yahoo.co.jp</p></li>
+<li class="listitem"><p>softbank.ne.jp</p></li>
+<li class="listitem"><p>clear-code.com</p></li>
+</ul></div>
+<p>例:</p>
+<pre class="programlisting">trust.add_envelope_from_domain("example.com")</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.trust-clear"></a>trust.clear</span></p></td>
+<td>
+<p>1.8.0から使用可能。</p>
+<p>信用するenvelope-fromのドメインリストを消去します。</p>
+<p>例:</p>
+<pre class="programlisting">trust.clear</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.trust-load-envelope-from-domains"></a>trust.load_envelope_from_domains(path)</span></p></td>
+<td>
+<p>1.8.0から使用可能。</p>
+<p>
+  <code class="varname">path</code>
+  から信用するenvelope-fromのドメインリストを読 み込みます。
+  <code class="varname">path</code>
+  には以下のような書式で信用するドメ インを記述します。
+</p>
+<pre class="programlisting"># コメント。この行は無視される。
+gmail.com
+# ↑の行はgmail.comを信用するという意味
+/\.example\.com/
+# ↑の行はexample.comのサブドメインすべてを信用するという意味
+
+# ↑の行は空白だけの行。空行は無視する。</pre>
+<p>例:</p>
+<pre class="programlisting">trust.load_envelope_from_domains("/etc/milter-manager/trusted-domains.list")
+# /etc/milter-manager/trusted-domains.listから信用する
+# ドメインのリストを読み込みます。</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp13103760"></a><h3>Restrict Accounts</h3>
+<p>TODO</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="configuration.applicable-condition"></a><h2>適用条件定義</h2>
+<p>ここからは本格的にRubyの知識が必要になります。標準でS25Rなど の有用な適用条件は用意されています。それらで十分ではない場合 は、適用条件を定義することができます。適用条件を定義すること により、子milterを適用するかを動的に判断することができます。</p>
+<p>適用条件は以下の書式で定義します。適用条件の定義にはRubyの知 識が必要になります。</p>
+<pre class="programlisting">define_applicable_condition("名前") do |condition|
+  condition.description = ...
+  condition.define_connect_stopper do |...|
+    ...
+  end
+  ...
+end</pre>
+<p>例えば、S25Rを実現する適用条件は以下のようになります。</p>
+<pre class="programlisting">define_applicable_condition("S25R") do |condition|
+  condition.description = "Selective SMTP Rejection"
+
+  condition.define_connect_stopper do |context, host, socket_address|
+    case host
+    when "unknown",
+      /\A\[.+\]\z/,
+      /\A[^.]*\d[^\d.]+\d.*\./,
+      /\A[^.]*\d{5}/,
+      /\A(?:[^.]+\.)?\d[^.]*\.[^.]+\..+\.[a-z]/i,
+      /\A[^.]*\d\.[^.]*\d-\d/,
+      /\A[^.]*\d\.[^.]*\d\.[^.]+\..+\./,
+      /\A(?:dhcp|dialup|ppp|[achrsvx]?dsl)[^.]*\d/i
+      false
+    else
+      true
+    end
+  end
+end</pre>
+<p>名前解決ができなかったときはhostは"unknown"ではなく、"[IPア ドレス]"になります。そのため、本当は"unknown"は必要なく、 /\A\[.+\]\z/で十分ですが、念のため入れています。 :-)</p>
+<p>define_applicable_condition do ... end内で設定できる項目は以 下の通りです。</p>
+<p>必須の項目はありません。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-description"></a>condition.description</span></p></td>
+<td>
+<p>適用条件の説明を指定します。</p>
+<p>説明は「"」で囲んで"test condition"というように指定します。</p>
+<p>例:</p>
+<pre class="programlisting">condition.description = "test condition"</pre>
+<p>既定値:</p>
+<pre class="programlisting">condition.description = nil</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-define-connect-stopper"></a>condition.define_connect_stopper {|context, host, socket_address| ...}</span></p></td>
+<td>
+<p>SMTPクライアントがSMTPサーバに接続してきたときのホスト名 とIPアドレスを利用して子milterを適用するかどうかを判断し ます。このときに利用できる情報はmilterのxxfi_connectで利用 可能な情報と同じです。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.host"></a>host</span></p></td>
+<td><p>接続してきたIPアドレスを名前解決して得られたホスト名 （文字列）です。名前解決に失敗した場合はIPアドレスが 「[]」で囲まれた文字列になります。例えば、"[1.2.3.4]" となります。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">socket_address</span></p></td>
+<td><p>接続してきたIPアドレスを表すオブジェクトです。詳細は後述 します。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下はクライアントからの接続が名前解決できた場合はmilter を適用しない例です。</p>
+<pre class="programlisting">condition.define_connect_stopper do |context, host, socket_address|
+  if /\A\[.+\]\z/ =~ host
+    false
+  else
+    true
+  end
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-define-helo-stopper"></a>condition.define_helo_stopper {|context, fqdn| ...}</span></p></td>
+<td>
+<p>SMTPクライアントがHELO/EHLOのときに送ってきたFQDNを利用し て子milterを適用するかどうかを判断します。このときに利用で きる情報はmilterのxxfi_heloで利用可能な情報と同じです。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.fqdn"></a>fqdn</span></p></td>
+<td><p>SMTPクライアントがHELO/EHLOのときに送ってきたFQDNです。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下はクライアントから送られてきたFQDNが "localhost.localdomain"の場合はmilterを適用しない例です。</p>
+<pre class="programlisting">condition.define_helo_stopper do |context, helo|
+  helo == "localhost.localdomain"
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.define-envelope-from-stopper"></a>define_envelope_from_stopper {|context, from| ...}</span></p></td>
+<td>
+<p>SMTPのMAIL FROMコマンドで渡された送信元アドレスを利用して 子milterを適用するかどうかを判断します。このときに利用で きる情報はmilterのxxfi_envfromで利用可能な情報と同じです。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.from"></a>from</span></p></td>
+<td><p>MAIL FROMコマンドに渡された送信元です。 例えば、"&lt;sender@example.com&gt;"となります。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下はexample.comから送信された場合はmilterを適用しない例 です。</p>
+<pre class="programlisting">condition.define_envelope_from_stopper do |context, from|
+  if /@example.com&gt;\z/ =~ from
+    true
+  else
+    false
+  end
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.define-envelope-recipient-stopper"></a>define_envelope_recipient_stopper {|context, recipient| ...}</span></p></td>
+<td>
+<p>SMTPのRCPT TOコマンドで渡された宛先アドレスを利用して子 milterを適用するかどうかを判断します。このときに利用でき る情報はmilterのxxfi_envrcptで利用可能な情報と同じです。 宛先が複数ある場合は複数回呼ばれます。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.recipient"></a>recipient</span></p></td>
+<td><p>RCPT TOコマンドに渡された宛先です。 例えば、"&lt;receiver@example.com&gt;"となります。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下はml.example.com宛の場合はmilterを適用しない例です。</p>
+<pre class="programlisting">condition.define_envelope_recipient_stopper do |context, recipient|
+  if /@ml.example.com&gt;\z/ =~ recipient
+    true
+  else
+    false
+  end
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-define-data-stopper"></a>condition.define_data_stopper {|context| ...}</span></p></td>
+<td>
+<p>SMTPクライアントがDATAを送ってきたときに子milterを適用す るかどうかを判断します。このときに利用で きる情報はmilterのxxfi_dataで利用可能な情報と同じです。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr></tbody>
+</table></div>
+<p>以下はDATAまで処理が進んだらmilterを終了する例です。 milterがヘッダや本文を書き換えるのはメール全体を処理した 後です。DATAの時点でmilterを終了させることにより、milter がヘッダや本文を書き換えないことが保証されます。milterに よっては途中の処理結果をログに出力するので、それを見て DATAまでのmilterの動作を確認することができます。</p>
+<pre class="programlisting">condition.define_data_stopper do |context|
+  true
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.define-header-stopper"></a>define_header_stopper {|context, name, value| ...}</span></p></td>
+<td>
+<p>メールのヘッダを利用して子milterを適用するかどうかを判断 します。このときに利用できる情報はmilterのxxfi_headerで利 用可能な情報と同じです。各ヘッダ毎に呼ばれます。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term">name</span></p></td>
+<td><p>ヘッダ名です。例えば、"From"となります。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.value"></a>value</span></p></td>
+<td><p>ヘッダの値です。例えば、"sender@example.com"となります。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下は"X-Spam-Flag"ヘッダの値が"YES"の場合はmilterを適用 しない例です。</p>
+<pre class="programlisting">condition.define_header_stopper do |context, name, value|
+  if ["X-Spam-Flag", "YES"] == [name, value]
+    true
+  else
+    false
+  end
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-define-end-of-header-stopper"></a>condition.define_end_of_header_stopper {|context| ...}</span></p></td>
+<td>
+<p>ヘッダをすべて処理した後に子milterを適用するかどうかを 判断します。このときに利用できる情報はmilterのxxfi_eohで 利用可能な情報と同じです。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr></tbody>
+</table></div>
+<p>以下はヘッダの処理が完了したらmilterを終了する例です。</p>
+<pre class="programlisting">condition.define_end_of_header_stopper do |context|
+  true
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-define-body-stopper"></a>condition.define_body_stopper {|context, chunk| ...}</span></p></td>
+<td>
+<p>本文の一部を利用して子milterを適用するかどうかを判断しま す。このときに利用できる情報はmilterのxxfi_bodyで利用可能 な情報と同じです。本文が大きい場合は複数回呼ばれます。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.chunk"></a>chunk</span></p></td>
+<td><p>本文の一部です。サイズが大きな本文は一度には処理されず に、いくつかの固まりに分割されて処理されます。最大で 65535バイトのデータになります。</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>以下は本文が署名されていたらmilterを終了する例です。</p>
+<pre class="programlisting">condition.define_body_stopper do |context, chunk|
+  if /^-----BEGIN PGP SIGNATURE-----$/ =~ chunk
+    true
+  else
+    false
+  end
+end</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.condition-define-end-of-message-stopper"></a>condition.define_end_of_message_stopper {|context| ...}</span></p></td>
+<td>
+<p>本文をすべて処理した後に子milterを適用するかどうかを 判断します。このときに利用できる情報はmilterのxxfi_eomで 利用可能な情報と同じです。</p>
+<p>子milterの適用を中止する場合はtrueを返し、続ける場合は falseを返します。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">context</span></p></td>
+<td><p>その時点での様々な情報を持ったオブジェクトです。詳細は 後述します。</p></td>
+</tr></tbody>
+</table></div>
+<p>以下は本文の処理が完了したらmilterを終了する例です。</p>
+<pre class="programlisting">condition.define_end_of_message_stopper do |context|
+  true
+end</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="refsect2">
+<a name="idp13183216"></a><h3>context</h3>
+<p>子milterを適用するかどうかを判断する時点での様々な情報を持っ たオブジェクトです。（クラスはMilter::Manager::ChildContextで す。）</p>
+<p>以下の情報を持っています。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.context-name"></a>context.name</span></p></td>
+<td>
+<p>子milterの名前です。define_milterで使った名前になります。</p>
+<p>例:</p>
+<pre class="programlisting">context.name # -&gt; "clamav-milter"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">context[name]</span></p></td>
+<td>
+<p>子milterが利用可能なマクロの値を返します。libmilterのAPI では1文字より長いマクロ名の場合は「{}」で囲まなければいけ ませんが、context[]では囲んでも囲まなくてもどちらでも構い ません。</p>
+<p>例:</p>
+<pre class="programlisting">context["j"] # -&gt; "mail.example.com"
+context["rcpt_address"] # -&gt; "receiver@example.com"
+context["{rcpt_address}"] # -&gt; "receiver@example.com"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-reject-question"></a>context.reject?</span></p></td>
+<td>
+<p>
+  子milterがrejectを返したときにtrueを返します。 子milterは
+  <a class="link" href="configuration.html#configuration.milter-evaluation-mode">milter.evaluation_mode</a>
+  を有効にしてください。
+</p>
+<p>引数として渡ってくるcontextは処理中のため、 context.reject?がtrueを返すことはありません。 context.children[]で取得した別の子milterの結果を利用する ときに有用です。</p>
+<p>例:</p>
+<pre class="programlisting">context.reject? # -&gt; false
+context.children["milter-greylist"].reject? # -&gt; true or false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-temporary-failure-question"></a>context.temporary_failure?</span></p></td>
+<td>
+<p>
+  子milterがtemporary failureを返したときにtrueを返します。 子milterは
+  <a class="link" href="configuration.html#configuration.milter-evaluation-mode">milter.evaluation_mode</a>
+  を有効にしてください。
+</p>
+<p>引数として渡ってくるcontextは処理中のため、 context.temporary_failure?がtrueを返すことはありません。 context.children[]で取得した別の子milterの結果を利用する ときに有用です。</p>
+<p>例:</p>
+<pre class="programlisting">context.temporary_failure? # -&gt; false
+context.children["milter-greylist"].temporary_failure? # -&gt; true or false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-accept-question"></a>context.accept?</span></p></td>
+<td>
+<p>子milterがacceptを返したときにtrueを返します。</p>
+<p>引数として渡ってくるcontextは処理中のため、 context.accept?がtrueを返すことはありません。 context.children[]で取得した別の子milterの結果を利用する ときに有用です。</p>
+<p>例:</p>
+<pre class="programlisting">context.accept? # -&gt; false
+context.children["milter-greylist"].accept? # -&gt; true or false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-discard-question"></a>context.discard?</span></p></td>
+<td>
+<p>
+  子milterがdiscardを返したときにtrueを返します。 子milterは
+  <a class="link" href="configuration.html#configuration.milter-evaluation-mode">milter.evaluation_mode</a>
+  を有効にしてください。
+</p>
+<p>引数として渡ってくるcontextは処理中のため、 context.discard?がtrueを返すことはありません。 context.children[]で取得した別の子milterの結果を利用する ときに有用です。</p>
+<p>例:</p>
+<pre class="programlisting">context.discard? # -&gt; false
+context.children["milter-greylist"].discard? # -&gt; true or false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-quitted-question"></a>context.quitted?</span></p></td>
+<td>
+<p>子milterの処理が終了している場合にtrueを返します。</p>
+<p>引数として渡ってくるcontextは処理中のため、 context.quitted?は常にfalseです。 context.children[]で取得した別の子milterの結果を利用する ときに有用です。</p>
+<p>例:</p>
+<pre class="programlisting">context.quitted? # -&gt; false
+context.children["milter-greylist"].quitted? # -&gt; true or false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-children"></a>context.children[name]</span></p></td>
+<td>
+<p>別の子milterのcontextを取得します。</p>
+<p>別の子milterを参照するときに利用する名前はdefine_milterで 使った名前（context.nameで取得できる名前）になります。</p>
+<p>存在しない名前で参照しようとした場合はnilが返ります。</p>
+<p>例:</p>
+<pre class="programlisting">context.children["milter-greylist"] # -&gt; milter-greylistのcontext
+context.children["nonexistent"]     # -&gt; nil
+context.children[context.name]      # -&gt; 自分のcontext</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-postfix-question"></a>context.postfix?</span></p></td>
+<td>
+<p>MTAがPostfixの場合に真を返します。Postfixかどうかは「v」 マクロの値に「Postfix」という文字列が含まれるかどうかで判 断します。</p>
+<p>Postfixの場合はtrue、そうでない場合はfalseが返ります。</p>
+<p>例:</p>
+<pre class="programlisting">context["v"]     # -&gt; "Postfix 2.5.5"
+context.postfix? # -&gt; true
+
+context["v"]     # -&gt; "2.5.5"
+context.postfix? # -&gt; false
+
+context["v"]     # -&gt; nil
+context.postfix? # -&gt; false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.context-authenticated-question"></a>context.authenticated?</span></p></td>
+<td>
+<p>送信元が認証されている場合に真を返します。認証されている かどうかは「auto_type」マクロか「auth_authen」マクロの値 があるかで判断します。これらのマクロはMAIL FROM以降でのみ 使えるので、それ以前の場合は常に偽を返します。Postfixの場 合はmain.cfに以下を追加することを忘れないで下さい。</p>
+<pre class="programlisting">milter_mail_macros = {auth_author} {auth_type} {auth_authen}</pre>
+<p>認証されている場合はtrue、そうでない場合はfalseが返ります。</p>
+<p>Example:</p>
+<pre class="programlisting">context["auth_type"]   # -&gt; nil
+context["auth_authen"] # -&gt; nil
+context.authenticated? # -&gt; false
+
+context["auth_type"]   # -&gt; "CRAM-MD5"
+context["auth_authen"] # -&gt; nil
+context.authenticated? # -&gt; true
+
+context["auth_type"]   # -&gt; nil
+context["auth_authen"] # -&gt; "sender"
+context.authenticated? # -&gt; true</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="configuration.socket-address"></a><h3>socket_address</h3>
+<p>ソケットのアドレスを表現しているオブジェクトです。IPv4ソケッ ト、IPv6ソケット、UNIXドメインソケットそれぞれで別々のオブジェ クトになります。</p>
+</div>
+<div class="refsect3">
+<a name="idp13230912"></a><h4>Milter::SocketAddress::IPv4</h4>
+<p>IPv4ソケットのアドレスを表現するオブジェクトです。以下のメソッ ドを持ちます。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.address"></a>address</span></p></td>
+<td>
+<p>ドット表記のIPv4アドレスを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.address # -&gt; "192.168.1.1"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.port"></a>port</span></p></td>
+<td>
+<p>ポート番号を返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.port # -&gt; 12345</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.to-s"></a>to_s</span></p></td>
+<td>
+<p>connection_specと同じ書式で表現したIPv4アドレスを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s # -&gt; "inet:12345@[192.168.1.1]"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.local-question"></a>local?</span></p></td>
+<td>
+<p>プライベートなネットワークのアドレスの場合はtrueを返しま す。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s   # -&gt; "inet:12345@[127.0.0.1]"
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; "inet:12345@[192.168.1.1]"
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; "inet:12345@[160.XXX.XXX.XXX]"
+socket_address.local? # -&gt; false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.to-ip-address"></a>to_ip_address</span></p></td>
+<td>
+<p>対応するIPAddrオブジェクトを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s          # -&gt; "inet:12345@[127.0.0.1]"
+socket_address.to_ip_address # -&gt; #&lt;IPAddr: IPv4:127.0.0.1/255.255.255.255&gt;</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13250304"></a><h4>Milter::SocketAddress::IPv6</h4>
+<p>IPv6ソケットのアドレスを表現するオブジェクトです。以下のメソッ ドを持ちます。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">address</span></p></td>
+<td>
+<p>コロン表記のIPv6アドレスを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.address # -&gt; "::1"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">port</span></p></td>
+<td>
+<p>ポート番号を返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.port # -&gt; 12345</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">to_s</span></p></td>
+<td>
+<p>connection_specと同じ書式で表現したIPv6アドレスを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s # -&gt; "inet6:12345@[::1]"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">local?</span></p></td>
+<td>
+<p>プライベートなネットワークのアドレスの場合はtrueを返しま す。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s   # -&gt; "inet6:12345@[::1]"
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; "inet6:12345@[fe80::XXXX]"
+socket_address.local? # -&gt; true
+
+socket_address.to_s   # -&gt; "inet6:12345@[2001::XXXX]"
+socket_address.local? # -&gt; false</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">to_ip_address</span></p></td>
+<td>
+<p>対応するIPAddrオブジェクトを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s          # -&gt; "inet6:12345@[::1]"
+socket_address.to_ip_address # -&gt; #&lt;IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0001/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff&gt;</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="idp13267648"></a><h4>Milter::SocketAddress::Unix</h4>
+<p>UNIXドメインソケットのアドレスを表現するオブジェクトです。以 下のメソッドを持ちます。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.path"></a>path</span></p></td>
+<td>
+<p>ソケットのパスを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.path # -&gt; "/tmp/local.sock"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">to_s</span></p></td>
+<td>
+<p>connection_specと同じ書式で表現したUNIXドメインソケットア ドレスを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s # -&gt; "unix:/tmp/local.sock"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">local?</span></p></td>
+<td>
+<p>常にtrueを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.local? # -&gt; true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">to_ip_address</span></p></td>
+<td>
+<p>常にnilを返します。</p>
+<p>例:</p>
+<pre class="programlisting">socket_address.to_s          # -&gt; "unix:/tmp/local.sock"
+socket_address.to_ip_address # -&gt; nil</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="configuration.database"></a><h2>データベース関連</h2>
+<p>1.6.6から使用可能。</p>
+<p>
+  データベース操作機能を利用する場合はRubyの知識が必要になりま す。データベース操作ライブラリとして
+  <a class="ulink" href="http://api.rubyonrails.org/files/activerecord/README_rdoc.html" target="_top">ActiveRecord</a>
+  を採用しています。そのため、MySQLやSQLite3など多くのRDBを操 作することができます。
+</p>
+<p>
+  データベース接続機能を利用する場合はActiveRecordを別途インス トールする必要があります。ActiveRecordのインストールにはRuby 用のパッケージ管理システム
+  <a class="ulink" href="https://rubygems.org/" target="_top">RubyGems</a>
+  を用います。RubyGems とActiveRecordのインストール方法は
+  <a class="link" href="install-to.html" title="プラットフォーム毎のmilter managerのインストール方法">インストール</a>
+  ページにあるインストールドキュメントのうち、 「（任意）」の方のインストールドキュメントを参照してください。 それぞれの環境でのRubyGemsとActiveRecordのインストール方法と を説明しています。
+</p>
+<p>ActiveRecordをインストールしたらデータベース操作機能を利用す ることができます。</p>
+<p>MySQLのusersテーブルの値を操作する場合の例を示します。</p>
+<p>MySQLの接続情報は以下の通りとします。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E5%90%8D"></a>データベース名</span></p></td>
+<td><p>mail-system</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%B5%E3%83%BC%E3%83%90%E3%81%AEIP%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9"></a>データベースサーバのIPアドレス</span></p></td>
+<td><p>192.168.0.1</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.%E3%83%A6%E3%83%BC%E3%82%B6%E5%90%8D"></a>ユーザ名</span></p></td>
+<td><p>milter-manager</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89"></a>パスワード</span></p></td>
+<td><p>secret</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>まず、この接続情報をmilter-manager.local.confで指定します。こ こでは、milter-manager.local.confは /etc/milter-manager/milter-manager.local.confにあるとします。</p>
+<p>/etc/milter-manager/milter-manager.local.conf:</p>
+<pre class="programlisting">database.type = "mysql2"
+database.name = "mail-system"
+database.user = "milter-manager"
+database.password = "secret"</pre>
+<p>次に、usersテーブルに接続するためのActiveRecrodオブジェクト を定義します。定義ファイルはmilter-manager.local.confが置い てあるディレクトリと同じパスにあるmodels/ディレクトリ以下に 置きます。今回はusersテーブル用の定義ファイルなので models/user.rbを作成します。</p>
+<p>/etc/milter-manager/models/user.rb:</p>
+<pre class="programlisting">class User &lt; ActiveRecord::Base
+end</pre>
+<p>これで準備は整ったので、再び、milter-manager.local.confへ戻 ります。以下のように書いてデータベースへ接続し、データを操作 します。</p>
+<p>/etc/milter-manager/milter-manager.local.conf:</p>
+<pre class="programlisting">database.setup
+database.load_models("models/*.rb")
+User.all.each do |user|
+  p user.name # =&gt; "alice", "bob", ...
+end</pre>
+<p>まとめると以下のようになります。</p>
+<p>/etc/milter-manager/milter-manager.local.conf:</p>
+<pre class="programlisting"># 接続情報設定
+database.type = "mysql2"
+database.name = "mail-system"
+database.user = "milter-manager"
+database.password = "secret"
+
+# 接続
+database.setup
+
+# 定義を読み込み
+database.load_models("models/*.rb")
+# データを操作
+User.all.each do |user|
+  p user.name # =&gt; "alice", "bob", ...
+end</pre>
+<p>/etc/milter-manager/models/user.rb:</p>
+<pre class="programlisting">class User &lt; ActiveRecord::Base
+end</pre>
+<p>以下は設定項目です。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.database-type"></a>database.type</span></p></td>
+<td>
+<p>データベースの種類を指定します。</p>
+<p>指定可能な種類は以下の通りです。</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="configuration.&amp;quot;mysql2&amp;quot;"></a>"mysql2"</span></p></td>
+<td>
+<p>MySQLを利用します。以下のようにmysql2 gemをインストー ルする必要があります。</p>
+<pre class="programlisting">% sudo gem install mysql2</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.&amp;quot;sqlite3&amp;quot;"></a>"sqlite3"</span></p></td>
+<td>
+<p>SQLite3を利用します。以下のようにsqlite3 gemをインストー ルする必要があります。</p>
+<pre class="programlisting">% sudo gem install sqlite3</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.&amp;quot;pg&amp;quot;"></a>"pg"</span></p></td>
+<td>
+<p>PostgreSQLを利用します。以下のようにpg gemをインストー ルする必要があります。</p>
+<pre class="programlisting">% sudo gem install pg</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>例:</p>
+<pre class="programlisting">database.type = "mysql2" # MySQLを利用</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-name"></a>database.name</span></p></td>
+<td>
+<p>接続するデータベース名を指定します。</p>
+<p>
+  SQLite3ではデータベースのパスまたは
+  <code class="code">":memory:"</code>
+  を指定 します。
+</p>
+<p>例:</p>
+<pre class="programlisting">database.name = "configurations" # configurationsデータベースへ接続</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-host"></a>database.host</span></p></td>
+<td>
+<p>接続するデータベースサーバのホスト名を指定します。</p>
+<p>MySQLなどでは規定値として"localhost"を利用します。</p>
+<p>SQLite3では無視されます。</p>
+<p>例:</p>
+<pre class="programlisting">database.host = "192.168.0.1" # 192.168.0.1で動いているサーバへ接続</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-port"></a>database.port</span></p></td>
+<td>
+<p>接続するデータベースサーバのポート番号を指定します。</p>
+<p>それぞれのRDBごとに規定値が設定されているため、多くの場合、 明示的に指定する必要はありません。</p>
+<p>SQLite3では無視されます。</p>
+<p>例:</p>
+<pre class="programlisting">database.port = 3306 # 3306番ポートで動いているサーバへ接続</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-path"></a>database.path</span></p></td>
+<td>
+<p>接続するデータベースサーバのUNIXドメインソケットのパスを 指定します。</p>
+<p>
+  SQLite3の場合はデータベースのパスになります。ただし、
+  <a class="link" href="configuration.html#configuration.database-name">.#database.name</a>
+  の設定の方が優先されるため、
+  <a class="link" href="configuration.html#configuration.database-path">.#database.path</a>
+  ではなく、
+  <a class="link" href="configuration.html#configuration.database-name">.#database.name</a>
+  を使 うことを推奨します。
+</p>
+<p>例:</p>
+<pre class="programlisting">database.path = "/var/run/mysqld/mysqld.sock" # UNIXドメインソケットでMySQLへ接続</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-user"></a>database.user</span></p></td>
+<td>
+<p>データベース接続ユーザを指定します。</p>
+<p>SQLite3では無視されます。</p>
+<p>例:</p>
+<pre class="programlisting">database.user = "milter-manager" # milter-managerユーザでサーバへ接続</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-password"></a>database.password</span></p></td>
+<td>
+<p>データベース接続時に使うパスワードを指定します。</p>
+<p>SQLite3では無視されます。</p>
+<p>例:</p>
+<pre class="programlisting">database.password = "secret"</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-extra-options"></a>database.extra_options</span></p></td>
+<td>
+<p>1.6.9から使用可能。</p>
+<p>
+  追加のオプションを指定します。例えば、ActiveRecordの MySQL2アダプタにある
+  <code class="code">:reconnect</code>
+  オプションを指定する 場合は以下のようになります。
+</p>
+<pre class="programlisting">database.type = "mysql2"
+database.extra_options[:reconnect] = true</pre>
+<p>指定できるオプションはデータベース毎に異なります。</p>
+<p>例:</p>
+<pre class="programlisting">database.extra_options[:reconnect] = true</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-setup"></a>database.setup</span></p></td>
+<td>
+<p>データベースへ接続します。</p>
+<p>この時点ではじめてデータベースへ接続します。この後からデー タベースを操作できるようになります。</p>
+<p>例:</p>
+<pre class="programlisting">database.setup</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="configuration.database-load-models"></a>database.load_models(path)</span></p></td>
+<td>
+<p>
+  ActiveRecord用のクラス定義が書かれたRubyスクリプトを読み 込みます。
+  <code class="varname">path</code>
+  にはglobが使えるため、"models/*.rb"と して複数のファイルを一度に読み込むことができます。
+  <code class="varname">path</code>
+  が相対パスだった場合は、milter-manager.confがあ るディレクトリからの相対パスになります。
+</p>
+<p>例:</p>
+<pre class="programlisting"># /etc/milter-manager/models/user.rb
+# /etc/milter-manager/models/group.rb
+# などを読み込む。
+# （/etc/milter-manager/milter-manager.confを使っている場合）
+database.load_models("models/*.rb")</pre>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

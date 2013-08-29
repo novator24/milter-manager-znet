@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-reply-decoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-reply-decoder.top_of_page">MilterReplyDecoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  MILTER-MANAGER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterReplyDecoder</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-reply-decoder.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="MILTER-REPLY-DECODER-ERROR:CAPS">MILTER_REPLY_DECODER_ERROR</link>
+enum                <link linkend="MilterReplyDecoderError">MilterReplyDecoderError</link>;
+struct              <link linkend="MilterReplyDecoder">MilterReplyDecoder</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-reply-decoder-error-quark">milter_reply_decoder_error_quark</link>    (<parameter><type>void</type></parameter>);
+<link linkend="MilterDecoder"><returnvalue>MilterDecoder</returnvalue></link> *     <link linkend="milter-reply-decoder-new">milter_reply_decoder_new</link>            (<parameter><type>void</type></parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-reply-decoder.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-reply-decoder.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MILTER-REPLY-DECODER-ERROR:CAPS" role="macro">
+<title>MILTER_REPLY_DECODER_ERROR</title>
+<indexterm zone="MILTER-REPLY-DECODER-ERROR:CAPS"><primary>MILTER_REPLY_DECODER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_REPLY_DECODER_ERROR           (milter_reply_decoder_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterReplyDecoderError" role="enum">
+<title>enum MilterReplyDecoderError</title>
+<indexterm zone="MilterReplyDecoderError"><primary>MilterReplyDecoderError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_REPLY_DECODER_ERROR_UNEXPECTED_MACRO_STAGE
+} MilterReplyDecoderError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterReplyDecoder" role="struct">
+<title>struct MilterReplyDecoder</title>
+<indexterm zone="MilterReplyDecoder"><primary>MilterReplyDecoder</primary></indexterm>
+<programlisting>struct MilterReplyDecoder {
+    MilterDecoder object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reply-decoder-error-quark" role="function">
+<title>milter_reply_decoder_error_quark ()</title>
+<indexterm zone="milter-reply-decoder-error-quark"><primary>milter_reply_decoder_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_reply_decoder_error_quark    (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-reply-decoder-new" role="function">
+<title>milter_reply_decoder_new ()</title>
+<indexterm zone="milter-reply-decoder-new"><primary>milter_reply_decoder_new</primary></indexterm>
+<programlisting><link linkend="MilterDecoder"><returnvalue>MilterDecoder</returnvalue></link> *     milter_reply_decoder_new            (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

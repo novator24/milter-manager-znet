@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# Copyright (C) 2010  Kouhei Sutou <kou@clear-code.com>
+#
+# This library is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this library.  If not, see <http://www.gnu.org/licenses/>.
+#
+#%# family=auto
+#%# capabilities=autoconf
+
+pid_file=${pidfile:-/var/run/milter-manager/milter-manager.pid}
+
+case "$1" in
+    auto|autoconf|detect)
+	if [ -f $pid_file ]; then
+	    echo "yes"
+	    exit 0
+	else
+	    echo "no (PID file doesn't exist: ${pid_file})"
+	    exit 1
+	fi
+	;;
+    config)
+	cat <<EOF
+graph_title milter manager: memory usage
+graph_vlabel memory usage in B
+graph_category milter-manager
+graph_info milter manager memory usage in B
+
+memory.label Memory
+memory.type GAUGE
+EOF
+	exit 0
+	;;
+    *)
+	;;
+esac
+
+milter_manager_pid=$(cat ${pid_file})
+memory_in_kb=$(ps -o rss -p ${milter_manager_pid} | tail -1)
+echo "memory.value ${memory_in_kb}000"

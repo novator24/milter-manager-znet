@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="MilterServerContext">
+<refmeta>
+<refentrytitle role="top_of_page" id="MilterServerContext.top_of_page">MilterServerContext</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterServerContext</refname>
+<refpurpose>サーバ側のmilterプロトコルを処理します。</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="MilterServerContext.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-SERVER-CONTEXT-ERROR:CAPS">MILTER_SERVER_CONTEXT_ERROR</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</link>
+#define             <link linkend="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS">MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</link>
+enum                <link linkend="MilterServerContextError">MilterServerContextError</link>;
+enum                <link linkend="MilterServerContextState">MilterServerContextState</link>;
+struct              <link linkend="MilterServerContext-struct">MilterServerContext</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-server-context-error-quark">milter_server_context_error_quark</link>   (<parameter><type>void</type></parameter>);
+<link linkend="MilterServerContext"><returnvalue>MilterServerContext</returnvalue></link> * <link linkend="milter-server-context-new">milter_server_context_new</link>         (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-connection-timeout">milter_server_context_set_connection_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-writing-timeout">milter_server_context_set_writing_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-reading-timeout">milter_server_context_set_reading_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-end-of-message-timeout">milter_server_context_set_end_of_message_timeout</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-set-connection-spec">milter_server_context_set_connection_spec</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-establish-connection">milter_server_context_establish_connection</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);
+<link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        <link linkend="milter-server-context-get-status">milter_server_context_get_status</link>    (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="MilterServerContextState"><returnvalue>MilterServerContextState</returnvalue></link> <link linkend="milter-server-context-get-state">milter_server_context_get_state</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-state">milter_server_context_set_state</link>     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterServerContextState"><type>MilterServerContextState</type></link> state</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-is-processing">milter_server_context_is_processing</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-negotiate">milter_server_context_negotiate</link>     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-connect">milter_server_context_connect</link>       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter><type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_length</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-helo">milter_server_context_helo</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-envelope-from">milter_server_context_envelope_from</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-envelope-recipient">milter_server_context_envelope_recipient</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-data">milter_server_context_data</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-unknown">milter_server_context_unknown</link>       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-header">milter_server_context_header</link>        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-end-of-header">milter_server_context_end_of_header</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-body">milter_server_context_body</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-end-of-message">milter_server_context_end_of_message</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-quit">milter_server_context_quit</link>          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-abort">milter_server_context_abort</link>         (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-is-enable-step">milter_server_context_is_enable_step</link>
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="milter-server-context-get-skip-body">milter_server_context_get_skip_body</link> (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="milter-server-context-get-name">milter_server_context_get_name</link>      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-server-context-set-name">milter_server_context_set_name</link>      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="MilterServerContext.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">オブジェクト階層</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="MilterAgent">MilterAgent</link>
+         +----<link linkend="MilterProtocolAgent">MilterProtocolAgent</link>
+               +----MilterServerContext
+</synopsis>
+</refsect1>
+<refsect1 id="MilterServerContext.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">実装されたインターフェイス</title>
+<para>
+MilterServerContext implements
+ <link linkend="MilterErrorEmittable">MilterErrorEmittable</link>,  <link linkend="MilterFinishedEmittable">MilterFinishedEmittable</link> and  <link linkend="MilterReplySignals">MilterReplySignals</link>.</para>
+</refsect1>
+<refsect1 id="MilterServerContext.properties" role="properties">
+<title role="properties.title">プロパティ</title>
+<synopsis>
+  "<link linkend="MilterServerContext--connection-timeout">connection-timeout</link>"       <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+  "<link linkend="MilterServerContext--end-of-message-timeout">end-of-message-timeout</link>"   <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+  "<link linkend="MilterServerContext--message-result">message-result</link>"           <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link>*  : Read / Write
+  "<link linkend="MilterServerContext--name">name</link>"                     <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  "<link linkend="MilterServerContext--reading-timeout">reading-timeout</link>"          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+  "<link linkend="MilterServerContext--state">state</link>"                    <link linkend="MilterServerContextState"><type>MilterServerContextState</type></link>  : Read / Write
+  "<link linkend="MilterServerContext--status">status</link>"                   <link linkend="MilterStatus"><type>MilterStatus</type></link>          : Read / Write
+  "<link linkend="MilterServerContext--writing-timeout">writing-timeout</link>"          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct
+</synopsis>
+</refsect1>
+<refsect1 id="MilterServerContext.signals" role="signal_proto">
+<title role="signal_proto.title">シグナル</title>
+<synopsis>
+  "<link linkend="MilterServerContext-connection-timeout">connection-timeout</link>"                             : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-end-of-message-timeout">end-of-message-timeout</link>"                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-message-processed">message-processed</link>"                              : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-reading-timeout">reading-timeout</link>"                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-ready">ready</link>"                                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-state-transited">state-transited</link>"                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-body">stop-on-body</link>"                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-connect">stop-on-connect</link>"                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-data">stop-on-data</link>"                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-end-of-header">stop-on-end-of-header</link>"                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-end-of-message">stop-on-end-of-message</link>"                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-envelope-from">stop-on-envelope-from</link>"                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-envelope-recipient">stop-on-envelope-recipient</link>"                     : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-header">stop-on-header</link>"                                 : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stop-on-helo">stop-on-helo</link>"                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-stopped">stopped</link>"                                        : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  "<link linkend="MilterServerContext-writing-timeout">writing-timeout</link>"                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+</synopsis>
+</refsect1>
+
+<refsect1 id="MilterServerContext.description" role="desc">
+<title role="desc.title">説明</title>
+<para><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>は1つのサーバ側のmilterプロトコルセッションを処理します。これは各milterプロトコルセッション毎に<link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>インスタンスが生成されるということです。</para>
+</refsect1>
+<refsect1 id="MilterServerContext.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-SERVER-CONTEXT-ERROR:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_ERROR</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-ERROR:CAPS"><primary>MILTER_SERVER_CONTEXT_ERROR</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_ERROR           (milter_server_context_error_quark())
+</programlisting>
+<para><link linkend="MilterServerContext"><type>MilterServerContext</type></link>のエラー用の<link linkend="GError"><type>GError</type></link>クォークを取得するために使われます。</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT     300
+</programlisting>
+<para>既定の秒単位での接続タイムアウト。</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT         10
+</programlisting>
+<para>既定の秒単位での書き込みタイムアウト。</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT         10
+</programlisting>
+<para>既定の秒単位での読み込みタイムアウト。</para></refsect2>
+<refsect2 id="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS" role="macro">
+<title>MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</title>
+<indexterm zone="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS"><primary>MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</primary></indexterm>
+<programlisting>#define MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT 300
+</programlisting>
+<para>既定の秒単位でのメッセージ終了時の応答待ちタイムアウト。</para></refsect2>
+<refsect2 id="MilterServerContextError" role="enum">
+<title>enum MilterServerContextError</title>
+<indexterm zone="MilterServerContextError"><primary>MilterServerContextError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_SERVER_CONTEXT_ERROR_CONNECTION_FAILURE,
+    MILTER_SERVER_CONTEXT_ERROR_NO_SPEC,
+    MILTER_SERVER_CONTEXT_ERROR_INVALID_STATE,
+    MILTER_SERVER_CONTEXT_ERROR_BUSY,
+    MILTER_SERVER_CONTEXT_ERROR_IO_ERROR,
+    MILTER_SERVER_CONTEXT_ERROR_NEWER_VERSION_REQUESTED
+} MilterServerContextError;
+</programlisting>
+<para><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>の関数呼び出し中に発生するエラーを識別します。</para><variablelist role="enum">
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-CONNECTION-FAILURE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_CONNECTION_FAILURE</literal></term>
+<listitem><simpara>接続が失敗したことを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-NO-SPEC:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_NO_SPEC</literal></term>
+<listitem><simpara>接続指定が設定されていないことを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-INVALID-STATE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_INVALID_STATE</literal></term>
+<listitem><simpara>現在の<link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>が予期しない応答を受け取ったことを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-BUSY:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_BUSY</literal></term>
+<listitem><simpara>前の操作の結果を受け取る前に新しい操作が要求されたことを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-IO-ERROR:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_IO_ERROR</literal></term>
+<listitem><simpara>milterプロトコルデータの読み書き時に発生した入出力エラーを示します。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-ERROR-NEWER-VERSION-REQUESTED:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_ERROR_NEWER_VERSION_REQUESTED</literal></term>
+<listitem><simpara>未サポートの新しいバージョンが要求されたことを示します。</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterServerContextState" role="enum">
+<title>enum MilterServerContextState</title>
+<indexterm zone="MilterServerContextState"><primary>MilterServerContextState</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_SERVER_CONTEXT_STATE_INVALID,
+    MILTER_SERVER_CONTEXT_STATE_START,
+    MILTER_SERVER_CONTEXT_STATE_DEFINE_MACRO,
+    MILTER_SERVER_CONTEXT_STATE_NEGOTIATE,
+    MILTER_SERVER_CONTEXT_STATE_CONNECT,
+    MILTER_SERVER_CONTEXT_STATE_HELO,
+    MILTER_SERVER_CONTEXT_STATE_ENVELOPE_FROM,
+    MILTER_SERVER_CONTEXT_STATE_ENVELOPE_RECIPIENT,
+    MILTER_SERVER_CONTEXT_STATE_DATA,
+    MILTER_SERVER_CONTEXT_STATE_UNKNOWN,
+    MILTER_SERVER_CONTEXT_STATE_HEADER,
+    MILTER_SERVER_CONTEXT_STATE_END_OF_HEADER,
+    MILTER_SERVER_CONTEXT_STATE_BODY,
+    MILTER_SERVER_CONTEXT_STATE_END_OF_MESSAGE,
+    MILTER_SERVER_CONTEXT_STATE_QUIT,
+    MILTER_SERVER_CONTEXT_STATE_ABORT
+} MilterServerContextState;
+</programlisting>
+<para><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>の状態を識別します。</para><variablelist role="enum">
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-INVALID:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_INVALID</literal></term>
+<listitem><simpara>不正な状態。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-START:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_START</literal></term>
+<listitem><simpara>はじまったばかり。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-DEFINE-MACRO:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_DEFINE_MACRO</literal></term>
+<listitem><simpara>マクロ定義を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-NEGOTIATE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_NEGOTIATE</literal></term>
+<listitem><simpara>ネゴシエーション中。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-CONNECT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_CONNECT</literal></term>
+<listitem><simpara>接続情報を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-HELO:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_HELO</literal></term>
+<listitem><simpara>HELOコマンドの情報を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-ENVELOPE-FROM:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_ENVELOPE_FROM</literal></term>
+<listitem><simpara>MAIL FROMコマンドの情報を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-ENVELOPE-RECIPIENT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_ENVELOPE_RECIPIENT</literal></term>
+<listitem><simpara>RCPT TOコマンドの情報を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-DATA:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_DATA</literal></term>
+<listitem><simpara>DATAコマンドの情報を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-UNKNOWN:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_UNKNOWN</literal></term>
+<listitem><simpara>未知のSMTPコマンドを送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-HEADER:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_HEADER</literal></term>
+<listitem><simpara>ヘッダを送信した。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-END-OF-HEADER:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_END_OF_HEADER</literal></term>
+<listitem><simpara>すべてのヘッダを送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-BODY:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_BODY</literal></term>
+<listitem><simpara>本文の1かたまりを送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-END-OF-MESSAGE:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_END_OF_MESSAGE</literal></term>
+<listitem><simpara>本文すべてを送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-QUIT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_QUIT</literal></term>
+<listitem><simpara>終了要求を送信しました。</simpara></listitem>
+</varlistentry>
+<varlistentry id="MILTER-SERVER-CONTEXT-STATE-ABORT:CAPS" role="constant">
+<term><literal>MILTER_SERVER_CONTEXT_STATE_ABORT</literal></term>
+<listitem><simpara>中止要求を送信しました。</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MilterServerContext-struct" role="struct">
+<title>struct MilterServerContext</title>
+<indexterm zone="MilterServerContext-struct"><primary>MilterServerContext</primary></indexterm>
+<programlisting>struct MilterServerContext;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-server-context-error-quark" role="function">
+<title>milter_server_context_error_quark ()</title>
+<indexterm zone="milter-server-context-error-quark"><primary>milter_server_context_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_server_context_error_quark   (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-server-context-new" role="function">
+<title>milter_server_context_new ()</title>
+<indexterm zone="milter-server-context-new"><primary>milter_server_context_new</primary></indexterm>
+<programlisting><link linkend="MilterServerContext"><returnvalue>MilterServerContext</returnvalue></link> * milter_server_context_new         (<parameter><type>void</type></parameter>);</programlisting>
+<para>新しいコンテキストオブジェクトを生成します。</para><variablelist role="params">
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>新しい<link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>オブジェクト。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-connection-timeout" role="function">
+<title>milter_server_context_set_connection_timeout ()</title>
+<indexterm zone="milter-server-context-set-connection-timeout"><primary>milter_server_context_set_connection_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_connection_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>接続時のタイムアウトを秒で設定します。もし、<parameter>context</parameter>が<parameter>timeout</parameter>秒以内にクライアントに接続できない場合は<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link>シグナルが発行されます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter> :</term>
+<listitem><simpara>接続時の秒単位のタイムアウト。（既定値は<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-CONNECTION-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_CONNECTION_TIMEOUT</literal></link>）</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-writing-timeout" role="function">
+<title>milter_server_context_set_writing_timeout ()</title>
+<indexterm zone="milter-server-context-set-writing-timeout"><primary>milter_server_context_set_writing_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_writing_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>書き込み時の秒単位のタイムアウトを設定します。<parameter>context</parameter>が<parameter>timeout</parameter>秒以内にクライアントのソケットに書き込めない場合は<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link>シグナルが発行されます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter> :</term>
+<listitem><simpara>秒単位での書き込みタイムアウト。（既定値は<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-WRITING-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_WRITING_TIMEOUT</literal></link>）</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-reading-timeout" role="function">
+<title>milter_server_context_set_reading_timeout ()</title>
+<indexterm zone="milter-server-context-set-reading-timeout"><primary>milter_server_context_set_reading_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_reading_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>読み込み時のタイムアウトを秒単位で指定します。<parameter>context</parameter>が<parameter>timeout</parameter>秒以内にクライアントソケットから応答を受け取らなかった場合は、<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link>シグナルが発行されます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter> :</term>
+<listitem><simpara>秒単位での読み込み時のタイムアウト。（既定値は<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-READING-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_READING_TIMEOUT</literal></link>）</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-end-of-message-timeout" role="function">
+<title>milter_server_context_set_end_of_message_timeout ()</title>
+<indexterm zone="milter-server-context-set-end-of-message-timeout"><primary>milter_server_context_set_end_of_message_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_end_of_message_timeout
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="gdouble"><type>gdouble</type></link> timeout</parameter>);</programlisting>
+<para>メッセージ終了時のタイムアウトを秒単位で設定します。<parameter>context</parameter>が<parameter>timeout</parameter>秒以内にクライアントソケットからメッセージ終了時の応答を受け取らなかった場合は、<link linkend="MilterServerContext-timeout"><type>"timeout"</type></link>シグナルが発行されます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter> :</term>
+<listitem><simpara>秒単位でのメッセージ終了時のタイムアウト。（既定値は<link linkend="MILTER-SERVER-CONTEXT-DEFAULT-END-OF-MESSAGE-TIMEOUT:CAPS"><literal>MILTER_SERVER_CONTEXT_DEFAULT_END_OF_MESSAGE_TIMEOUT</literal></link>）</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-connection-spec" role="function">
+<title>milter_server_context_set_connection_spec ()</title>
+<indexterm zone="milter-server-context-set-connection-spec"><primary>milter_server_context_set_connection_spec</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_set_connection_spec
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *spec</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>クライアントの接続指定を設定します。<parameter>spec</parameter>が不正な形式で、<parameter>error</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>でない場合は、エラーの詳細は<parameter>error</parameter>に設定されます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>spec</parameter> :</term>
+<listitem><simpara>クライアントの接続指定。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter> :</term>
+<listitem><simpara>エラーを受け取る場所のアドレス、または<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-establish-connection" role="function">
+<title>milter_server_context_establish_connection ()</title>
+<indexterm zone="milter-server-context-establish-connection"><primary>milter_server_context_establish_connection</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_establish_connection
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="GError"><type>GError</type></link> **error</parameter>);</programlisting>
+<para>クライアントへの接続を確立します。接続確立が失敗して、<parameter>error</parameter>が<link linkend="NULL:CAPS"><literal>NULL</literal></link>でない場合は、エラーの詳細は<parameter>error</parameter>に設定されます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter> :</term>
+<listitem><simpara>エラーを受け取る場所のアドレス、または<link linkend="NULL:CAPS"><literal>NULL</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-status" role="function">
+<title>milter_server_context_get_status ()</title>
+<indexterm zone="milter-server-context-get-status"><primary>milter_server_context_get_status</primary></indexterm>
+<programlisting><link linkend="MilterStatus"><returnvalue>MilterStatus</returnvalue></link>        milter_server_context_get_status    (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>現在の状態を取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>現在の状態。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-state" role="function">
+<title>milter_server_context_get_state ()</title>
+<indexterm zone="milter-server-context-get-state"><primary>milter_server_context_get_state</primary></indexterm>
+<programlisting><link linkend="MilterServerContextState"><returnvalue>MilterServerContextState</returnvalue></link> milter_server_context_get_state
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>現在の状態を取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>現在の状態。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-state" role="function">
+<title>milter_server_context_set_state ()</title>
+<indexterm zone="milter-server-context-set-state"><primary>milter_server_context_set_state</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_state     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterServerContextState"><type>MilterServerContextState</type></link> state</parameter>);</programlisting>
+<para>現在の状態を設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter> :</term>
+<listitem><simpara>新しい状態。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-is-processing" role="function">
+<title>milter_server_context_is_processing ()</title>
+<indexterm zone="milter-server-context-is-processing"><primary>milter_server_context_is_processing</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_is_processing (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>応答を待っているかどうかを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>最後の書き込みの後に応答を受け取っていたら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>、そうでなければ<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-negotiate" role="function">
+<title>milter_server_context_negotiate ()</title>
+<indexterm zone="milter-server-context-negotiate"><primary>milter_server_context_negotiate</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_negotiate     (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>クライアントとネゴシエーションします。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>option</parameter> :</term>
+<listitem><simpara>ネゴシエーションのオプション。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-connect" role="function">
+<title>milter_server_context_connect ()</title>
+<indexterm zone="milter-server-context-connect"><primary>milter_server_context_connect</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_connect       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter><type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_length</parameter>);</programlisting>
+<para>接続されたSMTPクライアントの情報を送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host_name</parameter> :</term>
+<listitem><simpara>接続してきたSMTPクライアントのホスト名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter> :</term>
+<listitem><simpara>接続してきたSMTPクライアントのアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address_length</parameter> :</term>
+<listitem><simpara><parameter>address</parameter>のサイズ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-helo" role="function">
+<title>milter_server_context_helo ()</title>
+<indexterm zone="milter-server-context-helo"><primary>milter_server_context_helo</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_helo          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);</programlisting>
+<para>HELOに渡されたFQDNを送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fqdn</parameter> :</term>
+<listitem><simpara>FQDN。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-envelope-from" role="function">
+<title>milter_server_context_envelope_from ()</title>
+<indexterm zone="milter-server-context-envelope-from"><primary>milter_server_context_envelope_from</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_envelope_from (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);</programlisting>
+<para>MAIL FROM時に渡されたパラメタを送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>from</parameter> :</term>
+<listitem><simpara>送信者のアドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-envelope-recipient" role="function">
+<title>milter_server_context_envelope_recipient ()</title>
+<indexterm zone="milter-server-context-envelope-recipient"><primary>milter_server_context_envelope_recipient</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_envelope_recipient
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *recipient</parameter>);</programlisting>
+<para>RCPT TO時に渡されたパラメタを送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recipient</parameter> :</term>
+<listitem><simpara>宛先アドレス。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-data" role="function">
+<title>milter_server_context_data ()</title>
+<indexterm zone="milter-server-context-data"><primary>milter_server_context_data</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_data          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>DATAコマンドを受信したことを通知します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-unknown" role="function">
+<title>milter_server_context_unknown ()</title>
+<indexterm zone="milter-server-context-unknown"><primary>milter_server_context_unknown</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_unknown       (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);</programlisting>
+<para>受信した未知のSMTPコマンドを送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command</parameter> :</term>
+<listitem><simpara>未知のSMTPコマンド。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-header" role="function">
+<title>milter_server_context_header ()</title>
+<indexterm zone="milter-server-context-header"><primary>milter_server_context_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_header        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>ヘッダを送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>ヘッダ名。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter> :</term>
+<listitem><simpara>ヘッダ値。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-end-of-header" role="function">
+<title>milter_server_context_end_of_header ()</title>
+<indexterm zone="milter-server-context-end-of-header"><primary>milter_server_context_end_of_header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_end_of_header (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>すべてのヘッダが送信されたことを通知します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-body" role="function">
+<title>milter_server_context_body ()</title>
+<indexterm zone="milter-server-context-body"><primary>milter_server_context_body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_body          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>本文の1かたまりを送信します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chunk</parameter> :</term>
+<listitem><simpara>本文の1かたまり。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter> :</term>
+<listitem><simpara><parameter>chunk</parameter>のサイズ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-end-of-message" role="function">
+<title>milter_server_context_end_of_message ()</title>
+<indexterm zone="milter-server-context-end-of-message"><primary>milter_server_context_end_of_message</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_end_of_message
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>すべての本文のかたまりを送信したことを通知します。未送信の最後の本文のかたまりも一緒に送信することができます。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chunk</parameter> :</term>
+<listitem><simpara>本文のかたまり。<link linkend="NULL:CAPS"><literal>NULL</literal></link>かもしれません。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter> :</term>
+<listitem><simpara><parameter>chunk</parameter>のサイズ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-quit" role="function">
+<title>milter_server_context_quit ()</title>
+<indexterm zone="milter-server-context-quit"><primary>milter_server_context_quit</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_quit          (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>現在の接続を終了します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-abort" role="function">
+<title>milter_server_context_abort ()</title>
+<indexterm zone="milter-server-context-abort"><primary>milter_server_context_abort</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_abort         (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para>現在の接続を中止します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>成功時は<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-is-enable-step" role="function">
+<title>milter_server_context_is_enable_step ()</title>
+<indexterm zone="milter-server-context-is-enable-step"><primary>milter_server_context_is_enable_step</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_is_enable_step
+                                                        (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter><link linkend="MilterStepFlags"><type>MilterStepFlags</type></link> step</parameter>);</programlisting>
+<para><parameter>context</parameter>のオプションで<parameter>step</parameter>フラグが有効かどうかを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>step</parameter> :</term>
+<listitem><simpara>ステップフラグ。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara><parameter>step</parameter>フラグが有効なら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>、そうでなければ<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-skip-body" role="function">
+<title>milter_server_context_get_skip_body ()</title>
+<indexterm zone="milter-server-context-get-skip-body"><primary>milter_server_context_get_skip_body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            milter_server_context_get_skip_body (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para><parameter>context</parameter>が本文のかたまりを送っている間にスキップ応答を受け取ったかどうかを取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara>本文のかたまりを省略していたら<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>、そうでなければ<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-get-name" role="function">
+<title>milter_server_context_get_name ()</title>
+<indexterm zone="milter-server-context-get-name"><primary>milter_server_context_get_name</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       milter_server_context_get_name      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>);</programlisting>
+<para><parameter>context</parameter>の名前を取得します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>返値</emphasis>&nbsp;:</term><listitem><simpara><parameter>context</parameter>の名前。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="milter-server-context-set-name" role="function">
+<title>milter_server_context_set_name ()</title>
+<indexterm zone="milter-server-context-set-name"><primary>milter_server_context_set_name</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_server_context_set_name      (<parameter><link linkend="MilterServerContext"><type>MilterServerContext</type></link> *context</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>);</programlisting>
+<para><parameter>context</parameter>の名前を設定します。</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter> :</term>
+<listitem><simpara><link linkend="MilterServerContext"><literal>MilterServerContext</literal></link>。</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter> :</term>
+<listitem><simpara>名前。</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="MilterServerContext.property-details" role="property_details">
+<title role="property_details.title">プロパティ詳細</title>
+<refsect2 id="MilterServerContext--connection-timeout" role="property"><title><literal>"connection-timeout"</literal>プロパティ</title>
+<indexterm zone="MilterServerContext--connection-timeout"><primary>MilterServerContext:connection-timeout</primary></indexterm>
+<programlisting>  "connection-timeout"       <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds for connecting to a filter.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 300</para>
+</refsect2>
+<refsect2 id="MilterServerContext--end-of-message-timeout" role="property"><title>The <literal>"end-of-message-timeout"</literal> property</title>
+<indexterm zone="MilterServerContext--end-of-message-timeout"><primary>MilterServerContext:end-of-message-timeout</primary></indexterm>
+<programlisting>  "end-of-message-timeout"   <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds between sending end-of-message to a filter and waiting for its reply.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 300</para>
+</refsect2>
+<refsect2 id="MilterServerContext--message-result" role="property"><title><literal>"message-result"</literal>プロパティ</title>
+<indexterm zone="MilterServerContext--message-result"><primary>MilterServerContext:message-result</primary></indexterm>
+<programlisting>  "message-result"           <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link>*  : Read / Write</programlisting>
+<para>現在処理中のメッセージの結果。</para></refsect2>
+<refsect2 id="MilterServerContext--name" role="property"><title><literal>"name"</literal>プロパティ。</title>
+<indexterm zone="MilterServerContext--name"><primary>MilterServerContext:name</primary></indexterm>
+<programlisting>  "name"                     <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>MilterServerContextの名前。</para><para>デフォルト値: NULL</para>
+</refsect2>
+<refsect2 id="MilterServerContext--reading-timeout" role="property"><title><literal>"reading-timeout"</literal>プロパティ</title>
+<indexterm zone="MilterServerContext--reading-timeout"><primary>MilterServerContext:reading-timeout</primary></indexterm>
+<programlisting>  "reading-timeout"          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds for reading reply from a filter.</para><para>Allowed values: &gt;= 0</para>
+<para>デフォルト値: 10</para>
+</refsect2>
+<refsect2 id="MilterServerContext--state" role="property"><title><literal>"state"</literal>プロパティ</title>
+<indexterm zone="MilterServerContext--state"><primary>MilterServerContext:state</primary></indexterm>
+<programlisting>  "state"                    <link linkend="MilterServerContextState"><type>MilterServerContextState</type></link>  : Read / Write</programlisting>
+<para>MilterServerContextの状態。</para><para>Default value: MILTER_SERVER_CONTEXT_STATE_START</para>
+</refsect2>
+<refsect2 id="MilterServerContext--status" role="property"><title><literal>"status"</literal>プロパティ</title>
+<indexterm zone="MilterServerContext--status"><primary>MilterServerContext:status</primary></indexterm>
+<programlisting>  "status"                   <link linkend="MilterStatus"><type>MilterStatus</type></link>          : Read / Write</programlisting>
+<para>MilterServerContextのステータス。</para><para>Default value: MILTER_STATUS_NOT_CHANGE</para>
+</refsect2>
+<refsect2 id="MilterServerContext--writing-timeout" role="property"><title>The <literal>"writing-timeout"</literal> property</title>
+<indexterm zone="MilterServerContext--writing-timeout"><primary>MilterServerContext:writing-timeout</primary></indexterm>
+<programlisting>  "writing-timeout"          <link linkend="gdouble"><type>gdouble</type></link>               : Read / Write / Construct</programlisting>
+<para>The timeout seconds for writing information from MTA to a filter.</para><para>Allowed values: &gt;= 0</para>
+<para>デフォルト値: 10</para>
+</refsect2>
+</refsect1>
+<refsect1 id="MilterServerContext.signal-details" role="signals">
+<title role="signals.title">シグナル詳細</title>
+<refsect2 id="MilterServerContext-connection-timeout" role="signal"><title><literal>"connection-timeout"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-connection-timeout"><primary>MilterServerContext::connection-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-end-of-message-timeout" role="signal"><title>The <literal>"end-of-message-timeout"</literal> signal</title>
+<indexterm zone="MilterServerContext-end-of-message-timeout"><primary>MilterServerContext::end-of-message-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-message-processed" role="signal"><title><literal>"message-processed"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-message-processed"><primary>MilterServerContext::message-processed</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="MilterMessageResult"><type>MilterMessageResult</type></link> *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-reading-timeout" role="signal"><title><literal>"reading-timeout"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-reading-timeout"><primary>MilterServerContext::reading-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-ready" role="signal"><title><literal>"ready"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-ready"><primary>MilterServerContext::ready</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-state-transited" role="signal"><title><literal>"state-translated"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-state-transited"><primary>MilterServerContext::state-transited</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link>     *milterservercontext,
+                                                        <link linkend="MilterServerContextState"><type>MilterServerContextState</type></link> arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>                 user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-body" role="signal"><title><literal>"stop-on-body"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-body"><primary>MilterServerContext::stop-on-body</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="guint64"><type>guint64</type></link>              arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-connect" role="signal"><title><literal>"stop-on-connect"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-connect"><primary>MilterServerContext::stop-on-connect</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             arg2,
+                                                        <link linkend="guint"><type>guint</type></link>                arg3,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-data" role="signal"><title><literal>"stop-on-data"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-data"><primary>MilterServerContext::stop-on-data</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-end-of-header" role="signal"><title><literal>"stop-on-end-of-header"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-end-of-header"><primary>MilterServerContext::stop-on-end-of-header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-end-of-message" role="signal"><title><literal>"stop-on-end-of-message"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-end-of-message"><primary>MilterServerContext::stop-on-end-of-message</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="guint64"><type>guint64</type></link>              arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-envelope-from" role="signal"><title><literal>"stop-on-envelope-from"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-envelope-from"><primary>MilterServerContext::stop-on-envelope-from</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-envelope-recipient" role="signal"><title><literal>"stop-on-envelope-recipient"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-envelope-recipient"><primary>MilterServerContext::stop-on-envelope-recipient</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-header" role="signal"><title><literal>"stop-on-header"</literal>シグナル。</title>
+<indexterm zone="MilterServerContext-stop-on-header"><primary>MilterServerContext::stop-on-header</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg2,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stop-on-helo" role="signal"><title><literal>"stop-on-helo"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stop-on-helo"><primary>MilterServerContext::stop-on-helo</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gchar"><type>gchar</type></link>               *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-stopped" role="signal"><title><literal>"stopped"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-stopped"><primary>MilterServerContext::stopped</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="MilterServerContext-writing-timeout" role="signal"><title><literal>"writing-timeout"</literal>シグナル</title>
+<indexterm zone="MilterServerContext-writing-timeout"><primary>MilterServerContext::writing-timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="MilterServerContext"><type>MilterServerContext</type></link> *milterservercontext,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>milterservercontext</parameter> :</term>
+<listitem><simpara>the object which received the signal.</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter> :</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+</refentry>

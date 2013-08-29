@@ -1,0 +1,594 @@
+<!-- ##### SECTION Title ##### -->
+MilterClientContext
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_CLIENT_CONTEXT_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM MilterClientContextError ##### -->
+<para>
+
+</para>
+
+@MILTER_CLIENT_CONTEXT_ERROR_INVALID_CODE: 
+@MILTER_CLIENT_CONTEXT_ERROR_IO_ERROR: 
+@MILTER_CLIENT_CONTEXT_ERROR_NULL: 
+@MILTER_CLIENT_CONTEXT_ERROR_INVALID_STATE: 
+@MILTER_CLIENT_CONTEXT_ERROR_INVALID_ACTION: 
+@MILTER_CLIENT_CONTEXT_ERROR_EMPTY: 
+
+<!-- ##### ENUM MilterClientContextState ##### -->
+<para>
+
+</para>
+
+@MILTER_CLIENT_CONTEXT_STATE_INVALID: 
+@MILTER_CLIENT_CONTEXT_STATE_START: 
+@MILTER_CLIENT_CONTEXT_STATE_NEGOTIATE: 
+@MILTER_CLIENT_CONTEXT_STATE_NEGOTIATE_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_CONNECT: 
+@MILTER_CLIENT_CONTEXT_STATE_CONNECT_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_HELO: 
+@MILTER_CLIENT_CONTEXT_STATE_HELO_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_FROM: 
+@MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_FROM_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_RECIPIENT: 
+@MILTER_CLIENT_CONTEXT_STATE_ENVELOPE_RECIPIENT_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_DATA: 
+@MILTER_CLIENT_CONTEXT_STATE_DATA_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_UNKNOWN: 
+@MILTER_CLIENT_CONTEXT_STATE_UNKNOWN_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_HEADER: 
+@MILTER_CLIENT_CONTEXT_STATE_HEADER_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_END_OF_HEADER: 
+@MILTER_CLIENT_CONTEXT_STATE_END_OF_HEADER_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_BODY: 
+@MILTER_CLIENT_CONTEXT_STATE_BODY_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_END_OF_MESSAGE: 
+@MILTER_CLIENT_CONTEXT_STATE_END_OF_MESSAGE_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_QUIT: 
+@MILTER_CLIENT_CONTEXT_STATE_QUIT_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_ABORT: 
+@MILTER_CLIENT_CONTEXT_STATE_ABORT_REPLIED: 
+@MILTER_CLIENT_CONTEXT_STATE_FINISHED: 
+
+<!-- ##### STRUCT MilterClientContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL MilterClientContext::abort ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::abort-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::body ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::body-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::connect ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::connect-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::data ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::data-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::define-macro ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL MilterClientContext::end-of-header ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::end-of-header-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::end-of-message ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::end-of-message-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::envelope-from ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::envelope-from-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::envelope-recipient ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::envelope-recipient-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::header ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::header-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::helo ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::helo-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::message-processed ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MilterClientContext::negotiate ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::negotiate-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+
+<!-- ##### SIGNAL MilterClientContext::timeout ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+
+<!-- ##### SIGNAL MilterClientContext::unknown ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+@Returns: 
+
+<!-- ##### SIGNAL MilterClientContext::unknown-response ##### -->
+<para>
+
+</para>
+
+@milterclientcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### ARG MilterClientContext:client ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClientContext:message-result ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClientContext:option ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClientContext:packet-buffer-size ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClientContext:quarantine-reason ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClientContext:state ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MilterClientContext:status ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION milter_client_context_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_new ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_feed ##### -->
+<para>
+
+</para>
+
+@context: 
+@chunk: 
+@size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_get_private_data ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_set_private_data ##### -->
+<para>
+
+</para>
+
+@context: 
+@data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION milter_client_context_set_reply ##### -->
+<para>
+
+</para>
+
+@context: 
+@code: 
+@extended_code: 
+@message: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_format_reply ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_add_header ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@value: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_insert_header ##### -->
+<para>
+
+</para>
+
+@context: 
+@index: 
+@name: 
+@value: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_change_header ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@index: 
+@value: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_delete_header ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@index: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_change_from ##### -->
+<para>
+
+</para>
+
+@context: 
+@from: 
+@parameters: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_add_recipient ##### -->
+<para>
+
+</para>
+
+@context: 
+@recipient: 
+@parameters: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_delete_recipient ##### -->
+<para>
+
+</para>
+
+@context: 
+@recipient: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_replace_body ##### -->
+<para>
+
+</para>
+
+@context: 
+@body: 
+@body_size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_progress ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_quarantine ##### -->
+<para>
+
+</para>
+
+@context: 
+@reason: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_set_timeout ##### -->
+<para>
+
+</para>
+
+@context: 
+@timeout: 
+
+
+<!-- ##### FUNCTION milter_client_context_get_timeout ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_set_state ##### -->
+<para>
+
+</para>
+
+@context: 
+@state: 
+
+
+<!-- ##### FUNCTION milter_client_context_get_state ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_client_context_set_option ##### -->
+<para>
+
+</para>
+
+@context: 
+@option: 
+
+
+<!-- ##### FUNCTION milter_client_context_get_option ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+

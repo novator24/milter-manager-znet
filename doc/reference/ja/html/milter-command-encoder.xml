@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-MilterCommandEncoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-MilterCommandEncoder.top_of_page">MilterCommandEncoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterCommandEncoder</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-MilterCommandEncoder.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>struct              <link linkend="MilterCommandEncoder">MilterCommandEncoder</link>;
+<link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     <link linkend="milter-command-encoder-new">milter_command_encoder_new</link>          (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-negotiate">milter_command_encoder_encode_negotiate</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-define-macro">milter_command_encoder_encode_define_macro</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> context</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *macros</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-connect">milter_command_encoder_encode_connect</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter>const <type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-helo">milter_command_encoder_encode_helo</link>  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-envelope-from">milter_command_encoder_encode_envelope_from</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-envelope-recipient">milter_command_encoder_encode_envelope_recipient</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *to</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-data">milter_command_encoder_encode_data</link>  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-header">milter_command_encoder_encode_header</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-end-of-header">milter_command_encoder_encode_end_of_header</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-body">milter_command_encoder_encode_body</link>  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packed_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-end-of-message">milter_command_encoder_encode_end_of_message</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-abort">milter_command_encoder_encode_abort</link> (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-quit">milter_command_encoder_encode_quit</link>  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="milter-command-encoder-encode-unknown">milter_command_encoder_encode_unknown</link>
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-MilterCommandEncoder.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-MilterCommandEncoder.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MilterCommandEncoder" role="struct">
+<title>struct MilterCommandEncoder</title>
+<indexterm zone="MilterCommandEncoder"><primary>MilterCommandEncoder</primary></indexterm>
+<programlisting>struct MilterCommandEncoder {
+    MilterEncoder object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-new" role="function">
+<title>milter_command_encoder_new ()</title>
+<indexterm zone="milter-command-encoder-new"><primary>milter_command_encoder_new</primary></indexterm>
+<programlisting><link linkend="MilterEncoder"><returnvalue>MilterEncoder</returnvalue></link> *     milter_command_encoder_new          (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-negotiate" role="function">
+<title>milter_command_encoder_encode_negotiate ()</title>
+<indexterm zone="milter-command-encoder-encode-negotiate"><primary>milter_command_encoder_encode_negotiate</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_negotiate
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter><link linkend="MilterOption"><type>MilterOption</type></link> *option</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-define-macro" role="function">
+<title>milter_command_encoder_encode_define_macro ()</title>
+<indexterm zone="milter-command-encoder-encode-define-macro"><primary>milter_command_encoder_encode_define_macro</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_define_macro
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter><link linkend="MilterCommand"><type>MilterCommand</type></link> context</parameter>,
+                                                         <parameter><link linkend="GHashTable"><type>GHashTable</type></link> *macros</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-connect" role="function">
+<title>milter_command_encoder_encode_connect ()</title>
+<indexterm zone="milter-command-encoder-encode-connect"><primary>milter_command_encoder_encode_connect</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_connect
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *host_name</parameter>,
+                                                         <parameter>const <type>struct sockaddr</type> *address</parameter>,
+                                                         <parameter><link linkend="socklen-t"><type>socklen_t</type></link> address_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-helo" role="function">
+<title>milter_command_encoder_encode_helo ()</title>
+<indexterm zone="milter-command-encoder-encode-helo"><primary>milter_command_encoder_encode_helo</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_helo  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fqdn</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-envelope-from" role="function">
+<title>milter_command_encoder_encode_envelope_from ()</title>
+<indexterm zone="milter-command-encoder-encode-envelope-from"><primary>milter_command_encoder_encode_envelope_from</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_envelope_from
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *from</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-envelope-recipient" role="function">
+<title>milter_command_encoder_encode_envelope_recipient ()</title>
+<indexterm zone="milter-command-encoder-encode-envelope-recipient"><primary>milter_command_encoder_encode_envelope_recipient</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_envelope_recipient
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *to</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-data" role="function">
+<title>milter_command_encoder_encode_data ()</title>
+<indexterm zone="milter-command-encoder-encode-data"><primary>milter_command_encoder_encode_data</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_data  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-header" role="function">
+<title>milter_command_encoder_encode_header ()</title>
+<indexterm zone="milter-command-encoder-encode-header"><primary>milter_command_encoder_encode_header</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_header
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *name</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *value</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-end-of-header" role="function">
+<title>milter_command_encoder_encode_end_of_header ()</title>
+<indexterm zone="milter-command-encoder-encode-end-of-header"><primary>milter_command_encoder_encode_end_of_header</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_end_of_header
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-body" role="function">
+<title>milter_command_encoder_encode_body ()</title>
+<indexterm zone="milter-command-encoder-encode-body"><primary>milter_command_encoder_encode_body</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_body  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packed_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-end-of-message" role="function">
+<title>milter_command_encoder_encode_end_of_message ()</title>
+<indexterm zone="milter-command-encoder-encode-end-of-message"><primary>milter_command_encoder_encode_end_of_message</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_end_of_message
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *chunk</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-abort" role="function">
+<title>milter_command_encoder_encode_abort ()</title>
+<indexterm zone="milter-command-encoder-encode-abort"><primary>milter_command_encoder_encode_abort</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_abort (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-quit" role="function">
+<title>milter_command_encoder_encode_quit ()</title>
+<indexterm zone="milter-command-encoder-encode-quit"><primary>milter_command_encoder_encode_quit</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_quit  (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-command-encoder-encode-unknown" role="function">
+<title>milter_command_encoder_encode_unknown ()</title>
+<indexterm zone="milter-command-encoder-encode-unknown"><primary>milter_command_encoder_encode_unknown</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                milter_command_encoder_encode_unknown
+                                                        (<parameter><link linkend="MilterCommandEncoder"><type>MilterCommandEncoder</type></link> *encoder</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> **packet</parameter>,
+                                                         <parameter><link linkend="gsize"><type>gsize</type></link> *packet_size</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *command</parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

@@ -1,0 +1,762 @@
+* milter-manager-children: multi mails in a session
+  processing has some problems. We should check MILTER_STEP_NO_* cases.
+* milter-manager: shutdown immediately when all child
+  milters doesn't establish negotiation. (Now, returning
+  negotiate reply.)
+* milter-server: disable define macros on HEADER and
+  BODY. Macro definitions on those states are invalid in
+  libmilter. Wow!
+* [1.7.x] support MAIL FROM parameters and RCPT TO parameters.
+  * e.g.: MAIL FROM:<null@example.com> XVERP BODY=8BITMIME SIZE=5000
+          -> "<null@example.com>\0XVERP\0BODY=8BITMIME\0SIZE=5000\0" packet.
+  * e.g.: RCPT TO:<null@example.com> NOTIFY=SUCCESS ORCPT=rfc822;null@example.jp
+          -> "<null@example.com>\0NOTIFY=SUCCESS\0ORCPT=rfc822;null@example.jp\0" packet.
+* [1.5.0] Ruby bindings: write a document for creating milter
+* [1.5.0] support Postfix access(5) and cidr_table(5) format
+  for whitelist applicable condition.
+--
+* [1.5.x] make number of leaders to be checked per
+  connection check customizable.
+* [1.x.x] improve netstat performance.
+  use net.inet.tcp.pcblist and net.inet6.ip6.stats
+  on FreeBSD and /proc/net/tcp and /proc/net/tcp6 on Linux directly.
+* [1.5.x] use UNIX domain socket rather than inet in document.
+  Suggested by ZnZ.
+* [1.5.x] multiply connection based anti-spam result as score.
+  e.g. SFP fail -> 2.3, S25R match -> 7.8, ...;
+       score = SPF fail * 0.3 + S25R match * 0.9 + ... = 0.69 + 7.02 + ...;
+       threshold = 5;
+       score < threshold -> pass, score > threshold -> tarpit, ...
+* [1.5.x] show elapsed time in connection check log when disconnected.
+* [1.5.x] output CVS for statistics.
+* [1.5.x] add signals for logging. (each mail transaction
+  finished for each milter and milter-manager, SMTP session
+  finished for each milter and milter-manager)
+  * MilterSessionResult
+    * client name (milter manager or child milter name)
+    * connect from
+    * connected time
+    * elapsed time
+    * HELO domain
+    * messages (list of MilterMessageResult)
+  * MilterMessageResult
+    * sender
+    * recipients
+    * headers
+    * body size
+    * state
+    * status
+    * added headers
+    * quarntine
+    * start time (time of received envelope-from)
+    * elapsed time
+  * session log signal passes MilterSessionResult
+  * message log signal passes MilterSessionResult and MilterMessageResult
+* Exim local_scan support.
+* milter-test-server: stop processing if all recipients are rejected.
+* XMail support.
+* write a test for over max body chunk size (65535) and skip case.
+  It's a case for dkim-filter.
+* support Postfix SMTP Access Policy Delegation protocol.
+* MilterCommandDecoder: support ESMTP parameters on MAIL FROM and RCPT TO.
+* Move some signals (SIGINT, SIGHUP, SIGTERM) handling from milter-manager-main
+  into milter_client_main since libmilter in sendmail handles those signals in
+  smfi_main().
+  And SIGPIPE should handle in libmilter-compatible.
+-----
+Index: milter/core/milter-command-decoder.c
+===================================================================
+--- milter/core/milter-command-decoder.c	(revision 2780)
++++ milter/core/milter-command-decoder.c	(working copy)
+@@ -129,8 +129,8 @@
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(MilterCommandDecoderClass, envelope_from),
+                      NULL, NULL,
+-                     g_cclosure_marshal_VOID__STRING,
+-                     G_TYPE_NONE, 1, G_TYPE_STRING);
++                     _milter_marshal_VOID__STRING_BOXED,
++                     G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_HASH_TABLE);
+ 
+     signals[ENVELOPE_RECIPIENT] =
+         g_signal_new("envelope-recipient",
+@@ -139,8 +139,8 @@
+                      G_STRUCT_OFFSET(MilterCommandDecoderClass,
+                                      envelope_recipient),
+                      NULL, NULL,
+-                     g_cclosure_marshal_VOID__STRING,
+-                     G_TYPE_NONE, 1, G_TYPE_STRING);
++                     _milter_marshal_VOID__STRING_BOXED,
++                     G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_HASH_TABLE);
+ 
+     signals[DATA] =
+         g_signal_new("data",
+@@ -651,9 +651,14 @@
+     if (null_character_point <= 0)
+         return FALSE;
+ 
++    /* TODO: support parameters
++     * "<recipient-path>\0[PARAMETER1\0PARAMETER2\0...\0]"
++     * PARAMETER = "KEYWORD" or "KEYWORD=VALUE"
++     */
++
+     milter_debug("[command-decoder][envelope-from] <%s>", buffer + 1);
+ 
+-    g_signal_emit(decoder, signals[ENVELOPE_FROM], 0, buffer + 1);
++    g_signal_emit(decoder, signals[ENVELOPE_FROM], 0, buffer + 1, NULL);
+ 
+     return TRUE;
+ }
+@@ -675,9 +680,14 @@
+     if (null_character_point <= 0)
+         return FALSE;
+ 
++    /* TODO: support parameters
++     * "<recipient-path>\0[PARAMETER1\0PARAMETER2\0...\0]"
++     * PARAMETER = "KEYWORD" or "KEYWORD=VALUE"
++     */
++
+     milter_debug("[command-decoder][envelope-recipient] <%s>", buffer + 1);
+ 
+-    g_signal_emit(decoder, signals[ENVELOPE_RECIPIENT], 0, buffer + 1);
++    g_signal_emit(decoder, signals[ENVELOPE_RECIPIENT], 0, buffer + 1, NULL);
+     return TRUE;
+ }
+ 
+Index: milter/core/milter-command-decoder.h
+===================================================================
+--- milter/core/milter-command-decoder.h	(revision 2780)
++++ milter/core/milter-command-decoder.h	(working copy)
+@@ -71,9 +71,11 @@
+     void (*helo)                (MilterCommandDecoder *decoder,
+                                  const gchar *fqdn);
+     void (*envelope_from)       (MilterCommandDecoder *decoder,
+-                                 const gchar *from);
++                                 const gchar *from,
++                                 GHashTable *parameters);
+     void (*envelope_recipient)  (MilterCommandDecoder *decoder,
+-                                 const gchar *recipient);
++                                 const gchar *recipient,
++                                 GHashTable *parameters);
+     void (*data)                (MilterCommandDecoder *decoder);
+     void (*header)              (MilterCommandDecoder *decoder,
+                                  const gchar *name,
+Index: milter/core/milter-marshalers.list
+===================================================================
+--- milter/core/milter-marshalers.list	(revision 2780)
++++ milter/core/milter-marshalers.list	(working copy)
+@@ -10,6 +10,7 @@
+ VOID:STRING,FLAGS,STRING,UINT,STRING,POINTER,STRING
+ VOID:STRING,ENUM
+ VOID:STRING,POINTER,UINT,ENUM
++VOID:STRING,BOXED
+ VOID:POINTER,UINT
+ VOID:UINT,STRING,STRING
+ VOID:OBJECT,POINTER
+Index: test/core/test-command-decoder.c
+===================================================================
+--- test/core/test-command-decoder.c	(revision 2780)
++++ test/core/test-command-decoder.c	(working copy)
+@@ -1,6 +1,6 @@
+ /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+ /*
+- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
++ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+  *
+  *  This library is free software: you can redistribute it and/or modify
+  *  it under the terms of the GNU Lesser General Public License as published by
+@@ -58,8 +58,10 @@
+ void test_decode_helo_without_null (void);
+ void test_decode_envelope_from (void);
+ void test_decode_envelope_from_without_null (void);
++void test_decode_envelope_from_with_parameters (void);
+ void test_decode_envelope_recipient (void);
+ void test_decode_envelope_recipient_without_null (void);
++void test_decode_envelope_recipient_with_parameters (void);
+ void test_decode_data (void);
+ void test_decode_data_with_garbage (void);
+ void test_decode_header (void);
+@@ -111,8 +113,10 @@
+ static gchar *helo_fqdn;
+ 
+ static gchar *envelope_from;
++static GHashTable *envelope_from_parameters;
+ 
+ static gchar *envelope_recipient;
++static GHashTable *envelope_recipient_parameters;
+ 
+ static gchar *header_name;
+ static gchar *header_value;
+@@ -169,19 +173,27 @@
+ }
+ 
+ static void
+-cb_envelope_from (MilterDecoder *decoder, const gchar *from, gpointer user_data)
++cb_envelope_from (MilterDecoder *decoder, const gchar *from,
++                  GHashTable *parameters, gpointer user_data)
+ {
+     n_envelope_froms++;
+ 
+     envelope_from = g_strdup(from);
++    envelope_from_parameters = parameters;
++    if (envelope_from_parameters)
++        g_hash_table_ref(envelope_from_parameters);
+ }
+ 
+ static void
+-cb_envelope_recipient (MilterDecoder *decoder, const gchar *to, gpointer user_data)
++cb_envelope_recipient (MilterDecoder *decoder, const gchar *to,
++                       GHashTable *parameters, gpointer user_data)
+ {
+     n_envelope_recipients++;
+ 
+     envelope_recipient = g_strdup(to);
++    envelope_recipient_parameters = parameters;
++    if (envelope_recipient_parameters)
++        g_hash_table_ref(envelope_recipient_parameters);
+ }
+ 
+ static void
+@@ -318,8 +330,10 @@
+     helo_fqdn = NULL;
+ 
+     envelope_from = NULL;
++    envelope_from_parameters = NULL;
+ 
+     envelope_recipient = NULL;
++    envelope_recipient_parameters = NULL;
+ 
+     header_name = NULL;
+     header_value = NULL;
+@@ -365,9 +379,13 @@
+ 
+     if (envelope_from)
+         g_free(envelope_from);
++    if (envelope_from_parameters)
++        g_hash_table_unref(envelope_from_parameters);
+ 
+     if (envelope_recipient)
+         g_free(envelope_recipient);
++    if (envelope_recipient_parameters)
++        g_hash_table_unref(envelope_recipient_parameters);
+ 
+     if (header_name)
+         g_free(header_name);
+@@ -1257,6 +1275,8 @@
+     gcut_assert_error(decode());
+     cut_assert_equal_int(1, n_envelope_froms);
+     cut_assert_equal_string(from, envelope_from);
++    gcut_assert_equal_hash_table_string_string(NULL,
++                                               envelope_from_parameters);
+ }
+ 
+ void
+@@ -1276,6 +1296,31 @@
+ }
+ 
+ void
++test_decode_envelope_from_with_parameters (void)
++{
++    const gchar from[] = "<kou@cozmixng.org>";
++
++    g_string_append(buffer, "M");
++    g_string_append(buffer, from);
++    g_string_append_c(buffer, '\0');
++    g_string_append(buffer, "NAME1=VALUE1");
++    g_string_append_c(buffer, '\0');
++    g_string_append(buffer, "NAME2=VALUE2");
++    g_string_append_c(buffer, '\0');
++
++    gcut_assert_error(decode());
++    cut_assert_equal_int(1, n_envelope_froms);
++    cut_assert_equal_string(from, envelope_from);
++
++    cut_omit("TODO: support parameter parsing");
++    gcut_assert_equal_hash_table_string_string(
++        gcut_take_new_hash_table_string_string("NAME1", "VALUE1",
++                                               "NAME2", "VALUE2",
++                                               NULL),
++        envelope_from_parameters);
++}
++
++void
+ test_decode_envelope_recipient (void)
+ {
+     const gchar recipient[] = "<kou@cozmixng.org>";
+@@ -1287,6 +1332,8 @@
+     gcut_assert_error(decode());
+     cut_assert_equal_int(1, n_envelope_recipients);
+     cut_assert_equal_string(recipient, envelope_recipient);
++    gcut_assert_equal_hash_table_string_string(NULL,
++                                               envelope_recipient_parameters);
+ }
+ 
+ void
+@@ -1306,6 +1353,31 @@
+ }
+ 
+ void
++test_decode_envelope_recipient_with_parameters (void)
++{
++    const gchar recipient[] = "<kou@cozmixng.org>";
++
++    g_string_append(buffer, "R");
++    g_string_append(buffer, recipient);
++    g_string_append_c(buffer, '\0');
++    g_string_append(buffer, "NAME1=VALUE1");
++    g_string_append_c(buffer, '\0');
++    g_string_append(buffer, "NAME2=VALUE2");
++    g_string_append_c(buffer, '\0');
++
++    gcut_assert_error(decode());
++    cut_assert_equal_int(1, n_envelope_recipients);
++    cut_assert_equal_string(recipient, envelope_recipient);
++
++    cut_omit("TODO: support parameter parsing");
++    gcut_assert_equal_hash_table_string_string(
++        gcut_take_new_hash_table_string_string("NAME1", "VALUE1",
++                                               "NAME2", "VALUE2",
++                                               NULL),
++        envelope_recipient_parameters);
++}
++
++void
+ test_decode_data (void)
+ {
+     g_string_append(buffer, "T");
+-----
+* MilterCommandEncoder support encoding ESMTP parameters on
+  MAIL FROM and RCPT TO.
+* envelope_from_stopper and envelope_recipient_stopper support ESMTP parameters.
+-----
+Index: doc/configuration.rd.ja
+===================================================================
+--- doc/configuration.rd.ja	(revision 2799)
++++ doc/configuration.rd.ja	(revision 2800)
+@@ -742,7 +742,7 @@
+        end
+      end
+ 
+-: define_envelope_from_stopper {|context, from| ...}
++: define_envelope_from_stopper {|context, from, parameters| ...}
+ 
+    SMTPのMAIL FROMコマンドで渡された送信元アドレスを利用して
+    子milterを適用するかどうかを判断します。このときに利用で
+@@ -759,10 +759,16 @@
+       MAIL FROMコマンドに渡された送信元です。
+       例えば、"<sender@example.com>"となります。
+ 
++   : parameters
++      MAIL FROMコマンドに渡されたESMTPのパラメータです。
++      例えば、"RET=HDRS ENVID=QQ314159"というパラメータが渡
++      された場合は{"RET" => "HDRS", "ENVID" => "QQ314159"}と
++      なります。
++
+    以下はexample.comから送信された場合はmilterを適用しない例
+    です。
+ 
+-     condition.define_envelope_from_stopper do |context, from|
++     condition.define_envelope_from_stopper do |context, from, parameters|
+        if /@example.com>\z/ =~ from
+          true
+        else
+@@ -770,7 +776,7 @@
+        end
+      end
+ 
+-: define_envelope_recipient_stopper {|context, recipient| ...}
++: define_envelope_recipient_stopper {|context, recipient, parameters| ...}
+ 
+    SMTPのRCPT TOコマンドで渡された宛先アドレスを利用して子
+    milterを適用するかどうかを判断します。このときに利用でき
+@@ -788,9 +794,16 @@
+       RCPT TOコマンドに渡された宛先です。
+       例えば、"<receiver@example.com>"となります。
+ 
++   : parameters
++      RCPT TOコマンドに渡されたESMTPのパラメータです。
++      例えば、"NOTIFY=SUCCESS ORCPT=rfc822;user@example.com"
++      というパラメータが渡された場合は
++      {"NOTIFY" => "SUCCESS", "ORCPT" => "rfc822;user@example.com"}
++      となります。
++
+    以下はml.example.com宛の場合はmilterを適用しない例です。
+ 
+-     condition.define_envelope_recipient_stopper do |context, recipient|
++     condition.define_envelope_recipient_stopper do |context, recipient, parameters|
+        if /@ml.example.com>\z/ =~ recipient
+          true
+        else
+Index: doc/configuration.rd
+===================================================================
+--- doc/configuration.rd	(revision 2799)
++++ doc/configuration.rd	(revision 2800)
+@@ -748,7 +748,7 @@
+        end
+      end
+ 
+-: define_envelope_from_stopper {|context, from| ...}
++: define_envelope_from_stopper {|context, from, parameters| ...}
+ 
+    Decides whether the child milter is applied or not with
+    envelope from address passed on MAIL FROM command of
+@@ -765,10 +765,15 @@
+       The envelope from address passed on MAIL FROM command.
+       For example, "<sender@example.com>".
+ 
++   : parameters
++      The ESMTP parameters passed on MAIL FROM command.
++      For example, {"RET" => "HDRS", "ENVID" => "QQ314159"} for
++      "RET=HDRS ENVID=QQ314159" parameters.
++
+    Here is an example that we stop the child milter when
+    mails are sent from example.com.
+ 
+-     condition.define_envelope_from_stopper do |context, from|
++     condition.define_envelope_from_stopper do |context, from, parameters|
+        if /@example.com>\z/ =~ from
+          true
+        else
+@@ -776,7 +781,7 @@
+        end
+      end
+ 
+-: define_envelope_recipient_stopper {|context, recipient| ...}
++: define_envelope_recipient_stopper {|context, recipient, parameters| ...}
+ 
+    Decides whether the child milter is applied or not with
+    envelope recipient address passed on RCPT TO command of
+@@ -794,6 +799,12 @@
+       The envelope recipient address passed on RCPT TO command.
+       For example, "<receiver@example.com>".
+ 
++   : parameters
++      The ESMTP parameters passed on RCPT TO command.
++      For example,
++      {"NOTIFY" => "SUCCESS", "ORCPT" => "rfc822;user@example.com"}
++      for "NOTIFY=SUCCESS ORCPT=rfc822;user@example.com" parameters.
++
+    Here is an example that we stop the child milter when
+    mails are sent to ml.example.com.
+ 
+Index: data/applicable-conditions/authentication.conf
+===================================================================
+--- data/applicable-conditions/authentication.conf	(revision 2799)
++++ data/applicable-conditions/authentication.conf	(revision 2800)
+@@ -3,7 +3,7 @@
+ define_applicable_condition("Authenticated") do |condition|
+   condition.description = "Apply a milter only when sender is authorized"
+ 
+-  condition.define_envelope_from_stopper do |context, from|
++  condition.define_envelope_from_stopper do |context, from, parameters|
+     not context.authenticated?
+   end
+ end
+@@ -11,7 +11,7 @@
+ define_applicable_condition("Unauthenticated") do |condition|
+   condition.description = "Apply a milter only when sender is not authorized"
+ 
+-  condition.define_envelope_from_stopper do |context, from|
++  condition.define_envelope_from_stopper do |context, from, parameters|
+     context.authenticated?
+   end
+ end
+Index: data/applicable-conditions/sendmail-compatible.conf
+===================================================================
+--- data/applicable-conditions/sendmail-compatible.conf	(revision 2799)
++++ data/applicable-conditions/sendmail-compatible.conf	(revision 2800)
+@@ -12,7 +12,7 @@
+     false
+   end
+ 
+-  condition.define_envelope_from_stopper do |context, from|
++  condition.define_envelope_from_stopper do |context, from, parameters|
+     context["i"] ||= "dummy-id" if context.postfix?
+     false
+   end
+Index: ChangeLog
+===================================================================
+--- ChangeLog	(revision 2799)
++++ ChangeLog	(revision 2800)
+@@ -1,5 +1,13 @@
+ 2009-03-08  Kouhei Sutou  <kou@cozmixng.org>
+ 
++	* doc/configuration.rd{,.ja}, binding/ruby/lib/milter/manager.rb:
++	pass ESMTP parameters to stoppers on MAIL FROM and RCPT TO but
++	not implemented yet. They are always {} for now.
++
++	* data/applicable-conditions/authentication.conf,
++	data/applicable-conditions/sendmail-compatible.conf: follow the
++	above change.
++
+ 	* TODO: add:
+ 	- MilterCommandDecoder: support ESMTP parameters on MAIL FROM and
+ 	  RCPT TO.
+Index: binding/ruby/lib/milter/manager.rb
+===================================================================
+--- binding/ruby/lib/milter/manager.rb	(revision 2799)
++++ binding/ruby/lib/milter/manager.rb	(revision 2800)
+@@ -741,7 +741,7 @@
+               context = ChildContext.new(child, children)
+               @envelope_from_stoppers.any? do |stopper|
+                 ConfigurationLoader.guard(false) do
+-                  stopper.call(context, from)
++                  stopper.call(context, from, {})
+                 end
+               end
+             end
+@@ -752,7 +752,7 @@
+               context = ChildContext.new(child, children)
+               @envelope_recipient_stoppers.any? do |stopper|
+                 ConfigurationLoader.guard(false) do
+-                  stopper.call(context, recipient)
++                  stopper.call(context, recipient, {})
+                 end
+               end
+             end
+-----
+* if all alive child milters don't need to receive the
+  command, children do nothing and leader returns response
+  immediately not returning PROGRESS. For example:
+Index: milter/manager/milter-manager-children.c
+===================================================================
+--- milter/manager/milter-manager-children.c	(revision 2280)
++++ milter/manager/milter-manager-children.c	(working copy)
+@@ -2205,15 +2205,13 @@
+     if (!milter_manager_children_check_alive(children))
+         return FALSE;
+ 
++    priv = MILTER_MANAGER_CHILDREN_GET_PRIVATE(children);
++    priv->current_state = MILTER_SERVER_CONTEXT_STATE_DATA;
++
+     if (!milter_manager_children_is_demanding_command(children,
+-                                                      MILTER_COMMAND_DATA)) {
+-        emit_no_demand_command_error(children, MILTER_COMMAND_DATA);
++                                                      MILTER_COMMAND_DATA))
+         return FALSE;
+-    }
+ 
+-    priv = MILTER_MANAGER_CHILDREN_GET_PRIVATE(children);
+-
+-    priv->current_state = MILTER_SERVER_CONTEXT_STATE_DATA;
+     init_command_waiting_child_queue(children, MILTER_COMMAND_DATA);
+ 
+     return send_command_to_first_waiting_child(children, MILTER_COMMAND_DATA);
+Index: milter/manager/milter-manager-leader.c
+===================================================================
+--- milter/manager/milter-manager-leader.c	(revision 2280)
++++ milter/manager/milter-manager-leader.c	(working copy)
+@@ -783,10 +783,12 @@
+     if (!priv->children)
+         return MILTER_STATUS_NOT_CHANGE;
+ 
+-    if (milter_manager_children_data(priv->children))
++    if (milter_manager_children_data(priv->children)) {
+         return MILTER_STATUS_PROGRESS;
+-    else
+-        return MILTER_STATUS_NOT_CHANGE; /* FIXME: reject or accept */
++    } else {
++        priv->state = next_state(leader, priv->state);
++        return MILTER_STATUS_NOT_CHANGE;
++    }
+ }
+ 
+ MilterStatus
+* bug? milter-manager sometimes doesn't finish child milter?
+* change process name of forked process launcher.
+* send quit command to launcher on manager dispose.
+* use chroot
+* add --disable-milter-manager configure option.
+* add --disable-ruby configure option.
+* tool/milter-test-server:
+  * support --macro=CONTEXT:NAME:VALUE
+  * support extracting multiple {reverse,forward}-paths from
+    envelope-from and envelope-recipient address in --mail-file.
+* tool/milter-test-client:
+  * support outputting reply information.
+  * support customizing reply by command line option.
+* add default applicable conditions:
+  ideas:
+    * S25R
+    * DNSBL: http://spam-champuru.livedoor.com/dnsbl/
+    * remote network (local network may not be a spammer)
+      * getifaddrs(3) can be used to determine local network.
+    * detected as spam (X-Spam-Flag:, X-Bogosity:)
+    * detected as virus (X-Virus-Status:)
+    * mailing list? (X-ML-Name)
+* graphs:
+  * child milters alive and dead.
+    (This can not be drawn by rrdtool since rrdtool db does not handle variable items)
+  * ...
+
+* performance:
+  * at least:
+    * 50_000 mails/day (0.58 mails/sec)
+      * 500 users
+      * a user receives 100 mails/day
+    * CPU: ???
+    * Memory: ???
+    * child milters:
+      * milter-greylist
+      * clamav-milter
+      * spamass-milter
+      * sid-milter
+      * dkim-milter
+      * dnsbl-milter
+
+  * FYI:
+    * BBSec Sentrion MP 4/8(2008/11)
+      http://www.bbsec.co.jp/products/Sentrion_MP_48.html
+      * 1_500_000 mails/day (17.36 mails/sec)
+      * CPU: Quad Core Intel Xeon E5472,12M Cache,3.0GHz x 2 1600MHz FSB
+      * Memory: 8GB
+
+    * Sohpos Email Appliance (2008/11)
+      http://sophos.com/sophos/docs/eng/factshts/sophos-email-appliances-dsus.pdf
+      http://www.sophos.co.jp/sophos/docs/jpn/factshts/sophos-email-appliances-dsjp.pdf
+     * ES1000:
+       * 20_000 mails/hour (5.56 mails/sec)
+       * CPU: Intel Celeron D 2.93GHz
+       * Memory: 1GB
+     * ES4000:
+       * 80_000 mails/hour (22.22 mails/sec)
+       * CPU: Intel Xeon 64-bit 3.2 GHz x 2
+       * Memory: 2GB
+    * HDE Anti-Spam for Gateway (2008/12)
+      http://www.hde.co.jp/has/require/
+      * 5_000 mails/hour (1.39 mails/sec)
+      * CPU: Intel Pentium Xeon 2GHz
+      * Memory: 2GB
+* fix FIXME in data/applicable-conditions/remote-network.conf
+  * add local network option?
+* milter-manager can be ran as normal user if milter-manager process is
+  invoked as root user. just only control connection handler and child
+  milter process invoker can be ran as root user.
+* milter_manager_egg_to_xml_string(): add user name, timeouts and
+  command options (<- needed?)
+* milter-manager supports macros requests.
+* milter-client-context should also close writer on timeout.
+* support MAIL FROM/RCPT TO additional info parsing.
+  (MilterClientContext::envelope-from, MilterClientContext::envelope-recipient)
+  cited from SMTP (RFC 2821) 4.1.1.2 MAIL (MAIL):
+       "MAIL FROM:" ("<>" / Reverse-Path)
+                    [SP Mail-parameters] CRLF
+
+  cited from SMTP (RFC 2821) 4.1.1.3 RECIPIENT (RCPT):
+       "RCPT TO:" ("<Postmaster@" domain ">" / "<Postmaster>" / Forward-Path)
+			[SP Rcpt-parameters] CRLF
+
+  cited from SMTP (RFC 2821) 4.1.2 Command Argument Syntax:
+       Reverse-path = Path
+       Forward-path = Path
+       Path = "<" [ A-d-l ":" ] Mailbox ">"
+       A-d-l = At-domain *( "," A-d-l )
+             ; Note that this form, the so-called "source route",
+             ; MUST BE accepted, SHOULD NOT be generated, and SHOULD be
+             ; ignored.
+       At-domain = "@" domain
+       Mail-parameters = esmtp-param *(SP esmtp-param)
+       Rcpt-parameters = esmtp-param *(SP esmtp-param)
+       esmtp-param     = esmtp-keyword ["=" esmtp-value]
+       esmtp-keyword   = (ALPHA / DIGIT) *(ALPHA / DIGIT / "-")
+       esmtp-value     = 1*(%d33-60 / %d62-127)
+	     ; any CHAR excluding "=", SP, and control characters
+       Keyword  = Ldh-str
+       Argument = Atom
+       Domain = (sub-domain 1*("." sub-domain)) / address-literal
+       sub-domain = Let-dig [Ldh-str]
+       address-literal = "[" IPv4-address-literal /
+			     IPv6-address-literal /
+			     General-address-literal "]"
+	     ; See section 4.1.3
+       Mailbox = Local-part "@" Domain
+       Local-part = Dot-string / Quoted-string
+	     ; MAY be case-sensitive
+       Dot-string = Atom *("." Atom)
+       Atom = 1*atext
+       Quoted-string = DQUOTE *qcontent DQUOTE
+       String = Atom / Quoted-string
+
+  cited from SMTP (RFC 2821) 4.1.3 Address Literals:
+       IPv4-address-literal = Snum 3("." Snum)
+       IPv6-address-literal = "IPv6:" IPv6-addr
+       General-address-literal = Standardized-tag ":" 1*dcontent
+       Standardized-tag = Ldh-str
+             ; MUST be specified in a standards-track RFC
+             ; and registered with IANA
+       Snum = 1*3DIGIT  ; representing a decimal integer
+             ; value in the range 0 through 255
+       Let-dig = ALPHA / DIGIT
+       Ldh-str = *( ALPHA / DIGIT / "-" ) Let-dig
+       IPv6-addr = IPv6-full / IPv6-comp / IPv6v4-full / IPv6v4-comp
+       IPv6-hex  = 1*4HEXDIG
+       IPv6-full = IPv6-hex 7(":" IPv6-hex)
+       IPv6-comp = [IPv6-hex *5(":" IPv6-hex)] "::" [IPv6-hex *5(":"
+		  IPv6-hex)]
+	     ; The "::" represents at least 2 16-bit groups of zeros
+	     ; No more than 6 groups in addition to the "::" may be
+	     ; present
+       IPv6v4-full = IPv6-hex 5(":" IPv6-hex) ":" IPv4-address-literal
+       IPv6v4-comp = [IPv6-hex *3(":" IPv6-hex)] "::"
+		    [IPv6-hex *3(":" IPv6-hex) ":"] IPv4-address-literal
+	     ; The "::" represents at least 2 16-bit groups of zeros
+	     ; No more than 4 groups in addition to the "::" and
+	     ; IPv4-address-literal may be present
+
+   cited from Internet Message Format (RFC 2822) 3.2.3. Folding white space and comments:
+	FWS             =       ([*WSP CRLF] 1*WSP) /   ; Folding white space
+				obs-FWS
+	ctext           =       NO-WS-CTL /     ; Non white space controls
+				%d33-39 /       ; The rest of the US-ASCII
+				%d42-91 /       ;  characters not including "(",
+				%d93-126        ;  ")", or "\"
+	ccontent        =       ctext / quoted-pair / comment
+	comment         =       "(" *([FWS] ccontent) [FWS] ")"
+	CFWS            =       *([FWS] comment) (([FWS] comment) / FWS)
+
+   cited from Internet Message Format (RFC 2822) 3.2.4. Atom:
+	atext           =       ALPHA / DIGIT / ; Any character except controls,
+				"!" / "#" /     ;  SP, and specials.
+				"$" / "%" /     ;  Used for atoms
+				"&" / "'" /
+				"*" / "+" /
+				"-" / "/" /
+				"=" / "?" /
+				"^" / "_" /
+				"`" / "{" /
+				"|" / "}" /
+				"~"
+	atom            =       [CFWS] 1*atext [CFWS]
+	dot-atom        =       [CFWS] dot-atom-text [CFWS]
+	dot-atom-text   =       1*atext *("." 1*atext)
+
+   cited from Internet Message Format (RFC 2822) 3.2.1. Primitive Tokens:
+        text            =       %d1-9 /         ; Characters excluding CR and LF
+                                %d11 /
+                                %d12 /
+                                %d14-127 /
+                                obs-text
+
+   cited from Internet Message Format (RFC 2822) 3.2.2. Quoted characters:
+        quoted-pair     =       ("\" text) / obs-qp
+
+   cited from Internet Message Format (RFC 2822) 3.2.5. Quoted strings:
+	qtext           =       NO-WS-CTL /     ; Non white space controls
+				%d33 /          ; The rest of the US-ASCII
+				%d35-91 /       ;  characters not including "\"
+				%d93-126        ;  or the quote character
+	qcontent        =       qtext / quoted-pair
+	quoted-string   =       [CFWS]
+				DQUOTE *([FWS] qcontent) [FWS] DQUOTE
+				[CFWS]
+
+   cited from Internet Message Format (RFC 2822) 4.1. Miscellaneous obsolete tokens:
+	obs-qp          =       "\" (%d0-127)
+	obs-text        =       *LF *CR *(obs-char *LF *CR)
+
+	obs-char        =       %d0-9 / %d11 /          ; %d0-127 except CR and
+				%d12 / %d14-127         ;  LF
+
+
+* milter-client-context supports MilterStepFlags.
+* check client context's modify operations (e.g. milter_client_add_header())
+  are called on end-of-message state.

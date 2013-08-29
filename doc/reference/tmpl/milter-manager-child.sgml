@@ -1,0 +1,104 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerChild
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_CHILD_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MILTER_MANAGER_CHILD ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM MilterManagerChildError ##### -->
+<para>
+
+</para>
+
+@MILTER_MANAGER_CHILD_ERROR_BAD_COMMAND_STRING: 
+@MILTER_MANAGER_CHILD_ERROR_START_FAILURE: 
+@MILTER_MANAGER_CHILD_ERROR_INVALID_USER_NAME: 
+@MILTER_MANAGER_CHILD_ERROR_NO_PRIVILEGE_MODE: 
+@MILTER_MANAGER_CHILD_ERROR_MILTER_TERMINATED_BY_SIGNAL: 
+@MILTER_MANAGER_CHILD_ERROR_MILTER_EXIT: 
+
+<!-- ##### STRUCT MilterManagerChild ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_child_error_quark ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_child_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_child_new_va_list ##### -->
+<para>
+
+</para>
+
+@first_name: 
+@args: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_child_get_command_line_string ##### -->
+<para>
+
+</para>
+
+@milter: 
+@Returns: 
+
+
+<!-- ##### FUNCTION milter_manager_child_get_user_name ##### -->
+<para>
+
+</para>
+
+@milter: 
+@Returns: 
+
+

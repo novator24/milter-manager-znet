@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="upgrade-options-on-freebsd">
+<refmeta>
+  <refentrytitle role='top_of_page' id='upgrade-options-on-freebsd.top_of_page'>FreeBSDで更新（任意）</refentrytitle>
+  <refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>FreeBSDで更新（任意）</refname>
+  <refpurpose>FreeBSDでのmilter manager関連ソフトウェアの更新方法</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>このドキュメントについて</title>
+  <para>
+  FreeBSDに特化したmilter manager関連ソフトウェアの更新方法につ いて説明します。新規にインストールする方法は
+  <link linkend='install-options-to-freebsd'>FreeBSDへインス トール（任意）</link>
+  を見てくださ い。
+</para>
+  <para>
+  まず、milter manager本体を更新する必要があるので、まだの場合 は
+  <link linkend='upgrade-on-freebsd'>FreeBSDで更新</link>
+  を見てください。
+</para>
+</refsect1>
+
+<refsect1>
+  <title>milter-manager-log-analyzerの更新</title>
+  <para>milter managerを上書きインストールするだけなので、追加の作業 は必要ありません。</para>
+</refsect1>
+
+<refsect1>
+  <title>まとめ</title>
+  <para>milter manager本体同様にmilter manager関連ソフトウェアも簡単 に更新することができます。新しいバージョンで行われている様々 な改善を利用したい場合は更新を検討してください。</para>
+</refsect1>
+</refentry>

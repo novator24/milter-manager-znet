@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry 
+  PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="log-list">
+<refmeta>
+  <refentrytitle role='top_of_page' id='log-list.top_of_page'>Log list</refentrytitle>
+  <refmiscinfo>MILTER-MANAGER Library</refmiscinfo>
+</refmeta>
+<refnamediv>
+  <refname>Log list</refname>
+  <refpurpose>List of logs by milter manager</refpurpose>
+</refnamediv>
+<refsect1>
+  <title>About this document</title>
+  <para>This document describes about logs by milter manager.</para>
+  <para>TODO</para>
+</refsect1>
+</refentry>

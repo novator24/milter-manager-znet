@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>milter-test-client</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter managerリファレンスマニュアル">
+<link rel="up" href="commands.html" title="コマンド">
+<link rel="prev" href="milter-test-server.html" title="milter-test-server">
+<link rel="next" href="milter-performance-check.html" title="milter-performance-check">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="milter-test-server.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="commands.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter managerリファレンスマニュアル</th>
+<td><a accesskey="n" href="milter-performance-check.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="milter-test-client"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="milter-test-client.top_of_page"></a>milter-test-client</span></h2>
+<p>milter-test-client — milter側のmilterプロトコルを実装したプログラム</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp6868352"></a><h2>名前</h2>
+<p>milter-test-client - milter側のmilterプロトコルを実装したプログラム</p>
+</div>
+<div class="refsect1">
+<a name="idp8471840"></a><h2>書式</h2>
+<p>
+  <code class="code">milter-test-client</code>
+   [
+  <span class="emphasis"><em>オプション ...</em></span>
+  ]
+</p>
+</div>
+<div class="refsect1">
+<a name="idp7980768"></a><h2>説明</h2>
+<p>milter-test-clientはMTA側から渡ってきた情報を表示するだけの milterです。マクロも含めてMTA側から渡っている情報を表示する ので、MTA側のmilterの設定を確認するために利用できます。</p>
+<p>Postfixのアーカイブの中にも同様のツールがあります。 src/milter/内にあるtest-milter.cがそれで、Postfixのmilterの実 装のテストにも使っているようです。ただし、test-milterはマクロ までは表示してくれません。もし、マクロを利用しているmilterが 期待通りに動かない場合の問題調査を行うのであれば、 milter-test-clientが役立つでしょう。</p>
+</div>
+<div class="refsect1">
+<a name="idp5716480"></a><h2>オプション</h2>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--help"></a>--help</span></p></td>
+<td><p>利用できるオプションを表示して終了します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--connection-spec"></a>--connection-spec=SPEC</span></p></td>
+<td>
+<p>接続を待ち受けるソケットを指定します。SPECの書式は次のう ちのどれかです。</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:パス</p></li>
+<li class="listitem"><p>inet:ポート番号</p></li>
+<li class="listitem"><p>inet:ポート番号@ホスト名</p></li>
+<li class="listitem"><p>inet:ポート番号@[アドレス]</p></li>
+<li class="listitem"><p>inet6:ポート番号</p></li>
+<li class="listitem"><p>inet6:ポート番号@ホスト名</p></li>
+<li class="listitem"><p>inet6:ポート番号@[アドレス]</p></li>
+</ul></div>
+<p>例:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>unix:/tmp/milter-test-client.sock</p></li>
+<li class="listitem"><p>inet:10025</p></li>
+<li class="listitem"><p>inet:10025@localhost</p></li>
+<li class="listitem"><p>inet:10025@[127.0.0.1]</p></li>
+<li class="listitem"><p>inet6:10025</p></li>
+<li class="listitem"><p>inet6:10025@localhost</p></li>
+<li class="listitem"><p>inet6:10025@[::1]</p></li>
+</ul></div>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--verbose"></a>--verbose</span></p></td>
+<td>
+<p>実行時のログをより詳細に出力します。</p>
+<p>「milter_log_level=all」というように環境変数を設定している 場合と同じ効果があります。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--syslog"></a>--syslog</span></p></td>
+<td><p>Syslogにもログを出力します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--no-report-request"></a>--no-report-request</span></p></td>
+<td><p>MTAから受け取った情報を表示しません。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--report-memory-profile"></a>--report-memory-profile</span></p></td>
+<td>
+<p>milterセッションが終了する毎にメモリ使用量を表示します。</p>
+<p>MILTER_MEMORY_PROFILE環境変数をyesに設定するとより詳細な 情報を表示します。</p>
+<p>例:</p>
+<pre class="programlisting">% MILTER_MEMORY_PROFILE=yes milter-test-client -s inet:10025</pre>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--daemon"></a>--daemon</span></p></td>
+<td><p>デーモンプロセスとして起動します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--user"></a>--user=USER</span></p></td>
+<td><p>実効ユーザをUSERとします。root権限が必要です。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--group"></a>--group=GROUP</span></p></td>
+<td><p>実効グループをGROUPとします。root権限が必要です。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--unix-socket-group"></a>--unix-socket-group=GROUP</span></p></td>
+<td><p>SPECで「unix:パス」を指定したときにUNIXドメインソケットの グループを変更します。</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--n-workers"></a>--n-workers=N_WORKERS</span></p></td>
+<td>
+<p>
+  メールを処理するプロセスを
+  <code class="varname">N_WORKERS</code>
+  個起動します。 指定できる値は0以上、1000以下です。0のときにワーカープロセスを使用し ません。
+</p>
+<p>
+  <span class="emphasis"><em>注意: この項目は実験的な機能扱いです。</em></span>
+  
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--event-loop-backend"></a>--event-loop-backend=BACKEND</span></p></td>
+<td>
+<p>
+  イベントループのバックエンドを指定します。
+  <code class="varname">BACKEND</code>
+  に指定できる値は、
+  <span class="command"><strong>glib</strong></span>
+  か
+  <span class="command"><strong>libev</strong></span>
+  のいずれかです。
+</p>
+<p>
+  <span class="emphasis"><em>注意: この項目は実験的な機能扱いです。</em></span>
+  
+</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--packet-buffer-size"></a>--packet-buffer-size=SIZE</span></p></td>
+<td>
+<p>
+  end-of-message時に送信パケットをバッファリングするための バッファサイズを指定します。パケットの量が
+  <code class="varname">SIZE</code>
+  バイ ト以上になるとまとめてパケットを送信します。0を指定すると バッファリングしません。
+</p>
+<p>既定値は0KBで、バッファリングしません。</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="milter-test-client.--version"></a>--version</span></p></td>
+<td><p>バージョンを表示して終了します。</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="idp6180928"></a><h2>終了ステータス</h2>
+<p>MTAからの接続を受け付ける状態になった場合は0になり、そうでな い場合は0以外になります。milter-test-clientはソケットの書式が 間違っている場合か、ソケットまわりの問題が起こると接続を受け 付ける状態になれません。そけっとまわりの問題とは、例えば、ポー トがすでに使用されているとか、UNIXドメインソケットを作成する パーミッションがない、などです。</p>
+</div>
+<div class="refsect1">
+<a name="idp6182752"></a><h2>例</h2>
+<p>以下の例では、10025番ポートでMTAからの接続を待つmilterを起動 します。</p>
+<pre class="programlisting">% milter-test-client -s inet:10025</pre>
+</div>
+<div class="refsect1">
+<a name="idp6184864"></a><h2>関連項目</h2>
+<p>
+  <a class="link" href="milter-test-server.html" title="milter-test-server">milter-test-server.rd.ja</a>
+  (1),
+  <a class="link" href="milter-performance-check.html" title="milter-performance-check">milter-performance-check.rd.ja</a>
+  (1)
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

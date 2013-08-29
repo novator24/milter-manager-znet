@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-control-command-decoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-control-command-decoder.top_of_page">MilterManagerControlCommandDecoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>MilterManagerControlCommandDecoder</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-control-command-decoder.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-DECODER-ERROR:CAPS">MILTER_MANAGER_CONTROL_COMMAND_DECODER_ERROR</link>
+#define             <link linkend="MILTER-MANAGER-CONTROL-COMMAND-DECODER:CAPS">MILTER_MANAGER_CONTROL_COMMAND_DECODER</link>(obj)
+enum                <link linkend="MilterManagerControlCommandDecoderError">MilterManagerControlCommandDecoderError</link>;
+struct              <link linkend="MilterManagerControlCommandDecoder">MilterManagerControlCommandDecoder</link>;
+<link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              <link linkend="milter-manager-control-command-decoder-error-quark">milter_manager_control_command_decoder_error_quark</link>
+                                                        (<parameter><type>void</type></parameter>);
+<link linkend="MilterDecoder"><returnvalue>MilterDecoder</returnvalue></link> *     <link linkend="milter-manager-control-command-decoder-new">milter_manager_control_command_decoder_new</link>
+                                                        (<parameter><type>void</type></parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-control-command-decoder.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-control-command-decoder.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-DECODER-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_DECODER_ERROR</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-DECODER-ERROR:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_DECODER_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_DECODER_ERROR           (milter_manager_control_command_decoder_error_quark())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-CONTROL-COMMAND-DECODER:CAPS" role="macro">
+<title>MILTER_MANAGER_CONTROL_COMMAND_DECODER()</title>
+<indexterm zone="MILTER-MANAGER-CONTROL-COMMAND-DECODER:CAPS"><primary>MILTER_MANAGER_CONTROL_COMMAND_DECODER</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_CONTROL_COMMAND_DECODER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), MILTER_TYPE_MANAGER_CONTROL_COMMAND_DECODER, MilterManagerControlCommandDecoder))
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerControlCommandDecoderError" role="enum">
+<title>enum MilterManagerControlCommandDecoderError</title>
+<indexterm zone="MilterManagerControlCommandDecoderError"><primary>MilterManagerControlCommandDecoderError</primary></indexterm>
+<programlisting>typedef enum {
+    MILTER_MANAGER_CONTROL_COMMAND_DECODER_ERROR_UNEXPECTED_COMMAND
+} MilterManagerControlCommandDecoderError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MilterManagerControlCommandDecoder" role="struct">
+<title>struct MilterManagerControlCommandDecoder</title>
+<indexterm zone="MilterManagerControlCommandDecoder"><primary>MilterManagerControlCommandDecoder</primary></indexterm>
+<programlisting>struct MilterManagerControlCommandDecoder {
+    MilterDecoder object;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-command-decoder-error-quark" role="function">
+<title>milter_manager_control_command_decoder_error_quark ()</title>
+<indexterm zone="milter-manager-control-command-decoder-error-quark"><primary>milter_manager_control_command_decoder_error_quark</primary></indexterm>
+<programlisting><link linkend="GQuark"><returnvalue>GQuark</returnvalue></link>              milter_manager_control_command_decoder_error_quark
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="milter-manager-control-command-decoder-new" role="function">
+<title>milter_manager_control_command_decoder_new ()</title>
+<indexterm zone="milter-manager-control-command-decoder-new"><primary>milter_manager_control_command_decoder_new</primary></indexterm>
+<programlisting><link linkend="MilterDecoder"><returnvalue>MilterDecoder</returnvalue></link> *     milter_manager_control_command_decoder_new
+                                                        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>

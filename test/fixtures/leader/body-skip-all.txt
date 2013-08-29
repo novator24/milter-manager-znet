@@ -1,0 +1,45 @@
+[scenario]
+clients=client10026;client10027
+import=end-of-header.txt
+actions=body-skip-first;body-skip-second;end-of-message
+
+[client10026]
+port=10026
+arguments=--action;skip;--body-regexp;First
+
+[client10027]
+port=10027
+arguments=--action;skip;--body-regexp;Second
+
+[body-skip-first]
+command=body
+
+chunk=First skip message
+
+response=body
+n_received=1
+status=continue
+
+chunks=First skip message;;
+
+[body-skip-second]
+command=body
+
+chunk=Second skip message
+
+response=body
+n_received=0
+status=continue
+
+chunks=;;
+
+[end-of-message]
+command=end-of-message
+
+response=end-of-message
+n_received=2
+status=continue
+
+chunks=;First skip messageSecond skip message
+end_of_message_chunks=;;
+headers=From:kou+sender@example.com

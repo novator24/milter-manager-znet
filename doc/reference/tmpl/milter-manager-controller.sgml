@@ -1,0 +1,49 @@
+<!-- ##### SECTION Title ##### -->
+MilterManagerController
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MILTER_MANAGER_CONTROLLER ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### STRUCT MilterManagerController ##### -->
+<para>
+
+</para>
+
+@object: 
+
+<!-- ##### FUNCTION milter_manager_controller_new ##### -->
+<para>
+
+</para>
+
+@manager: 
+@event_loop: 
+@Returns: 
+
+

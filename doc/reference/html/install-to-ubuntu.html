@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Install to Ubuntu</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="milter manager Reference Manual">
+<link rel="up" href="install-to.html" title="Install milter manager to your platform">
+<link rel="prev" href="install-options-to-debian.html" title="Install to Debian (optional)">
+<link rel="next" href="install-options-to-ubuntu.html" title="Install to Ubuntu (optional)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="install-options-to-debian.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="install-to.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">milter manager Reference Manual</th>
+<td><a accesskey="n" href="install-options-to-ubuntu.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="install-to-ubuntu"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="install-to-ubuntu.top_of_page"></a>Install to Ubuntu</span></h2>
+<p>Install to Ubuntu — How to install milter manager to Ubuntu Linux</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="idp5468672"></a><h2>About this document</h2>
+<p>
+  This document describes how to install milter manager to Ubuntu Linux. See 
+  <a class="link" href="install.html" title="Install">Install</a>
+   for general install information.
+</p>
+</div>
+<div class="refsect1">
+<a name="idp7135088"></a><h2>Install packages</h2>
+<p>We provide milter manager deb packages for the following distributions. You put the following content to /etc/apt/sources.list.d/milter-manager.list.</p>
+<p>You also enable the official backports repository to detect the latest viruses by the latest ClamAV.</p>
+<div class="refsect2">
+<a name="idp6659104"></a><h3>For Lucid Lynx</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ lucid universe</pre>
+<p>If you don't enable the official backport repository, you need to create /etc/apt/sources.list.d/backports.list with the following content:</p>
+<pre class="programlisting">deb http://archive.ubuntu.com/ubuntu lucid-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp7494304"></a><h3>For Precise Pangolin</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ precise universe</pre>
+<p>If you don't enable the official backport repository, you need to create /etc/apt/sources.list.d/backports.list with the following content:</p>
+<pre class="programlisting">deb http://archive.ubuntu.com/ubuntu precise-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp1479152"></a><h3>For Quantal Quetzal</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ quantal universe</pre>
+<p>If you don't enable the official backport repository, you need to create /etc/apt/sources.list.d/backports.list with the following content:</p>
+<pre class="programlisting">deb http://archive.ubuntu.com/ubuntu quantal-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5492368"></a><h3>For Raring Ringtail</h3>
+<p>/etc/apt/sources.list.d/milter-manager.list:</p>
+<pre class="programlisting">deb http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe
+deb-src http://downloads.sourceforge.net/project/milter-manager/ubuntu/stable/ raring universe</pre>
+<p>If you don't enable the official backport repository, you need to create /etc/apt/sources.list.d/backports.list with the following content:</p>
+<pre class="programlisting">deb http://archive.ubuntu.com/ubuntu raring-backports main universe</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp5495840"></a><h3>Install</h3>
+<p>We register the key of the package repository:</p>
+<pre class="programlisting">% sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1BD22CD1</pre>
+<p>We install milter manager package:</p>
+<pre class="programlisting">% sudo apt-get update
+% sudo apt-get -V -y install milter-manager</pre>
+<p>We use Postfix as MTA:</p>
+<pre class="programlisting">% sudo apt-get -V -y install postfix</pre>
+<p>We use spamass-milter, clamav-milter and milter-greylist as milters:</p>
+<pre class="programlisting">% sudo apt-get -V -y install spamass-milter clamav-milter milter-greylist</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp7862736"></a><h2>Configuration</h2>
+<p>Here is a basic configuration policy.</p>
+<p>We use UNIX domain socket for accepting connection from MTA because security and speed.</p>
+<p>We set read/write permission for 'postfix' group to UNIX domain socket because existing milter packages' configuration can be used.</p>
+<p>
+  milter-greylist should be applied only if
+  <a class="ulink" href="http://gabacho.reto.jp/en/anti-spam/" target="_top">S25R</a>
+  condition is matched to reduce needless delivery delay. But the configuration is automatically done by milter-manager. We need to do nothing for it.
+</p>
+<div class="refsect2">
+<a name="idp7866208"></a><h3>Configure spamass-milter</h3>
+<p>At first, we configure spamd.</p>
+<p>We add the following configuration to /etc/spamassassin/local.cf. This configuration is for adding headers only if spam detected.</p>
+<pre class="programlisting">report_safe 0
+
+remove_header ham Status
+remove_header ham Level</pre>
+<p>We change /etc/default/spamassassin like the following to enable spamd:</p>
+<p>Before:</p>
+<pre class="programlisting">ENABLED=0</pre>
+<p>After:</p>
+<pre class="programlisting">ENABLED=1</pre>
+<p>spamd should be started:</p>
+<pre class="programlisting">% sudo /etc/init.d/spamassassin start</pre>
+<p>There are no changes for spamass-milter's configuration.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp6851136"></a><h3>Configure clamav-milter</h3>
+<p>We change /etc/default/clamav-milter to do the followings:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Virus check is done by clamd not clamav-milter.</p></li>
+<li class="listitem"><p>'postfix' group can communicate to clamav-milter.</p></li>
+</ul></div>
+<p>Before:</p>
+<pre class="programlisting">#SOCKET_RWGROUP=postfix</pre>
+<p>After:</p>
+<pre class="programlisting">SOCKET_RWGROUP=postfix</pre>
+<p>clamav-milter should be restarted:</p>
+<pre class="programlisting">% sudo /etc/init.d/clamav-milter restart</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp9505680"></a><h3>Configure milter-greylist</h3>
+<p>We change /etc/milter-greylist/greylist.conf for the following configurations:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>use the leading 24bits for IP address match to avoid Greylist adverse effect for sender uses some MTA case.</p></li>
+<li class="listitem"><p>decrease retransmit check time to 10 minutes from 30 minutes (default value) to avoid Greylist adverse effect.</p></li>
+<li class="listitem"><p>increase auto whitelist period to a week from 1 day (default value) to avoid Greylist adverse effect.</p></li>
+<li class="listitem"><p>use Greylist by default.</p></li>
+</ul></div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>The configuration relaxes Greylist check to avoid Greylist
+adverse effect. It increases received spam mails but we
+should give priority to avoid false positive rather than
+false negative. We should not consider that we blocks all
+spam mails by Greylist. We can blocks spam mails that
+isn't blocked by Greylist by other anti-spam technique
+such as SpamAssassin. milter manager helps constructing
+mail system that combines some anti-spam techniques.</div>
+<p>Before:</p>
+<pre class="programlisting">racl whitelist default</pre>
+<p>After:</p>
+<pre class="programlisting">subnetmatch /24
+greylist 10m
+autowhite 1w
+racl greylist default</pre>
+<p>We change /etc/default/milter-greylist to enable milter-greylist. milter-greylist uses IPv4 socket because milter-gresylist's run script doesn't support changing socket's group permission:</p>
+<p>Before:</p>
+<pre class="programlisting">ENABLED=0</pre>
+<p>After:</p>
+<pre class="programlisting">ENABLED=1
+SOCKET="inet:11125@[127.0.0.1]"</pre>
+<p>milter-greylist should be started:</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-greylist start</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp10785456"></a><h3>Configure milter-manager</h3>
+<p>milter-manager detects milters that installed in system. We can confirm spamass-milter, clamav-milter and milter-greylist are detected:</p>
+<pre class="programlisting">% sudo /usr/sbin/milter-manager -u milter-manager --show-config</pre>
+<p>The following output shows milters are detected:</p>
+<pre class="programlisting">...
+define_milter("milter-greylist") do |milter|
+  milter.connection_spec = "inet:11125@[127.0.0.1]"
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter("clamav-milter") do |milter|
+  milter.connection_spec = "unix:/var/run/clamav/clamav-milter.ctl"
+  ...
+  milter.enabled = true
+  ...
+end
+..
+define_milter("spamass-milter") do |milter|
+  milter.connection_spec = "unix:/var/spool/postfix/spamass/spamass.sock"
+  ...
+  milter.enabled = true
+  ...
+end
+..</pre>
+<p>
+  We should confirm that milter's name, socket path and 'enabled = true'. If the values are unexpected, we need to change /etc/milter-manager/milter-manager.conf. See 
+  <a class="link" href="configuration.html" title="Configuration">Configuration</a>
+   for details of milter-manager.conf.
+</p>
+<p>But if we can, we want to use milter manager without editing miter-manager.conf. If you report your environment to the milter manager project, the milter manager project may improve detect method.</p>
+<p>We change /etc/default/milter-manager to work with Postfix:</p>
+<p>Before:</p>
+<pre class="programlisting"># For postfix, you might want these settings:
+# SOCKET_GROUP=postfix
+# CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</pre>
+<p>After:</p>
+<pre class="programlisting"># For postfix, you might want these settings:
+SOCKET_GROUP=postfix
+CONNECTION_SPEC=unix:/var/spool/postfix/milter-manager/milter-manager.sock</pre>
+<p>We add milter-manager user to postfix group:</p>
+<pre class="programlisting">% sudo adduser milter-manager postfix</pre>
+<p>milter-manager's configuration is completed. We start milter-manager:</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-manager restart</pre>
+<p>/usr/bin/milter-test-server is usuful to confirm milter-manager was ran:</p>
+<pre class="programlisting">% sudo -u postfix milter-test-server -s unix:/var/spool/postfix/milter-manager/milter-manager.sock</pre>
+<p>Here is a sample success output:</p>
+<pre class="programlisting">status: accept
+elapsed-time: 0.128 seconds</pre>
+<p>If milter-manager fails to run, the following message will be shown:</p>
+<pre class="programlisting">Failed to connect to unix:/var/spool/postfix/milter-manager/milter-manager.sock: No such file or directory</pre>
+<p>In this case, we can use log to solve the problem. milter-manager is verbosily if --verbose option is specified. milter-manager outputs logs to standard output if milter-manager isn't daemon process.</p>
+<p>We can add the following configuration to /etc/default/milter-manager to output verbose log to standard output:</p>
+<pre class="programlisting">OPTION_ARGS="--verbose --no-daemon"</pre>
+<p>We start milter-manager again:</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-manager restart</pre>
+<p>Some logs are output if there is a problem. Running milter-manager can be exitted by Ctrl+c.</p>
+<p>OPTION_ARGS configuration in /etc/default/milter-manager should be commented out after the problem is solved to run milter-manager as daemon process. And we should restart milter-manager.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="idp10804528"></a><h3>Configure Postfix</h3>
+<p>We add the following milter configuration to /etc/postfix/main.cf.</p>
+<pre class="programlisting">milter_default_action = accept
+milter_protocol = 6
+milter_mail_macros = {auth_author} {auth_type} {auth_authen}</pre>
+<p>Here are descriptions of the configuration.</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a name="install-to-ubuntu.milter-protocol"></a>milter_protocol = 6</span></p></td>
+<td><p>Postfix uses milter protocol version 6.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-ubuntu.milter-default-action"></a>milter_default_action = accept</span></p></td>
+<td>
+<p>Postfix accepts a mail if Postfix can't connect to milter. It's useful configuration for not stopping mail server function if milter has some problems. But it causes some problems that spam mails and virus mails may be delivered until milter is recovered.</p>
+<p>If you can recover milter, 'tempfail' will be better choice rather than 'accept'. Default is 'tempfail'.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a name="install-to-ubuntu.milter-mail-macros"></a>milter_mail_macros = {auth_author} {auth_type} {auth_authen}</span></p></td>
+<td><p>Postfix passes SMTP Auth related infomation to milter. Some milters like milter-greylist use it.</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>We need to register milter-manager to Postfix. It's important that spamass-milter, clamav-milter, milter-greylist aren't needed to be registered because they are used via milter-manager.</p>
+<p>We need to add the following configuration to /etc/postfix/main.cf. Note that Postfix chrooted to /var/spool/postfix/.</p>
+<pre class="programlisting">smtpd_milters = unix:/milter-manager/milter-manager.sock</pre>
+<p>We reload Postfix configuration:</p>
+<pre class="programlisting">% sudo /etc/init.d/postfix reload</pre>
+<p>Postfix's milter configuration is completed.</p>
+<p>milter-manager logs to syslog. If milter-manager works well, some logs can be showen in /var/log/mail.info. We need to sent a test mail for confirming.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="idp10819216"></a><h2>Conclusion</h2>
+<p>There are many configurations to work milter and Postfix together. They can be reduced by introducing milter-manager.</p>
+<p>Without milter-manager, we need to specify sockets of spamass-milter, clamav-milter and milter-greylist to smtpd_milters. With milter-manager, we doesn't need to specify sockets of them, just specify a socket of milter-manager. They are detected automatically. We doesn't need to take care some small mistakes like typo.</p>
+<p>milter-manager also supports ENABELD configuration used in /etc/default/milter-greylist. If we disable a milter, we use the following steps:</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-greylist stop
+% sudo vim /etc/default/milter-greylist # ENABLED=1 =&gt; ENABLED=0</pre>
+<p>We need to reload milter-manager after we disable a milter.</p>
+<pre class="programlisting">% sudo /etc/init.d/milter-manager reload</pre>
+<p>milter-manager detects a milter is disabled and doesn't use it. We doesn't need to change Postfix's main.cf.</p>
+<p>We can reduce maintainance cost by introducing milter-manager if we use some milters on Ubuntu.</p>
+<p>
+  milter manager also provides tools to help operation. Installing them is optional but we can reduce operation cost too. If we also install them, we will go to
+  <a class="link" href="install-options-to-ubuntu.html" title="Install to Ubuntu (optional)">Install to Ubuntu (optional)</a>
+  .
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

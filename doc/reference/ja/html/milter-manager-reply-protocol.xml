@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY version SYSTEM "version.xml">
+]>
+<refentry id="milter-manager-milter-manager-reply-protocol">
+<refmeta>
+<refentrytitle role="top_of_page" id="milter-manager-milter-manager-reply-protocol.top_of_page">milter-manager-reply-protocol</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>milter managerライブラリ</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>milter-manager-reply-protocol</refname>
+<refpurpose/>
+</refnamediv>
+
+<refsynopsisdiv id="milter-manager-milter-manager-reply-protocol.synopsis" role="synopsis">
+<title role="synopsis.title">概要</title>
+
+<synopsis>#define             <link linkend="MILTER-MANAGER-REPLY-SUCCESS:CAPS">MILTER_MANAGER_REPLY_SUCCESS</link>
+#define             <link linkend="MILTER-MANAGER-REPLY-FAILURE:CAPS">MILTER_MANAGER_REPLY_FAILURE</link>
+#define             <link linkend="MILTER-MANAGER-REPLY-ERROR:CAPS">MILTER_MANAGER_REPLY_ERROR</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="milter-manager-milter-manager-reply-protocol.description" role="desc">
+<title role="desc.title">説明</title>
+<para>
+</para>
+</refsect1>
+<refsect1 id="milter-manager-milter-manager-reply-protocol.details" role="details">
+<title role="details.title">詳細</title>
+<refsect2 id="MILTER-MANAGER-REPLY-SUCCESS:CAPS" role="macro">
+<title>MILTER_MANAGER_REPLY_SUCCESS</title>
+<indexterm zone="MILTER-MANAGER-REPLY-SUCCESS:CAPS"><primary>MILTER_MANAGER_REPLY_SUCCESS</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_REPLY_SUCCESS "success"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-REPLY-FAILURE:CAPS" role="macro">
+<title>MILTER_MANAGER_REPLY_FAILURE</title>
+<indexterm zone="MILTER-MANAGER-REPLY-FAILURE:CAPS"><primary>MILTER_MANAGER_REPLY_FAILURE</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_REPLY_FAILURE "failure"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MILTER-MANAGER-REPLY-ERROR:CAPS" role="macro">
+<title>MILTER_MANAGER_REPLY_ERROR</title>
+<indexterm zone="MILTER-MANAGER-REPLY-ERROR:CAPS"><primary>MILTER_MANAGER_REPLY_ERROR</primary></indexterm>
+<programlisting>#define MILTER_MANAGER_REPLY_ERROR "error"
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+</refentry>
